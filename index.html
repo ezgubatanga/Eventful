@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Daniel & Sofia | Wedding Celebration</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,400&family=Outfit:wght@300;400;500;600&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <div class="page-shell">
+    <header class="hero-section">
+      <div class="hero-copy">
+        <p class="eyebrow">Wedding Celebration</p>
+        <h1>Daniel Reyes & Sofia Martinez</h1>
+        <p class="hero-tagline">“Together is our favorite place to be.”</p>
+        <p class="hero-text">Daniel and Sofia met during a university volunteer trip in Palawan. What started as a shared love for travel turned into a lifelong journey together.</p>
+        <div class="hero-actions">
+          <a href="#details" class="btn btn-primary">View Event Details</a>
+          <a href="#rsvp" class="btn btn-secondary">RSVP Now</a>
+        </div>
+      </div>
+      <div class="hero-image">
+        <img src="https://images.unsplash.com/photo-1511285560929-80b456fea0bc?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=80" alt="Daniel and Sofia" class="hero-photo" />
+      </div>
+    </header>
+
+    <main>
+      <section id="details" class="section intro-grid">
+        <div class="section-card">
+          <h2>Save the Date</h2>
+          <p class="date">June 18, 2026</p>
+          <p>Ceremony at 3:30 PM · Reception at 6:00 PM onwards</p>
+        </div>
+        <div class="section-card">
+          <h2>Ceremony</h2>
+          <p>San Agustin Church</p>
+          <p>Intramuros, Manila</p>
+          <a href="#" class="link-button">View Ceremony Map</a>
+        </div>
+        <div class="section-card">
+          <h2>Reception</h2>
+          <p>The Glass Garden</p>
+          <p>Pasig City</p>
+          <a href="#" class="link-button">View Reception Map</a>
+        </div>
+      </section>
+
+      <section class="section timeline-section">
+        <h2>Wedding Program</h2>
+        <div class="timeline-list">
+          <div class="timeline-item">
+            <div class="timeline-time">2:30 PM</div>
+            <div class="timeline-event">Guest Arrival</div>
+          </div>
+          <div class="timeline-item">
+            <div class="timeline-time">3:30 PM</div>
+            <div class="timeline-event">Ceremony Begins</div>
+          </div>
+          <div class="timeline-item">
+            <div class="timeline-time">4:30 PM</div>
+            <div class="timeline-event">Photo Session</div>
+          </div>
+          <div class="timeline-item">
+            <div class="timeline-time">6:00 PM</div>
+            <div class="timeline-event">Reception Starts</div>
+          </div>
+          <div class="timeline-item">
+            <div class="timeline-time">7:30 PM</div>
+            <div class="timeline-event">Dinner</div>
+          </div>
+          <div class="timeline-item">
+            <div class="timeline-time">9:00 PM</div>
+            <div class="timeline-event">First Dance</div>
+          </div>
+          <div class="timeline-item">
+            <div class="timeline-time">10:30 PM</div>
+            <div class="timeline-event">After Party</div>
+          </div>
+        </div>
+      </section>
+
+      <section id="rsvp" class="section rsvp-section">
+        <div class="section-heading">
+          <h2>RSVP</h2>
+          <p>Please respond by May 20, 2026.</p>
+        </div>
+        <form id="rsvpForm" class="rsvp-form">
+          <div class="form-row">
+            <label for="fullName">Full Name</label>
+            <input type="text" id="fullName" name="fullName" required />
+          </div>
+          <div class="form-row">
+            <label for="email">Email Address</label>
+            <input type="email" id="email" name="email" required />
+          </div>
+          <div class="form-row">
+            <label for="phone">Contact Number</label>
+            <input type="tel" id="phone" name="phone" required />
+          </div>
+          <div class="form-row select-row">
+            <label>Will you attend?</label>
+            <select id="attendance" name="attendance" required>
+              <option value="">Select</option>
+              <option value="yes">Yes</option>
+              <option value="no">No</option>
+            </select>
+          </div>
+          <div class="form-row select-row">
+            <label for="guestCount">Number of Guests</label>
+            <input type="number" id="guestCount" name="guestCount" min="0" value="0" required />
+          </div>
+          <div class="form-row select-row">
+            <label for="meal">Meal Preference</label>
+            <select id="meal" name="meal" required>
+              <option value="">Choose a meal</option>
+              <option value="beef">Beef</option>
+              <option value="chicken">Chicken</option>
+              <option value="vegetarian">Vegetarian</option>
+            </select>
+          </div>
+          <div class="form-row">
+            <label for="message">Message for the couple</label>
+            <textarea id="message" name="message" rows="4"></textarea>
+          </div>
+          <button type="submit" class="btn btn-primary">Submit RSVP</button>
+          <p id="rsvpFeedback" class="form-feedback"></p>
+        </form>
+      </section>
+
+      <section class="section entourage-section">
+        <h2>Wedding Party</h2>
+        <div class="party-grid">
+          <div class="party-card">
+            <h3>Best Man</h3>
+            <p>Miguel Santos</p>
+          </div>
+          <div class="party-card">
+            <h3>Maid of Honor</h3>
+            <p>Isabella Cruz</p>
+          </div>
+          <div class="party-card">
+            <h3>Bridesmaids</h3>
+            <p>Angela Lopez<br />Camille Torres</p>
+          </div>
+          <div class="party-card">
+            <h3>Groomsmen</h3>
+            <p>Rafael Gomez<br />Luis Navarro</p>
+          </div>
+        </div>
+      </section>
+
+      <section class="section dress-code-section">
+        <div class="section-heading">
+          <h2>Dress Code</h2>
+          <p>Formal Garden Elegance</p>
+        </div>
+        <p>Gentlemen in suits; ladies in long gowns. Please avoid wearing white.</p>
+        <div class="color-palette">
+          <span class="color-chip sage">Sage Green</span>
+          <span class="color-chip champagne">Champagne</span>
+          <span class="color-chip dusty-rose">Dusty Rose</span>
+        </div>
+      </section>
+
+      <section class="section registry-section">
+        <h2>Gift Registry</h2>
+        <p>Your presence is the greatest gift, but if you wish to bless us further, a contribution to our future home would mean so much.</p>
+        <div class="registry-links">
+          <a href="#" class="link-button">Bank Transfer Details</a>
+          <a href="#" class="link-button">Registry Link</a>
+        </div>
+      </section>
+
+      <section class="section travel-section">
+        <h2>Travel & Accommodation</h2>
+        <p>Please book early due to limited availability.</p>
+        <div class="travel-grid">
+          <div class="travel-card">
+            <h3>The Linden Suites</h3>
+            <p>Pasig</p>
+          </div>
+          <div class="travel-card">
+            <h3>Marco Polo Ortigas</h3>
+            <p>Pasig City</p>
+          </div>
+        </div>
+      </section>
+
+      <section class="section faq-section">
+        <h2>FAQs</h2>
+        <div class="faq-grid">
+          <div class="faq-item"><strong>Can I bring a plus one?</strong><p>Only if indicated in your invitation.</p></div>
+          <div class="faq-item"><strong>Is parking available?</strong><p>Yes, both venues have parking.</p></div>
+          <div class="faq-item"><strong>Are kids allowed?</strong><p>Ceremony only, reception is adults-only.</p></div>
+          <div class="faq-item"><strong>What time should I arrive?</strong><p>At least 30 minutes before ceremony.</p></div>
+        </div>
+      </section>
+
+      <section class="section gallery-section">
+        <h2>Gallery</h2>
+        <p>Memories from our engagement shoot and candid moments.</p>
+        <div class="gallery-grid">
+          <div class="gallery-item"><img src="https://images.unsplash.com/photo-1519741497674-611481863552?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80" alt="Gallery Details" /></div>
+          <div class="gallery-item"><img src="https://images.unsplash.com/photo-1520854221256-17451cc331bf?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80" alt="Gallery Rings" /></div>
+          <div class="gallery-item"><img src="https://images.unsplash.com/photo-1606800052052-a08af7148866?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80" alt="Gallery Hands" /></div>
+          <div class="gallery-item"><img src="https://images.unsplash.com/photo-1519225421980-715cb0215aed?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80" alt="Gallery Glasses" /></div>
+          <div class="gallery-item"><img src="https://images.unsplash.com/photo-1530103043085-7973715ec208?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80" alt="Gallery Cake" /></div>
+        </div>
+      </section>
+
+      <section class="section contact-section">
+        <h2>Contact</h2>
+        <div class="contact-grid">
+          <div class="contact-card">
+            <h3>Wedding Coordinator</h3>
+            <p>Clara Events Co.</p>
+            <p>Phone: +63 917 123 4567</p>
+          </div>
+          <div class="contact-card">
+            <h3>Emergency Contact</h3>
+            <p>Miguel Santos</p>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <footer class="footer">
+      <p>“We can’t wait to celebrate this special day with you.”</p>
+    </footer>
+  </div>
+  <script src="script.js"></script>
+</body>
+</html>
