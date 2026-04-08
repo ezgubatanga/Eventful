@@ -660,6 +660,14 @@ h3 {
 
   .page-shell { padding: 24px; }
   
+  .section {
+    margin-bottom: 40px;
+  }
+
+  .hero-section {
+    margin-bottom: 50px;
+  }
+  
   .section-card,
   .rsvp-form,
   .rsvp-section {
