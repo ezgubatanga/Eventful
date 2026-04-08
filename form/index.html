@@ -409,7 +409,8 @@
       background: var(--gold-light);
     }
 
-    .check-item input[type="checkbox"] {
+    .check-item input[type="checkbox"],
+    .check-item input[type="radio"] {
       display: none;
     }
 
@@ -576,6 +577,101 @@
     .premium-badge::before {
       content: '✦';
       font-size: 0.55rem;
+    }
+
+    /* ─── Time Picker ────────────────────────────────────── */
+    .time-picker {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .time-select {
+      flex: 1;
+      min-width: 0;
+    }
+
+    .time-colon {
+      font-size: 1.1rem;
+      font-weight: 600;
+      color: var(--text-muted);
+      flex-shrink: 0;
+    }
+
+    .ampm-toggle {
+      display: flex;
+      border: 1.5px solid #E0DAD2;
+      border-radius: var(--radius);
+      overflow: hidden;
+      flex-shrink: 0;
+      background: #FDFCFB;
+      transition: var(--transition);
+    }
+
+    .ampm-btn {
+      padding: 14px 14px;
+      font-family: 'Outfit', sans-serif;
+      font-size: 0.88rem;
+      font-weight: 500;
+      background: transparent;
+      color: var(--text-muted);
+      border: none;
+      cursor: pointer;
+      transition: var(--transition);
+      line-height: 1;
+    }
+
+    .ampm-btn + .ampm-btn {
+      border-left: 1.5px solid #E0DAD2;
+    }
+
+    .ampm-btn.active {
+      background: var(--gold);
+      color: #fff;
+    }
+
+    /* ─── Slug Field ─────────────────────────────────────── */
+    .slug-wrap {
+      display: flex;
+      align-items: center;
+      border: 1.5px solid #E0DAD2;
+      border-radius: var(--radius);
+      background: #FDFCFB;
+      overflow: hidden;
+      transition: var(--transition);
+    }
+
+    .slug-wrap:focus-within {
+      border-color: var(--gold);
+      background: #fff;
+      box-shadow: 0 0 0 4px var(--gold-light);
+    }
+
+    .slug-wrap.error {
+      border-color: #C0706A;
+      box-shadow: 0 0 0 3px rgba(192, 112, 106, 0.12);
+    }
+
+    .slug-prefix {
+      padding: 14px 0 14px 18px;
+      font-size: 0.97rem;
+      color: var(--text-light);
+      white-space: nowrap;
+      flex-shrink: 0;
+      user-select: none;
+    }
+
+    .slug-input {
+      border: none !important;
+      box-shadow: none !important;
+      background: transparent !important;
+      padding-left: 2px;
+      flex: 1;
+    }
+
+    .slug-input:focus {
+      border: none;
+      box-shadow: none;
     }
 
     /* ─── Summary ────────────────────────────────────────── */
@@ -978,15 +1074,56 @@
               <span class="field-error" id="err-weddingDate">Please choose a date.</span>
             </div>
             <div class="field-group">
+              <label class="field-label">Ceremony Time <span class="req">*</span></label>
+              <div class="time-picker">
+                <select class="field-input time-select" id="ceremonyHour" name="ceremonyHour">
+                  <option value="">Hour</option>
+                  <option>1</option><option>2</option><option>3</option><option>4</option>
+                  <option>5</option><option>6</option><option>7</option><option>8</option>
+                  <option>9</option><option>10</option><option>11</option><option>12</option>
+                </select>
+                <span class="time-colon">:</span>
+                <select class="field-input time-select" id="ceremonyMinute" name="ceremonyMinute">
+                  <option value="">Min</option>
+                  <option value="00">00</option><option value="15">15</option>
+                  <option value="30">30</option><option value="45">45</option>
+                </select>
+                <div class="ampm-toggle">
+                  <button type="button" class="ampm-btn active" id="amBtn" onclick="setAmPm('AM')">AM</button>
+                  <button type="button" class="ampm-btn" id="pmBtn" onclick="setAmPm('PM')">PM</button>
+                </div>
+              </div>
+              <span class="field-error" id="err-ceremonyTime">Please select the ceremony time.</span>
+            </div>
+            <div class="field-group">
               <label class="field-label" for="location">City / Location <span class="req">*</span></label>
               <input class="field-input" type="text" id="location" name="location" placeholder="e.g. Manila" required />
               <span class="field-error" id="err-location">Please enter a location.</span>
             </div>
-            <div class="field-group field-full">
+            <div class="field-group">
+              <label class="field-label" for="venueName">Venue Name <span class="req">*</span></label>
+              <input class="field-input" type="text" id="venueName" name="venueName" placeholder="e.g. The Ruins, Bacolod" required />
+              <span class="field-error" id="err-venueName">Please enter the venue name.</span>
+            </div>
+            <div class="field-group">
               <label class="field-label" for="email">Email Address <span class="req">*</span></label>
-              <input class="field-input" type="email" id="email" name="email" placeholder="yourname@email.com"
-                required />
+              <input class="field-input" type="email" id="email" name="email" placeholder="yourname@email.com" required />
               <span class="field-error" id="err-email">Please enter a valid email.</span>
+            </div>
+            <div class="field-group">
+              <label class="field-label" for="contactNumber">Contact Number <span class="req">*</span></label>
+              <input class="field-input" type="tel" id="contactNumber" name="contactNumber" placeholder="e.g. 09171234567" required />
+              <span class="field-error" id="err-contactNumber">Please enter a contact number.</span>
+            </div>
+            <div class="field-group field-full">
+              <label class="field-label" for="pageSlug">Preferred Page URL <span class="req">*</span></label>
+              <div class="slug-wrap">
+                <span class="slug-prefix">eventful.page/</span>
+                <input class="field-input slug-input" type="text" id="pageSlug" name="pageSlug"
+                  placeholder="sofia-and-carlos" autocomplete="off" required
+                  oninput="updateSlugPreview(this.value)" />
+              </div>
+              <span class="field-error" id="err-pageSlug">Please enter a preferred URL (letters, numbers, and hyphens only).</span>
             </div>
           </div>
         </div>
@@ -1053,6 +1190,33 @@
           <div class="premium-grid" id="premiumAddOnsGrid">
             <!-- Populated by JS -->
           </div>
+
+          <div class="section-group" style="margin-top:28px">
+            <p class="group-label">Delivery</p>
+            <div class="checkbox-grid">
+              <label class="check-item is-checked" id="lbl-delivery-standard" tabindex="0" role="radio" aria-checked="true"
+                     onclick="selectDelivery('standard')" onkeydown="if(event.key==='Enter'||event.key===' ')selectDelivery('standard')">
+                <input type="radio" name="delivery" id="delivery-standard" value="standard" checked />
+                <span class="custom-check"><svg width="11" height="9" viewBox="0 0 11 9" fill="none"><path d="M1 4.5L4 7.5L10 1" stroke="white" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+                <span class="check-text">Standard — 7 days<br><small style="color:var(--text-light);font-size:0.78rem">Included</small></span>
+              </label>
+              <label class="check-item" id="lbl-delivery-rush" tabindex="0" role="radio" aria-checked="false"
+                     onclick="selectDelivery('rush')" onkeydown="if(event.key==='Enter'||event.key===' ')selectDelivery('rush')">
+                <input type="radio" name="delivery" id="delivery-rush" value="rush" />
+                <span class="custom-check"><svg width="11" height="9" viewBox="0 0 11 9" fill="none"><path d="M1 4.5L4 7.5L10 1" stroke="white" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+                <span class="check-text">Rush — 3 days<br><small style="color:var(--text-light);font-size:0.78rem">+₱1,800</small></span>
+              </label>
+            </div>
+          </div>
+
+          <div class="section-group" style="margin-top:20px;margin-bottom:0">
+            <p class="group-label">Special Requests</p>
+            <div class="field-group">
+              <textarea class="field-input" id="specialRequests" name="specialRequests"
+                        placeholder="Any special notes, preferences, or requests for your wedding page…"
+                        rows="4" style="resize:vertical;line-height:1.6"></textarea>
+            </div>
+          </div>
         </div>
         <div class="step-nav">
           <button class="btn btn-ghost" onclick="goBack(4)">← Back</button>
@@ -1086,6 +1250,12 @@
           <div class="summary-block" id="summaryAddOnsBlock">
             <p class="summary-block-title">Your Add-Ons</p>
             <div class="summary-tags" id="summaryAddOnsTags"></div>
+          </div>
+
+          <!-- special requests -->
+          <div class="summary-block" id="summarySpecialBlock" style="display:none">
+            <p class="summary-block-title">Special Requests</p>
+            <p id="summarySpecialText" style="color:var(--text-muted);font-size:0.9rem;line-height:1.6"></p>
           </div>
 
           <!-- pricing -->
@@ -1139,30 +1309,35 @@
 
     // ── Data ──────────────────────────────────────────────────
     const CORE_SECTIONS = [
-      'Hero Section', 'Wedding Details', 'Our Story',
-      'Event Timeline', 'Venue Information', 'RSVP Form',
-      'Dress Code', 'Gallery', 'FAQs', 'Contact Info'
+      "Couple's Story",
+      'Schedule & Timeline',
+      'Venue Info / Google Maps',
+      'Photo Gallery',
+      'Dress Code & FAQ',
+      'Countdown Timer',
+      'RSVP Form',
+      'Contact Info',
+      'Mobile-Optimized Design',
+      'Custom Shareable Link',
     ];
 
     const FUNCTIONAL_ADDONS = [
-      { id: 'fa-maps', label: 'Interactive Maps', price: 500 },
-      { id: 'fa-plusone', label: 'Plus-One Management', price: 750 },
+      { id: 'fa-music', label: 'Background Music / Spotify Playlist', price: 400 },
       { id: 'fa-meal', label: 'Meal Selection', price: 600 },
-      { id: 'fa-gift', label: 'Gift Registry Integration', price: 500 },
-      { id: 'fa-confirm', label: 'RSVP Confirmation Page', price: 400 },
-      { id: 'fa-cal', label: 'Calendar Integration', price: 350 },
+      { id: 'fa-video', label: 'Featured Video', price: 400 },
+      { id: 'fa-gift', label: 'Gift Registry Integration', price: 600 },
+      { id: 'fa-cal', label: 'Calendar Integration', price: 400 },
     ];
 
     const PREMIUM_ADDONS = [
-      { id: 'pa-timer', label: 'Countdown Timer', price: 500 },
       { id: 'pa-qr', label: 'Digital Invite + QR Code', price: 1200 },
-      { id: 'pa-dash', label: 'Live RSVP Tracking Dashboard', price: 1500 },
-      { id: 'pa-music', label: 'Background Music Player', price: 700 },
-      { id: 'pa-ai', label: 'AI Guest Assistant', price: 2000 },
-      { id: 'pa-upload', label: 'Photo Upload Gallery', price: 1000 },
+      { id: 'pa-email', label: 'Email Reminder', price: 1200 },
+      { id: 'pa-dash', label: 'Live Guest Tracking Dashboard', price: 1800 },
+      { id: 'pa-photos', label: 'Guest Photo Submissions', price: 1200 },
+      { id: 'pa-domain', label: 'Custom Domain (1 year)', price: 1800 },
     ];
 
-    const BASE_PRICE = 5000;
+    const BASE_PRICE = 4000;
     let currentStep = 1;
     const TOTAL_STEPS = 5;
 
@@ -1226,6 +1401,38 @@
       labelEl.setAttribute('aria-checked', cb.checked);
     }
 
+    function setAmPm(val) {
+      document.getElementById('amBtn').classList.toggle('active', val === 'AM');
+      document.getElementById('pmBtn').classList.toggle('active', val === 'PM');
+    }
+
+    function getCeremonyTime() {
+      const h = document.getElementById('ceremonyHour').value;
+      const m = document.getElementById('ceremonyMinute').value;
+      if (!h || m === '') return '';
+      const ampm = document.getElementById('amBtn').classList.contains('active') ? 'AM' : 'PM';
+      return `${h}:${m} ${ampm}`;
+    }
+
+    function updateSlugPreview(val) {
+      const sanitized = val.toLowerCase().replace(/[^a-z0-9-]/g, '');
+      const el = document.getElementById('pageSlug');
+      if (val !== sanitized) { el.value = sanitized; }
+      const wrap = el.closest('.slug-wrap');
+      wrap.classList.remove('error');
+      document.getElementById('err-pageSlug').classList.remove('visible');
+    }
+
+    function selectDelivery(value) {
+      ['standard', 'rush'].forEach(v => {
+        const lbl = document.getElementById(`lbl-delivery-${v}`);
+        const rb = document.getElementById(`delivery-${v}`);
+        lbl.classList.toggle('is-checked', v === value);
+        lbl.setAttribute('aria-checked', v === value);
+        rb.checked = v === value;
+      });
+    }
+
     // ── Stepper UI ────────────────────────────────────────────
     function updateStepper(active) {
       for (let i = 1; i <= TOTAL_STEPS; i++) {
@@ -1280,16 +1487,28 @@
         { id: 'coupleNames', errId: 'err-coupleNames', test: v => v.trim().length > 1 },
         { id: 'weddingDate', errId: 'err-weddingDate', test: v => !!v },
         { id: 'location', errId: 'err-location', test: v => v.trim().length > 1 },
+        { id: 'venueName', errId: 'err-venueName', test: v => v.trim().length > 1 },
         { id: 'email', errId: 'err-email', test: v => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v) },
+        { id: 'contactNumber', errId: 'err-contactNumber', test: v => v.trim().length > 6 },
+        { id: 'pageSlug', errId: 'err-pageSlug', test: v => /^[a-z0-9-]{2,}$/.test(v.trim()) },
       ];
       fields.forEach(({ id, errId, test }) => {
         const el = document.getElementById(id);
         const err = document.getElementById(errId);
+        const slugWrap = id === 'pageSlug' ? el.closest('.slug-wrap') : null;
         const valid = test(el.value);
         el.classList.toggle('error', !valid);
+        if (slugWrap) slugWrap.classList.toggle('error', !valid);
         err.classList.toggle('visible', !valid);
         if (!valid) ok = false;
       });
+      // Ceremony time custom check
+      const ctErr = document.getElementById('err-ceremonyTime');
+      const ctValid = !!getCeremonyTime();
+      document.getElementById('ceremonyHour').classList.toggle('error', !ctValid);
+      document.getElementById('ceremonyMinute').classList.toggle('error', !ctValid);
+      ctErr.classList.toggle('visible', !ctValid);
+      if (!ctValid) ok = false;
       return ok;
     }
 
@@ -1297,9 +1516,9 @@
     function calcPrice() {
       let total = BASE_PRICE;
       let lines = [];
+      lines.push(`Base package — ₱${BASE_PRICE.toLocaleString()}`);
       const selFn = getSelectedFunctional();
       const selPr = getSelectedPremium();
-      lines.push(`Base package — ₱${BASE_PRICE.toLocaleString()}`);
       selFn.forEach(id => {
         const item = FUNCTIONAL_ADDONS.find(a => a.id === id);
         if (item) { total += item.price; lines.push(`${item.label} +₱${item.price.toLocaleString()}`); }
@@ -1308,6 +1527,13 @@
         const item = PREMIUM_ADDONS.find(a => a.id === id);
         if (item) { total += item.price; lines.push(`${item.label} +₱${item.price.toLocaleString()}`); }
       });
+      const isRush = document.getElementById('delivery-rush')?.checked;
+      if (isRush) {
+        total += 1800;
+        lines.push('Rush Delivery (3 days) +₱1,800');
+      } else {
+        lines.push('Standard Delivery (7 days) — included');
+      }
       return { total, lines };
     }
 
@@ -1331,11 +1557,26 @@
       const email = document.getElementById('email').value;
 
       document.getElementById('summaryCoupleName').textContent = couple;
+      const isRush = document.getElementById('delivery-rush')?.checked;
+      const time = getCeremonyTime();
+      const venue = document.getElementById('venueName').value;
+      const slug = document.getElementById('pageSlug').value.trim();
       document.getElementById('summaryMeta').innerHTML = `
-        <span>📅 ${formatDate(date)}</span>
-        <span>📍 ${loc}</span>
+        <span>📅 ${formatDate(date)}${time ? ' · ' + time : ''}</span>
+        <span>📍 ${venue ? venue + ', ' : ''}${loc}</span>
         <span>✉️ ${email}</span>
+        <span>🔗 eventful.page/${slug}</span>
+        <span>${isRush ? '🚀 Rush (3 days)' : '📦 Standard (7 days)'}</span>
       `;
+
+      const specialReqs = document.getElementById('specialRequests')?.value.trim();
+      const specialBlock = document.getElementById('summarySpecialBlock');
+      if (specialReqs) {
+        document.getElementById('summarySpecialText').textContent = specialReqs;
+        specialBlock.style.display = 'block';
+      } else {
+        specialBlock.style.display = 'none';
+      }
 
       // core tags
       document.getElementById('summaryCoreTags').innerHTML =
@@ -1369,6 +1610,14 @@
       return d.toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' });
     }
 
+    function formatTime(timeStr) {
+      if (!timeStr) return '';
+      const [h, m] = timeStr.split(':').map(Number);
+      const ampm = h >= 12 ? 'PM' : 'AM';
+      const hour = h % 12 || 12;
+      return `${hour}:${String(m).padStart(2, '0')} ${ampm}`;
+    }
+
     // ── Build Payload ─────────────────────────────────────────
     function buildPayload() {
       const { total } = calcPrice();
@@ -1381,10 +1630,16 @@
         coupleNames: document.getElementById('coupleNames').value.trim(),
         weddingDate: document.getElementById('weddingDate').value,
         email: document.getElementById('email').value.trim(),
+        contactNumber: document.getElementById('contactNumber').value.trim(),
         location: document.getElementById('location').value.trim(),
+        venueName: document.getElementById('venueName').value.trim(),
+        ceremonyTime: getCeremonyTime(),
+        pageSlug: document.getElementById('pageSlug').value.trim(),
         coreSections: CORE_SECTIONS,
         functionalAddOns: selFnLabels,
         premiumAddOns: selPrLabels,
+        delivery: document.getElementById('delivery-rush')?.checked ? 'Rush (3 days) +₱1,800' : 'Standard (7 days)',
+        specialRequests: document.getElementById('specialRequests')?.value.trim() || '',
         estimatedPrice: total,
         submittedAt: new Date().toISOString(),
       };
@@ -1440,8 +1695,13 @@
     renderPremiumAddOns();
     updateStepper(1);
 
+    // Preselect wedding date to today + 15 days
+    const defaultDate = new Date();
+    defaultDate.setDate(defaultDate.getDate() + 15);
+    document.getElementById('weddingDate').value = defaultDate.toISOString().split('T')[0];
+
     // Live validation clear
-    ['coupleNames', 'weddingDate', 'location', 'email'].forEach(id => {
+    ['coupleNames', 'weddingDate', 'location', 'venueName', 'email', 'contactNumber'].forEach(id => {
       document.getElementById(id)?.addEventListener('input', () => {
         document.getElementById(id).classList.remove('error');
         document.getElementById(`err-${id}`)?.classList.remove('visible');
