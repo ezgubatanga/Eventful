@@ -1183,6 +1183,8 @@
       font-size: 1.3rem;
       font-style: italic;
       color: var(--text-muted);
+      display: flex;
+      align-items: center;
     }
 
     .footer-copy {
@@ -1192,6 +1194,7 @@
 
     .footer-links {
       display: flex;
+      align-items: center;
       gap: 24px;
     }
 
@@ -1292,10 +1295,100 @@
         width: 240px;
       }
     }
+
+    /* ─── PRELOADER ────────────────────────────────────────── */
+    .preloader-overlay {
+      position: fixed;
+      inset: 0;
+      background: var(--bg);
+      z-index: 100000;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: opacity 0.6s cubic-bezier(0.16, 1, 0.3, 1) 0.2s, visibility 0.6s 0.2s;
+    }
+
+    .preloader-overlay.hidden {
+      opacity: 0;
+      visibility: hidden;
+    }
+
+    /* From Uiverse.io by andrew-manzyk */ 
+    .loader {
+      --fill-color: var(--gold);
+      --shine-color: rgba(197, 160, 89, 0.2);
+      transform: scale(0.6);
+      width: 100px;
+      height: auto;
+      position: relative;
+      filter: drop-shadow(0 0 10px var(--shine-color));
+    }
+
+    .loader #pegtopone {
+      position: absolute;
+      animation: flowe-one 1s linear infinite;
+    }
+
+    .loader #pegtoptwo {
+      position: absolute;
+      opacity: 0;
+      transform: scale(0) translateY(-200px) translateX(-100px);
+      animation: flowe-two 1s linear infinite;
+      animation-delay: 0.3s;
+    }
+
+    .loader #pegtopthree {
+      position: absolute;
+      opacity: 0;
+      transform: scale(0) translateY(-200px) translateX(100px);
+      animation: flowe-three 1s linear infinite;
+      animation-delay: 0.6s;
+    }
+
+    .loader svg g path {
+      fill: var(--fill-color);
+    }
+
+    @keyframes flowe-one {
+      0% { transform: scale(0.5) translateY(-200px); opacity: 0; }
+      25% { transform: scale(0.75) translateY(-100px); opacity: 1; }
+      50% { transform: scale(1) translateY(0px); opacity: 1; }
+      75% { transform: scale(0.5) translateY(50px); opacity: 1; }
+      100% { transform: scale(0) translateY(100px); opacity: 0; }
+    }
+
+    @keyframes flowe-two {
+      0% { transform: scale(0.5) rotateZ(-10deg) translateY(-200px) translateX(-100px); opacity: 0; }
+      25% { transform: scale(1) rotateZ(-5deg) translateY(-100px) translateX(-50px); opacity: 1; }
+      50% { transform: scale(1) rotateZ(0deg) translateY(0px) translateX(-25px); opacity: 1; }
+      75% { transform: scale(0.5) rotateZ(5deg) translateY(50px) translateX(0px); opacity: 1; }
+      100% { transform: scale(0) rotateZ(10deg) translateY(100px) translateX(25px); opacity: 0; }
+    }
+
+    @keyframes flowe-three {
+      0% { transform: scale(0.5) rotateZ(10deg) translateY(-200px) translateX(100px); opacity: 0; }
+      25% { transform: scale(1) rotateZ(5deg) translateY(-100px) translateX(50px); opacity: 1; }
+      50% { transform: scale(1) rotateZ(0deg) translateY(0px) translateX(25px); opacity: 1; }
+      75% { transform: scale(0.5) rotateZ(-5deg) translateY(50px) translateX(0px); opacity: 1; }
+      100% { transform: scale(0) rotateZ(-10deg) translateY(100px) translateX(-25px); opacity: 0; }
+    }
   </style>
 </head>
 
 <body>
+
+  <!-- ═══ PRELOADER ════════════════════════════════════════════ -->
+  <div id="page-preloader" class="preloader-overlay">
+    <div class="loader">
+      <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+        <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+          <path id="pegtopone" d="M50,10 C50,40 60,50 90,50 C60,50 50,60 50,90 C50,60 40,50 10,50 C40,50 50,40 50,10 Z" fill="currentColor" />
+          <path id="pegtoptwo" d="M50,10 C50,40 60,50 90,50 C60,50 50,60 50,90 C50,60 40,50 10,50 C40,50 50,40 50,10 Z" fill="currentColor" />
+          <path id="pegtopthree" d="M50,10 C50,40 60,50 90,50 C60,50 50,60 50,90 C50,60 40,50 10,50 C40,50 50,40 50,10 Z" fill="currentColor" />
+        </g>
+      </svg>
+    </div>
+  </div>
 
   <!-- ═══ NAV ════════════════════════════════════════════════ -->
   <nav class="nav">
@@ -1351,7 +1444,8 @@
               <span class="phone-bar-name">Maria & Carlos</span>
               <span class="phone-bar-date">June 18, 2026</span>
             </div>
-            <div class="phone-hero-img">🌸</div>
+            <div class="phone-hero-img" style="background: url('pexels-junerydocto.webp') center/cover no-repeat;">
+            </div>
             <div class="phone-content">
               <div class="phone-couple">Maria & Carlos</div>
               <div class="phone-date-loc">June 18 · Makati City</div>
@@ -1386,7 +1480,7 @@
 
           <div class="hero-float-card card-2">
             <div class="float-card-label">Countdown</div>
-            <div class="float-card-value">73 days</div>
+            <div class="float-card-value" id="hero-countdown">73 days</div>
             <span class="float-card-tag">Countdown timer ✦</span>
           </div>
         </div>
@@ -1701,7 +1795,7 @@
         <div class="cta-actions">
           <a href="/form" class="btn btn-gold" id="bottom-cta">Create My Wedding Page ✦</a>
         </div>
-        <span class="cta-note">🔒 No commitment. We'll contact you with a preview first.</span>
+        <span class="cta-note">No commitment. We'll contact you with a preview first.</span>
       </div>
     </div>
   </section>
@@ -1710,7 +1804,8 @@
   <footer class="footer">
     <div class="container">
       <div class="footer-inner">
-        <span class="footer-brand"><img src="logo.webp" alt="Eventful Logo" height="24" style="height: 24px; width: auto;" /></span>
+        <span class="footer-brand"><img src="logo.webp" alt="Eventful Logo" height="24"
+            style="height: 24px; width: auto;" /></span>
         <div class="footer-links">
           <a href="#features">Features</a>
           <a href="/form">Get Started</a>
@@ -1759,8 +1854,15 @@
     }
 
     @keyframes pulse-ring {
-      0%   { transform: scale(1);   opacity: 0.6; }
-      100% { transform: scale(1.6); opacity: 0; }
+      0% {
+        transform: scale(1);
+        opacity: 0.6;
+      }
+
+      100% {
+        transform: scale(1.6);
+        opacity: 0;
+      }
     }
 
     #music-toggle.playing::before {
@@ -1835,6 +1937,41 @@
         }
       });
     })();
+
+    // Live Countdown Logic
+    (function () {
+      const weddingDate = new Date('June 18, 2026 00:00:00').getTime();
+      const now = new Date().getTime();
+      const distance = weddingDate - now;
+
+      // Calculate relative days
+      const days = Math.ceil(distance / (1000 * 60 * 60 * 24));
+
+      const countdownEl = document.getElementById('hero-countdown');
+      if (countdownEl) {
+        if (days > 1) {
+          countdownEl.textContent = days + ' days';
+        } else if (days === 1) {
+          countdownEl.textContent = '1 day';
+        } else if (days === 0) {
+          countdownEl.textContent = 'Today!';
+        } else {
+          countdownEl.textContent = 'Just Married!';
+        }
+      }
+    })();
+
+    // Initialize Preloader Fade-out
+    window.addEventListener('load', () => {
+      const preloader = document.getElementById('page-preloader');
+      if (preloader) {
+        // Let it run slightly past the actual visual load for a nice polished effect
+        setTimeout(() => {
+          preloader.classList.add('hidden');
+        }, 300);
+      }
+    });
+
   </script>
 
 </body>
