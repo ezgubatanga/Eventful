@@ -746,6 +746,34 @@
       border: 1px solid rgba(197, 160, 89, 0.25);
     }
 
+    .summary-tag.removable {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .tag-remove {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 14px;
+      height: 14px;
+      border-radius: 50%;
+      background: rgba(0,0,0,0.12);
+      border: none;
+      cursor: pointer;
+      font-size: 0.6rem;
+      line-height: 1;
+      color: inherit;
+      padding: 0;
+      flex-shrink: 0;
+      transition: background 0.2s;
+    }
+
+    .tag-remove:hover {
+      background: rgba(0,0,0,0.25);
+    }
+
     .price-box {
       background: linear-gradient(135deg, #2A2520 0%, #3D3530 100%);
       color: #fff;
@@ -1091,12 +1119,12 @@
                 <span class="time-colon">:</span>
                 <select class="field-input time-select" id="ceremonyMinute" name="ceremonyMinute">
                   <option value="">Min</option>
-                  <option value="00">00</option><option value="15">15</option>
+                  <option value="00" selected>00</option><option value="15">15</option>
                   <option value="30">30</option><option value="45">45</option>
                 </select>
                 <div class="ampm-toggle">
-                  <button type="button" class="ampm-btn active" id="amBtn" onclick="setAmPm('AM')">AM</button>
-                  <button type="button" class="ampm-btn" id="pmBtn" onclick="setAmPm('PM')">PM</button>
+                  <button type="button" class="ampm-btn" id="amBtn" onclick="setAmPm('AM')">AM</button>
+                  <button type="button" class="ampm-btn active" id="pmBtn" onclick="setAmPm('PM')">PM</button>
                 </div>
               </div>
               <span class="field-error" id="err-ceremonyTime">Please select the ceremony time.</span>
@@ -1267,9 +1295,8 @@
           <!-- pricing -->
           <div class="price-box" id="summaryPriceBox">
             <div>
-              <p class="price-label">Estimated Total</p>
+              <p class="price-label">Total</p>
               <p class="price-value" id="summaryPrice"></p>
-              <p class="price-note">Final pricing confirmed on consultation</p>
             </div>
             <div class="price-breakdown" id="summaryBreakdown"></div>
           </div>
@@ -1427,6 +1454,19 @@
       const wrap = el.closest('.slug-wrap');
       wrap.classList.remove('error');
       document.getElementById('err-pageSlug').classList.remove('visible');
+    }
+
+    function removeAddon(id) {
+      const cb = document.getElementById(id);
+      if (cb) {
+        cb.checked = false;
+        const lbl = document.getElementById(`lbl-${id}`);
+        if (lbl) {
+          lbl.classList.remove('is-checked');
+          lbl.setAttribute('aria-checked', 'false');
+        }
+      }
+      buildSummary();
     }
 
     function selectDelivery(value) {
@@ -1597,11 +1637,11 @@
       const addOnTags = [
         ...selFn.map(id => {
           const it = FUNCTIONAL_ADDONS.find(a => a.id === id);
-          return it ? `<span class="summary-tag addon">${it.label}</span>` : '';
+          return it ? `<span class="summary-tag addon removable">${it.label}<button class="tag-remove" onclick="removeAddon('${id}')" title="Remove">✕</button></span>` : '';
         }),
         ...selPr.map(id => {
           const it = PREMIUM_ADDONS.find(a => a.id === id);
-          return it ? `<span class="summary-tag premium">✦ ${it.label}</span>` : '';
+          return it ? `<span class="summary-tag premium removable">✦ ${it.label}<button class="tag-remove" onclick="removeAddon('${id}')" title="Remove">✕</button></span>` : '';
         }),
       ].join('');
       document.getElementById('summaryAddOnsTags').innerHTML =
