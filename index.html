@@ -5,8 +5,17 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Eventful — Elegant Wedding Landing Pages</title>
-  <meta name="description"
-    content="Create a stunning, personalized wedding landing page in minutes. Beautiful sections, premium features, and seamless RSVP — all in one elegant page." />
+  <meta name="description" content="Your wedding, in one beautiful page." />
+  <meta property="og:title" content="Eventful — Elegant Wedding Landing Pages" />
+  <meta property="og:description" content="Your wedding, in one beautiful page." />
+  <meta property="og:image" content="eventful.webp" />
+  <meta property="og:url" content="https://eventful.page" />
+  <meta property="og:type" content="website" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="Eventful — Elegant Wedding Landing Pages" />
+  <meta name="twitter:description" content="Your wedding, in one beautiful page." />
+  <meta name="twitter:image" content="eventful.webp" />
+  <link rel="icon" type="image/webp" href="favicon.webp" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link
@@ -45,6 +54,8 @@
 
     html {
       scroll-behavior: smooth;
+      overflow-x: hidden;
+      width: 100%;
     }
 
     body {
@@ -55,6 +66,7 @@
       font-weight: 300;
       -webkit-font-smoothing: antialiased;
       overflow-x: hidden;
+      width: 100%;
     }
 
     /* ─── Noise Texture Overlay ────────────────────────── */
@@ -1290,8 +1302,7 @@
     <div class="container">
       <div class="nav-inner">
         <a href="index.html" class="nav-logo">
-          <span class="nav-logo-mark">✦</span>
-          Eventful
+          <img src="logo.webp" alt="Eventful Logo" height="32" style="height: 32px; width: auto;" />
         </a>
         <ul class="nav-links">
           <li><a href="#features">Features</a></li>
@@ -1589,7 +1600,7 @@
             <div class="dot"></div>
             <div class="dot"></div>
             <div class="dot"></div>
-            <div class="included-visual-url">your-wedding.eventful.ph</div>
+            <div class="included-visual-url">https://eventful.page/your-wedding</div>
           </div>
           <div class="visual-content">
             <div class="visual-section-row">
@@ -1699,16 +1710,132 @@
   <footer class="footer">
     <div class="container">
       <div class="footer-inner">
-        <span class="footer-brand">Eventful</span>
+        <span class="footer-brand"><img src="logo.webp" alt="Eventful Logo" height="24" style="height: 24px; width: auto;" /></span>
         <div class="footer-links">
           <a href="#features">Features</a>
           <a href="/form">Get Started</a>
-          <a href="mailto:hello@eventful.ph">Contact</a>
+          <a href="mailto:hello@eventful.page">Contact</a>
         </div>
         <span class="footer-copy">© 2026 Eventful. Made with ♡ for couples.</span>
       </div>
     </div>
   </footer>
+
+
+  <!-- ═══ BACKGROUND MUSIC ══════════════════════════════════════ -->
+  <audio id="bg-music" src="Perfect.mp3" loop preload="auto" style="display: none !important;"></audio>
+
+  <!-- Floating music toggle -->
+  <button id="music-toggle" title="Toggle music" aria-label="Toggle background music">
+    <span id="music-icon">🔇</span>
+  </button>
+
+  <style>
+    #music-toggle {
+      position: fixed;
+      bottom: 28px;
+      right: 28px;
+      width: 50px;
+      height: 50px;
+      border-radius: 50%;
+      background: var(--surface);
+      border: 1.5px solid var(--gold-mid);
+      box-shadow: var(--shadow-md);
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.2rem;
+      z-index: 9999;
+      transition: var(--transition);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+    }
+
+    #music-toggle:hover {
+      transform: scale(1.1);
+      box-shadow: var(--shadow-lg);
+      border-color: var(--gold);
+    }
+
+    @keyframes pulse-ring {
+      0%   { transform: scale(1);   opacity: 0.6; }
+      100% { transform: scale(1.6); opacity: 0; }
+    }
+
+    #music-toggle.playing::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      border-radius: 50%;
+      border: 2px solid var(--gold);
+      animation: pulse-ring 1.8s ease-out infinite;
+    }
+  </style>
+
+  <script>
+    (function () {
+      const audio = document.getElementById('bg-music');
+      const btn = document.getElementById('music-toggle');
+      const icon = document.getElementById('music-icon');
+      let isPlaying = false;
+
+      function updateState(playing) {
+        isPlaying = playing;
+        if (playing) {
+          btn.classList.add('playing');
+          icon.textContent = '🎵';
+        } else {
+          btn.classList.remove('playing');
+          icon.textContent = '🔇';
+        }
+      }
+
+      function attemptPlay() {
+        if (isPlaying) return;
+        const playPromise = audio.play();
+        if (playPromise !== undefined) {
+          playPromise.then(() => {
+            updateState(true);
+            removeInteractionListeners();
+          }).catch(error => {
+            console.log("Autoplay blocked by browser. Awaiting user interaction...");
+          });
+        }
+      }
+
+      function onInteraction() {
+        attemptPlay();
+      }
+
+      function removeInteractionListeners() {
+        document.removeEventListener('click', onInteraction, true);
+        document.removeEventListener('keydown', onInteraction, true);
+        document.removeEventListener('touchstart', onInteraction, true);
+        document.removeEventListener('scroll', onInteraction, true);
+      }
+
+      // 1. Attempt to play immediately on load (will work if browser allows it)
+      attemptPlay();
+
+      // 2. If blocked, wait for the first interaction to start playback
+      document.addEventListener('click', onInteraction, true);
+      document.addEventListener('keydown', onInteraction, true);
+      document.addEventListener('touchstart', onInteraction, true);
+      document.addEventListener('scroll', onInteraction, true);
+
+      // 3. Manual toggle
+      btn.addEventListener('click', function (e) {
+        e.stopPropagation();
+        if (audio.paused) {
+          audio.play().then(() => updateState(true));
+        } else {
+          audio.pause();
+          updateState(false);
+        }
+      });
+    })();
+  </script>
 
 </body>
 
