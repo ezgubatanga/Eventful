@@ -1062,11 +1062,17 @@
         </div>
         <div class="step-body">
           <div class="fields-grid">
-            <div class="field-group field-full">
-              <label class="field-label" for="coupleNames">Couple Names <span class="req">*</span></label>
-              <input class="field-input" type="text" id="coupleNames" name="coupleNames"
-                placeholder="e.g. Daniel & Sofia" autocomplete="off" required />
-              <span class="field-error" id="err-coupleNames">Please enter both names.</span>
+            <div class="field-group">
+              <label class="field-label" for="groomName">Groom's Name <span class="req">*</span></label>
+              <input class="field-input" type="text" id="groomName" name="groomName"
+                placeholder="e.g. Carlos" autocomplete="off" required />
+              <span class="field-error" id="err-groomName">Please enter the groom's name.</span>
+            </div>
+            <div class="field-group">
+              <label class="field-label" for="brideName">Bride's Name <span class="req">*</span></label>
+              <input class="field-input" type="text" id="brideName" name="brideName"
+                placeholder="e.g. Sofia" autocomplete="off" required />
+              <span class="field-error" id="err-brideName">Please enter the bride's name.</span>
             </div>
             <div class="field-group">
               <label class="field-label" for="weddingDate">Wedding Date <span class="req">*</span></label>
@@ -1102,7 +1108,7 @@
             </div>
             <div class="field-group">
               <label class="field-label" for="venueName">Venue Name <span class="req">*</span></label>
-              <input class="field-input" type="text" id="venueName" name="venueName" placeholder="e.g. The Ruins, Bacolod" required />
+              <input class="field-input" type="text" id="venueName" name="venueName" placeholder="e.g. Wolfgang's Steakhouse, Taguig" required />
               <span class="field-error" id="err-venueName">Please enter the venue name.</span>
             </div>
             <div class="field-group">
@@ -1484,7 +1490,8 @@
     function validateStep1() {
       let ok = true;
       const fields = [
-        { id: 'coupleNames', errId: 'err-coupleNames', test: v => v.trim().length > 1 },
+        { id: 'groomName', errId: 'err-groomName', test: v => v.trim().length > 0 },
+        { id: 'brideName', errId: 'err-brideName', test: v => v.trim().length > 0 },
         { id: 'weddingDate', errId: 'err-weddingDate', test: v => !!v },
         { id: 'location', errId: 'err-location', test: v => v.trim().length > 1 },
         { id: 'venueName', errId: 'err-venueName', test: v => v.trim().length > 1 },
@@ -1551,7 +1558,9 @@
 
     // ── Build Summary ─────────────────────────────────────────
     function buildSummary() {
-      const couple = document.getElementById('coupleNames').value;
+      const groom = document.getElementById('groomName').value.trim();
+      const bride = document.getElementById('brideName').value.trim();
+      const couple = `${groom} & ${bride}`;
       const date = document.getElementById('weddingDate').value;
       const loc = document.getElementById('location').value;
       const email = document.getElementById('email').value;
@@ -1627,7 +1636,8 @@
         .map(id => PREMIUM_ADDONS.find(a => a.id === id)?.label).filter(Boolean);
 
       return {
-        coupleNames: document.getElementById('coupleNames').value.trim(),
+        groomName: document.getElementById('groomName').value.trim(),
+        brideName: document.getElementById('brideName').value.trim(),
         weddingDate: document.getElementById('weddingDate').value,
         email: document.getElementById('email').value.trim(),
         contactNumber: document.getElementById('contactNumber').value.trim(),
@@ -1701,7 +1711,7 @@
     document.getElementById('weddingDate').value = defaultDate.toISOString().split('T')[0];
 
     // Live validation clear
-    ['coupleNames', 'weddingDate', 'location', 'venueName', 'email', 'contactNumber'].forEach(id => {
+    ['groomName', 'brideName', 'weddingDate', 'location', 'venueName', 'email', 'contactNumber'].forEach(id => {
       document.getElementById(id)?.addEventListener('input', () => {
         document.getElementById(id).classList.remove('error');
         document.getElementById(`err-${id}`)?.classList.remove('visible');
