@@ -1,12 +1,12 @@
 /* ─── Tokens ─────────────────────────────────────────── */
 :root {
-  --bg:           #FDFCF9;
-  --surface:      #FFFFFF;
-  --surface-2:    #F5F3EF;
-  --surface-3:    #EDE9E3;
-  --text-main:    #2A2520;
-  --text-muted:   #7A746D;
-  --text-light:   #A89F96;
+  --bg:           #1A1714;
+  --surface:      #232018;
+  --surface-2:    #2A2520;
+  --surface-3:    #332E28;
+  --text-main:    #F0EDE8;
+  --text-muted:   #9E9890;
+  --text-light:   #6E685F;
   --gold:         #C5A059;
   --gold-dark:    #B8903F;
   --gold-light:   rgba(197,160,89,0.12);
@@ -16,8 +16,8 @@
   --rose:         #D1A3A4;
   --radius:       16px;
   --radius-lg:    24px;
-  --shadow-sm:    0 2px 8px rgba(42,37,32,0.05), 0 1px 2px rgba(42,37,32,0.04);
-  --shadow-md:    0 8px 24px rgba(42,37,32,0.08), 0 2px 6px rgba(42,37,32,0.05);
+  --shadow-sm:    0 2px 8px rgba(0,0,0,0.28), 0 1px 2px rgba(0,0,0,0.20);
+  --shadow-md:    0 8px 24px rgba(0,0,0,0.40), 0 2px 6px rgba(0,0,0,0.24);
   --shadow-gold:  0 6px 20px rgba(197,160,89,0.28);
   --transition:   0.25s ease;
 }
@@ -60,7 +60,7 @@ body {
   align-items: center;
   justify-content: space-between;
   padding: 16px 40px;
-  background: rgba(253,252,249,0.90);
+  background: rgba(26,23,20,0.90);
   backdrop-filter: blur(16px);
   -webkit-backdrop-filter: blur(16px);
   border-bottom: 1px solid rgba(197,160,89,0.15);
@@ -237,7 +237,7 @@ body {
   color: var(--text-main);
   padding: 13px 34px;
   border-radius: 999px;
-  border: 1.5px solid rgba(42,37,32,0.18);
+  border: 1.5px solid rgba(240,237,232,0.18);
   font-family: 'Outfit', sans-serif;
   font-size: 0.88rem;
   font-weight: 500;
@@ -262,7 +262,7 @@ body {
 
 /* ─── Countdown ──────────────────────────────────────── */
 .countdown-bar {
-  background: linear-gradient(135deg, #2A2520 0%, #3D3530 100%);
+  background: linear-gradient(135deg, #0E0C0A 0%, #1A1714 100%);
   color: #fff;
   padding: 32px 24px;
   text-align: center;
@@ -408,7 +408,7 @@ section { padding: 88px 24px; }
   padding: 22px 24px;
   background: var(--surface);
   border-radius: var(--radius);
-  border: 1px solid rgba(220,215,207,0.55);
+  border: 1px solid rgba(60,55,48,0.55);
   box-shadow: var(--shadow-sm);
   transition: box-shadow var(--transition), transform var(--transition);
 }
@@ -457,7 +457,7 @@ section { padding: 88px 24px; }
   background: var(--surface-2);
   border-radius: var(--radius-lg);
   overflow: hidden;
-  border: 1px solid rgba(220,215,207,0.45);
+  border: 1px solid rgba(60,55,48,0.45);
   box-shadow: var(--shadow-sm);
   transition: box-shadow var(--transition), transform var(--transition);
 }
@@ -605,7 +605,7 @@ section { padding: 88px 24px; }
   padding: 7px 14px 7px 8px;
   border-radius: 999px;
   background: var(--surface-2);
-  border: 1px solid rgba(220,215,207,0.6);
+  border: 1px solid rgba(60,55,48,0.6);
   font-size: 0.78rem;
   color: var(--text-muted);
   font-weight: 500;
@@ -625,7 +625,7 @@ section { padding: 88px 24px; }
   padding: 18px 22px;
   background: var(--surface-2);
   border-radius: var(--radius);
-  border: 1px solid rgba(220,215,207,0.50);
+  border: 1px solid rgba(60,55,48,0.50);
   transition: border-color var(--transition), box-shadow var(--transition);
 }
 
@@ -650,7 +650,7 @@ section { padding: 88px 24px; }
 
 /* ─── RSVP ───────────────────────────────────────────── */
 .rsvp {
-  background: linear-gradient(150deg, #2A2520 0%, #3D3530 100%);
+  background: linear-gradient(150deg, #0E0C0A 0%, #1A1714 100%);
   color: #fff;
 }
 
@@ -708,7 +708,7 @@ section { padding: 88px 24px; }
   box-shadow: 0 0 0 3px rgba(197,160,89,0.18);
 }
 
-.rsvp-input option { background: #3D3530; color: #fff; }
+.rsvp-input option { background: #1A1714; color: #fff; }
 
 .rsvp-submit {
   width: 100%;
@@ -766,7 +766,7 @@ section { padding: 88px 24px; }
   background: var(--surface);
   border-radius: var(--radius);
   padding: 30px 26px;
-  border: 1px solid rgba(220,215,207,0.55);
+  border: 1px solid rgba(60,55,48,0.55);
   box-shadow: var(--shadow-sm);
   transition: box-shadow var(--transition), transform var(--transition);
 }
@@ -806,7 +806,7 @@ section { padding: 88px 24px; }
 
 /* ─── Footer ─────────────────────────────────────────── */
 .footer {
-  background: #2A2520;
+  background: #0E0C0A;
   color: rgba(255,255,255,0.45);
   text-align: center;
   padding: 56px 24px;
