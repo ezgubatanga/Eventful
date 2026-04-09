@@ -49,6 +49,13 @@ CSS paths in couple pages must use absolute URLs (e.g., `/sofia-and-carlos/sofia
 3. Define `:root` tokens at the top of the couple's CSS to establish their color palette
 4. Each page is fully self-contained — inline the countdown and RSVP JS directly in the HTML `<script>` tag (see sofia-and-carlos pattern)
 
+## Preloader
+
+Every page must include the animated gold preloader. Pattern from `sofia-and-carlos`:
+- CSS: `.preloader-overlay` + `.loader` + `flowe-one/two/three` keyframes in the couple's CSS file. Uses `var(--bg)` for background and `var(--gold)` for the spinner color.
+- HTML: `<div id="page-preloader" class="preloader-overlay">` with three SVGs (`#pegtopone`, `#pegtoptwo`, `#pegtopthree`). Each SVG must use **unique** gradient/filter/mask IDs (suffix `-a`, `-b`, `-c`) to avoid conflicts.
+- JS: `window.addEventListener('load', () => setTimeout(() => preloader.classList.add('hidden'), 300))`
+
 ## Mobile Nav (Hamburger)
 
 All wedding pages must include a hamburger menu for mobile (`≤768px`). Pattern from `sofia-and-carlos`:
