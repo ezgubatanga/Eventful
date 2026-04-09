@@ -792,7 +792,24 @@
     }
 
     .showcase-thumb-2 {
-      background: linear-gradient(135deg, #E8EDE9 0%, #C8D5CA 100%);
+      background: url('https://images.unsplash.com/photo-1511285560929-80b456fea0bc?auto=format&fit=crop&w=800&q=70') center/cover no-repeat;
+    }
+
+    .showcase-thumb-2::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: rgba(19, 16, 26, 0.50);
+    }
+
+    .showcase-thumb-2 .showcase-preview {
+      position: relative;
+      z-index: 1;
+    }
+
+    .showcase-thumb-2 .showcase-preview-name,
+    .showcase-thumb-2 .showcase-preview-date {
+      color: #fff;
     }
 
     .showcase-thumb-3 {
@@ -840,6 +857,11 @@
     .badge-warm {
       background: rgba(209, 163, 164, 0.15);
       color: #A87070;
+    }
+
+    .badge-plum {
+      background: rgba(107, 63, 94, 0.18);
+      color: #9B6490;
     }
 
     .showcase-body {
@@ -1853,21 +1875,20 @@
           </div>
         </div>
 
-        <div class="showcase-card">
+        <div class="showcase-card" onclick="window.open('/anna-and-marco','_blank')" style="cursor:pointer">
           <div class="showcase-thumb showcase-thumb-2">
             <div class="showcase-preview">
               <div class="showcase-preview-name">Anna & Marco</div>
               <div class="showcase-preview-date">Sept 5 · Cebu</div>
-              <span class="showcase-preview-badge badge-sage">Included</span>
             </div>
           </div>
           <div class="showcase-body">
-            <strong>Sage & Linen</strong>
-            <p>Clean, botanical, and modern — perfect for an intimate garden wedding.</p>
+            <strong>Standard + Functional Features</strong>
+            <p>Deep plum and terracotta — bespoke, dramatic, and full of personality.</p>
             <div class="showcase-tags">
-              <span class="showcase-tag">RSVP Form</span>
-              <span class="showcase-tag">Gallery</span>
-              <span class="showcase-tag">Couple's Story</span>
+              <span class="showcase-tag">Background Music</span>
+              <span class="showcase-tag">Meal Selection</span>
+              <span class="showcase-tag">Gift Registry</span>
             </div>
           </div>
         </div>
