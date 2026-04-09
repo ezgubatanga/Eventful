@@ -36,9 +36,7 @@
       <li><a href="#gallery">Gallery</a></li>
       <li><a href="#rsvp" class="nav-rsvp">RSVP</a></li>
     </ul>
-    <button class="nav-hamburger" id="nav-hamburger" aria-label="Toggle menu" aria-expanded="false">
-      <span></span><span></span><span></span>
-    </button>
+    <label class="hamburger"><input type="checkbox" id="nav-toggle"><svg viewBox="0 0 32 32"><path class="line line-top-bottom" d="M27 10 13 10C10.8 10 9 8.2 9 6 9 3.5 10.8 2 13 2 15.2 2 17 3.8 17 6L17 26C17 28.2 18.8 30 21 30 23.2 30 25 28.2 25 26 25 23.8 23.2 22 21 22L7 22"/><path class="line" d="M7 16 27 16"/></svg></label>
   </nav>
 
   <!-- ── Hero ──────────────────────────────────────────── -->
@@ -409,20 +407,13 @@
     setInterval(updateCountdown, 1000);
 
     // ── Hamburger ─────────────────────────────────────────
-    const hamburger = document.getElementById('nav-hamburger');
+    const navToggle = document.getElementById('nav-toggle');
     const navLinks = document.getElementById('nav-links');
-    hamburger.addEventListener('click', () => {
-      const open = hamburger.classList.toggle('open');
-      navLinks.classList.toggle('open', open);
-      hamburger.setAttribute('aria-expanded', open);
-    });
-    navLinks.querySelectorAll('a').forEach(a => {
-      a.addEventListener('click', () => {
-        hamburger.classList.remove('open');
-        navLinks.classList.remove('open');
-        hamburger.setAttribute('aria-expanded', false);
-      });
-    });
+    navToggle.addEventListener('change', () => navLinks.classList.toggle('open', navToggle.checked));
+    navLinks.querySelectorAll('a').forEach(a => a.addEventListener('click', () => {
+      navToggle.checked = false;
+      navLinks.classList.remove('open');
+    }));
 
     // ── RSVP ──────────────────────────────────────────────
     document.getElementById('rsvpForm').addEventListener('submit', function(e) {
