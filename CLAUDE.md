@@ -2,6 +2,10 @@
 
 This file provides guidance to Claude Code (claude.ai/code) when working with code in this repository.
 
+## Communication Style
+
+Keep all responses minimal. No preamble, no summaries, no filler.
+
 ## What is Eventful
 
 Eventful is a platform that creates bespoke wedding websites for couples. Each couple gets their own subdirectory with a fully custom look and feel.
