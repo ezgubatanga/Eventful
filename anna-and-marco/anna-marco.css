@@ -1,23 +1,27 @@
 /* ─── Tokens ─────────────────────────────────────────── */
 :root {
-  --bg:           #12100F;
-  --surface:      #1C1917;
-  --surface-2:    #231F1C;
-  --surface-3:    #2C2723;
+  --bg:           #13101A;
+  --surface:      #1C1825;
+  --surface-2:    #24202F;
+  --surface-3:    #2E2A3A;
   --text-main:    #F5F0EB;
-  --text-muted:   #A09890;
-  --text-light:   #706860;
+  --text-muted:   #A89FB0;
+  --text-light:   #756878;
   --gold:         #C8976A;
   --gold-dark:    #B8845A;
   --gold-light:   rgba(200,151,106,0.12);
   --gold-mid:     rgba(200,151,106,0.28);
   --rose:         #C9A0A0;
+  --rose-light:   rgba(201,160,160,0.15);
   --plum:         #6B3F5E;
+  --plum-light:   rgba(107,63,94,0.18);
+  --plum-mid:     rgba(107,63,94,0.35);
   --radius:       16px;
   --radius-lg:    24px;
-  --shadow-sm:    0 2px 8px rgba(0,0,0,0.30), 0 1px 2px rgba(0,0,0,0.22);
-  --shadow-md:    0 8px 24px rgba(0,0,0,0.44), 0 2px 6px rgba(0,0,0,0.26);
+  --shadow-sm:    0 2px 8px rgba(0,0,0,0.34), 0 1px 2px rgba(0,0,0,0.24);
+  --shadow-md:    0 8px 24px rgba(0,0,0,0.48), 0 2px 6px rgba(0,0,0,0.28);
   --shadow-gold:  0 6px 20px rgba(200,151,106,0.30);
+  --shadow-plum:  0 6px 20px rgba(107,63,94,0.30);
   --transition:   0.25s ease;
 }
 
@@ -109,10 +113,10 @@ body {
   align-items: center;
   justify-content: space-between;
   padding: 16px 40px;
-  background: rgba(18,16,15,0.92);
+  background: rgba(19,16,26,0.92);
   backdrop-filter: blur(16px);
   -webkit-backdrop-filter: blur(16px);
-  border-bottom: 1px solid rgba(200,151,106,0.15);
+  border-bottom: 1px solid rgba(107,63,94,0.30);
 }
 
 .nav-brand {
@@ -168,7 +172,7 @@ body {
   height: 48px;
   border-radius: 50%;
   background: rgba(18,16,15,0.88);
-  border: 1.5px solid rgba(200,151,106,0.35);
+  border: 1.5px solid rgba(107,63,94,0.45);
   color: var(--gold);
   font-size: 1.1rem;
   cursor: pointer;
@@ -182,19 +186,19 @@ body {
 }
 
 .music-btn:hover {
-  border-color: var(--gold);
-  box-shadow: 0 6px 20px rgba(200,151,106,0.30);
+  border-color: var(--plum);
+  box-shadow: var(--shadow-plum);
   transform: translateY(-2px);
 }
 
 .music-btn.playing {
-  border-color: var(--gold);
+  border-color: var(--plum);
   animation: music-pulse 2s ease-in-out infinite;
 }
 
 @keyframes music-pulse {
-  0%, 100% { box-shadow: 0 0 0 0 rgba(200,151,106,0.35); }
-  50% { box-shadow: 0 0 0 8px rgba(200,151,106,0); }
+  0%, 100% { box-shadow: 0 0 0 0 rgba(107,63,94,0.45); }
+  50% { box-shadow: 0 0 0 8px rgba(107,63,94,0); }
 }
 
 /* ─── Hero ───────────────────────────────────────────── */
@@ -208,8 +212,9 @@ body {
   padding: 120px 24px 80px;
   position: relative;
   background:
-    radial-gradient(ellipse 80% 60% at 50% 0%, rgba(200,151,106,0.08), transparent),
-    radial-gradient(ellipse 60% 45% at 80% 100%, rgba(107,63,94,0.10), transparent),
+    radial-gradient(ellipse 80% 55% at 50% 0%, rgba(107,63,94,0.22), transparent),
+    radial-gradient(ellipse 60% 45% at 85% 100%, rgba(200,151,106,0.14), transparent),
+    radial-gradient(ellipse 40% 35% at 10% 60%, rgba(201,160,160,0.08), transparent),
     var(--bg);
   overflow: hidden;
 }
@@ -347,13 +352,13 @@ body {
 .hero-divider {
   width: 1px;
   height: 64px;
-  background: linear-gradient(to bottom, transparent, var(--gold-mid), transparent);
+  background: linear-gradient(to bottom, transparent, var(--plum-mid), transparent);
   margin: 52px auto 0;
 }
 
 /* ─── Countdown ──────────────────────────────────────── */
 .countdown-bar {
-  background: linear-gradient(135deg, #0A0908 0%, #12100F 100%);
+  background: linear-gradient(135deg, #0D0A14 0%, #1C1825 100%);
   color: #fff;
   padding: 32px 24px;
   text-align: center;
@@ -401,7 +406,7 @@ body {
 .countdown-sep {
   font-family: 'Cormorant Infant', serif;
   font-size: 2rem;
-  color: rgba(200,151,106,0.28);
+  color: rgba(107,63,94,0.45);
   align-self: center;
   margin-bottom: 24px;
 }
@@ -440,9 +445,9 @@ section { padding: 88px 24px; }
 .section-divider {
   width: 44px;
   height: 2px;
-  background: var(--gold);
+  background: linear-gradient(90deg, var(--plum), var(--gold));
   margin: 24px 0;
-  opacity: 0.45;
+  opacity: 0.70;
   border-radius: 2px;
 }
 
@@ -548,7 +553,7 @@ section { padding: 88px 24px; }
   gap: 8px;
   padding: 10px 20px;
   border-radius: 999px;
-  border: 1.5px solid rgba(200,151,106,0.30);
+  border: 1.5px solid rgba(107,63,94,0.35);
   background: transparent;
   color: var(--text-muted);
   font-family: 'Outfit', sans-serif;
@@ -561,9 +566,9 @@ section { padding: 88px 24px; }
 }
 
 .calendar-btn:hover {
-  border-color: var(--gold);
-  color: var(--gold);
-  background: var(--gold-light);
+  border-color: var(--plum);
+  color: var(--rose);
+  background: var(--plum-light);
   transform: translateY(-1px);
 }
 
@@ -734,9 +739,9 @@ section { padding: 88px 24px; }
 }
 
 .registry-card:hover {
-  box-shadow: var(--shadow-md);
+  box-shadow: var(--shadow-plum);
   transform: translateY(-2px);
-  border-color: rgba(200,151,106,0.28);
+  border-color: rgba(107,63,94,0.45);
 }
 
 .registry-card-icon {
@@ -837,8 +842,8 @@ section { padding: 88px 24px; }
 }
 
 .faq-item:hover {
-  border-color: rgba(200,151,106,0.30);
-  box-shadow: var(--shadow-sm);
+  border-color: rgba(107,63,94,0.45);
+  box-shadow: var(--shadow-plum);
 }
 
 .faq-question {
@@ -857,7 +862,7 @@ section { padding: 88px 24px; }
 
 /* ─── RSVP ───────────────────────────────────────────── */
 .rsvp {
-  background: linear-gradient(150deg, #0A0908 0%, #12100F 100%);
+  background: linear-gradient(150deg, #0D0A14 0%, #1C1825 50%, #221428 100%);
   color: #fff;
 }
 
@@ -866,8 +871,8 @@ section { padding: 88px 24px; }
 .rsvp .section-lead { color: rgba(255,255,255,0.58); max-width: 480px; }
 
 .rsvp-card {
-  background: rgba(255,255,255,0.055);
-  border: 1px solid rgba(255,255,255,0.10);
+  background: rgba(107,63,94,0.08);
+  border: 1px solid rgba(107,63,94,0.22);
   border-radius: var(--radius-lg);
   padding: 44px;
   margin-top: 44px;
@@ -909,10 +914,10 @@ section { padding: 88px 24px; }
 .rsvp-input::placeholder { color: rgba(255,255,255,0.24); }
 
 .rsvp-input:focus {
-  border-color: var(--gold);
-  background: rgba(255,255,255,0.10);
+  border-color: var(--plum);
+  background: rgba(107,63,94,0.12);
   outline: none;
-  box-shadow: 0 0 0 3px rgba(200,151,106,0.18);
+  box-shadow: 0 0 0 3px rgba(107,63,94,0.20);
 }
 
 .rsvp-input option { background: #12100F; color: #fff; }
@@ -1024,7 +1029,7 @@ section { padding: 88px 24px; }
 
 /* ─── Footer ─────────────────────────────────────────── */
 .footer {
-  background: #0A0908;
+  background: #0D0A14;
   color: rgba(255,255,255,0.45);
   text-align: center;
   padding: 56px 24px;
@@ -1090,12 +1095,12 @@ section { padding: 88px 24px; }
     flex-direction: column;
     position: fixed;
     top: 57px; left: 0; right: 0;
-    background: rgba(18,16,15,0.97);
+    background: rgba(19,16,26,0.97);
     backdrop-filter: blur(16px);
     -webkit-backdrop-filter: blur(16px);
     padding: 24px 32px 32px;
     gap: 20px;
-    border-bottom: 1px solid rgba(200,151,106,0.15);
+    border-bottom: 1px solid rgba(107,63,94,0.30);
     z-index: 99;
   }
   .nav-links.open { display: flex; }
