@@ -152,6 +152,28 @@ Add `.rsvp-hint` to the couple's CSS:
 }
 ```
 
+## Functional Add-Ons (Patterns)
+
+### Background Music
+Place the mp3 inside the couple's folder. Add an `<audio>` element and a floating `.music-btn` button (bottom-right corner). Toggle play/pause and the `.playing` class + pulsing animation in JS. Pattern from `anna-and-marco`.
+
+### Meal Selection
+Add a `<select id="rsvp-meal">` field in the RSVP grid. Add a second meal field (`id="rsvp-meal-guest2"`) with class `rsvp-meal-guest2` (hidden by default). In JS, listen to the guests dropdown: show the second field when value is `'2'`, hide and reset it otherwise.
+
+```css
+.rsvp-meal-guest2 { display: none; }
+.rsvp-meal-guest2.visible { display: flex; }
+```
+
+### Featured Video
+Add a `.video-section` with a `.video-wrapper` containing an `<iframe>`. Aspect ratio 16/9. Pattern from `anna-and-marco`.
+
+### Gift Registry
+Add a `.registry` section with `.registry-cards` (3-column grid). Each card has an icon, name, description, and link. Pattern from `anna-and-marco`.
+
+### Calendar Integration
+Add `.calendar-add` below the schedule grid with two `.calendar-btn` links: Google Calendar (constructed URL) and Apple Calendar (generated `.ics` Blob). Build both in JS after `DOMContentLoaded`. Pattern from `anna-and-marco`.
+
 ## Build Tooling (Future Consideration)
 
 There is currently no bundler or build step. As more couple pages are added, a lightweight bundler (e.g., Vite) would enable shared HTML component templates, CSS base layers with per-couple overrides, and minification — reducing copy-paste overhead between pages.

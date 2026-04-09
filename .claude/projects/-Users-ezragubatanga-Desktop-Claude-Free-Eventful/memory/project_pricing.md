@@ -37,3 +37,4 @@ type: project
 | Couple | Package |
 |--------|---------|
 | Sofia & Carlos | Base only |
+| Anna & Marco | Base + all functional add-ons (Music, Meal Selection, Featured Video, Gift Registry, Calendar Integration) |
