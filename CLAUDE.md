@@ -57,6 +57,7 @@ Every page (root and couple pages) must include Open Graph and Twitter Card meta
 
 ```html
 <meta property="og:type" content="website" />
+<meta property="og:url" content="https://eventful.page/[couple-slug]" />
 <meta property="og:title" content="[Title]" />
 <meta property="og:description" content="[Location]" />
 <meta property="og:image" content="[Hero image URL ?w=1200]" />
