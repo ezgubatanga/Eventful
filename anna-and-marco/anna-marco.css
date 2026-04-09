@@ -7,10 +7,10 @@
   --text-main:    #F5F0EB;
   --text-muted:   #A89FB0;
   --text-light:   #756878;
-  --gold:         #C8976A;
-  --gold-dark:    #B8845A;
-  --gold-light:   rgba(200,151,106,0.12);
-  --gold-mid:     rgba(200,151,106,0.28);
+  --gold:         #6B3F5E;
+  --gold-dark:    #5A3450;
+  --gold-light:   rgba(107,63,94,0.12);
+  --gold-mid:     rgba(107,63,94,0.28);
   --rose:         #C9A0A0;
   --rose-light:   rgba(201,160,160,0.15);
   --plum:         #6B3F5E;
@@ -20,7 +20,7 @@
   --radius-lg:    24px;
   --shadow-sm:    0 2px 8px rgba(0,0,0,0.34), 0 1px 2px rgba(0,0,0,0.24);
   --shadow-md:    0 8px 24px rgba(0,0,0,0.48), 0 2px 6px rgba(0,0,0,0.28);
-  --shadow-gold:  0 6px 20px rgba(200,151,106,0.30);
+  --shadow-gold:  0 6px 20px rgba(107,63,94,0.30);
   --shadow-plum:  0 6px 20px rgba(107,63,94,0.30);
   --transition:   0.25s ease;
 }
@@ -159,7 +159,7 @@ body {
 .nav-rsvp:hover {
   background: var(--gold-dark) !important;
   transform: translateY(-1px);
-  box-shadow: 0 8px 24px rgba(200,151,106,0.40) !important;
+  box-shadow: 0 8px 24px rgba(107,63,94,0.40) !important;
 }
 
 /* ─── Music Toggle ───────────────────────────────────── */
@@ -213,7 +213,7 @@ body {
   position: relative;
   background:
     radial-gradient(ellipse 80% 55% at 50% 0%, rgba(107,63,94,0.22), transparent),
-    radial-gradient(ellipse 60% 45% at 85% 100%, rgba(200,151,106,0.14), transparent),
+    radial-gradient(ellipse 60% 45% at 85% 100%, rgba(107,63,94,0.14), transparent),
     radial-gradient(ellipse 40% 35% at 10% 60%, rgba(201,160,160,0.08), transparent),
     var(--bg);
   overflow: hidden;
@@ -325,7 +325,7 @@ body {
 .btn-gold:hover {
   background: var(--gold-dark);
   transform: translateY(-2px);
-  box-shadow: 0 10px 28px rgba(200,151,106,0.42);
+  box-shadow: 0 10px 28px rgba(107,63,94,0.42);
 }
 
 .btn-outline {
@@ -947,13 +947,13 @@ section { padding: 88px 24px; }
   cursor: pointer;
   margin-top: 8px;
   transition: background var(--transition), transform var(--transition), box-shadow var(--transition);
-  box-shadow: 0 6px 20px rgba(200,151,106,0.38);
+  box-shadow: 0 6px 20px rgba(107,63,94,0.38);
 }
 
 .rsvp-submit:hover {
   background: var(--gold-dark);
   transform: translateY(-1px);
-  box-shadow: 0 10px 28px rgba(200,151,106,0.44);
+  box-shadow: 0 10px 28px rgba(107,63,94,0.44);
 }
 
 .rsvp-submit:active { transform: translateY(0); }
