@@ -771,7 +771,24 @@
     }
 
     .showcase-thumb-1 {
-      background: linear-gradient(135deg, #F5EBD8 0%, #EDD3A0 100%);
+      background: url('https://images.unsplash.com/photo-1612883833766-7930d960e16f?auto=format&fit=crop&w=800&q=70') center/cover no-repeat;
+    }
+
+    .showcase-thumb-1::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: rgba(20, 16, 12, 0.32);
+    }
+
+    .showcase-thumb-1 .showcase-preview {
+      position: relative;
+      z-index: 1;
+    }
+
+    .showcase-thumb-1 .showcase-preview-name,
+    .showcase-thumb-1 .showcase-preview-date {
+      color: #fff;
     }
 
     .showcase-thumb-2 {
@@ -1177,7 +1194,7 @@
 
     .footer-links a {
       font-size: 0.82rem;
-      color: var(--text-light);
+      color: var(--text-muted);
       text-decoration: none;
       transition: color 0.25s;
     }
@@ -1818,21 +1835,20 @@
       </div>
 
       <div class="showcase-grid">
-        <div class="showcase-card">
+        <div class="showcase-card" onclick="window.open('/sofia-and-carlos','_blank')" style="cursor:pointer">
           <div class="showcase-thumb showcase-thumb-1">
             <div class="showcase-preview">
-              <div class="showcase-preview-name">Sofia & Daniel</div>
-              <div class="showcase-preview-date">June 18 · Manila</div>
-              <span class="showcase-preview-badge badge-gold">✦ Premium</span>
+              <div class="showcase-preview-name">Sofia & Carlos</div>
+              <div class="showcase-preview-date">June 14 · Manila</div>
             </div>
           </div>
           <div class="showcase-body">
-            <strong>Garden Romance</strong>
-            <p>Warm champagne and ivory — a timeless palette for an outdoor ceremony.</p>
+            <strong>Standard Features</strong>
+            <p>Dark, romantic, and editorial — gold accents on a deep moody palette.</p>
             <div class="showcase-tags">
+              <span class="showcase-tag">RSVP Form</span>
               <span class="showcase-tag">Countdown</span>
-              <span class="showcase-tag">QR Code</span>
-              <span class="showcase-tag">Email Reminder</span>
+              <span class="showcase-tag">Google Maps</span>
             </div>
           </div>
         </div>
