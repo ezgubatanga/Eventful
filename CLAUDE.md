@@ -46,8 +46,9 @@ CSS paths in couple pages must use absolute URLs (e.g., `/sofia-and-carlos/sofia
 
 1. Create `[couple-name]/index.html` and `[couple-name]/[couple-name].css`
 2. Link the CSS with an absolute path: `href="/[couple-name]/[couple-name].css"`
-3. Define `:root` tokens at the top of the couple's CSS to establish their color palette
-4. Each page is fully self-contained — inline the countdown and RSVP JS directly in the HTML `<script>` tag (see sofia-and-carlos pattern)
+3. Add the favicon: `<link rel="icon" type="image/webp" href="/favicon.webp" />`
+4. Define `:root` tokens at the top of the couple's CSS to establish their color palette
+5. Each page is fully self-contained — inline the countdown and RSVP JS directly in the HTML `<script>` tag (see sofia-and-carlos pattern)
 
 ## Smooth Scroll
 
@@ -112,6 +113,43 @@ Every page (root and couple pages) must include Open Graph and Twitter Card meta
 <meta name="twitter:title" content="[Title]" />
 <meta name="twitter:description" content="[Location]" />
 <meta name="twitter:image" content="[Hero image URL ?w=1200]" />
+```
+
+## RSVP Form — Required Fields
+
+The RSVP form must include a **Phone Number** field (optional, `type="tel"`) after the email field:
+
+```html
+<div class="rsvp-field">
+  <label class="rsvp-label" for="rsvp-phone">Phone Number</label>
+  <input class="rsvp-input" type="tel" id="rsvp-phone" placeholder="+1 (555) 000-0000" />
+</div>
+```
+
+Standard field order: Full Name → Email → Phone Number → Will you attend? → Number of guests → Message.
+
+## RSVP Form — Plus-One Restriction
+
+The "Number of guests" field must always indicate that a plus-one is only permitted if the invitation explicitly allows it:
+
+```html
+<select class="rsvp-input" id="rsvp-guests">
+  <option value="1">Just me (1)</option>
+  <option value="2">With a plus-one (2) — only if your invitation permits</option>
+</select>
+<p class="rsvp-hint">A plus-one may only be brought if your invitation explicitly includes one.</p>
+```
+
+Add `.rsvp-hint` to the couple's CSS:
+
+```css
+.rsvp-hint {
+  margin: 6px 0 0;
+  font-size: 0.75rem;
+  color: rgba(255,255,255,0.45);
+  font-family: 'Outfit', sans-serif;
+  line-height: 1.4;
+}
 ```
 
 ## Build Tooling (Future Consideration)

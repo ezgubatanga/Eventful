@@ -762,6 +762,14 @@ section { padding: 88px 24px; }
 
 .rsvp-input option { background: #1A1714; color: #fff; }
 
+.rsvp-hint {
+  margin: 6px 0 0;
+  font-size: 0.75rem;
+  color: rgba(255,255,255,0.45);
+  font-family: 'Outfit', sans-serif;
+  line-height: 1.4;
+}
+
 .rsvp-submit {
   width: 100%;
   padding: 16px;

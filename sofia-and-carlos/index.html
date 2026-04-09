@@ -4,6 +4,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="icon" type="image/webp" href="/favicon.webp" />
   <title>Sofia & Carlos | June 14, 2026</title>
   <meta name="description" content="Join us as we celebrate the wedding of Sofia Reyes and Carlos Mendoza." />
   <meta name="agd-partner-manual-verification" />
@@ -349,6 +350,10 @@
               <input class="rsvp-input" type="email" id="rsvp-email" placeholder="your@email.com" required />
             </div>
             <div class="rsvp-field">
+              <label class="rsvp-label" for="rsvp-phone">Phone Number</label>
+              <input class="rsvp-input" type="tel" id="rsvp-phone" placeholder="+1 (555) 000-0000" />
+            </div>
+            <div class="rsvp-field">
               <label class="rsvp-label" for="rsvp-attend">Will you attend?</label>
               <select class="rsvp-input" id="rsvp-attend" required>
                 <option value="">Select</option>
@@ -360,8 +365,9 @@
               <label class="rsvp-label" for="rsvp-guests">Number of guests</label>
               <select class="rsvp-input" id="rsvp-guests">
                 <option value="1">Just me (1)</option>
-                <option value="2">With a plus-one (2)</option>
+                <option value="2">With a plus-one (2) — only if your invitation permits</option>
               </select>
+              <p class="rsvp-hint">A plus-one may only be brought if your invitation explicitly includes one.</p>
             </div>
             <div class="rsvp-field full">
               <label class="rsvp-label" for="rsvp-message">Message for the couple <span style="opacity:0.5">(optional)</span></label>
