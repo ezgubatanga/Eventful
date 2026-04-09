@@ -129,7 +129,7 @@ body {
   content: '';
   position: absolute;
   inset: 0;
-  background: url('https://images.unsplash.com/photo-1511285560929-80b456fea0bc?auto=format&fit=crop&w=1800&q=70') center/cover no-repeat;
+  background: url('https://images.unsplash.com/photo-1612883833766-7930d960e16f?auto=format&fit=crop&w=1800&q=70') center/cover no-repeat;
   opacity: 0.06;
   pointer-events: none;
 }
