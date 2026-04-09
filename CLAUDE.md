@@ -49,6 +49,34 @@ CSS paths in couple pages must use absolute URLs (e.g., `/sofia-and-carlos/sofia
 3. Define `:root` tokens at the top of the couple's CSS to establish their color palette
 4. Each page is fully self-contained — inline the countdown and RSVP JS directly in the HTML `<script>` tag (see sofia-and-carlos pattern)
 
+## Smooth Scroll
+
+All pages use JS-driven ease-in/out scroll (quadratic bezier) instead of CSS `scroll-behavior: smooth`. Set `html { scroll-behavior: auto }` in CSS. Add this to every page's `<script>` block:
+
+```js
+document.querySelectorAll('a[href^="#"]').forEach(a => {
+  a.addEventListener('click', e => {
+    const target = document.querySelector(a.getAttribute('href'));
+    if (!target) return;
+    e.preventDefault();
+    const start = window.scrollY;
+    const end = target.getBoundingClientRect().top + start - 72;
+    const duration = 800;
+    let startTime = null;
+    const ease = t => t < 0.5 ? 2*t*t : -1+(4-2*t)*t;
+    const step = ts => {
+      if (!startTime) startTime = ts;
+      const p = Math.min((ts - startTime) / duration, 1);
+      window.scrollTo(0, start + (end - start) * ease(p));
+      if (p < 1) requestAnimationFrame(step);
+    };
+    requestAnimationFrame(step);
+  });
+});
+```
+
+The `- 72` offset accounts for the fixed nav height.
+
 ## Preloader
 
 Every page must include the animated gold preloader. Pattern from `sofia-and-carlos`:

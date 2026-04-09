@@ -54,7 +54,7 @@
     }
 
     html {
-      scroll-behavior: smooth;
+      scroll-behavior: auto;
       overflow-x: hidden;
       width: 100%;
     }
@@ -2185,6 +2185,27 @@
         }
       }
     })();
+
+    // Smooth scroll
+    document.querySelectorAll('a[href^="#"]').forEach(a => {
+      a.addEventListener('click', e => {
+        const target = document.querySelector(a.getAttribute('href'));
+        if (!target) return;
+        e.preventDefault();
+        const start = window.scrollY;
+        const end = target.getBoundingClientRect().top + start - 72;
+        const duration = 800;
+        let startTime = null;
+        const ease = t => t < 0.5 ? 2*t*t : -1+(4-2*t)*t;
+        const step = ts => {
+          if (!startTime) startTime = ts;
+          const p = Math.min((ts - startTime) / duration, 1);
+          window.scrollTo(0, start + (end - start) * ease(p));
+          if (p < 1) requestAnimationFrame(step);
+        };
+        requestAnimationFrame(step);
+      });
+    });
 
     // Initialize Preloader Fade-out
     window.addEventListener('load', () => {
