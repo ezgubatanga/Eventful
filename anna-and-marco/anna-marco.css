@@ -744,12 +744,6 @@ section { padding: 88px 24px; }
   border-color: rgba(107,63,94,0.45);
 }
 
-.registry-card-icon {
-  font-size: 1.8rem;
-  margin-bottom: 12px;
-  display: block;
-}
-
 .registry-card-name {
   font-family: 'Cormorant Infant', serif;
   font-size: 1.2rem;
