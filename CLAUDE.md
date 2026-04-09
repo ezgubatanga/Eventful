@@ -45,6 +45,27 @@ CSS paths in couple pages must use absolute URLs (e.g., `/sofia-and-carlos/sofia
 3. Define `:root` tokens at the top of the couple's CSS to establish their color palette
 4. Each page is fully self-contained — inline the countdown and RSVP JS directly in the HTML `<script>` tag (see sofia-and-carlos pattern)
 
+## Social Sharing Meta Tags
+
+Every page (root and couple pages) must include Open Graph and Twitter Card meta tags. For couple pages, source the values as follows:
+
+- `og:title` / `twitter:title` — from the page `<title>`
+- `og:description` / `twitter:description` — from the `.hero-location` text
+- `og:image` / `twitter:image` — from the hero section background image URL, resized to `w=1200`
+- `og:type` — always `website`
+- `twitter:card` — always `summary_large_image`
+
+```html
+<meta property="og:type" content="website" />
+<meta property="og:title" content="[Title]" />
+<meta property="og:description" content="[Location]" />
+<meta property="og:image" content="[Hero image URL ?w=1200]" />
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:title" content="[Title]" />
+<meta name="twitter:description" content="[Location]" />
+<meta name="twitter:image" content="[Hero image URL ?w=1200]" />
+```
+
 ## Build Tooling (Future Consideration)
 
 There is currently no bundler or build step. As more couple pages are added, a lightweight bundler (e.g., Vite) would enable shared HTML component templates, CSS base layers with per-couple overrides, and minification — reducing copy-paste overhead between pages.
