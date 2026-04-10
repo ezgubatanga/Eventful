@@ -1396,7 +1396,9 @@
       cursor: pointer;
       flex-shrink: 0;
     }
-    #weddingDate:disabled {
+    #weddingDate:disabled,
+    .field-input:disabled,
+    .ampm-btn:disabled {
       opacity: 0.38;
       cursor: not-allowed;
     }
@@ -1544,7 +1546,7 @@
               </label>
             </div>
             <div class="field-group">
-              <label class="field-label">Ceremony Time <span class="req">*</span></label>
+              <label class="field-label">Ceremony Time <span class="req" id="ceremonyTimeReq">*</span></label>
               <div class="time-picker">
                 <select class="field-input time-select" id="ceremonyHour" name="ceremonyHour">
                   <option value="">Hour</option>
@@ -1566,12 +1568,12 @@
               <span class="field-error" id="err-ceremonyTime">Please select the ceremony time.</span>
             </div>
             <div class="field-group">
-              <label class="field-label" for="location">Ceremony Location <span class="req">*</span></label>
+              <label class="field-label" for="location">Ceremony Location <span class="req" id="locationReq">*</span></label>
               <input class="field-input" type="text" id="location" name="location" placeholder="e.g. San Antonio Parish, Makati" required />
               <span class="field-error" id="err-location">Please enter the ceremony location.</span>
             </div>
             <div class="field-group">
-              <label class="field-label" for="venueName">Reception Location <span class="req">*</span></label>
+              <label class="field-label" for="venueName">Reception Location <span class="req" id="venueNameReq">*</span></label>
               <input class="field-input" type="text" id="venueName" name="venueName" placeholder="e.g. Wolfgang's Steakhouse, Taguig" required />
               <span class="field-error" id="err-venueName">Please enter the reception location.</span>
             </div>
@@ -1582,18 +1584,22 @@
             </div>
             <div class="field-group">
               <label class="field-label" for="contactNumber">Contact Number <span class="req">*</span></label>
-              <input class="field-input" type="tel" id="contactNumber" name="contactNumber" placeholder="e.g. 09171234567" required />
+              <input class="field-input" type="tel" id="contactNumber" name="contactNumber" placeholder="e.g. 09171234567" maxlength="13" required />
               <span class="field-error" id="err-contactNumber">Please enter a contact number.</span>
             </div>
             <div class="field-group field-full">
               <label class="field-label" for="pageSlug">Preferred Page URL <span class="req">*</span></label>
               <div class="slug-wrap">
-                <span class="slug-prefix">eventful.page/</span>
+                <span class="slug-prefix" id="slugPrefix">eventful.page/</span>
                 <input class="field-input slug-input" type="text" id="pageSlug" name="pageSlug"
-                  placeholder="sofia-and-carlos" autocomplete="off" required
+                  placeholder="sofia-and-carlos" autocomplete="off" required maxlength="30"
                   oninput="updateSlugPreview(this.value)" />
               </div>
               <span class="field-error" id="err-pageSlug">Please enter a preferred URL (letters, numbers, and hyphens only).</span>
+              <label class="still-deciding-label" style="margin-top:8px">
+                <input type="checkbox" id="wantCustomDomain" />
+                <span>I want a custom domain</span>
+              </label>
             </div>
           </div>
         </div>
@@ -1959,7 +1965,8 @@
     }
 
     function updateSlugPreview(val) {
-      const sanitized = val.toLowerCase().replace(/[^a-z0-9-]/g, '');
+      const isCustomDomain = document.getElementById('wantCustomDomain').checked;
+      const sanitized = val.toLowerCase().replace(isCustomDomain ? /[^a-z0-9-.]/g : /[^a-z0-9-]/g, '');
       const el = document.getElementById('pageSlug');
       if (val !== sanitized) { el.value = sanitized; }
       const wrap = el.closest('.slug-wrap');
@@ -2051,8 +2058,8 @@
         { id: 'groomName', errId: 'err-groomName', test: v => v.trim().length > 0 },
         { id: 'brideName', errId: 'err-brideName', test: v => v.trim().length > 0 },
         { id: 'weddingDate', errId: 'err-weddingDate', test: v => document.getElementById('stillDeciding').checked || !!v },
-        { id: 'location', errId: 'err-location', test: v => v.trim().length > 1 },
-        { id: 'venueName', errId: 'err-venueName', test: v => v.trim().length > 1 },
+        { id: 'location', errId: 'err-location', test: v => document.getElementById('stillDeciding').checked || v.trim().length > 1 },
+        { id: 'venueName', errId: 'err-venueName', test: v => document.getElementById('stillDeciding').checked || v.trim().length > 1 },
         { id: 'email', errId: 'err-email', test: v => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v) },
         { id: 'contactNumber', errId: 'err-contactNumber', test: v => v.trim().length > 6 },
         { id: 'pageSlug', errId: 'err-pageSlug', test: v => /^[a-z0-9-]{2,}$/.test(v.trim()) },
@@ -2069,7 +2076,7 @@
       });
       // Ceremony time custom check
       const ctErr = document.getElementById('err-ceremonyTime');
-      const ctValid = !!getCeremonyTime();
+      const ctValid = document.getElementById('stillDeciding').checked || !!getCeremonyTime();
       document.getElementById('ceremonyHour').classList.toggle('error', !ctValid);
       document.getElementById('ceremonyMinute').classList.toggle('error', !ctValid);
       ctErr.classList.toggle('visible', !ctValid);
@@ -2133,7 +2140,7 @@
         <span><span class="summary-meta-label">Date</span>${stillDeciding ? 'Still deciding' : formatDate(date)}${!stillDeciding && time ? ' · ' + time : ''}</span>
         <span><span class="summary-meta-label">Location</span>${venue ? venue + ', ' : ''}${loc}</span>
         <span><span class="summary-meta-label">Email</span><span style="pointer-events:none;text-decoration:none;color:inherit">${email}</span></span>
-        <span><span class="summary-meta-label">Link</span>eventful.page/${slug}</span>
+        <span><span class="summary-meta-label">Link</span>${document.getElementById('wantCustomDomain').checked ? 'Custom domain' : 'eventful.page/' + slug}</span>
         <span><span class="summary-meta-label">Delivery</span>${isRush ? 'Rush (3 days)' : 'Standard (7 days)'}</span>
       `;
 
@@ -2457,18 +2464,61 @@
 
     // "Still deciding" checkbox toggle
     document.getElementById('stillDeciding').addEventListener('change', function () {
-      const dateInput = document.getElementById('weddingDate');
-      const req = document.getElementById('weddingDateReq');
-      dateInput.disabled = this.checked;
-      req.style.opacity = this.checked ? '0' : '';
-      if (this.checked) {
-        dateInput.classList.remove('error');
-        document.getElementById('err-weddingDate').classList.remove('visible');
+      const deciding = this.checked;
+      const disableIds = ['weddingDate', 'ceremonyHour', 'ceremonyMinute', 'location', 'venueName'];
+      const reqIds = ['weddingDateReq', 'ceremonyTimeReq', 'locationReq', 'venueNameReq'];
+      const errIds = ['err-weddingDate', 'err-ceremonyTime', 'err-location', 'err-venueName'];
+
+      disableIds.forEach(id => {
+        const el = document.getElementById(id);
+        if (el) el.disabled = deciding;
+      });
+      // also disable AM/PM buttons
+      ['amBtn', 'pmBtn'].forEach(id => {
+        const btn = document.getElementById(id);
+        if (btn) btn.disabled = deciding;
+      });
+      reqIds.forEach(id => {
+        const el = document.getElementById(id);
+        if (el) el.style.opacity = deciding ? '0' : '';
+      });
+      if (deciding) {
+        errIds.forEach(id => {
+          const el = document.getElementById(id);
+          if (el) { el.classList.remove('visible'); }
+        });
+        disableIds.forEach(id => {
+          document.getElementById(id)?.classList.remove('error');
+        });
       }
     });
 
+    // "I want a custom domain" checkbox
+    document.getElementById('wantCustomDomain').addEventListener('change', function () {
+      document.getElementById('slugPrefix').textContent = this.checked ? 'https://www.' : 'eventful.page/';
+      const slugInput = document.getElementById('pageSlug');
+      slugInput.placeholder = this.checked ? 'sofia-and-carlos.com' : 'sofia-and-carlos';
+      // Auto-check or uncheck the premium domain addon in step 4
+      const domainCb = document.getElementById('pa-domain');
+      const domainLbl = document.getElementById('lbl-pa-domain');
+      if (domainCb && domainLbl) {
+        domainCb.checked = this.checked;
+        domainLbl.classList.toggle('is-checked', this.checked);
+        domainLbl.setAttribute('aria-checked', this.checked);
+      }
+      calcPrice();
+    });
+
+    // Contact number — allow digits and + only
+    document.getElementById('contactNumber').addEventListener('input', function () {
+      const sanitized = this.value.replace(/[^0-9+]/g, '');
+      if (this.value !== sanitized) this.value = sanitized;
+      this.classList.remove('error');
+      document.getElementById('err-contactNumber')?.classList.remove('visible');
+    });
+
     // Live validation clear
-    ['groomName', 'brideName', 'weddingDate', 'location', 'venueName', 'email', 'contactNumber'].forEach(id => {
+    ['groomName', 'brideName', 'weddingDate', 'location', 'venueName', 'email'].forEach(id => {
       document.getElementById(id)?.addEventListener('input', () => {
         document.getElementById(id).classList.remove('error');
         document.getElementById(`err-${id}`)?.classList.remove('visible');
