@@ -4,6 +4,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="format-detection" content="telephone=no,email=no,address=no" />
   <title>Create Your Wedding Page – Eventful</title>
   <meta name="description" content="Your wedding, in one beautiful page." />
   <meta property="og:title" content="Create Your Wedding Page – Eventful" />
@@ -2104,7 +2105,7 @@
       document.getElementById('summaryMeta').innerHTML = `
         <span><span class="summary-meta-label">Date</span>${formatDate(date)}${time ? ' · ' + time : ''}</span>
         <span><span class="summary-meta-label">Location</span>${venue ? venue + ', ' : ''}${loc}</span>
-        <span><span class="summary-meta-label">Email</span><span style="user-select:text">${email}</span></span>
+        <span><span class="summary-meta-label">Email</span><span style="pointer-events:none;text-decoration:none;color:inherit">${email}</span></span>
         <span><span class="summary-meta-label">Link</span>eventful.page/${slug}</span>
         <span><span class="summary-meta-label">Delivery</span>${isRush ? 'Rush (3 days)' : 'Standard (7 days)'}</span>
       `;
