@@ -768,8 +768,8 @@
 
     .summary-meta {
       display: flex;
-      gap: 20px;
-      flex-wrap: wrap;
+      flex-direction: column;
+      gap: 6px;
       font-size: 0.88rem;
       color: var(--text-muted);
       margin-bottom: 0;
@@ -777,8 +777,18 @@
 
     .summary-meta span {
       display: flex;
-      align-items: center;
-      gap: 5px;
+      align-items: baseline;
+      gap: 6px;
+      word-break: break-all;
+    }
+
+    .summary-meta-label {
+      font-size: 0.75rem;
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+      color: var(--text-light);
+      flex-shrink: 0;
+      min-width: 60px;
     }
 
     .summary-tags {
@@ -2092,11 +2102,11 @@
       const venue = document.getElementById('venueName').value;
       const slug = document.getElementById('pageSlug').value.trim();
       document.getElementById('summaryMeta').innerHTML = `
-        <span>📅 ${formatDate(date)}${time ? ' · ' + time : ''}</span>
-        <span>📍 ${venue ? venue + ', ' : ''}${loc}</span>
-        <span>✉️ ${email}</span>
-        <span>🔗 eventful.page/${slug}</span>
-        <span>${isRush ? '🚀 Rush (3 days)' : '📦 Standard (7 days)'}</span>
+        <span><span class="summary-meta-label">Date</span>${formatDate(date)}${time ? ' · ' + time : ''}</span>
+        <span><span class="summary-meta-label">Location</span>${venue ? venue + ', ' : ''}${loc}</span>
+        <span><span class="summary-meta-label">Email</span>${email}</span>
+        <span><span class="summary-meta-label">Link</span>eventful.page/${slug}</span>
+        <span><span class="summary-meta-label">Delivery</span>${isRush ? 'Rush (3 days)' : 'Standard (7 days)'}</span>
       `;
 
       const specialReqs = document.getElementById('specialRequests')?.value.trim();
