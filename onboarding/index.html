@@ -370,7 +370,7 @@
       border: 1.5px solid #E0DAD2;
       border-radius: var(--radius);
       font-family: 'Outfit', sans-serif;
-      font-size: 0.97rem;
+      font-size: 1rem;
       color: var(--text-main);
       background: #FDFCFB;
       transition: var(--transition);
@@ -1022,7 +1022,7 @@
       font-size: 1.6rem;
       font-weight: 500;
       color: var(--text-main);
-      margin-bottom: 4px;
+      margin-bottom: 16px;
     }
 
     .payment-tabs {
@@ -1062,12 +1062,13 @@
       margin-top: 8px;
       background: none;
       border: none;
-      font-size: 0.78rem;
+      font-size: 0.85rem;
       font-family: 'Outfit', sans-serif;
+      font-weight: 600;
       color: var(--gold);
       cursor: pointer;
-      padding: 4px 8px;
-      border-radius: 6px;
+      padding: 7px 24px;
+      border-radius: 999px;
       transition: opacity 0.2s;
     }
 
@@ -1102,6 +1103,9 @@
       align-items: center;
       justify-content: center;
       gap: 6px;
+      flex-wrap: nowrap;
+      white-space: nowrap;
+      text-decoration: none;
     }
     .copy-number-btn {
       background: none;
@@ -1678,12 +1682,14 @@
           </div>
 
         </div>
-        <div class="step-nav" style="flex-wrap:wrap;gap:12px">
+        <div class="step-nav">
           <button class="btn btn-ghost" onclick="goBack(5)">← Edit</button>
-          <button class="btn btn-submit" id="submitBtn" onclick="handleSubmit()">
-            Proceed to Payment ✦
-          </button>
-          <p class="cta-subtext" style="width:100%;margin:0;justify-content:flex-end">Pay via GCash, bank, or any InstaPay-supported e-wallet.</p>
+          <div style="display:flex;flex-direction:column;align-items:flex-end;gap:6px">
+            <button class="btn btn-submit" id="submitBtn" onclick="handleSubmit()">
+              Proceed to Payment ✦
+            </button>
+            <p class="cta-subtext" style="margin:0;max-width:100%">Pay via GCash, bank, or any InstaPay-supported e-wallet.</p>
+          </div>
         </div>
       </div>
 
@@ -1703,7 +1709,7 @@
           <!-- QR + Download -->
           <div class="payment-qr-wrap">
             <img class="payment-qr" id="modalQr" src="https://eventful.page/onboarding/qr.jpg" alt="GCash QR Code" />
-            <button class="download-qr-btn" onclick="downloadQr()" title="Download QR code">⬇ Download QR</button>
+            <button class="download-qr-btn" onclick="downloadQr()" title="Download QR code"><svg width="12" height="12" viewBox="0 0 12 12" fill="none" style="vertical-align:middle;margin-right:5px"><path d="M6 1v7M3 5.5l3 3 3-3M1 10h10" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>Download QR</button>
           </div>
 
           <!-- GCash info -->
