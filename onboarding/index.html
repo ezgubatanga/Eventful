@@ -1970,7 +1970,10 @@
     }
 
     // ── Payment Modal ─────────────────────────────────────────
-    let _receiptDataUrl = null;
+    const CLOUDINARY_CLOUD = 'dvdekmzqn';
+    const CLOUDINARY_PRESET = 'Eventful';
+
+    let _receiptFile = null;
     let _receiptFileName = null;
 
     function handleSubmit() {
@@ -1989,20 +1992,17 @@
     function handleReceiptUpload(e) {
       const file = e.target.files[0];
       if (!file) return;
+      _receiptFile = file;
       _receiptFileName = file.name;
-      const reader = new FileReader();
-      reader.onload = ev => {
-        _receiptDataUrl = ev.target.result;
-        document.getElementById('previewImg').src = _receiptDataUrl;
-        document.getElementById('previewName').textContent = file.name;
-        document.getElementById('uploadZone').style.display = 'none';
-        document.getElementById('uploadPreview').classList.add('visible');
-      };
-      reader.readAsDataURL(file);
+      const previewUrl = URL.createObjectURL(file);
+      document.getElementById('previewImg').src = previewUrl;
+      document.getElementById('previewName').textContent = file.name;
+      document.getElementById('uploadZone').style.display = 'none';
+      document.getElementById('uploadPreview').classList.add('visible');
     }
 
     function removeReceipt() {
-      _receiptDataUrl = null;
+      _receiptFile = null;
       _receiptFileName = null;
       document.getElementById('receiptFile').value = '';
       document.getElementById('uploadPreview').classList.remove('visible');
@@ -2025,14 +2025,31 @@
       });
     });
 
-    function confirmPayment() {
+    async function confirmPayment() {
       const btn = document.getElementById('confirmPaymentBtn');
       btn.disabled = true;
-      btn.innerHTML = `<span class="spinner"></span> Submitting…`;
+      btn.innerHTML = `<span class="spinner"></span> Uploading receipt…`;
 
       const payload = buildPayload();
       payload.paymentStatus = 'receipt_uploaded';
-      if (_receiptFileName) payload.receiptFileName = _receiptFileName;
+
+      // Upload receipt image to Cloudinary if one was selected
+      if (_receiptFile) {
+        try {
+          const formData = new FormData();
+          formData.append('file', _receiptFile);
+          formData.append('upload_preset', CLOUDINARY_PRESET);
+          formData.append('folder', 'receipts');
+          const res = await fetch(`https://api.cloudinary.com/v1_1/${CLOUDINARY_CLOUD}/image/upload`, {
+            method: 'POST',
+            body: formData,
+          });
+          const data = await res.json();
+          if (data.secure_url) payload.receiptUrl = data.secure_url;
+        } catch (_) {}
+      }
+
+      btn.innerHTML = `<span class="spinner"></span> Submitting…`;
 
       // Fire-and-forget — no-cors returns an opaque response we can never read
       fetch(APPS_SCRIPT_URL, {
