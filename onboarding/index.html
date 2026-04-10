@@ -1316,6 +1316,7 @@
       justify-content: flex-end;
       margin-top: 10px;
     }
+    .mobile-break { display: none; }
 
     /* ─── Success & Error States ─────────────────────────── */
     .status-screen {
@@ -1394,6 +1395,7 @@
         max-width: 400px;
         white-space: normal;
       }
+      .mobile-break { display: inline; }
 
       .fields-grid {
         grid-template-columns: 1fr;
@@ -1704,7 +1706,7 @@
           <button class="btn btn-submit" id="submitBtn" onclick="handleSubmit()">
             Proceed to Payment ✦
           </button>
-          <p class="cta-subtext payment-subtext">Pay via GCash, bank, or any InstaPay-supported e-wallet.</p>
+          <p class="cta-subtext payment-subtext">Pay via GCash, bank, or any<br class="mobile-break">InstaPay-supported e-wallet.</p>
         </div>
       </div>
 
