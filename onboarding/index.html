@@ -77,6 +77,40 @@
       padding: 40px 20px 80px;
     }
 
+    .chat-bubble-wrap {
+      display: flex;
+      align-items: flex-end;
+      gap: 12px;
+      margin-top: 20px;
+    }
+
+    .chat-avatar {
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      object-fit: cover;
+      flex-shrink: 0;
+    }
+
+    .chat-bubble {
+      background: var(--surface);
+      border-radius: 18px 18px 18px 4px;
+      padding: 12px 16px;
+      font-size: 0.88rem;
+      color: var(--text-main);
+      box-shadow: var(--shadow-sm);
+      line-height: 1.5;
+    }
+
+    .chat-link {
+      color: var(--gold);
+      font-weight: 600;
+      text-decoration: none;
+      white-space: nowrap;
+    }
+
+    .chat-link:hover { text-decoration: underline; }
+
     /* ─── Back Link ──────────────────────────────────────── */
     .back-link {
       display: inline-flex;
@@ -1208,6 +1242,18 @@
       transform: none;
     }
 
+    .btn-load-saved {
+      background: none;
+      border: none;
+      font-family: 'Outfit', sans-serif;
+      font-size: 0.85rem;
+      color: var(--text-muted);
+      cursor: pointer;
+      padding: 0;
+      transition: color 0.2s;
+    }
+    .btn-load-saved:hover { color: var(--text-main); }
+
     .no-receipt-warning {
       background: var(--surface-2);
       border-radius: var(--radius);
@@ -1485,7 +1531,7 @@
           </div>
         </div>
         <div class="step-nav">
-          <span></span>
+          <button class="btn-load-saved" id="loadSavedBtn" onclick="loadSaved()" style="display:none">↩ Resume</button>
           <div style="display:flex;flex-direction:column;align-items:flex-end;gap:6px">
             <button class="btn btn-primary" id="nextBtn1" onclick="goNext(1)">
               Continue <span>→</span>
@@ -1723,6 +1769,14 @@
       </div>
 
     </div><!-- /.form-card -->
+
+    <!-- ── Chat Bubble ──────────────────────────────────────── -->
+    <div class="chat-bubble-wrap">
+      <img class="chat-avatar" src="https://eventful.page/onboarding/me.jpg" alt="Ezra" />
+      <div class="chat-bubble">
+        Do you want a more simple process? <a href="https://m.me/ezragubatanga" target="_blank" rel="noopener" class="chat-link">Message me on Facebook</a>
+      </div>
+    </div>
 
   </div><!-- /.page-wrap -->
 
@@ -2189,10 +2243,63 @@
 
     function saveForLater() {
       const payload = buildPayload();
+      // Also store raw IDs for checkbox restore
+      payload._functionalIds = getSelectedFunctional();
+      payload._premiumIds = getSelectedPremium();
+      payload._rushDelivery = document.getElementById('delivery-rush')?.checked || false;
       localStorage.setItem('eventful_saved', JSON.stringify(payload));
       closePaymentModal();
       document.getElementById('noReceiptWarning').style.display = 'none';
+      document.getElementById('loadSavedBtn').style.display = '';
       alert('Your details have been saved in this browser. You can return anytime to complete your payment.');
+    }
+
+    function loadSaved() {
+      const raw = localStorage.getItem('eventful_saved');
+      if (!raw) return;
+      const d = JSON.parse(raw);
+
+      // Step 1 fields
+      const set = (id, val) => { const el = document.getElementById(id); if (el) el.value = val || ''; };
+      set('groomName', d.groomName);
+      set('brideName', d.brideName);
+      set('weddingDate', d.weddingDate);
+      set('email', d.email);
+      set('contactNumber', d.contactNumber);
+      set('location', d.location);
+      set('venueName', d.venueName);
+      set('pageSlug', d.pageSlug);
+      set('specialRequests', d.specialRequests);
+
+      // Ceremony time
+      if (d.ceremonyTime) {
+        const parts = d.ceremonyTime.match(/^(\d+):(\d+)\s*(AM|PM)$/i);
+        if (parts) {
+          set('ceremonyHour', parts[1]);
+          set('ceremonyMinute', parts[2]);
+          const isAm = parts[3].toUpperCase() === 'AM';
+          document.getElementById('amBtn')?.classList.toggle('active', isAm);
+          document.getElementById('pmBtn')?.classList.toggle('active', !isAm);
+        }
+      }
+
+      // Functional addon checkboxes
+      FUNCTIONAL_ADDONS.forEach(a => {
+        const cb = document.getElementById(a.id);
+        if (cb) cb.checked = (d._functionalIds || []).includes(a.id);
+      });
+
+      // Premium addon checkboxes
+      PREMIUM_ADDONS.forEach(a => {
+        const cb = document.getElementById(a.id);
+        if (cb) cb.checked = (d._premiumIds || []).includes(a.id);
+      });
+
+      // Rush delivery
+      const rush = document.getElementById('delivery-rush');
+      if (rush) rush.checked = !!d._rushDelivery;
+
+      alert('Your saved details have been restored. Review each step before submitting.');
     }
 
     async function confirmPayment() {
@@ -2266,6 +2373,11 @@
     renderFunctionalAddOns();
     renderPremiumAddOns();
     updateStepper(1);
+
+    // Show resume button if saved data exists
+    if (localStorage.getItem('eventful_saved')) {
+      document.getElementById('loadSavedBtn').style.display = '';
+    }
 
     // Preselect wedding date to today + 15 days
     const defaultDate = new Date();
