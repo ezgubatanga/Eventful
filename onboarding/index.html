@@ -788,7 +788,7 @@
       letter-spacing: 0.04em;
       color: var(--text-light);
       flex-shrink: 0;
-      min-width: 60px;
+      min-width: 72px;
     }
 
     .summary-tags {
@@ -2104,7 +2104,7 @@
       document.getElementById('summaryMeta').innerHTML = `
         <span><span class="summary-meta-label">Date</span>${formatDate(date)}${time ? ' · ' + time : ''}</span>
         <span><span class="summary-meta-label">Location</span>${venue ? venue + ', ' : ''}${loc}</span>
-        <span><span class="summary-meta-label">Email</span>${email}</span>
+        <span><span class="summary-meta-label">Email</span><span style="user-select:text">${email}</span></span>
         <span><span class="summary-meta-label">Link</span>eventful.page/${slug}</span>
         <span><span class="summary-meta-label">Delivery</span>${isRush ? 'Rush (3 days)' : 'Standard (7 days)'}</span>
       `;
