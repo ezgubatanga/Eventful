@@ -1307,6 +1307,16 @@
       font-size: 0.75rem;
     }
 
+    .step-nav-payment {
+      flex-wrap: wrap;
+    }
+
+    .payment-subtext {
+      width: 100%;
+      justify-content: flex-end;
+      margin: 0;
+    }
+
     /* ─── Success & Error States ─────────────────────────── */
     .status-screen {
       display: none;
@@ -1376,6 +1386,9 @@
       }
       .cta-subtext {
         text-align: right;
+      }
+      .cta-subtext::before {
+        display: none;
       }
 
       .fields-grid {
@@ -1682,14 +1695,12 @@
           </div>
 
         </div>
-        <div class="step-nav">
+        <div class="step-nav step-nav-payment">
           <button class="btn btn-ghost" onclick="goBack(5)">← Edit</button>
-          <div style="display:flex;flex-direction:column;align-items:flex-end;gap:6px">
-            <button class="btn btn-submit" id="submitBtn" onclick="handleSubmit()">
-              Proceed to Payment ✦
-            </button>
-            <p class="cta-subtext" style="margin:0;max-width:100%">Pay via GCash, bank, or any InstaPay-supported e-wallet.</p>
-          </div>
+          <button class="btn btn-submit" id="submitBtn" onclick="handleSubmit()">
+            Proceed to Payment ✦
+          </button>
+          <p class="cta-subtext payment-subtext">Pay via GCash, bank, or any InstaPay-supported e-wallet.</p>
         </div>
       </div>
 
@@ -1940,6 +1951,7 @@
     // ── Stepper UI ────────────────────────────────────────────
     function updateStepper(active) {
       for (let i = 1; i <= TOTAL_STEPS; i++) {
+        const node = document.getElementById(`node-${i}`);
         const circle = document.getElementById(`circle-${i}`);
         const label = document.getElementById(`label-${i}`);
         circle.classList.remove('active', 'done');
@@ -1948,12 +1960,18 @@
           circle.classList.add('done');
           circle.textContent = '✓';
           label.classList.add('done');
+          node.style.cursor = 'pointer';
+          node.onclick = () => showStep(i);
         } else if (i === active) {
           circle.classList.add('active');
           circle.textContent = i;
           label.classList.add('active');
+          node.style.cursor = 'default';
+          node.onclick = null;
         } else {
           circle.textContent = i;
+          node.style.cursor = 'default';
+          node.onclick = null;
         }
         if (i < TOTAL_STEPS) {
           const conn = document.getElementById(`conn-${i}-${i + 1}`);
@@ -2310,7 +2328,6 @@
       const rush = document.getElementById('delivery-rush');
       if (rush) rush.checked = !!d._rushDelivery;
 
-      alert('Your saved details have been restored. Review each step before submitting.');
     }
 
     async function confirmPayment() {
