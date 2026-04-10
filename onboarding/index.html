@@ -2025,33 +2025,28 @@
       });
     });
 
-    async function confirmPayment() {
+    function confirmPayment() {
       const btn = document.getElementById('confirmPaymentBtn');
       btn.disabled = true;
       btn.innerHTML = `<span class="spinner"></span> Submitting…`;
 
       const payload = buildPayload();
-      if (_receiptDataUrl) {
-        payload.receiptImage = _receiptDataUrl;
-        payload.receiptFileName = _receiptFileName;
-      }
       payload.paymentStatus = 'receipt_uploaded';
+      if (_receiptFileName) payload.receiptFileName = _receiptFileName;
 
-      try {
-        await fetch(APPS_SCRIPT_URL, {
-          method: 'POST',
-          mode: 'no-cors',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify(payload),
-        });
+      // Fire-and-forget — no-cors returns an opaque response we can never read
+      fetch(APPS_SCRIPT_URL, {
+        method: 'POST',
+        mode: 'no-cors',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(payload),
+      }).catch(() => {});
+
+      // Don't gate the UX on an unreadable response — show success after brief delay
+      setTimeout(() => {
         closePaymentModal();
         showSuccess(payload.email);
-      } catch (err) {
-        showError();
-        btn.disabled = false;
-        btn.innerHTML = `I've Sent Payment ✦`;
-        console.error('Submission error:', err);
-      }
+      }, 800);
     }
 
     function showSuccess(email) {
