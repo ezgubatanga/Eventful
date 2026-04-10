@@ -915,6 +915,244 @@
       flex: 1;
     }
 
+    /* ─── Payment Modal ──────────────────────────────────── */
+    .payment-modal-overlay {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: rgba(42, 37, 32, 0.55);
+      backdrop-filter: blur(6px);
+      -webkit-backdrop-filter: blur(6px);
+      z-index: 9000;
+      align-items: center;
+      justify-content: center;
+      padding: 24px;
+    }
+
+    .payment-modal-overlay.open {
+      display: flex;
+    }
+
+    .payment-modal {
+      background: var(--surface);
+      border-radius: var(--radius-xl);
+      padding: 36px 32px 32px;
+      max-width: 440px;
+      width: 100%;
+      box-shadow: var(--shadow-lg);
+      text-align: center;
+      position: relative;
+      max-height: 90vh;
+      overflow-y: auto;
+    }
+
+    .payment-modal-close {
+      position: absolute;
+      top: 16px;
+      right: 18px;
+      background: none;
+      border: none;
+      font-size: 1.3rem;
+      color: var(--text-light);
+      cursor: pointer;
+      line-height: 1;
+      padding: 4px;
+    }
+
+    .payment-modal-close:hover { color: var(--text-main); }
+
+    .payment-modal-title {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.6rem;
+      font-weight: 500;
+      color: var(--text-main);
+      margin-bottom: 4px;
+    }
+
+    .payment-modal-subtitle {
+      font-size: 0.82rem;
+      color: var(--text-muted);
+      margin-bottom: 20px;
+    }
+
+    .payment-qr {
+      width: 200px;
+      height: 200px;
+      object-fit: contain;
+      border-radius: 12px;
+      margin: 0 auto 16px;
+      display: block;
+      border: 1px solid var(--surface-2);
+    }
+
+    .payment-amount-badge {
+      display: inline-block;
+      background: linear-gradient(135deg, #2A2520 0%, #3D3530 100%);
+      color: #fff;
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.8rem;
+      font-weight: 500;
+      padding: 8px 24px;
+      border-radius: 999px;
+      margin-bottom: 16px;
+    }
+
+    .payment-gcash-number {
+      font-size: 0.88rem;
+      font-weight: 600;
+      color: var(--text-main);
+      margin-bottom: 4px;
+    }
+
+    .payment-gcash-name {
+      font-size: 0.8rem;
+      color: var(--text-muted);
+      margin-bottom: 16px;
+    }
+
+    .payment-instructions {
+      background: var(--surface-2);
+      border-radius: var(--radius);
+      padding: 14px 16px;
+      text-align: left;
+      margin-bottom: 20px;
+    }
+
+    .payment-instructions p {
+      font-size: 0.8rem;
+      color: var(--text-muted);
+      line-height: 1.6;
+      margin: 0;
+    }
+
+    .payment-instructions strong {
+      color: var(--text-main);
+      display: block;
+      font-size: 0.78rem;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      margin-bottom: 6px;
+    }
+
+    .payment-upload-label {
+      font-size: 0.78rem;
+      font-weight: 600;
+      color: var(--text-main);
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      display: block;
+      margin-bottom: 8px;
+      text-align: left;
+    }
+
+    .payment-upload-zone {
+      border: 2px dashed rgba(197, 160, 89, 0.4);
+      border-radius: var(--radius);
+      padding: 20px 16px;
+      text-align: center;
+      cursor: pointer;
+      transition: var(--transition);
+      margin-bottom: 16px;
+      position: relative;
+    }
+
+    .payment-upload-zone:hover,
+    .payment-upload-zone.dragover {
+      border-color: var(--gold);
+      background: var(--gold-light);
+    }
+
+    .payment-upload-zone input[type="file"] {
+      position: absolute;
+      inset: 0;
+      opacity: 0;
+      cursor: pointer;
+    }
+
+    .payment-upload-zone p {
+      font-size: 0.82rem;
+      color: var(--text-muted);
+      margin: 0;
+      pointer-events: none;
+    }
+
+    .payment-upload-zone .upload-icon {
+      font-size: 1.6rem;
+      margin-bottom: 6px;
+      display: block;
+      pointer-events: none;
+    }
+
+    .payment-upload-preview {
+      display: none;
+      align-items: center;
+      gap: 10px;
+      background: var(--gold-light);
+      border: 1px solid var(--gold-mid);
+      border-radius: var(--radius);
+      padding: 10px 14px;
+      margin-bottom: 16px;
+      text-align: left;
+    }
+
+    .payment-upload-preview.visible { display: flex; }
+
+    .payment-upload-preview img {
+      width: 40px;
+      height: 40px;
+      object-fit: cover;
+      border-radius: 6px;
+      flex-shrink: 0;
+    }
+
+    .payment-upload-preview-name {
+      font-size: 0.82rem;
+      color: var(--text-main);
+      font-weight: 500;
+      flex: 1;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+
+    .payment-upload-remove {
+      background: none;
+      border: none;
+      color: var(--text-light);
+      cursor: pointer;
+      font-size: 1rem;
+      padding: 0;
+      flex-shrink: 0;
+    }
+
+    .payment-upload-remove:hover { color: var(--text-main); }
+
+    .btn-confirm-payment {
+      width: 100%;
+      background: linear-gradient(135deg, #2A2520 0%, #3D3530 100%);
+      color: #fff;
+      border: none;
+      border-radius: 999px;
+      padding: 15px 28px;
+      font-family: 'Outfit', sans-serif;
+      font-size: 0.95rem;
+      font-weight: 600;
+      letter-spacing: 0.04em;
+      cursor: pointer;
+      transition: var(--transition);
+    }
+
+    .btn-confirm-payment:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 16px 40px rgba(42, 37, 32, 0.35);
+    }
+
+    .btn-confirm-payment:disabled {
+      opacity: 0.65;
+      cursor: not-allowed;
+      transform: none;
+    }
+
     /* ─── CTA subtext ─────────────────────────────────────── */
     .cta-subtext {
       text-align: center;
@@ -1318,10 +1556,41 @@
           <button class="btn btn-ghost" onclick="goBack(5)">← Edit</button>
           <div style="display:flex;flex-direction:column;align-items:flex-end;gap:8px">
             <button class="btn btn-submit" id="submitBtn" onclick="handleSubmit()">
-              Create My Wedding Page ✦
+              Proceed to Payment ✦
             </button>
-            <p class="cta-subtext">No commitment. We'll contact you with a preview.</p>
+            <p class="cta-subtext">Pay via GCash, bank, or any InstaPay-supported e-wallet.</p>
           </div>
+        </div>
+      </div>
+
+      <!-- ── Payment Modal ─────────────────────────────── -->
+      <div class="payment-modal-overlay" id="paymentModal">
+        <div class="payment-modal">
+          <button class="payment-modal-close" onclick="closePaymentModal()" aria-label="Close">✕</button>
+          <p class="payment-modal-title">Complete Your Payment</p>
+          <p class="payment-modal-subtitle">Scan the QR or send directly to the number below</p>
+          <img class="payment-qr" src="/onboarding/qr.jpg" alt="GCash QR Code" />
+          <div class="payment-amount-badge" id="modalAmount">₱4,000</div>
+          <p class="payment-gcash-number">GCash: 0947 357 5780</p>
+          <p class="payment-gcash-name">Eventful (Ezra G.)</p>
+          <div class="payment-instructions">
+            <strong>How to pay</strong>
+            <p>Open <b>GCash, any bank app, or e-wallet</b> that supports <b>InstaPay</b>. Scan the QR code or manually send to <b>0947 357 5780</b>. Enter the exact amount shown above, then upload your receipt below.</p>
+          </div>
+          <span class="payment-upload-label">Upload your receipt</span>
+          <div class="payment-upload-zone" id="uploadZone">
+            <input type="file" id="receiptFile" accept="image/*" onchange="handleReceiptUpload(event)" />
+            <span class="upload-icon">📎</span>
+            <p>Tap to choose or drag your screenshot here</p>
+          </div>
+          <div class="payment-upload-preview" id="uploadPreview">
+            <img id="previewImg" src="" alt="Receipt preview" />
+            <span class="payment-upload-preview-name" id="previewName"></span>
+            <button class="payment-upload-remove" onclick="removeReceipt()" title="Remove">✕</button>
+          </div>
+          <button class="btn-confirm-payment" id="confirmPaymentBtn" onclick="confirmPayment()">
+            I've Sent Payment ✦
+          </button>
         </div>
       </div>
 
@@ -1709,28 +1978,87 @@
       };
     }
 
-    // ── Submit ────────────────────────────────────────────────
-    async function handleSubmit() {
-      const btn = document.getElementById('submitBtn');
+    // ── Payment Modal ─────────────────────────────────────────
+    let _receiptDataUrl = null;
+    let _receiptFileName = null;
+
+    function handleSubmit() {
+      // Show payment modal with dynamic amount
+      const { total } = calcPrice();
+      document.getElementById('modalAmount').textContent = `₱${total.toLocaleString()}`;
+      document.getElementById('paymentModal').classList.add('open');
+      document.body.style.overflow = 'hidden';
+    }
+
+    function closePaymentModal() {
+      document.getElementById('paymentModal').classList.remove('open');
+      document.body.style.overflow = '';
+    }
+
+    function handleReceiptUpload(e) {
+      const file = e.target.files[0];
+      if (!file) return;
+      _receiptFileName = file.name;
+      const reader = new FileReader();
+      reader.onload = ev => {
+        _receiptDataUrl = ev.target.result;
+        document.getElementById('previewImg').src = _receiptDataUrl;
+        document.getElementById('previewName').textContent = file.name;
+        document.getElementById('uploadZone').style.display = 'none';
+        document.getElementById('uploadPreview').classList.add('visible');
+      };
+      reader.readAsDataURL(file);
+    }
+
+    function removeReceipt() {
+      _receiptDataUrl = null;
+      _receiptFileName = null;
+      document.getElementById('receiptFile').value = '';
+      document.getElementById('uploadPreview').classList.remove('visible');
+      document.getElementById('uploadZone').style.display = '';
+    }
+
+    // Dragover styling
+    document.addEventListener('DOMContentLoaded', () => {
+      const zone = document.getElementById('uploadZone');
+      zone.addEventListener('dragover', e => { e.preventDefault(); zone.classList.add('dragover'); });
+      zone.addEventListener('dragleave', () => zone.classList.remove('dragover'));
+      zone.addEventListener('drop', e => {
+        e.preventDefault();
+        zone.classList.remove('dragover');
+        const file = e.dataTransfer.files[0];
+        if (file && file.type.startsWith('image/')) {
+          document.getElementById('receiptFile').files = e.dataTransfer.files;
+          handleReceiptUpload({ target: { files: [file] } });
+        }
+      });
+    });
+
+    async function confirmPayment() {
+      const btn = document.getElementById('confirmPaymentBtn');
       btn.disabled = true;
-      btn.innerHTML = `<span class="spinner"></span> Sending…`;
+      btn.innerHTML = `<span class="spinner"></span> Submitting…`;
 
       const payload = buildPayload();
+      if (_receiptDataUrl) {
+        payload.receiptImage = _receiptDataUrl;
+        payload.receiptFileName = _receiptFileName;
+      }
+      payload.paymentStatus = 'receipt_uploaded';
 
       try {
-        const res = await fetch(APPS_SCRIPT_URL, {
+        await fetch(APPS_SCRIPT_URL, {
           method: 'POST',
           mode: 'no-cors',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify(payload),
         });
-
-        // no-cors means we can't read the response — treat as success
+        closePaymentModal();
         showSuccess(payload.email);
       } catch (err) {
         showError();
         btn.disabled = false;
-        btn.innerHTML = `Create My Wedding Page ✦`;
+        btn.innerHTML = `I've Sent Payment ✦`;
         console.error('Submission error:', err);
       }
     }
