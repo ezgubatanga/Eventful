@@ -377,7 +377,7 @@ body {
   justify-content: center;
   align-items: center;
   gap: 28px;
-  flex-wrap: wrap;
+  flex-wrap: nowrap;
 }
 
 .countdown-unit {
@@ -504,7 +504,7 @@ section { padding: 88px 24px; }
   padding: 22px 24px;
   background: var(--surface);
   border-radius: var(--radius);
-  border: 1px solid rgba(50,45,40,0.55);
+  border: 1px solid rgba(107,63,94,0.22);
   box-shadow: var(--shadow-sm);
   transition: box-shadow var(--transition), transform var(--transition);
 }
@@ -535,7 +535,7 @@ section { padding: 88px 24px; }
 
 .schedule-detail {
   font-size: 0.82rem;
-  color: var(--text-light);
+  color: var(--text-muted);
   line-height: 1.5;
 }
 
@@ -732,7 +732,7 @@ section { padding: 88px 24px; }
   background: var(--surface);
   border-radius: var(--radius);
   padding: 28px 24px;
-  border: 1px solid rgba(50,45,40,0.55);
+  border: 1px solid rgba(107,63,94,0.22);
   box-shadow: var(--shadow-sm);
   text-align: center;
   transition: box-shadow var(--transition), transform var(--transition), border-color var(--transition);
@@ -811,7 +811,7 @@ section { padding: 88px 24px; }
   padding: 7px 14px 7px 8px;
   border-radius: 999px;
   background: var(--surface-2);
-  border: 1px solid rgba(50,45,40,0.6);
+  border: 1px solid rgba(107,63,94,0.22);
   font-size: 0.78rem;
   color: var(--text-muted);
   font-weight: 500;
@@ -831,7 +831,7 @@ section { padding: 88px 24px; }
   padding: 18px 22px;
   background: var(--surface-2);
   border-radius: var(--radius);
-  border: 1px solid rgba(50,45,40,0.50);
+  border: 1px solid rgba(107,63,94,0.22);
   transition: border-color var(--transition), box-shadow var(--transition);
 }
 
@@ -994,10 +994,11 @@ section { padding: 88px 24px; }
 }
 
 .contact-card-icon {
-  font-size: 1.4rem;
   margin-bottom: 14px;
   display: block;
+  color: var(--gold);
 }
+.contact-card-icon svg { display: block; }
 
 .contact-card-title {
   font-family: 'Cormorant Infant', serif;
@@ -1024,7 +1025,7 @@ section { padding: 88px 24px; }
 /* ─── Footer ─────────────────────────────────────────── */
 .footer {
   background: var(--surface-3);
-  color: var(--text-light);
+  color: var(--text-muted);
   text-align: center;
   padding: 56px 24px;
 }
@@ -1055,7 +1056,7 @@ section { padding: 88px 24px; }
 
 .footer-powered {
   font-size: 0.73rem;
-  opacity: 0.28;
+  opacity: 0.55;
   letter-spacing: 0.08em;
 }
 
@@ -1101,6 +1102,10 @@ section { padding: 88px 24px; }
   .nav-links a { font-size: 0.95rem; }
   .nav-links li:last-child { margin-top: 8px; }
   .nav-rsvp { text-align: center; }
+  .countdown-units { gap: 12px; }
+  .countdown-num { font-size: clamp(1.4rem, 7vw, 2rem); }
+  .countdown-unit-label { font-size: 0.55rem; letter-spacing: 0.12em; }
+  .countdown-sep { font-size: 1.4rem; }
   section { padding: 64px 20px; }
   .story-inner,
   .dress-faq-inner { grid-template-columns: 1fr; gap: 40px; }

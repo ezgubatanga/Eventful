@@ -1379,6 +1379,28 @@
       display: block;
     }
 
+    .still-deciding-label {
+      display: inline-flex;
+      align-items: center;
+      gap: 7px;
+      margin-top: 8px;
+      font-size: 0.82rem;
+      color: var(--text-muted);
+      cursor: pointer;
+      user-select: none;
+    }
+    .still-deciding-label input[type="checkbox"] {
+      width: 15px;
+      height: 15px;
+      accent-color: var(--gold);
+      cursor: pointer;
+      flex-shrink: 0;
+    }
+    #weddingDate:disabled {
+      opacity: 0.38;
+      cursor: not-allowed;
+    }
+
     /* ─── Responsive ─────────────────────────────────────── */
     @media (max-width: 640px) {
       .page-wrap {
@@ -1513,9 +1535,13 @@
               <span class="field-error" id="err-brideName">Please enter the bride's name.</span>
             </div>
             <div class="field-group">
-              <label class="field-label" for="weddingDate">Wedding Date <span class="req">*</span></label>
+              <label class="field-label" for="weddingDate">Wedding Date <span class="req" id="weddingDateReq">*</span></label>
               <input class="field-input" type="date" id="weddingDate" name="weddingDate" required />
               <span class="field-error" id="err-weddingDate">Please choose a date.</span>
+              <label class="still-deciding-label">
+                <input type="checkbox" id="stillDeciding" />
+                <span>We're still deciding</span>
+              </label>
             </div>
             <div class="field-group">
               <label class="field-label">Ceremony Time <span class="req">*</span></label>
@@ -2024,7 +2050,7 @@
       const fields = [
         { id: 'groomName', errId: 'err-groomName', test: v => v.trim().length > 0 },
         { id: 'brideName', errId: 'err-brideName', test: v => v.trim().length > 0 },
-        { id: 'weddingDate', errId: 'err-weddingDate', test: v => !!v },
+        { id: 'weddingDate', errId: 'err-weddingDate', test: v => document.getElementById('stillDeciding').checked || !!v },
         { id: 'location', errId: 'err-location', test: v => v.trim().length > 1 },
         { id: 'venueName', errId: 'err-venueName', test: v => v.trim().length > 1 },
         { id: 'email', errId: 'err-email', test: v => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v) },
@@ -2093,6 +2119,7 @@
       const groom = document.getElementById('groomName').value.trim();
       const bride = document.getElementById('brideName').value.trim();
       const couple = `${groom} & ${bride}`;
+      const stillDeciding = document.getElementById('stillDeciding').checked;
       const date = document.getElementById('weddingDate').value;
       const loc = document.getElementById('location').value;
       const email = document.getElementById('email').value;
@@ -2103,7 +2130,7 @@
       const venue = document.getElementById('venueName').value;
       const slug = document.getElementById('pageSlug').value.trim();
       document.getElementById('summaryMeta').innerHTML = `
-        <span><span class="summary-meta-label">Date</span>${formatDate(date)}${time ? ' · ' + time : ''}</span>
+        <span><span class="summary-meta-label">Date</span>${stillDeciding ? 'Still deciding' : formatDate(date)}${!stillDeciding && time ? ' · ' + time : ''}</span>
         <span><span class="summary-meta-label">Location</span>${venue ? venue + ', ' : ''}${loc}</span>
         <span><span class="summary-meta-label">Email</span><span style="pointer-events:none;text-decoration:none;color:inherit">${email}</span></span>
         <span><span class="summary-meta-label">Link</span>eventful.page/${slug}</span>
@@ -2170,7 +2197,7 @@
       return {
         groomName: document.getElementById('groomName').value.trim(),
         brideName: document.getElementById('brideName').value.trim(),
-        weddingDate: document.getElementById('weddingDate').value,
+        weddingDate: document.getElementById('stillDeciding').checked ? 'Still deciding' : document.getElementById('weddingDate').value,
         email: document.getElementById('email').value.trim(),
         contactNumber: document.getElementById('contactNumber').value.trim(),
         location: document.getElementById('location').value.trim(),
@@ -2427,6 +2454,18 @@
     const defaultDate = new Date();
     defaultDate.setDate(defaultDate.getDate() + 15);
     document.getElementById('weddingDate').value = defaultDate.toISOString().split('T')[0];
+
+    // "Still deciding" checkbox toggle
+    document.getElementById('stillDeciding').addEventListener('change', function () {
+      const dateInput = document.getElementById('weddingDate');
+      const req = document.getElementById('weddingDateReq');
+      dateInput.disabled = this.checked;
+      req.style.opacity = this.checked ? '0' : '';
+      if (this.checked) {
+        dateInput.classList.remove('error');
+        document.getElementById('err-weddingDate').classList.remove('visible');
+      }
+    });
 
     // Live validation clear
     ['groomName', 'brideName', 'weddingDate', 'location', 'venueName', 'email', 'contactNumber'].forEach(id => {

@@ -152,6 +152,10 @@ Add `.rsvp-hint` to the couple's CSS:
 }
 ```
 
+## Contact Cards
+
+Use inline SVG icons — never emojis. The icon span uses `.contact-card-icon` with `color: var(--gold)` and `svg { display: block }`. Standard icons: person SVG for bride/groom, clipboard SVG for coordinator.
+
 ## Functional Add-Ons (Patterns)
 
 ### Background Music
