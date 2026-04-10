@@ -9,7 +9,7 @@
   <meta property="og:title" content="Create Your Wedding Page – Eventful" />
   <meta property="og:description" content="Your wedding, in one beautiful page." />
   <meta property="og:image" content="../eventful.webp" />
-  <meta property="og:url" content="https://eventful.page/form" />
+  <meta property="og:url" content="https://eventful.page/onboarding" />
   <meta property="og:type" content="website" />
   <meta name="twitter:card" content="summary_large_image" />
   <meta name="twitter:title" content="Create Your Wedding Page – Eventful" />
@@ -453,6 +453,16 @@
       position: relative;
       z-index: 1;
       flex: 1;
+    }
+
+    .addon-price {
+      font-size: 0.78rem;
+      font-weight: 600;
+      color: var(--gold);
+      letter-spacing: 0.02em;
+      flex-shrink: 0;
+      position: relative;
+      z-index: 1;
     }
 
     .locked-badge {
@@ -1401,6 +1411,7 @@
           <input type="checkbox" id="${item.id}" name="${item.id}"/>
           <span class="custom-check">${checkSVG()}</span>
           <span class="check-text">${item.label}</span>
+          <span class="addon-price">+₱${item.price.toLocaleString()}</span>
         </label>
       `).join('');
     }
@@ -1416,6 +1427,7 @@
             <p class="premium-text">${item.label}</p>
             <span class="premium-badge">Premium</span>
           </div>
+          <span class="addon-price">+₱${item.price.toLocaleString()}</span>
         </label>
       `).join('');
     }

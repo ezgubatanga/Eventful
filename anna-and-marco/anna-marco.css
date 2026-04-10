@@ -1,27 +1,27 @@
 /* ─── Tokens ─────────────────────────────────────────── */
 :root {
-  --bg:           #13101A;
-  --surface:      #1C1825;
-  --surface-2:    #24202F;
-  --surface-3:    #2E2A3A;
-  --text-main:    #F5F0EB;
-  --text-muted:   #A89FB0;
-  --text-light:   #756878;
+  --bg:           #FAF7F5;
+  --surface:      #FFFFFF;
+  --surface-2:    #F3EEF0;
+  --surface-3:    #EAE2E6;
+  --text-main:    #2A1F27;
+  --text-muted:   #6B5060;
+  --text-light:   #9B7D8A;
   --gold:         #6B3F5E;
   --gold-dark:    #5A3450;
-  --gold-light:   rgba(107,63,94,0.12);
-  --gold-mid:     rgba(107,63,94,0.28);
-  --rose:         #C9A0A0;
-  --rose-light:   rgba(201,160,160,0.15);
+  --gold-light:   rgba(107,63,94,0.10);
+  --gold-mid:     rgba(107,63,94,0.22);
+  --rose:         #B07878;
+  --rose-light:   rgba(176,120,120,0.12);
   --plum:         #6B3F5E;
-  --plum-light:   rgba(107,63,94,0.18);
-  --plum-mid:     rgba(107,63,94,0.35);
+  --plum-light:   rgba(107,63,94,0.12);
+  --plum-mid:     rgba(107,63,94,0.28);
   --radius:       16px;
   --radius-lg:    24px;
-  --shadow-sm:    0 2px 8px rgba(0,0,0,0.34), 0 1px 2px rgba(0,0,0,0.24);
-  --shadow-md:    0 8px 24px rgba(0,0,0,0.48), 0 2px 6px rgba(0,0,0,0.28);
-  --shadow-gold:  0 6px 20px rgba(107,63,94,0.30);
-  --shadow-plum:  0 6px 20px rgba(107,63,94,0.30);
+  --shadow-sm:    0 2px 8px rgba(0,0,0,0.08), 0 1px 2px rgba(0,0,0,0.06);
+  --shadow-md:    0 8px 24px rgba(0,0,0,0.12), 0 2px 6px rgba(0,0,0,0.08);
+  --shadow-gold:  0 6px 20px rgba(107,63,94,0.22);
+  --shadow-plum:  0 6px 20px rgba(107,63,94,0.22);
   --transition:   0.25s ease;
 }
 
@@ -113,7 +113,7 @@ body {
   align-items: center;
   justify-content: space-between;
   padding: 16px 40px;
-  background: rgba(19,16,26,0.92);
+  background: rgba(250,247,245,0.92);
   backdrop-filter: blur(16px);
   -webkit-backdrop-filter: blur(16px);
   border-bottom: 1px solid rgba(107,63,94,0.30);
@@ -171,7 +171,7 @@ body {
   width: 48px;
   height: 48px;
   border-radius: 50%;
-  background: rgba(18,16,15,0.88);
+  background: rgba(250,247,245,0.88);
   border: 1.5px solid rgba(107,63,94,0.45);
   color: var(--gold);
   font-size: 1.1rem;
@@ -358,8 +358,8 @@ body {
 
 /* ─── Countdown ──────────────────────────────────────── */
 .countdown-bar {
-  background: linear-gradient(135deg, #0D0A14 0%, #1C1825 100%);
-  color: #fff;
+  background: linear-gradient(135deg, #EAE2E6 0%, #F3EEF0 100%);
+  color: var(--text-main);
   padding: 32px 24px;
   text-align: center;
 }
@@ -856,13 +856,13 @@ section { padding: 88px 24px; }
 
 /* ─── RSVP ───────────────────────────────────────────── */
 .rsvp {
-  background: linear-gradient(150deg, #0D0A14 0%, #1C1825 50%, #221428 100%);
-  color: #fff;
+  background: linear-gradient(150deg, #EAE2E6 0%, #F3EEF0 50%, #EDE5EA 100%);
+  color: var(--text-main);
 }
 
 .rsvp .section-eyebrow { color: var(--gold); }
-.rsvp .section-title { color: #fff; }
-.rsvp .section-lead { color: rgba(255,255,255,0.58); max-width: 480px; }
+.rsvp .section-title { color: var(--text-main); }
+.rsvp .section-lead { color: var(--text-muted); max-width: 480px; }
 
 .rsvp-card {
   background: rgba(107,63,94,0.08);
@@ -914,12 +914,12 @@ section { padding: 88px 24px; }
   box-shadow: 0 0 0 3px rgba(107,63,94,0.20);
 }
 
-.rsvp-input option { background: #12100F; color: #fff; }
+.rsvp-input option { background: #FAF7F5; color: var(--text-main); }
 
 .rsvp-hint {
   margin: 6px 0 0;
   font-size: 0.75rem;
-  color: rgba(255,255,255,0.45);
+  color: var(--text-light);
   font-family: 'Outfit', sans-serif;
   line-height: 1.4;
 }
@@ -1023,8 +1023,8 @@ section { padding: 88px 24px; }
 
 /* ─── Footer ─────────────────────────────────────────── */
 .footer {
-  background: #0D0A14;
-  color: rgba(255,255,255,0.45);
+  background: var(--surface-3);
+  color: var(--text-light);
   text-align: center;
   padding: 56px 24px;
 }
@@ -1089,7 +1089,7 @@ section { padding: 88px 24px; }
     flex-direction: column;
     position: fixed;
     top: 57px; left: 0; right: 0;
-    background: rgba(19,16,26,0.97);
+    background: rgba(250,247,245,0.97);
     backdrop-filter: blur(16px);
     -webkit-backdrop-filter: blur(16px);
     padding: 24px 32px 32px;

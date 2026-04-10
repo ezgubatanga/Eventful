@@ -70,7 +70,7 @@
   </div>
 
   <!-- ── Background Music ──────────────────────────────── -->
-  <audio id="bg-music" src="/anna-and-marco/Perfect.mp3" loop preload="none"></audio>
+  <audio id="bg-music" src="/anna-and-marco/Perfect.mp3" loop preload="auto"></audio>
   <button class="music-btn" id="music-btn" aria-label="Toggle background music" title="Toggle music">♪</button>
 
   <!-- ── Nav ───────────────────────────────────────────── -->
@@ -564,6 +564,12 @@
     // ── Music ─────────────────────────────────────────────
     const audio    = document.getElementById('bg-music');
     const musicBtn = document.getElementById('music-btn');
+    audio.volume = 0.5;
+    audio.play().then(() => {
+      musicBtn.textContent = '♫';
+      musicBtn.classList.add('playing');
+      musicBtn.setAttribute('title', 'Pause music');
+    }).catch(() => { /* autoplay blocked — user must click */ });
     musicBtn.addEventListener('click', () => {
       if (audio.paused) {
         audio.play();
