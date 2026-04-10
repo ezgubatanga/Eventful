@@ -969,11 +969,53 @@
       margin-bottom: 4px;
     }
 
-    .payment-modal-subtitle {
-      font-size: 0.82rem;
-      color: var(--text-muted);
+    .payment-tabs {
+      display: flex;
+      gap: 8px;
+      justify-content: center;
       margin-bottom: 20px;
     }
+
+    .payment-tab {
+      background: var(--surface-2);
+      border: 2px solid transparent;
+      border-radius: 999px;
+      padding: 7px 24px;
+      font-family: 'Outfit', sans-serif;
+      font-size: 0.85rem;
+      font-weight: 600;
+      color: var(--text-muted);
+      cursor: pointer;
+      transition: var(--transition);
+    }
+
+    .payment-tab.active {
+      border-color: var(--gold);
+      color: var(--gold);
+      background: var(--gold-light);
+    }
+
+    .payment-qr-wrap {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      margin-bottom: 16px;
+    }
+
+    .download-qr-btn {
+      margin-top: 8px;
+      background: none;
+      border: none;
+      font-size: 0.78rem;
+      font-family: 'Outfit', sans-serif;
+      color: var(--gold);
+      cursor: pointer;
+      padding: 4px 8px;
+      border-radius: 6px;
+      transition: opacity 0.2s;
+    }
+
+    .download-qr-btn:hover { opacity: 0.7; }
 
     .payment-qr {
       width: 200px;
@@ -989,7 +1031,7 @@
       display: inline-block;
       background: linear-gradient(135deg, #2A2520 0%, #3D3530 100%);
       color: #fff;
-      font-family: 'Cormorant Garamond', serif;
+      font-family: 'Outfit', sans-serif;
       font-size: 1.8rem;
       font-weight: 500;
       padding: 8px 24px;
@@ -1002,7 +1044,22 @@
       font-weight: 600;
       color: var(--text-main);
       margin-bottom: 4px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
     }
+    .copy-number-btn {
+      background: none;
+      border: none;
+      cursor: pointer;
+      color: var(--gold);
+      font-size: 1rem;
+      padding: 0 2px;
+      line-height: 1;
+      transition: opacity 0.2s;
+    }
+    .copy-number-btn:hover { opacity: 0.7; }
 
     .payment-gcash-name {
       font-size: 0.8rem;
@@ -1236,6 +1293,14 @@
 
       .step-nav {
         padding: 20px 24px 28px;
+        flex-wrap: wrap;
+      }
+      .step-nav > div[style] {
+        align-items: center !important;
+        width: 100%;
+      }
+      .cta-subtext {
+        text-align: center;
       }
 
       .fields-grid {
@@ -1560,20 +1625,47 @@
         <div class="payment-modal">
           <button class="payment-modal-close" onclick="closePaymentModal()" aria-label="Close">✕</button>
           <p class="payment-modal-title">Complete Your Payment</p>
-          <p class="payment-modal-subtitle">Scan the QR or send directly to the number below</p>
-          <img class="payment-qr" src="https://eventful.page/onboarding/qr.jpg" alt="GCash QR Code" />
           <div class="payment-amount-badge" id="modalAmount">₱4,000</div>
-          <p class="payment-gcash-number">GCash: 0947 357 5780</p>
-          <p class="payment-gcash-name">Eventful (Ezra G.)</p>
-          <div class="payment-instructions">
-            <strong>How to pay</strong>
-            <p>Open <b>GCash, any bank app, or e-wallet</b> that supports <b>InstaPay</b>. Scan the QR code or manually send to <b>0947 357 5780</b> (If you're using GCash). Enter the exact amount shown above, then upload your receipt below.</p>
+
+          <!-- Payment method tabs -->
+          <div class="payment-tabs">
+            <button class="payment-tab active" id="tabGcash" onclick="selectPaymentMethod('gcash')">GCash</button>
+            <button class="payment-tab" id="tabBpi" onclick="selectPaymentMethod('bpi')">BPI</button>
           </div>
+
+          <!-- QR + Download -->
+          <div class="payment-qr-wrap">
+            <img class="payment-qr" id="modalQr" src="https://eventful.page/onboarding/qr.jpg" alt="GCash QR Code" />
+            <button class="download-qr-btn" onclick="downloadQr()" title="Download QR code">⬇ Download QR</button>
+          </div>
+
+          <!-- GCash info -->
+          <div class="payment-info" id="infoGcash">
+            <p class="payment-gcash-number">GCash: 0947 357 5780 <button class="copy-number-btn" onclick="copyText('09473575780', this)" title="Copy number">⧉</button></p>
+            <p class="payment-gcash-name">Eventful (Ezra G.)</p>
+          </div>
+
+          <!-- BPI info -->
+          <div class="payment-info" id="infoBpi" style="display:none">
+            <p class="payment-gcash-number">Account number: 1479322437 <button class="copy-number-btn" onclick="copyText('1479322437', this)" title="Copy account number">⧉</button></p>
+            <p class="payment-gcash-number" style="margin-top:4px">Account name: Ezra John Gubatanga <button class="copy-number-btn" onclick="copyText('Ezra John Gubatanga', this)" title="Copy account name">⧉</button></p>
+          </div>
+
+          <!-- How to pay -->
+          <div class="payment-instructions" id="instructionsGcash">
+            <strong>How to pay via GCash</strong>
+            <p>Open your GCash app and scan or upload the QR code above. You may also copy <b>0947 357 5780</b> <button class="copy-number-btn" style="font-size:0.85rem" onclick="copyText('09473575780', this)" title="Copy number">⧉</button> to send the payment directly. Make sure the amount matches exactly.</p>
+          </div>
+          <div class="payment-instructions" id="instructionsBpi" style="display:none">
+            <strong>How to pay via BPI</strong>
+            <p>Open your BPI Online app and scan or upload the QR code above. You may also copy the account number and name above and paste them manually in the app. Make sure the amount matches exactly.</p>
+          </div>
+
           <span class="payment-upload-label">Upload your receipt</span>
           <div class="payment-upload-zone" id="uploadZone">
             <input type="file" id="receiptFile" accept="image/*" onchange="handleReceiptUpload(event)" />
             <span class="upload-icon">📎</span>
-            <p>Tap to choose or drag your screenshot here</p>
+            <p>Tap to choose or drag your screenshot here (max 5 MB)</p>
           </div>
           <div class="payment-upload-preview" id="uploadPreview">
             <img id="previewImg" src="" alt="Receipt preview" />
@@ -1984,6 +2076,38 @@
       document.body.style.overflow = 'hidden';
     }
 
+    let _selectedMethod = 'gcash';
+
+    function selectPaymentMethod(method) {
+      _selectedMethod = method;
+      const isGcash = method === 'gcash';
+      document.getElementById('tabGcash').classList.toggle('active', isGcash);
+      document.getElementById('tabBpi').classList.toggle('active', !isGcash);
+      document.getElementById('modalQr').src = isGcash ? 'https://eventful.page/onboarding/qr.jpg' : 'https://eventful.page/onboarding/qrbpi.jpg';
+      document.getElementById('modalQr').alt = isGcash ? 'GCash QR Code' : 'BPI QR Code';
+      document.getElementById('infoGcash').style.display = isGcash ? '' : 'none';
+      document.getElementById('infoBpi').style.display = isGcash ? 'none' : '';
+      document.getElementById('instructionsGcash').style.display = isGcash ? '' : 'none';
+      document.getElementById('instructionsBpi').style.display = isGcash ? 'none' : '';
+    }
+
+    function copyText(text, btn) {
+      navigator.clipboard.writeText(text).then(() => {
+        const original = btn.textContent;
+        btn.textContent = '✓';
+        setTimeout(() => btn.textContent = original, 1500);
+      });
+    }
+
+    function downloadQr() {
+      const src = document.getElementById('modalQr').src;
+      const filename = _selectedMethod === 'gcash' ? 'GCash-QR-Eventful.jpg' : 'BPI-QR-Eventful.jpg';
+      const a = document.createElement('a');
+      a.href = src;
+      a.download = filename;
+      a.click();
+    }
+
     function closePaymentModal() {
       document.getElementById('paymentModal').classList.remove('open');
       document.body.style.overflow = '';
@@ -1992,6 +2116,11 @@
     function handleReceiptUpload(e) {
       const file = e.target.files[0];
       if (!file) return;
+      if (file.size > 5 * 1024 * 1024) {
+        alert('File is too large. Please upload an image under 5 MB.');
+        document.getElementById('receiptFile').value = '';
+        return;
+      }
       _receiptFile = file;
       _receiptFileName = file.name;
       const previewUrl = URL.createObjectURL(file);
