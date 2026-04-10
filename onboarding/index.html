@@ -2062,7 +2062,7 @@
         { id: 'venueName', errId: 'err-venueName', test: v => document.getElementById('stillDeciding').checked || v.trim().length > 1 },
         { id: 'email', errId: 'err-email', test: v => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v) },
         { id: 'contactNumber', errId: 'err-contactNumber', test: v => v.trim().length > 6 },
-        { id: 'pageSlug', errId: 'err-pageSlug', test: v => /^[a-z0-9-]{2,}$/.test(v.trim()) },
+        { id: 'pageSlug', errId: 'err-pageSlug', test: v => document.getElementById('wantCustomDomain').checked ? /^[a-z0-9-.]{2,}$/.test(v.trim()) : /^[a-z0-9-]{2,}$/.test(v.trim()) },
       ];
       fields.forEach(({ id, errId, test }) => {
         const el = document.getElementById(id);
