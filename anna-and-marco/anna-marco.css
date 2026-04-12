@@ -657,6 +657,7 @@ section { padding: 88px 24px; }
 
 /* ─── Gallery ────────────────────────────────────────── */
 .gallery { background: var(--bg); }
+.accommodation + .gallery { padding-top: 0; }
 
 .gallery-grid {
   display: grid;
@@ -1198,6 +1199,7 @@ section { padding: 88px 24px; }
 
 /* ─── Timeline ───────────────────────────────────────── */
 .timeline { background: var(--surface); }
+.story + .timeline { padding-top: 0; }
 
 .timeline-items {
   position: relative;
