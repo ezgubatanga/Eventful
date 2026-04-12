@@ -681,9 +681,12 @@ section { padding: 88px 24px; }
 }
 
 .gallery-item:nth-child(2) {
+  grid-row: 1;
   aspect-ratio: unset;
   align-self: stretch;
+  min-height: 0;
 }
+.gallery-item:nth-child(2) img { object-position: center 15%; }
 
 .gallery-item img {
   width: 100%;
