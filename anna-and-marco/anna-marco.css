@@ -263,10 +263,10 @@ body {
   font-size: clamp(1.4rem, 3.5vw, 2.2rem);
   font-style: normal;
   font-weight: 400;
-  color: var(--gold);
+  color: var(--surface-3);
   display: block;
   line-height: 1.2;
-  margin: 0 0 4px;
+  margin: 0;
   letter-spacing: 0.15em;
 }
 
