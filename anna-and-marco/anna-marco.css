@@ -1133,7 +1133,8 @@ section { padding: 88px 24px; }
   section { padding: 64px 20px; }
   .story-inner,
   .dress-faq-inner { grid-template-columns: 1fr; gap: 40px; }
-  .story-image { aspect-ratio: 3/2; }
+  .story-image { aspect-ratio: 3/2; order: 2; }
+  .story-text { order: 1; }
   .schedule-grid,
   .venue-cards { grid-template-columns: 1fr; }
   .rsvp-grid { grid-template-columns: 1fr; }

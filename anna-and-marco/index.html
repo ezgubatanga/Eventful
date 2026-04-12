@@ -458,7 +458,7 @@
       <h2 class="section-title">Our engagement film</h2>
       <p class="section-lead">A short film capturing the moments that led us here.</p>
       <div class="video-wrapper">
-        <video id="engagement-video" controls preload="metadata" poster="https://images.unsplash.com/photo-1511285560929-80b456fea0bc?auto=format&fit=crop&w=1200&q=80" style="width:100%;height:100%;display:block;object-fit:cover;">
+        <video id="engagement-video" controls preload="none" poster="https://images.unsplash.com/photo-1511285560929-80b456fea0bc?auto=format&fit=crop&w=1200&q=80" style="width:100%;height:100%;display:block;object-fit:cover;">
           <source src="/anna-and-marco/anna-and-marco.mp4" type="video/mp4">
         </video>
       </div>
@@ -750,8 +750,11 @@
       }
     });
 
-    // ── Video — pause music when playing ──────────────────
+    // ── Video — load on first interaction, pause music when playing ──
     const engagementVideo = document.getElementById('engagement-video');
+    engagementVideo.addEventListener('click', () => {
+      if (engagementVideo.readyState === 0) engagementVideo.load();
+    }, { once: true });
     engagementVideo.addEventListener('play', () => {
       if (!audio.paused) {
         audio.pause();
@@ -816,10 +819,14 @@
       const btn     = document.getElementById('password-submit');
       const err     = document.getElementById('password-error');
       if (sessionStorage.getItem('am_auth') === '1') { overlay.classList.add('hidden'); return; }
+      // Lock scroll while password overlay is visible
+      document.body.style.overflow = 'hidden';
       function attempt() {
         if (input.value.trim() === PASS) {
           sessionStorage.setItem('am_auth', '1');
           overlay.classList.add('hidden');
+          document.body.style.overflow = '';
+          window.scrollTo(0, 0);
         } else {
           err.textContent = 'Incorrect password. Please check your invitation.';
           input.value = '';
