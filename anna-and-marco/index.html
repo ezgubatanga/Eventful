@@ -104,34 +104,33 @@
         <a href="#story" class="btn-outline">Our Story</a>
       </div>
       <div class="hero-divider"></div>
+      <!-- ── Countdown ──────────────────────────────────── -->
+      <div class="countdown-bar">
+        <p class="countdown-label">Counting down to the big day</p>
+        <div class="countdown-units">
+          <div class="countdown-unit">
+            <span class="countdown-num" id="cd-days">--</span>
+            <span class="countdown-unit-label">Days</span>
+          </div>
+          <span class="countdown-sep">·</span>
+          <div class="countdown-unit">
+            <span class="countdown-num" id="cd-hours">--</span>
+            <span class="countdown-unit-label">Hours</span>
+          </div>
+          <span class="countdown-sep">·</span>
+          <div class="countdown-unit">
+            <span class="countdown-num" id="cd-mins">--</span>
+            <span class="countdown-unit-label">Minutes</span>
+          </div>
+          <span class="countdown-sep">·</span>
+          <div class="countdown-unit">
+            <span class="countdown-num" id="cd-secs">--</span>
+            <span class="countdown-unit-label">Seconds</span>
+          </div>
+        </div>
+      </div>
     </div>
   </section>
-
-  <!-- ── Countdown ─────────────────────────────────────── -->
-  <div class="countdown-bar">
-    <p class="countdown-label">Counting down to the big day</p>
-    <div class="countdown-units">
-      <div class="countdown-unit">
-        <span class="countdown-num" id="cd-days">--</span>
-        <span class="countdown-unit-label">Days</span>
-      </div>
-      <span class="countdown-sep">·</span>
-      <div class="countdown-unit">
-        <span class="countdown-num" id="cd-hours">--</span>
-        <span class="countdown-unit-label">Hours</span>
-      </div>
-      <span class="countdown-sep">·</span>
-      <div class="countdown-unit">
-        <span class="countdown-num" id="cd-mins">--</span>
-        <span class="countdown-unit-label">Minutes</span>
-      </div>
-      <span class="countdown-sep">·</span>
-      <div class="countdown-unit">
-        <span class="countdown-num" id="cd-secs">--</span>
-        <span class="countdown-unit-label">Seconds</span>
-      </div>
-    </div>
-  </div>
 
   <!-- ── Couple's Story ─────────────────────────────────── -->
   <section class="story" id="story">
@@ -437,7 +436,7 @@
           <img src="https://images.unsplash.com/photo-1469371670807-013ccf25f16a?auto=format&fit=crop&w=1200&q=80" alt="Golden hour together" />
         </div>
         <div class="gallery-item">
-          <img src="https://images.unsplash.com/photo-1490750967868-88df5691b2b5?auto=format&fit=crop&w=600&q=80" alt="The bouquet" />
+          <img src="https://images.unsplash.com/photo-1455793581681-0ece81f17d47?auto=format&fit=crop&w=600&q=80" alt="The bouquet" />
         </div>
         <div class="gallery-item">
           <img src="https://images.unsplash.com/photo-1523438885200-e635ba2c371e?auto=format&fit=crop&w=600&q=80" alt="The rings" />
@@ -657,12 +656,18 @@
 
   <!-- ── Footer ─────────────────────────────────────────── -->
   <footer class="footer">
-    <p class="footer-couple">Anna &amp; Marco</p>
-    <p class="footer-date">September 20, 2026 · Rome</p>
-    <p class="footer-quote">"La vita è bella — and it's even more beautiful with you."</p>
-    <p class="footer-powered">
-      Page crafted by <a href="https://eventful.page" target="_blank">Eventful</a>.
-    </p>
+    <video class="footer-video" autoplay muted loop playsinline disablepictureinpicture>
+      <source src="/anna-and-marco/anna-and-marco.mp4" type="video/mp4">
+    </video>
+    <div class="footer-overlay"></div>
+    <div class="footer-inner">
+      <p class="footer-couple">Anna &amp; Marco</p>
+      <p class="footer-date">September 20, 2026 · Rome</p>
+      <p class="footer-quote">"La vita è bella — and it's even more beautiful with you."</p>
+      <p class="footer-powered">
+        Page crafted by <a href="https://eventful.page" target="_blank">Eventful</a>.
+      </p>
+    </div>
   </footer>
 
   <script>
@@ -690,19 +695,21 @@
     // ── Preloader ─────────────────────────────────────────
     window.addEventListener('load', () => {
       const preloader = document.getElementById('page-preloader');
-      if (!preloader) return;
-      setTimeout(() => {
-        preloader.classList.add('hidden');
-        // Start music after preloader fades (transition is 0.6s)
-        setTimeout(() => {
-          audio.play().then(() => {
-            musicBtn.textContent = '♫';
-            musicBtn.classList.add('playing');
-            musicBtn.setAttribute('title', 'Pause music');
-          }).catch(() => { /* autoplay blocked */ });
-        }, 700);
-      }, 300);
+      if (preloader) setTimeout(() => preloader.classList.add('hidden'), 300);
     });
+
+    // ── Music — play on first user interaction ────────────
+    function startMusic() {
+      audio.play().then(() => {
+        musicBtn.textContent = '♫';
+        musicBtn.classList.add('playing');
+        musicBtn.setAttribute('title', 'Pause music');
+      }).catch(() => {});
+      window.removeEventListener('scroll', startMusic);
+      window.removeEventListener('pointerdown', startMusic);
+    }
+    window.addEventListener('scroll', startMusic, { passive: true });
+    window.addEventListener('pointerdown', startMusic);
 
     // ── Countdown ─────────────────────────────────────────
     const WEDDING_DATE = new Date('2026-09-20T16:00:00');
