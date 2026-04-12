@@ -87,20 +87,6 @@
   <audio id="bg-music" src="/anna-and-marco/Perfect.mp3" loop preload="auto"></audio>
   <button class="music-btn" id="music-btn" aria-label="Toggle background music" title="Toggle music">♪</button>
 
-  <!-- ── Nav ───────────────────────────────────────────── -->
-  <nav class="nav">
-    <span class="nav-brand">Anna &amp; Marco</span>
-    <ul class="nav-links" id="nav-links">
-      <li><a href="#story">Our Story</a></li>
-      <li><a href="#schedule">Schedule</a></li>
-      <li><a href="#venue">Venue</a></li>
-      <li><a href="#stay">Stay</a></li>
-      <li><a href="#gallery">Gallery</a></li>
-      <li><a href="#registry">Registry</a></li>
-      <li><a href="#rsvp" class="nav-rsvp">RSVP</a></li>
-    </ul>
-    <label class="hamburger"><input type="checkbox" id="nav-toggle"><svg viewBox="0 0 32 32"><path class="line line-top-bottom" d="M27 10 13 10C10.8 10 9 8.2 9 6 9 3.5 10.8 2 13 2 15.2 2 17 3.8 17 6L17 26C17 28.2 18.8 30 21 30 23.2 30 25 28.2 25 26 25 23.8 23.2 22 21 22L7 22"/><path class="line" d="M7 16 27 16"/></svg></label>
-  </nav>
 
   <!-- ── Hero ──────────────────────────────────────────── -->
   <section class="hero">
@@ -687,7 +673,7 @@
         if (!target) return;
         e.preventDefault();
         const start = window.scrollY;
-        const end = target.getBoundingClientRect().top + start - 72;
+        const end = target.getBoundingClientRect().top + start;
         const duration = 800;
         let startTime = null;
         const ease = t => t < 0.5 ? 2*t*t : -1+(4-2*t)*t;
@@ -704,7 +690,18 @@
     // ── Preloader ─────────────────────────────────────────
     window.addEventListener('load', () => {
       const preloader = document.getElementById('page-preloader');
-      if (preloader) setTimeout(() => preloader.classList.add('hidden'), 300);
+      if (!preloader) return;
+      setTimeout(() => {
+        preloader.classList.add('hidden');
+        // Start music after preloader fades (transition is 0.6s)
+        setTimeout(() => {
+          audio.play().then(() => {
+            musicBtn.textContent = '♫';
+            musicBtn.classList.add('playing');
+            musicBtn.setAttribute('title', 'Pause music');
+          }).catch(() => { /* autoplay blocked */ });
+        }, 700);
+      }, 300);
     });
 
     // ── Countdown ─────────────────────────────────────────
@@ -728,24 +725,10 @@
     updateCountdown();
     setInterval(updateCountdown, 1000);
 
-    // ── Hamburger ─────────────────────────────────────────
-    const navToggle = document.getElementById('nav-toggle');
-    const navLinks  = document.getElementById('nav-links');
-    navToggle.addEventListener('change', () => navLinks.classList.toggle('open', navToggle.checked));
-    navLinks.querySelectorAll('a').forEach(a => a.addEventListener('click', () => {
-      navToggle.checked = false;
-      navLinks.classList.remove('open');
-    }));
-
     // ── Music ─────────────────────────────────────────────
     const audio    = document.getElementById('bg-music');
     const musicBtn = document.getElementById('music-btn');
     audio.volume = 0.5;
-    audio.play().then(() => {
-      musicBtn.textContent = '♫';
-      musicBtn.classList.add('playing');
-      musicBtn.setAttribute('title', 'Pause music');
-    }).catch(() => { /* autoplay blocked — user must click */ });
     musicBtn.addEventListener('click', () => {
       if (audio.paused) {
         audio.play();

@@ -45,12 +45,11 @@
   width: 100px;
   height: auto;
   position: relative;
-  filter: drop-shadow(0 0 10px var(--gold));
 }
 
-.loader #pegtopone { position: absolute; animation: flowe-one 1s linear infinite; }
-.loader #pegtoptwo { position: absolute; opacity: 0; transform: scale(0) translateY(-200px) translateX(-100px); animation: flowe-two 1s linear infinite; animation-delay: 0.3s; }
-.loader #pegtopthree { position: absolute; opacity: 0; transform: scale(0) translateY(-200px) translateX(100px); animation: flowe-three 1s linear infinite; animation-delay: 0.6s; }
+.loader #pegtopone { position: absolute; animation: flowe-one 2s linear infinite; }
+.loader #pegtoptwo { position: absolute; opacity: 0; transform: scale(0) translateY(-200px) translateX(-100px); animation: flowe-two 2s linear infinite; animation-delay: 0.6s; }
+.loader #pegtopthree { position: absolute; opacity: 0; transform: scale(0) translateY(-200px) translateX(100px); animation: flowe-three 2s linear infinite; animation-delay: 1.2s; }
 .loader svg g path { fill: var(--fill-color); }
 
 @keyframes flowe-one {
@@ -207,7 +206,7 @@ body {
   align-items: center;
   justify-content: center;
   text-align: center;
-  padding: 120px 24px 80px;
+  padding: 40px 24px 80px;
   position: relative;
   background:
     radial-gradient(ellipse 80% 55% at 50% 0%, rgba(107,63,94,0.22), transparent),
@@ -266,7 +265,7 @@ body {
   color: var(--surface-3);
   display: block;
   line-height: 1.2;
-  margin: 0;
+  margin: -20px 0 10px;
   letter-spacing: 0.15em;
 }
 
@@ -1151,27 +1150,20 @@ section { padding: 88px 24px; }
 .hero .btn-outline   { color: rgba(255,255,255,0.82); border-color: rgba(255,255,255,0.28); }
 .hero .btn-outline:hover { border-color: #C8976A; color: #C8976A; }
 
-/* ─── Scroll Reveal ──────────────────────────────────── */
-.reveal {
-  opacity: 0;
-  transform: translateY(24px);
-  transition: opacity 0.65s ease, transform 0.65s ease;
-}
-.reveal.visible   { opacity: 1; transform: none; }
-
-.reveal-left {
-  opacity: 0;
-  transform: translateX(-28px);
-  transition: opacity 0.65s ease, transform 0.65s ease;
-}
-.reveal-left.visible { opacity: 1; transform: none; }
-
+/* ─── Scroll Reveal (blur-to-focus) ──────────────────── */
+.reveal,
+.reveal-left,
 .reveal-right {
   opacity: 0;
-  transform: translateX(28px);
-  transition: opacity 0.65s ease, transform 0.65s ease;
+  filter: blur(12px);
+  transition: opacity 1s ease, filter 1s ease;
 }
-.reveal-right.visible { opacity: 1; transform: none; }
+.reveal.visible,
+.reveal-left.visible,
+.reveal-right.visible {
+  opacity: 1;
+  filter: blur(0);
+}
 
 /* ─── Timeline ───────────────────────────────────────── */
 .timeline { background: var(--surface); }
