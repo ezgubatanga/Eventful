@@ -269,7 +269,7 @@ body {
   color: var(--surface-3);
   display: block;
   line-height: 1;
-  margin: -0.35em 0 -0.25em;
+  margin: -0.35em 0 0.05em;
   letter-spacing: 0.15em;
 }
 
@@ -1250,13 +1250,10 @@ section { padding: 88px 24px; }
 
 .timeline-content {
   grid-column: 3; grid-row: 1;
-  background: var(--surface-2);
-  border-radius: var(--radius);
-  padding: 20px 24px;
-  border: 1px solid rgba(107,63,94,0.18);
-  transition: box-shadow var(--transition), transform var(--transition);
+  padding: 4px 0;
+  transition: transform var(--transition);
 }
-.timeline-content:hover { box-shadow: var(--shadow-sm); transform: translateX(3px); }
+.timeline-content:hover { transform: translateX(3px); }
 
 .timeline-item:nth-child(even) .timeline-year    { grid-column: 3; text-align: left; padding-right: 0; padding-left: 8px; }
 .timeline-item:nth-child(even) .timeline-content { grid-column: 1; }
@@ -1330,7 +1327,7 @@ section { padding: 88px 24px; }
   flex-wrap: wrap;
 }
 .weather-eyebrow    { font-size: 0.67rem; text-transform: uppercase; letter-spacing: 0.28em; color: var(--gold); font-weight: 600; margin-bottom: 6px; display: block; }
-.weather-title      { font-family: 'Cormorant Infant', serif; font-size: 1.2rem; font-weight: 500; color: var(--text-main); margin-bottom: 4px; }
+.weather-title      { font-family: 'Cormorant Infant', serif; font-size: 1.6rem; font-weight: 500; color: var(--text-main); margin-bottom: 4px; }
 .weather-note       { font-size: 0.82rem; color: var(--text-muted); line-height: 1.55; }
 .weather-stats      { display: flex; gap: 28px; flex-wrap: wrap; flex: 1; justify-content: flex-end; }
 .weather-stat       { display: flex; flex-direction: column; align-items: center; gap: 4px; }
@@ -1489,5 +1486,5 @@ section { padding: 88px 24px; }
   .transport-items  { grid-template-columns: 1fr; gap: 20px; }
   .transport-block  { padding: 24px 20px; }
   .weather-card     { flex-direction: column; align-items: flex-start; gap: 20px; padding: 24px 20px; }
-  .weather-stats    { justify-content: flex-start; }
+  .weather-stats    { justify-content: space-between; flex-wrap: nowrap; gap: 0; width: 100%; }
 }
