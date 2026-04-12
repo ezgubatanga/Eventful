@@ -123,7 +123,6 @@ body {
   font-family: 'Parisienne', cursive;
   font-size: 1.3rem;
   color: var(--text-main);
-  letter-spacing: 0.01em;
   text-decoration: none;
 }
 
@@ -257,7 +256,6 @@ body {
   line-height: 1.15;
   color: var(--text-main);
   margin-bottom: 4px;
-  letter-spacing: 0.02em;
 }
 
 .hero-ampersand {
@@ -425,9 +423,9 @@ section { padding: 88px 24px; }
 }
 
 .section-title {
-  font-family: 'Cormorant Infant', serif;
+  font-family: 'Parisienne', cursive;
   font-size: clamp(2rem, 4vw, 2.8rem);
-  font-weight: 500;
+  font-weight: 400;
   line-height: 1.15;
   color: var(--text-main);
   margin-bottom: 16px;
@@ -1034,7 +1032,6 @@ section { padding: 88px 24px; }
   font-weight: 400;
   color: var(--text-main);
   margin-bottom: 8px;
-  letter-spacing: 0.02em;
 }
 
 .footer-date {
