@@ -1215,7 +1215,7 @@ section { padding: 88px 24px; }
 .hero .hero-quote    { color: rgba(255,255,255,0.52); }
 .hero .hero-divider  { background: linear-gradient(to bottom, transparent, rgba(255,255,255,0.20), transparent); }
 .hero .btn-outline   { color: rgba(255,255,255,0.82); border-color: rgba(255,255,255,0.28); }
-.hero .btn-outline:hover { border-color: #C8976A; color: #C8976A; }
+.hero .btn-outline:hover { border-color: #fff; color: #fff; }
 
 /* ─── Scroll Reveal (blur-to-focus) ──────────────────── */
 .reveal,
