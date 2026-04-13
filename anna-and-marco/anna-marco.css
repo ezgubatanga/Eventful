@@ -142,7 +142,7 @@ body {
   cursor: pointer;
 }
 
-.nav-links a:hover { color: var(--gold); }
+.nav-links a:hover { color: #fff; }
 
 .nav-rsvp {
   background: var(--gold) !important;
@@ -613,7 +613,7 @@ section { padding: 88px 24px; }
   background: var(--surface-2);
   border-radius: var(--radius-lg);
   overflow: hidden;
-  border: 1px solid rgba(50,45,40,0.45);
+  border: 1px solid rgba(50,45,40,0.12);
   box-shadow: var(--shadow-sm);
   transition: box-shadow var(--transition), transform var(--transition);
 }
