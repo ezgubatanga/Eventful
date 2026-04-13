@@ -1283,6 +1283,25 @@
         padding: 60px 0 40px;
       }
 
+      .hero > .container > .hero-inner > div:first-child {
+        text-align: center;
+      }
+
+      .hero-trust {
+        justify-content: center;
+      }
+
+      .hero-actions {
+        flex-direction: row;
+        flex-wrap: nowrap;
+        justify-content: center;
+      }
+
+      .hero-actions .btn {
+        flex: 1;
+        text-align: center;
+      }
+
       .features,
       .how-it-works,
       .showcase,
@@ -1297,11 +1316,11 @@
       }
 
       .features-grid {
-        grid-template-columns: 1fr;
+        grid-template-columns: 1fr 1fr;
       }
 
       .steps-list {
-        grid-template-columns: 1fr;
+        grid-template-columns: 1fr 1fr;
       }
 
       .showcase-grid {
@@ -1662,7 +1681,6 @@
 
         <!-- Left: copy -->
         <div>
-          <div class="hero-tag fade-up">Elegant wedding pages, ready in as little as 2 days</div>
           <h1 class="fade-up delay-1">
             Your love story<br />deserves a<br /><em>beautiful page</em>
           </h1>
@@ -1671,8 +1689,8 @@
             timers, and more. No code. No stress.
           </p>
           <div class="hero-actions fade-up delay-3">
-            <a href="/onboarding" class="btn btn-gold" id="hero-cta">Create My Wedding Page ✦</a>
-            <a href="#showcase" class="btn btn-outline">See Examples</a>
+            <a href="/onboarding" class="btn btn-gold" id="hero-cta">Get Started ✦</a>
+            <a href="#showcase" class="btn btn-outline">View Demo</a>
           </div>
           <div class="hero-trust fade-up delay-4">
             <div class="trust-avatars">
@@ -1689,14 +1707,14 @@
         <div class="hero-visual fade-up delay-2">
           <div class="hero-phone">
             <div class="phone-bar">
-              <span class="phone-bar-name">Maria & Justin</span>
-              <span class="phone-bar-date">June 18, 2026</span>
+              <span class="phone-bar-name">Anna & Marco</span>
+              <span class="phone-bar-date">September 14, 2026</span>
             </div>
-            <div class="phone-hero-img" style="background: url('pexels-junerydocto.webp') center/cover no-repeat;">
+            <div class="phone-hero-img" style="background: url('https://images.unsplash.com/photo-1511285560929-80b456fea0bc?auto=format&fit=crop&w=1800&q=70') center/cover no-repeat;">
             </div>
             <div class="phone-content">
-              <div class="phone-couple">Maria & Justin</div>
-              <div class="phone-date-loc">June 18 · Makati City</div>
+              <div class="phone-couple">Anna & Marco</div>
+              <div class="phone-date-loc">September 14 · Tuscany, Italy</div>
               <div class="phone-rsvp-btn">RSVP Now</div>
               <div class="phone-divider"></div>
               <div class="phone-sections">
@@ -1842,7 +1860,7 @@
       </div>
 
       <div style="text-align:center; margin-top:52px;">
-        <a href="/onboarding" class="btn btn-gold" id="hiw-cta">Start Building — It's Free to Preview ✦</a>
+        <a href="/onboarding" class="btn btn-gold" id="hiw-cta">Let's Get Started ✦</a>
       </div>
     </div>
   </section>
@@ -1857,24 +1875,6 @@
       </div>
 
       <div class="showcase-grid">
-        <div class="showcase-card" onclick="window.open('/sofia-and-carlos','_blank')" style="cursor:pointer">
-          <div class="showcase-thumb showcase-thumb-1">
-            <div class="showcase-preview">
-              <div class="showcase-preview-name">Sofia & Carlos</div>
-              <div class="showcase-preview-date">June 14 · Manila</div>
-            </div>
-          </div>
-          <div class="showcase-body">
-            <strong>Standard Features</strong>
-            <p>Dark, romantic, and editorial — gold accents on a deep moody palette.</p>
-            <div class="showcase-tags">
-              <span class="showcase-tag">RSVP Form</span>
-              <span class="showcase-tag">Countdown</span>
-              <span class="showcase-tag">Google Maps</span>
-            </div>
-          </div>
-        </div>
-
         <div class="showcase-card" onclick="window.open('/anna-and-marco','_blank')" style="cursor:pointer">
           <div class="showcase-thumb showcase-thumb-2">
             <div class="showcase-preview">
@@ -1889,25 +1889,6 @@
               <span class="showcase-tag">Background Music</span>
               <span class="showcase-tag">Meal Selection</span>
               <span class="showcase-tag">Gift Registry</span>
-            </div>
-          </div>
-        </div>
-
-        <div class="showcase-card">
-          <div class="showcase-thumb showcase-thumb-3">
-            <div class="showcase-preview">
-              <div class="showcase-preview-name">Lia & James</div>
-              <div class="showcase-preview-date">Nov 22 · Tagaytay</div>
-              <span class="showcase-preview-badge badge-warm">Premium</span>
-            </div>
-          </div>
-          <div class="showcase-body">
-            <strong>Dusty Rose</strong>
-            <p>Soft, romantic, and effortlessly elegant — with a full live RSVP dashboard.</p>
-            <div class="showcase-tags">
-              <span class="showcase-tag">Live Dashboard</span>
-              <span class="showcase-tag">Music Player</span>
-              <span class="showcase-tag">Guest Photos</span>
             </div>
           </div>
         </div>
