@@ -1473,6 +1473,48 @@
 
       .features-grid {
         grid-template-columns: 1fr 1fr;
+        gap: 0;
+        position: relative;
+        overflow: visible;
+      }
+
+      /* vertical center line — overflows top & bottom, fades */
+      .features-grid::before {
+        content: '';
+        position: absolute;
+        left: 50%;
+        top: -48px;
+        bottom: -48px;
+        width: 1px;
+        background: linear-gradient(
+          to bottom,
+          transparent 0%,
+          rgba(220,215,207,0.7) 18%,
+          rgba(220,215,207,0.7) 82%,
+          transparent 100%
+        );
+        pointer-events: none;
+        z-index: 0;
+      }
+
+      /* strip card styling on mobile */
+      .feature-card {
+        background: transparent;
+        border: none;
+        border-radius: 0;
+        box-shadow: none;
+        padding: 28px 18px;
+      }
+
+      /* horizontal lines only between rows (not above row 1 or below row 3) */
+      .feature-card:nth-child(3),
+      .feature-card:nth-child(4) {
+        border-top: 1px solid rgba(220,215,207,0.7);
+      }
+
+      .feature-card:nth-child(5),
+      .feature-card:nth-child(6) {
+        border-top: 1px solid rgba(220,215,207,0.7);
       }
 
       .steps-list {
@@ -2404,6 +2446,16 @@
         }, 300);
       }
     });
+
+    // Keep preview video permanently muted
+    const previewVideo = document.querySelector('.prev-hero-video');
+    if (previewVideo) {
+      previewVideo.muted = true;
+      previewVideo.volume = 0;
+      previewVideo.addEventListener('volumechange', () => {
+        if (!previewVideo.muted) { previewVideo.muted = true; previewVideo.volume = 0; }
+      });
+    }
 
   </script>
 
