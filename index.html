@@ -930,161 +930,124 @@
     }
 
     /* ─── SAMPLE PAGES SHOWCASE ───────────────────────────── */
-   .showcase-grid {
-      display: grid;
-      grid-template-columns: 1fr 1fr 1fr;
-      gap: 20px;
+    .showcase-grid {
       margin-top: 60px;
-    }
-
-    .showcase-card {
-      background: var(--surface);
-      border-radius: var(--radius-lg);
-      overflow: hidden;
-      box-shadow: var(--shadow-sm);
-      border: 1px solid rgba(220, 215, 207, 0.5);
-      transition: var(--transition);
-      cursor: pointer;
-    }
-
-    .showcase-card:hover {
-      transform: translateY(-10px);
-      box-shadow: var(--shadow-lg);
-    }
-
-    .showcase-thumb {
-      height: 200px;
-      position: relative;
       display: flex;
-      align-items: center;
       justify-content: center;
     }
 
-    .showcase-thumb-1 {
-      background: url('https://images.unsplash.com/photo-1612883833766-7930d960e16f?auto=format&fit=crop&w=800&q=70') center/cover no-repeat;
+    .showcase-card {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      max-width: 780px;
+      width: 100%;
+      background: var(--surface);
+      border-radius: var(--radius-xl);
+      overflow: hidden;
+      box-shadow: var(--shadow-md);
+      border: 1px solid rgba(220, 215, 207, 0.5);
+      transition: var(--transition);
+      cursor: pointer;
+      text-decoration: none;
     }
 
-    .showcase-thumb-1::after {
+    .showcase-card:hover {
+      transform: translateY(-8px);
+      box-shadow: var(--shadow-lg);
+    }
+
+    .showcase-img {
+      background: url('https://images.unsplash.com/photo-1658019071484-f2ebe0902bc1?auto=format&fit=crop&w=900&q=80') center/cover no-repeat;
+      position: relative;
+      min-height: 360px;
+    }
+
+    .showcase-img::after {
       content: '';
       position: absolute;
       inset: 0;
-      background: rgba(20, 16, 12, 0.32);
-    }
-
-    .showcase-thumb-1 .showcase-preview {
-      position: relative;
-      z-index: 1;
-    }
-
-    .showcase-thumb-1 .showcase-preview-name,
-    .showcase-thumb-1 .showcase-preview-date {
-      color: #fff;
-    }
-
-    .showcase-thumb-2 {
-      background: url('https://images.unsplash.com/photo-1511285560929-80b456fea0bc?auto=format&fit=crop&w=800&q=70') center/cover no-repeat;
-    }
-
-    .showcase-thumb-2::after {
-      content: '';
-      position: absolute;
-      inset: 0;
-      background: rgba(19, 16, 26, 0.50);
-    }
-
-    .showcase-thumb-2 .showcase-preview {
-      position: relative;
-      z-index: 1;
-    }
-
-    .showcase-thumb-2 .showcase-preview-name,
-    .showcase-thumb-2 .showcase-preview-date {
-      color: #fff;
-    }
-
-    .showcase-thumb-3 {
-      background: linear-gradient(135deg, #EDE8E3 0%, #D5C5B8 100%);
-    }
-
-    .showcase-preview {
-      text-align: center;
-      padding: 12px;
-    }
-
-    .showcase-preview-name {
-      font-family: 'Cormorant Garamond', serif;
-      font-size: 1.5rem;
-      font-style: italic;
-      margin-bottom: 2px;
-    }
-
-    .showcase-preview-date {
-      font-size: 0.65rem;
-      text-transform: uppercase;
-      letter-spacing: 0.15em;
-      color: var(--text-light);
-    }
-
-    .showcase-preview-badge {
-      display: inline-block;
-      margin-top: 8px;
-      padding: 3px 10px;
-      border-radius: 20px;
-      font-size: 0.65rem;
-      font-weight: 600;
-    }
-
-    .badge-gold {
-      background: var(--gold-light);
-      color: #9A7833;
-    }
-
-    .badge-sage {
-      background: var(--sage-light);
-      color: var(--sage);
-    }
-
-    .badge-warm {
-      background: rgba(209, 163, 164, 0.15);
-      color: #A87070;
-    }
-
-    .badge-plum {
-      background: rgba(107, 63, 94, 0.18);
-      color: #9B6490;
+      background: linear-gradient(135deg, rgba(19,16,26,0.18), rgba(107,63,94,0.22));
     }
 
     .showcase-body {
-      padding: 20px 24px 24px;
-      border-top: 1px solid rgba(220, 215, 207, 0.5);
+      padding: 44px 40px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      gap: 0;
     }
 
-    .showcase-body strong {
-      font-family: 'Cormorant Garamond', serif;
-      font-size: 1.2rem;
+    .showcase-eyebrow {
+      font-size: 0.68rem;
+      text-transform: uppercase;
+      letter-spacing: 0.3em;
+      color: var(--gold);
       font-weight: 500;
-      display: block;
-      margin-bottom: 4px;
+      margin-bottom: 14px;
     }
 
-    .showcase-body p {
-      font-size: 0.8rem;
+    .showcase-name {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 2.2rem;
+      font-weight: 500;
+      font-style: italic;
+      line-height: 1.1;
+      color: var(--text-main);
+      margin-bottom: 6px;
+    }
+
+    .showcase-date {
+      font-size: 0.72rem;
+      text-transform: uppercase;
+      letter-spacing: 0.15em;
+      color: var(--text-light);
+      margin-bottom: 20px;
+    }
+
+    .showcase-divider {
+      width: 40px;
+      height: 1px;
+      background: var(--gold);
+      opacity: 0.4;
+      margin-bottom: 20px;
+    }
+
+    .showcase-desc {
+      font-size: 0.85rem;
       color: var(--text-muted);
+      line-height: 1.7;
+      margin-bottom: 24px;
     }
 
     .showcase-tags {
       display: flex;
       flex-wrap: wrap;
       gap: 6px;
-      margin-top: 12px;
+      margin-bottom: 32px;
     }
 
     .showcase-tag {
-      font-size: 0.72rem;
-      padding: 3px 10px;
+      font-size: 0.7rem;
+      padding: 4px 12px;
       border-radius: 20px;
       background: rgba(220, 215, 207, 0.4);
       color: var(--text-muted);
+    }
+
+    .showcase-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 0.82rem;
+      font-weight: 500;
+      color: var(--gold);
+      letter-spacing: 0.04em;
+      text-decoration: none;
+      transition: gap var(--transition);
+    }
+
+    .showcase-link:hover {
+      gap: 14px;
     }
 
     /* ─── FEATURES LIST ───────────────────────────────────── */
@@ -1451,7 +1414,7 @@
         display: none;
       }
 
-      .showcase-grid {
+      .showcase-card {
         grid-template-columns: 1fr 1fr;
       }
 
@@ -1490,6 +1453,9 @@
       .hero-actions .btn {
         flex: 1;
         text-align: center;
+        white-space: nowrap;
+        padding: 12px 18px;
+        font-size: 0.8rem;
       }
 
       .features,
@@ -1513,8 +1479,16 @@
         grid-template-columns: 1fr 1fr;
       }
 
-      .showcase-grid {
+      .showcase-card {
         grid-template-columns: 1fr;
+      }
+
+      .showcase-img {
+        min-height: 240px;
+      }
+
+      .showcase-body {
+        padding: 32px 28px;
       }
 
       .testimonials-grid {
@@ -2058,27 +2032,30 @@
   <section class="showcase" id="showcase">
     <div class="container">
       <div class="section-header">
-        <span class="eyebrow">Sample pages</span>
+        <span class="eyebrow">Demo page</span>
         <h2>See what your page could look like</h2>
         <p>Every Eventful page is uniquely crafted to match your aesthetic and love story.</p>
       </div>
 
       <div class="showcase-grid">
-        <div class="showcase-card" onclick="window.open('/anna-and-marco','_blank')" style="cursor:pointer">
-          <div class="showcase-thumb showcase-thumb-2">
-            <div class="showcase-preview">
-              <div class="showcase-preview-name">Anna & Marco</div>
-              <div class="showcase-preview-date">Sept 5 · Cebu</div>
-            </div>
-          </div>
+        <div class="showcase-card" onclick="window.open('/anna-and-marco','_blank')">
+          <div class="showcase-img"></div>
           <div class="showcase-body">
-            <strong>Standard + Functional Features</strong>
-            <p>Deep plum and terracotta — bespoke, dramatic, and full of personality.</p>
+            <span class="showcase-eyebrow">Live Example</span>
+            <div class="showcase-name">Anna &amp; Marco</div>
+            <div class="showcase-date">September 20, 2026 · Rome, Italy</div>
+            <div class="showcase-divider"></div>
+            <p class="showcase-desc">Deep plum and terracotta — bespoke, dramatic, and full of personality. Every detail tailored to the couple.</p>
             <div class="showcase-tags">
               <span class="showcase-tag">Background Music</span>
               <span class="showcase-tag">Meal Selection</span>
               <span class="showcase-tag">Gift Registry</span>
+              <span class="showcase-tag">Countdown Timer</span>
+              <span class="showcase-tag">RSVP Form</span>
             </div>
+            <span class="showcase-link">View their page
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+            </span>
           </div>
         </div>
       </div>
