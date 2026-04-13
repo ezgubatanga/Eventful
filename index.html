@@ -1476,6 +1476,8 @@
         gap: 0;
         position: relative;
         overflow: visible;
+        margin-left: -28px;
+        margin-right: -28px;
       }
 
       /* vertical center line — overflows top & bottom, fades */
@@ -1503,7 +1505,17 @@
         border: none;
         border-radius: 0;
         box-shadow: none;
-        padding: 28px 18px;
+        padding: 28px 20px;
+      }
+
+      /* align left-column text with section content */
+      .feature-card:nth-child(odd) {
+        padding-left: 28px;
+      }
+
+      /* align right-column text with section content */
+      .feature-card:nth-child(even) {
+        padding-right: 28px;
       }
 
       /* horizontal lines only between rows (not above row 1 or below row 3) */
@@ -2447,13 +2459,17 @@
       }
     });
 
-    // Keep preview video permanently muted
+    // Keep preview video permanently muted — defaultMuted persists through play/pause cycles
     const previewVideo = document.querySelector('.prev-hero-video');
     if (previewVideo) {
+      previewVideo.defaultMuted = true;
       previewVideo.muted = true;
       previewVideo.volume = 0;
-      previewVideo.addEventListener('volumechange', () => {
-        if (!previewVideo.muted) { previewVideo.muted = true; previewVideo.volume = 0; }
+      ['play', 'playing', 'volumechange', 'canplay', 'canplaythrough'].forEach(evt => {
+        previewVideo.addEventListener(evt, () => {
+          previewVideo.muted = true;
+          previewVideo.volume = 0;
+        });
       });
     }
 
