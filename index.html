@@ -2385,6 +2385,22 @@
           updateState(false);
         }
       });
+
+      // Pause on tab hide, resume on tab show (only if was playing)
+      document.addEventListener('visibilitychange', () => {
+        if (document.hidden) {
+          if (!audio.paused) {
+            audio.pause();
+            updateState(false);
+            audio._wasPlaying = true;
+          }
+        } else {
+          if (audio._wasPlaying) {
+            audio._wasPlaying = false;
+            audio.play().then(() => updateState(true)).catch(() => {});
+          }
+        }
+      });
     })();
 
     // Live Countdown Logic
