@@ -175,16 +175,12 @@ body {
   display: flex;
   align-items: center;
   justify-content: center;
-  backdrop-filter: blur(12px);
-  -webkit-backdrop-filter: blur(12px);
-  box-shadow: 0 4px 16px rgba(0,0,0,0.40);
-  transition: border-color var(--transition), box-shadow var(--transition), transform var(--transition);
+  transition: border-color var(--transition), transform var(--transition);
   text-decoration: none;
 }
 
 .back-btn:hover {
   border-color: var(--plum);
-  box-shadow: var(--shadow-plum);
   transform: translateY(-2px);
 }
 
@@ -1171,6 +1167,7 @@ section { padding: 88px 24px; }
   .story-inner,
   .dress-faq-inner { grid-template-columns: 1fr; gap: 40px; }
   .story-image { aspect-ratio: 3/2; order: 2; }
+  .story-image img { object-position: center top; }
   .story-text { order: 1; }
   .schedule-grid,
   .venue-cards { grid-template-columns: 1fr; }

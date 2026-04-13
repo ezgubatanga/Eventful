@@ -2046,14 +2046,7 @@
             <div class="showcase-date">September 20, 2026 · Rome, Italy</div>
             <div class="showcase-divider"></div>
             <p class="showcase-desc">Deep plum and terracotta — bespoke, dramatic, and full of personality. Every detail tailored to the couple.</p>
-            <div class="showcase-tags">
-              <span class="showcase-tag">Background Music</span>
-              <span class="showcase-tag">Meal Selection</span>
-              <span class="showcase-tag">Gift Registry</span>
-              <span class="showcase-tag">Countdown Timer</span>
-              <span class="showcase-tag">RSVP Form</span>
-            </div>
-            <span class="showcase-link">View their page
+            <span class="showcase-link">View demo page
               <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
             </span>
           </div>
@@ -2401,12 +2394,13 @@
     });
 
     // Initialize Preloader Fade-out
+    document.body.style.overflow = 'hidden';
     window.addEventListener('load', () => {
       const preloader = document.getElementById('page-preloader');
       if (preloader) {
-        // Let it run slightly past the actual visual load for a nice polished effect
         setTimeout(() => {
           preloader.classList.add('hidden');
+          document.body.style.overflow = '';
         }, 300);
       }
     });
