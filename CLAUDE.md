@@ -161,6 +161,19 @@ Use inline SVG icons — never emojis. The icon span uses `.contact-card-icon` w
 ### Background Music
 Place the mp3 inside the couple's folder. Add an `<audio>` element and a floating `.music-btn` button (bottom-right corner). Toggle play/pause and the `.playing` class + pulsing animation in JS. Pattern from `anna-and-marco`.
 
+Always include tab visibility handling — pause when tab hides, resume only if audio was playing when user left:
+
+```js
+let _musicPausedByTab = false;
+document.addEventListener('visibilitychange', () => {
+  if (document.hidden) {
+    if (!audio.paused) { audio.pause(); _musicPausedByTab = true; }
+  } else {
+    if (_musicPausedByTab) { audio.play(); _musicPausedByTab = false; }
+  }
+});
+```
+
 ### Meal Selection
 Add a `<select id="rsvp-meal">` field in the RSVP grid. Add a second meal field (`id="rsvp-meal-guest2"`) with class `rsvp-meal-guest2` (hidden by default). In JS, listen to the guests dropdown: show the second field when value is `'2'`, hide and reset it otherwise.
 
