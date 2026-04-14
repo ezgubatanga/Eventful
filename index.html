@@ -807,6 +807,195 @@
       background: rgba(220, 215, 207, 0.6);
     }
 
+    /* ─── DASHBOARD PREVIEW ──────────────────────────────── */
+    .dashboard-preview {
+      padding: 100px 0;
+    }
+    .dashboard-preview-inner {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 72px;
+      align-items: center;
+    }
+    .dashboard-preview-text .eyebrow {
+      display: inline-block;
+      margin-bottom: 16px;
+    }
+    .dashboard-preview-text h2 {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 2.6rem;
+      font-weight: 500;
+      line-height: 1.2;
+      color: var(--text-main);
+      margin-bottom: 20px;
+    }
+    .dashboard-preview-text p {
+      font-size: 0.95rem;
+      color: var(--text-muted);
+      line-height: 1.8;
+      margin-bottom: 16px;
+    }
+    .dashboard-feature-list {
+      list-style: none;
+      margin-top: 28px;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+    .dashboard-feature-list li {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-size: 0.88rem;
+      color: var(--text-muted);
+    }
+    .dashboard-feature-list li::before {
+      content: '';
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: var(--gold);
+      flex-shrink: 0;
+    }
+    /* Mock dashboard UI */
+    .dash-mock {
+      background: #1a1714;
+      border-radius: var(--radius-lg);
+      box-shadow: var(--shadow-lg);
+      overflow: hidden;
+      font-family: 'Outfit', sans-serif;
+    }
+    .dash-mock-topbar {
+      background: #141210;
+      padding: 14px 20px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      border-bottom: 1px solid rgba(255,255,255,0.06);
+    }
+    .dash-mock-title {
+      font-size: 0.78rem;
+      font-weight: 600;
+      letter-spacing: 0.12em;
+      color: rgba(255,255,255,0.5);
+      text-transform: uppercase;
+    }
+    .dash-mock-dot {
+      width: 8px; height: 8px;
+      border-radius: 50%;
+      background: var(--gold);
+      opacity: 0.7;
+    }
+    .dash-mock-body {
+      padding: 20px;
+    }
+    .dash-mock-kpis {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 10px;
+      margin-bottom: 20px;
+    }
+    .dash-mock-kpi {
+      background: rgba(255,255,255,0.04);
+      border: 1px solid rgba(255,255,255,0.07);
+      border-radius: 10px;
+      padding: 12px 14px;
+    }
+    .dash-mock-kpi-label {
+      font-size: 0.6rem;
+      color: rgba(255,255,255,0.35);
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      margin-bottom: 6px;
+    }
+    .dash-mock-kpi-value {
+      font-size: 1.4rem;
+      font-weight: 600;
+      color: #fff;
+      line-height: 1;
+    }
+    .dash-mock-kpi-value.gold { color: #C5A059; }
+    .dash-mock-table-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 12px;
+    }
+    .dash-mock-table-title {
+      font-size: 0.65rem;
+      font-weight: 600;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.4);
+    }
+    .dash-mock-pills {
+      display: flex;
+      gap: 6px;
+    }
+    .dash-mock-pill {
+      font-size: 0.6rem;
+      padding: 3px 10px;
+      border-radius: 20px;
+      border: 1px solid rgba(255,255,255,0.12);
+      color: rgba(255,255,255,0.35);
+    }
+    .dash-mock-pill.active {
+      border-color: #C5A059;
+      color: #C5A059;
+    }
+    .dash-mock-rows {
+      display: flex;
+      flex-direction: column;
+      gap: 2px;
+    }
+    .dash-mock-row {
+      display: grid;
+      grid-template-columns: 2fr 1fr 1fr 2fr;
+      align-items: center;
+      padding: 9px 12px;
+      border-radius: 8px;
+      background: rgba(255,255,255,0.025);
+      border: 1px solid rgba(255,255,255,0.04);
+      gap: 8px;
+    }
+    .dash-mock-row-name {
+      font-size: 0.72rem;
+      color: rgba(255,255,255,0.75);
+    }
+    .dash-mock-badge {
+      font-size: 0.58rem;
+      padding: 2px 8px;
+      border-radius: 20px;
+      font-weight: 600;
+      display: inline-block;
+    }
+    .dash-mock-badge.yes { background: rgba(95,113,97,0.2); color: #8aab8c; }
+    .dash-mock-badge.no  { background: rgba(180,80,80,0.15); color: #c47a7a; }
+    .dash-mock-row-guests {
+      font-size: 0.7rem;
+      color: rgba(255,255,255,0.35);
+      text-align: center;
+    }
+    .dash-mock-row-head {
+      background: transparent !important;
+      border-color: transparent !important;
+      padding-bottom: 4px;
+    }
+    .dash-mock-row-head div {
+      font-size: 0.58rem;
+      font-weight: 600;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.25) !important;
+    }
+    .dash-mock-row-meal {
+      font-size: 0.68rem;
+      color: rgba(255,255,255,0.3);
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
     /* ─── FEATURES ────────────────────────────────────────── */
     .section-header {
       text-align: center;
@@ -1408,6 +1597,14 @@
 
     /* ─── Responsive ──────────────────────────────────────── */
     @media (max-width: 960px) {
+      .dashboard-preview-inner {
+        grid-template-columns: 1fr;
+        gap: 48px;
+      }
+      .dash-mock-kpis {
+        grid-template-columns: repeat(2, 1fr);
+      }
+
       .hero-inner {
         grid-template-columns: 1fr;
         gap: 60px;
@@ -2031,6 +2228,100 @@
       </div>
     </div>
   </div>
+
+  <!-- ═══ DASHBOARD PREVIEW ══════════════════════════════════ -->
+  <section class="dashboard-preview">
+    <div class="container">
+      <div class="dashboard-preview-inner">
+
+        <div class="dashboard-preview-text">
+          <span class="eyebrow">RSVP Dashboard</span>
+          <h2>Always know who's coming</h2>
+          <p>Every Eventful page comes with a private dashboard — track your headcount, meal choices, and messages in real time, all in one place.</p>
+          <ul class="dashboard-feature-list">
+            <li>Live headcount with going &amp; declined breakdown</li>
+            <li>Meal selection summary per guest</li>
+            <li>Full guest list with contact buttons</li>
+            <li>Printable RSVP report</li>
+          </ul>
+        </div>
+
+        <div class="dash-mock">
+          <div class="dash-mock-topbar">
+            <div class="dash-mock-title">RSVP Dashboard</div>
+            <div class="dash-mock-dot"></div>
+          </div>
+          <div class="dash-mock-body">
+            <div class="dash-mock-kpis">
+              <div class="dash-mock-kpi">
+                <div class="dash-mock-kpi-label">Total</div>
+                <div class="dash-mock-kpi-value">50</div>
+              </div>
+              <div class="dash-mock-kpi">
+                <div class="dash-mock-kpi-label">Attending</div>
+                <div class="dash-mock-kpi-value gold">42</div>
+              </div>
+              <div class="dash-mock-kpi">
+                <div class="dash-mock-kpi-label">Declined</div>
+                <div class="dash-mock-kpi-value">8</div>
+              </div>
+              <div class="dash-mock-kpi">
+                <div class="dash-mock-kpi-label">Headcount</div>
+                <div class="dash-mock-kpi-value">57</div>
+              </div>
+            </div>
+            <div class="dash-mock-table-header">
+              <div class="dash-mock-table-title">Recent RSVPs</div>
+              <div class="dash-mock-pills">
+                <div class="dash-mock-pill active">All</div>
+                <div class="dash-mock-pill">Attending</div>
+                <div class="dash-mock-pill">Declined</div>
+              </div>
+            </div>
+            <div class="dash-mock-rows">
+              <div class="dash-mock-row dash-mock-row-head">
+                <div class="dash-mock-row-name">Name</div>
+                <div class="dash-mock-row-guests">Going</div>
+                <div class="dash-mock-row-guests">Guests</div>
+                <div class="dash-mock-row-meal">Meal</div>
+              </div>
+              <div class="dash-mock-row">
+                <div class="dash-mock-row-name">Sofia Reyes</div>
+                <div><span class="dash-mock-badge yes">Yes</span></div>
+                <div class="dash-mock-row-guests">2</div>
+                <div class="dash-mock-row-meal">Herb-Roasted Chicken</div>
+              </div>
+              <div class="dash-mock-row">
+                <div class="dash-mock-row-name">Marco Dela Cruz</div>
+                <div><span class="dash-mock-badge yes">Yes</span></div>
+                <div class="dash-mock-row-guests">1</div>
+                <div class="dash-mock-row-meal">Braised Beef Tenderloin</div>
+              </div>
+              <div class="dash-mock-row">
+                <div class="dash-mock-row-name">Isabella Santos</div>
+                <div><span class="dash-mock-badge yes">Yes</span></div>
+                <div class="dash-mock-row-guests">2</div>
+                <div class="dash-mock-row-meal">Pan-Seared Sea Bass</div>
+              </div>
+              <div class="dash-mock-row">
+                <div class="dash-mock-row-name">Carlos Mendoza</div>
+                <div><span class="dash-mock-badge no">No</span></div>
+                <div class="dash-mock-row-guests">0</div>
+                <div class="dash-mock-row-meal">—</div>
+              </div>
+              <div class="dash-mock-row">
+                <div class="dash-mock-row-name">Camille Torres</div>
+                <div><span class="dash-mock-badge yes">Yes</span></div>
+                <div class="dash-mock-row-guests">1</div>
+                <div class="dash-mock-row-meal">Roasted Veg Risotto</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
 
   <!-- ═══ FEATURES ═══════════════════════════════════════════ -->
   <section class="features" id="features">
