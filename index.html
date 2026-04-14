@@ -2455,8 +2455,13 @@
       const elM = document.getElementById('prev-cd-mins');
       const elS = document.getElementById('prev-cd-secs');
       const fmt = v => String(v).padStart(2,'0');
-      function tick() {
-        const diff = target - new Date();
+      let lastSec = -1;
+      function tick(ts) {
+        requestAnimationFrame(tick);
+        const now = Math.floor(Date.now() / 1000);
+        if (now === lastSec) return;
+        lastSec = now;
+        const diff = target - Date.now();
         if (diff <= 0) {
           [elD, elH, elM, elS].forEach(el => { if (el) el.textContent = '00'; });
           return;
@@ -2470,8 +2475,7 @@
         if (elM) elM.textContent = fmt(m);
         if (elS) elS.textContent = fmt(s);
       }
-      tick();
-      setInterval(tick, 1000);
+      requestAnimationFrame(tick);
     })();
 
     // Smooth scroll
