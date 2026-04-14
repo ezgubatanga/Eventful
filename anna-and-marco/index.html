@@ -895,10 +895,9 @@
       };
 
       try {
-        await fetch(SCRIPT_URL, {
-          method: 'POST',
-          mode:   'no-cors',
-          body:   new URLSearchParams(payload)
+        await fetch(SCRIPT_URL + '?' + new URLSearchParams(payload), {
+          method: 'GET',
+          mode:   'no-cors'
         });
         fb.style.display = 'block';
         if (attend === 'yes') {

@@ -50,11 +50,53 @@ function doPost(e) {
   }
 }
 
-// Test via browser: returns last 5 RSVPs
 function doGet(e) {
-  const sheet = SpreadsheetApp.openById(SHEET_ID).getSheetByName(SHEET_NAME);
-  const rows  = sheet.getLastRow();
-  return ContentService
-    .createTextOutput('Sheet has ' + rows + ' rows (including header).')
-    .setMimeType(ContentService.MimeType.TEXT);
+  const lock = LockService.scriptLock();
+  lock.tryLock(10000);
+
+  try {
+    const data  = e.parameter;
+
+    // If no name param, return row count (health check)
+    if (!data.name) {
+      const sheet = SpreadsheetApp.openById(SHEET_ID).getSheetByName(SHEET_NAME);
+      return ContentService
+        .createTextOutput('Sheet has ' + sheet.getLastRow() + ' rows (including header).')
+        .setMimeType(ContentService.MimeType.TEXT);
+    }
+
+    const sheet = SpreadsheetApp.openById(SHEET_ID).getSheetByName(SHEET_NAME);
+
+    if (sheet.getLastRow() === 0) {
+      sheet.appendRow([
+        'Timestamp', 'Name', 'Email', 'Phone',
+        'Attending', 'Guests', 'Meal', 'Plus-One Meal', 'Message'
+      ]);
+      sheet.getRange(1, 1, 1, 9).setFontWeight('bold');
+    }
+
+    sheet.appendRow([
+      new Date(),
+      data.name    || '',
+      data.email   || '',
+      data.phone   || '',
+      data.attend  || '',
+      data.guests  || '',
+      data.meal    || '',
+      data.meal2   || '',
+      data.message || ''
+    ]);
+
+    return ContentService
+      .createTextOutput(JSON.stringify({ status: 'ok' }))
+      .setMimeType(ContentService.MimeType.JSON);
+
+  } catch (err) {
+    return ContentService
+      .createTextOutput(JSON.stringify({ status: 'error', message: err.message }))
+      .setMimeType(ContentService.MimeType.JSON);
+
+  } finally {
+    lock.releaseLock();
+  }
 }
