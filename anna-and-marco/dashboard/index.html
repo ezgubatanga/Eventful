@@ -736,39 +736,22 @@
     let activeFilter   = 'all';
     let currentFiltered = [];
 
-    function loadData() {
+    async function loadData() {
       document.getElementById('state-loading').style.display = 'flex';
       document.getElementById('state-error').style.display   = 'none';
       document.getElementById('content').style.display       = 'none';
 
-      const cbName = '_gasCallback_' + Date.now();
-      const script = document.createElement('script');
-      const timeout = setTimeout(() => {
-        script.remove();
-        delete window[cbName];
-        document.getElementById('state-loading').style.display = 'none';
-        document.getElementById('state-error').style.display   = 'flex';
-      }, 10000);
-
-      window[cbName] = function(data) {
-        clearTimeout(timeout);
-        script.remove();
-        delete window[cbName];
+      try {
+        const res  = await fetch(SCRIPT_URL + '?action=data');
+        const data = await res.json();
         allRecent = data.recent || [];
         render(data);
         document.getElementById('state-loading').style.display = 'none';
         document.getElementById('content').style.display       = 'block';
-      };
-
-      script.src = SCRIPT_URL + '?action=data&callback=' + cbName;
-      script.onerror = () => {
-        clearTimeout(timeout);
-        script.remove();
-        delete window[cbName];
+      } catch (err) {
         document.getElementById('state-loading').style.display = 'none';
         document.getElementById('state-error').style.display   = 'flex';
-      };
-      document.head.appendChild(script);
+      }
     }
 
     document.getElementById('refresh-btn').addEventListener('click', loadData);
