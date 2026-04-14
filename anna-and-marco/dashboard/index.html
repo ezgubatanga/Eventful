@@ -334,6 +334,41 @@
       font-style: italic;
     }
 
+    /* ── Table actions ── */
+    .table-actions {
+      display: flex;
+      gap: 10px;
+      margin-top: 12px;
+      justify-content: flex-end;
+    }
+    .tbl-btn {
+      padding: 8px 20px;
+      border-radius: 8px;
+      font-size: 0.8rem;
+      font-family: 'Outfit', sans-serif;
+      font-weight: 500;
+      cursor: pointer;
+      border: 1px solid var(--border);
+      transition: background 0.2s, color 0.2s;
+    }
+    .tbl-btn-viewall {
+      background: transparent;
+      color: var(--gold);
+      border-color: var(--gold);
+    }
+    .tbl-btn-viewall:hover { background: var(--gold); color: #1a1a1a; }
+    .tbl-btn-print {
+      background: transparent;
+      color: var(--light);
+      border-color: var(--border);
+    }
+    .tbl-btn-print:hover { background: var(--surface); color: var(--text); }
+    @media print {
+      body > *:not(#main) { display: none; }
+      .table-actions, .filter-row, .nav-hamburger, .auth-overlay { display: none !important; }
+      .dots-dropdown, .btn-dots, .action-btn { display: none !important; }
+    }
+
     /* ── Recent table ── */
     .table-wrap {
       background: var(--surface);
@@ -694,6 +729,10 @@
           <tbody id="rsvp-tbody"></tbody>
         </table>
       </div>
+      <div class="table-actions" id="table-actions">
+        <button class="tbl-btn tbl-btn-viewall" id="btn-view-all">View All</button>
+        <button class="tbl-btn tbl-btn-print" id="btn-print">Print</button>
+      </div>
 
     </div>
   </main>
@@ -735,6 +774,7 @@
     let allRecent      = [];
     let activeFilter   = 'all';
     let currentFiltered = [];
+    let showAll        = false;
 
     async function loadData() {
       document.getElementById('state-loading').style.display = 'flex';
@@ -763,6 +803,7 @@
         document.querySelectorAll('.filter-pill').forEach(p => p.classList.remove('active'));
         pill.classList.add('active');
         activeFilter = pill.dataset.filter;
+        showAll = false;
         renderTable();
       });
     });
@@ -825,13 +866,21 @@
         ? allRecent
         : allRecent.filter(r => r.attend === activeFilter);
 
-      const tbody = document.getElementById('rsvp-tbody');
+      const tbody   = document.getElementById('rsvp-tbody');
+      const viewBtn = document.getElementById('btn-view-all');
+      const actions = document.getElementById('table-actions');
+
       if (!currentFiltered.length) {
         tbody.innerHTML = `<tr><td colspan="6" style="text-align:center;color:var(--light);padding:32px">No RSVPs found.</td></tr>`;
+        actions.style.display = 'none';
         return;
       }
 
-      tbody.innerHTML = currentFiltered.map((r, i) => `
+      const visible = showAll ? currentFiltered : currentFiltered.slice(0, 10);
+      viewBtn.textContent = showAll ? 'Show Less' : `View All (${currentFiltered.length})`;
+      actions.style.display = currentFiltered.length <= 10 ? 'none' : 'flex';
+
+      tbody.innerHTML = visible.map((r, i) => `
         <tr>
           <td>${esc(r.name)}</td>
           <td>${r.attend === 'yes'
@@ -868,7 +917,7 @@
       `).join('');
 
       // Attach listeners directly to each button — no delegation, no stale closures
-      currentFiltered.forEach((r, i) => {
+      visible.forEach((r, i) => {
         document.getElementById('btn-remove-' + i).addEventListener('click', e => {
           e.stopPropagation();
           openRemoveModal(r);
@@ -888,6 +937,13 @@
         });
       });
     }
+
+    document.getElementById('btn-view-all').addEventListener('click', () => {
+      showAll = !showAll;
+      renderTable();
+    });
+
+    document.getElementById('btn-print').addEventListener('click', () => window.print());
 
     function closeAllDropdowns() {
       document.querySelectorAll('.dots-dropdown.open').forEach(d => d.classList.remove('open'));

@@ -93,7 +93,7 @@ function doGet(e) {
         headcount: going + plusOnes,
         meals,
         meals2,
-        recent:    recent.slice(0, 20)
+        recent:    recent
       }, callback);
     }
 
