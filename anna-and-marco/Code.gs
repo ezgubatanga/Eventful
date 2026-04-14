@@ -78,7 +78,10 @@ function doGet(e) {
           attend,
           guests: String(guests),
           meal,
-          ts:  ts ? new Date(ts).toLocaleDateString('en-US', { month: 'short', day: 'numeric' }) : '',
+          meal2,
+          message,
+          ts:    ts ? new Date(ts).toLocaleDateString('en-US', { month: 'short', day: 'numeric' }) : '',
+          tsRaw: ts ? new Date(ts).toLocaleString('en-US') : '',
           row: i + 1
         });
       }
