@@ -1,6 +1,3 @@
-// Anna & Marco — RSVP to Google Sheets
-// Deploy as Web App: Execute as Me, Anyone can access
-
 const SHEET_ID   = '1UdaACtGxNvgPut1UpF8qioRvoIKK6XOMjE-tkw6fBOQ';
 const SHEET_NAME = 'RSVPs';
 
@@ -13,10 +10,7 @@ function doPost(e) {
     const sheet = SpreadsheetApp.openById(SHEET_ID).getSheetByName(SHEET_NAME);
 
     if (sheet.getLastRow() === 0) {
-      sheet.appendRow([
-        'Timestamp', 'Name', 'Email', 'Phone',
-        'Attending', 'Guests', 'Meal', 'Plus-One Meal', 'Message'
-      ]);
+      sheet.appendRow(['Timestamp', 'Name', 'Email', 'Phone', 'Attending', 'Guests', 'Meal', 'Plus-One Meal', 'Message']);
       sheet.getRange(1, 1, 1, 9).setFontWeight('bold');
     }
 
@@ -32,12 +26,10 @@ function doPost(e) {
       data.message || ''
     ]);
 
-    // MailApp.sendEmail('anna@example.com', 'New RSVP from ' + data.name, JSON.stringify(data, null, 2));
-
-    return json({ status: 'ok' });
+    return json({ status: 'ok' }, null);
 
   } catch (err) {
-    return json({ status: 'error', message: err.message });
+    return json({ status: 'error', message: err.message }, null);
   } finally {
     lock.releaseLock();
   }
@@ -47,11 +39,11 @@ function doGet(e) {
   const lock = LockService.getScriptLock();
   lock.tryLock(10000);
 
-  try {
-    const action   = e.parameter.action;
-    const callback = e.parameter.callback || null;
+  const callback = (e.parameter && e.parameter.callback) ? e.parameter.callback : null;
 
-    // Dashboard data endpoint
+  try {
+    const action = e.parameter.action;
+
     if (action === 'data') {
       const sheet = SpreadsheetApp.openById(SHEET_ID).getSheetByName(SHEET_NAME);
       const rows  = sheet.getDataRange().getValues();
@@ -61,7 +53,8 @@ function doGet(e) {
       }
 
       let going = 0, notGoing = 0, plusOnes = 0;
-      const meals = {}, meals2 = {};
+      const meals  = {};
+      const meals2 = {};
       const recent = [];
 
       for (let i = 1; i < rows.length; i++) {
@@ -71,7 +64,7 @@ function doGet(e) {
         if (attend === 'yes') {
           going++;
           if (String(guests) === '2') plusOnes++;
-          if (meal)  meals[meal]   = (meals[meal]  || 0) + 1;
+          if (meal)  meals[meal]   = (meals[meal]   || 0) + 1;
           if (meal2) meals2[meal2] = (meals2[meal2] || 0) + 1;
         } else {
           notGoing++;
@@ -84,12 +77,12 @@ function doGet(e) {
           attend,
           guests: String(guests),
           meal,
-          ts: ts ? new Date(ts).toLocaleDateString('en-US', { month: 'short', day: 'numeric' }) : '',
-          row: i + 1   // 1-indexed sheet row (row 1 = header, data starts at 2)
+          ts:  ts ? new Date(ts).toLocaleDateString('en-US', { month: 'short', day: 'numeric' }) : '',
+          row: i + 1
         });
       }
 
-      recent.reverse(); // newest first
+      recent.reverse();
 
       return json({
         total:     going + notGoing,
@@ -103,7 +96,6 @@ function doGet(e) {
       }, callback);
     }
 
-    // Delete a row
     if (action === 'delete') {
       const rowIndex = parseInt(e.parameter.row);
       if (rowIndex > 1) {
@@ -113,14 +105,13 @@ function doGet(e) {
       return json({ status: 'ok' }, callback);
     }
 
-    // RSVP submission via GET (form handler)
     const data = e.parameter;
     if (data.name) {
       const sheet = SpreadsheetApp.openById(SHEET_ID).getSheetByName(SHEET_NAME);
 
       if (sheet.getLastRow() === 0) {
-        sheet.appendRow(['Timestamp','Name','Email','Phone','Attending','Guests','Meal','Plus-One Meal','Message']);
-        sheet.getRange(1,1,1,9).setFontWeight('bold');
+        sheet.appendRow(['Timestamp', 'Name', 'Email', 'Phone', 'Attending', 'Guests', 'Meal', 'Plus-One Meal', 'Message']);
+        sheet.getRange(1, 1, 1, 9).setFontWeight('bold');
       }
 
       sheet.appendRow([
@@ -138,7 +129,6 @@ function doGet(e) {
       return json({ status: 'ok' }, callback);
     }
 
-    // Health check
     const sheet = SpreadsheetApp.openById(SHEET_ID).getSheetByName(SHEET_NAME);
     return ContentService
       .createTextOutput('Sheet has ' + sheet.getLastRow() + ' rows (including header).')
