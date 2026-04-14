@@ -596,7 +596,9 @@
       .kpi-grid { grid-template-columns: repeat(2, 1fr); gap: 10px; }
       .kpi-value { font-size: 1.9rem; }
       .meal-name { width: 130px; }
-      /* Hide Date column on mobile */
+      /* Hide Meal + Date columns on mobile */
+      thead th:nth-child(4),
+      tbody td:nth-child(4),
       thead th:nth-child(5),
       tbody td:nth-child(5) { display: none; }
       /* Show 3-dots, hide text buttons */
@@ -697,11 +699,11 @@
           <thead>
             <tr>
               <th>Name</th>
-              <th>Status</th>
+              <th>Attending</th>
               <th>Guests</th>
               <th>Meal</th>
               <th>Date</th>
-              <th class="th-actions">Actions</th>
+              <th class="th-actions"></th>
             </tr>
           </thead>
           <tbody id="rsvp-tbody"></tbody>
@@ -846,10 +848,10 @@
         <tr>
           <td>${esc(r.name)}</td>
           <td>${r.attend === 'yes'
-            ? '<span class="badge badge-going">Attending</span>'
-            : '<span class="badge badge-no">Declined</span>'
+            ? '<span class="badge badge-going">Yes</span>'
+            : '<span class="badge badge-no">No</span>'
           }</td>
-          <td class="td-muted">${r.guests === '2' ? '2 guests' : '1 guest'}</td>
+          <td class="td-muted">${r.guests === '2' ? '2' : '1'}</td>
           <td class="td-muted">${esc(MEAL_LABELS[r.meal] || r.meal || '—')}</td>
           <td class="td-muted">${esc(r.ts)}</td>
           <td class="td-actions">
