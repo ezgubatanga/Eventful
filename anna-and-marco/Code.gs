@@ -48,7 +48,8 @@ function doGet(e) {
   lock.tryLock(10000);
 
   try {
-    const action = e.parameter.action;
+    const action   = e.parameter.action;
+    const callback = e.parameter.callback || null;
 
     // Dashboard data endpoint
     if (action === 'data') {
@@ -56,7 +57,7 @@ function doGet(e) {
       const rows  = sheet.getDataRange().getValues();
 
       if (rows.length <= 1) {
-        return json({ total: 0, going: 0, notGoing: 0, plusOnes: 0, headcount: 0, meals: {}, meals2: {}, recent: [] });
+        return json({ total: 0, going: 0, notGoing: 0, plusOnes: 0, headcount: 0, meals: {}, meals2: {}, recent: [] }, callback);
       }
 
       let going = 0, notGoing = 0, plusOnes = 0;
@@ -99,7 +100,7 @@ function doGet(e) {
         meals,
         meals2,
         recent:    recent.slice(0, 20)
-      });
+      }, callback);
     }
 
     // Delete a row
@@ -109,7 +110,7 @@ function doGet(e) {
         const sheet = SpreadsheetApp.openById(SHEET_ID).getSheetByName(SHEET_NAME);
         sheet.deleteRow(rowIndex);
       }
-      return json({ status: 'ok' });
+      return json({ status: 'ok' }, callback);
     }
 
     // RSVP submission via GET (form handler)
@@ -134,7 +135,7 @@ function doGet(e) {
         data.message || ''
       ]);
 
-      return json({ status: 'ok' });
+      return json({ status: 'ok' }, callback);
     }
 
     // Health check
@@ -144,13 +145,18 @@ function doGet(e) {
       .setMimeType(ContentService.MimeType.TEXT);
 
   } catch (err) {
-    return json({ status: 'error', message: err.message });
+    return json({ status: 'error', message: err.message }, callback);
   } finally {
     lock.releaseLock();
   }
 }
 
-function json(obj) {
+function json(obj, callback) {
+  if (callback) {
+    return ContentService
+      .createTextOutput(callback + '(' + JSON.stringify(obj) + ')')
+      .setMimeType(ContentService.MimeType.JAVASCRIPT);
+  }
   return ContentService
     .createTextOutput(JSON.stringify(obj))
     .setMimeType(ContentService.MimeType.JSON);
