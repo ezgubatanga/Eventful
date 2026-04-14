@@ -371,7 +371,14 @@
       table th.screen-only, table td.screen-only { display: none !important; }
       table th.print-only, table td.print-only { display: table-cell !important; white-space: normal; word-break: break-word; }
       table td, table th { white-space: normal !important; word-break: break-word; overflow: visible !important; }
-      table { font-size: 0.7rem; table-layout: auto; width: 100%; }
+      table { font-size: 0.7rem; table-layout: fixed; width: 100%; }
+      /* Name Phone Going Guest Meal Message */
+      thead th:nth-child(1) { width: 18%; }
+      thead th:nth-child(2) { width: 14%; }
+      thead th:nth-child(3) { width: 8%;  }
+      thead th:nth-child(4) { width: 7%;  }
+      thead th:nth-child(5) { width: 18%; }
+      thead th:nth-child(6) { width: 35%; }
       #rsvp-section-title::after { content: 'RSVPs'; }
       #rsvp-section-title { font-size: 0; }
       #rsvp-section-title::after { font-size: 0.75rem; letter-spacing: 0.1em; }
@@ -732,7 +739,7 @@
               <th>Going</th>
               <th>Guest</th>
               <th>Meal</th>
-              <th>Date</th>
+              <th class="screen-only">Date</th>
               <th class="print-only">Message</th>
               <th class="th-actions screen-only"></th>
             </tr>
@@ -901,7 +908,7 @@
           }</td>
           <td class="td-muted">${r.attend !== 'yes' ? '0' : r.guests === '2' ? '2' : '1'}</td>
           <td class="td-muted">${esc(MEAL_LABELS[r.meal] || r.meal || '—')}</td>
-          <td class="td-muted">${esc(r.ts)}</td>
+          <td class="td-muted screen-only">${esc(r.ts)}</td>
           <td class="print-only">${esc(r.message || '—')}</td>
           <td class="td-actions">
             ${r.phone ? `<a class="action-btn btn-contact" href="tel:${String(r.phone)}" target="_blank">
@@ -956,7 +963,14 @@
       renderTable();
     });
 
-    document.getElementById('btn-print').addEventListener('click', () => window.print());
+    document.getElementById('btn-print').addEventListener('click', () => {
+      const prev = showAll;
+      showAll = true;
+      renderTable();
+      window.print();
+      showAll = prev;
+      renderTable();
+    });
 
     function closeAllDropdowns() {
       document.querySelectorAll('.dots-dropdown.open').forEach(d => d.classList.remove('open'));
