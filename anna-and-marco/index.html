@@ -870,7 +870,7 @@
     }
 
     // ── RSVP ──────────────────────────────────────────────
-    const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbymhlnCdW71K5wqxYYtiR5I0QYZs5lUKuFWMShekt5ulnHBN5qz0gr5fA_qsk8TB0Nm4A/exec';
+    const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbxlzoxREgePvEsPzO1Gn53qG483GknKqpaX24kglO54tVRIPJJtd0VG3BpMgKdOimVtBQ/exec';
 
     document.getElementById('rsvpForm').addEventListener('submit', async function(e) {
       e.preventDefault();
@@ -898,7 +898,7 @@
         await fetch(SCRIPT_URL, {
           method: 'POST',
           mode:   'no-cors',
-          body:   JSON.stringify(payload)
+          body:   new URLSearchParams(payload)
         });
         fb.style.display = 'block';
         if (attend === 'yes') {

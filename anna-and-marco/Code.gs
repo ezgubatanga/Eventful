@@ -9,7 +9,7 @@ function doPost(e) {
   lock.tryLock(10000);
 
   try {
-    const data   = JSON.parse(e.postData.contents);
+    const data   = e.parameter;
     const sheet  = SpreadsheetApp.openById(SHEET_ID).getSheetByName(SHEET_NAME);
 
     // Add header row if sheet is empty
