@@ -791,6 +791,28 @@
       }
     });
 
+    // ── Attend — disable guests/meal when declining ───────
+    const attendSelect  = document.getElementById('rsvp-attend');
+    const mealSelect    = document.getElementById('rsvp-meal');
+    const declineFields = [guestsSelect, mealSelect];
+
+    attendSelect.addEventListener('change', () => {
+      const declining = attendSelect.value === 'no';
+      declineFields.forEach(el => {
+        el.disabled = declining;
+        el.closest('.rsvp-field').style.opacity = declining ? '0.35' : '1';
+      });
+      if (declining) {
+        guestsSelect.value = '1';
+        mealSelect.value   = '';
+        meal2Field.classList.remove('visible');
+        document.getElementById('rsvp-meal-guest2').value = '';
+        document.getElementById('rsvp-meal-guest2').disabled = true;
+      } else {
+        document.getElementById('rsvp-meal-guest2').disabled = false;
+      }
+    });
+
 
     // ── Password protection ───────────────────────────────
     (function () {
