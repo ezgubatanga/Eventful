@@ -39,10 +39,11 @@ function doGet(e) {
   const lock = LockService.getScriptLock();
   lock.tryLock(10000);
 
-  const callback = (e.parameter && e.parameter.callback) ? e.parameter.callback : null;
+  const params   = (e && e.parameter) ? e.parameter : {};
+  const callback = params.callback || null;
 
   try {
-    const action = e.parameter.action;
+    const action = params.action;
 
     if (action === 'data') {
       const sheet = SpreadsheetApp.openById(SHEET_ID).getSheetByName(SHEET_NAME);
@@ -97,7 +98,7 @@ function doGet(e) {
     }
 
     if (action === 'delete') {
-      const rowIndex = parseInt(e.parameter.row);
+      const rowIndex = parseInt(params.row);
       if (rowIndex > 1) {
         const sheet = SpreadsheetApp.openById(SHEET_ID).getSheetByName(SHEET_NAME);
         sheet.deleteRow(rowIndex);
@@ -105,7 +106,7 @@ function doGet(e) {
       return json({ status: 'ok' }, callback);
     }
 
-    const data = e.parameter;
+    const data = params;
     if (data.name) {
       const sheet = SpreadsheetApp.openById(SHEET_ID).getSheetByName(SHEET_NAME);
 
