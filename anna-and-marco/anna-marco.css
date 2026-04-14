@@ -46,7 +46,7 @@
   width: 100px;
   height: auto;
   position: relative;
-  filter: drop-shadow(0 0 10px rgba(197,160,89,0.55));
+
 }
 
 .loader #pegtopone { position: absolute; animation: flowe-one 2s linear infinite; }
