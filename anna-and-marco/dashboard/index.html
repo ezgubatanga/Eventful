@@ -412,7 +412,8 @@
       margin-left: 6px;
     }
     .btn-remove:hover { background: rgba(196,122,122,0.16); }
-    .btn-icon { width: 13px; height: 13px; }
+    .btn-icon { width: 13px; height: 13px; pointer-events: none; }
+    .action-btn * { pointer-events: none; }
 
     /* ── 3-dots mobile menu ── */
     .btn-dots {
@@ -429,7 +430,7 @@
       transition: background 0.15s;
     }
     .btn-dots:hover { background: var(--gold-mid); }
-    .btn-dots svg { width: 16px; height: 16px; pointer-events: none; }
+    .btn-dots * { pointer-events: none; }
     .td-actions { position: relative; white-space: nowrap; }
     .dots-dropdown {
       display: none;
@@ -460,7 +461,8 @@
       text-align: left;
       transition: background 0.12s;
     }
-    .dots-item svg { width: 14px; height: 14px; flex-shrink: 0; }
+    .dots-item svg { width: 14px; height: 14px; flex-shrink: 0; pointer-events: none; }
+    .dots-item * { pointer-events: none; }
     .dots-item:hover { background: var(--surface-3); }
     .dots-item-contact { color: var(--gold); }
     .dots-item-delete  { color: var(--red); border-top: 1px solid var(--border); }
@@ -604,7 +606,7 @@
       thead th:nth-child(2),
       tbody td:nth-child(2) { width: 1px; white-space: nowrap; padding-left: 8px; padding-right: 8px; }
       thead th:nth-child(3),
-      tbody td:nth-child(3) { width: 1px; white-space: nowrap; padding-left: 8px; padding-right: 4px; text-align: center; }
+      tbody td:nth-child(3) { width: 1px; white-space: nowrap; padding-left: 8px; padding-right: 4px; }
       /* Compact meal text */
       thead th:nth-child(4),
       tbody td:nth-child(4) { padding-left: 4px; padding-right: 4px; }
@@ -710,7 +712,7 @@
             <tr>
               <th>Name</th>
               <th>Going</th>
-              <th style="text-align:center">Guests</th>
+              <th>Guests</th>
               <th>Meal</th>
               <th>Date</th>
               <th class="th-actions"></th>
