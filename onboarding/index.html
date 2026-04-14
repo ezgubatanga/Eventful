@@ -9,15 +9,15 @@
   <meta name="description" content="Your wedding, in one beautiful page." />
   <meta property="og:title" content="Create Your Wedding Page – Eventful" />
   <meta property="og:description" content="Your wedding, in one beautiful page." />
-  <meta property="og:image" content="../eventful.webp" />
+  <meta property="og:image" content="https://eventful.page/eventful.webp" />
   <meta property="og:url" content="https://eventful.page/onboarding" />
   <meta property="og:type" content="website" />
   <meta name="twitter:card" content="summary_large_image" />
   <meta name="twitter:title" content="Create Your Wedding Page – Eventful" />
   <meta name="twitter:description" content="Your wedding, in one beautiful page." />
-  <meta name="twitter:image" content="../eventful.webp" />
+  <meta name="twitter:image" content="https://eventful.page/eventful.webp" />
   <meta name="agd-partner-manual-verification" />
-  <link rel="icon" type="image/webp" href="../favicon.webp" />
+  <link rel="icon" type="image/webp" href="https://eventful.page/favicon.webp" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link
@@ -1403,6 +1403,112 @@
       cursor: not-allowed;
     }
 
+    /* ─── Included Details Disclosure ───────────────────── */
+    .included-details {
+      margin-top: 16px;
+    }
+
+    .included-summary {
+      font-size: 0.8rem;
+      color: var(--gold);
+      font-weight: 600;
+      cursor: pointer;
+      letter-spacing: 0.04em;
+      list-style: none;
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      user-select: none;
+    }
+
+    .included-summary::-webkit-details-marker { display: none; }
+
+    .included-grid {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+    }
+
+    .included-tag {
+      display: inline-flex;
+      align-items: center;
+      gap: 7px;
+      font-size: 0.85rem;
+      background: var(--sage-light);
+      color: var(--sage);
+      border: 1px solid rgba(95, 113, 97, 0.2);
+      border-radius: 999px;
+      padding: 8px 16px;
+      font-weight: 500;
+    }
+
+    .included-tag::before {
+      content: '✓';
+      font-size: 0.75rem;
+      font-weight: 700;
+    }
+
+    /* ─── Price Bar ──────────────────────────────────────── */
+    .price-bar {
+      display: none;
+      position: fixed;
+      bottom: 24px;
+      right: 24px;
+      background: var(--primary);
+      color: #fff;
+      border-radius: 999px;
+      padding: 10px 20px;
+      font-family: 'Outfit', sans-serif;
+      font-size: 0.88rem;
+      font-weight: 500;
+      box-shadow: 0 8px 28px rgba(42, 37, 32, 0.28);
+      z-index: 500;
+      gap: 10px;
+      align-items: center;
+      pointer-events: none;
+    }
+
+    .price-bar.visible {
+      display: flex;
+    }
+
+    .price-bar-label {
+      color: rgba(255,255,255,0.55);
+      font-size: 0.78rem;
+    }
+
+    .price-bar-amount {
+      font-weight: 700;
+      font-size: 1rem;
+      color: #fff;
+    }
+
+    /* ─── Domain Status ──────────────────────────────────── */
+    .domain-status {
+      display: none;
+      align-items: center;
+      gap: 6px;
+      margin-top: 8px;
+      font-size: 0.8rem;
+      font-weight: 500;
+    }
+
+    .domain-status.visible { display: flex; }
+
+    .domain-status-dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      flex-shrink: 0;
+    }
+
+    .domain-status.checking .domain-status-dot { background: var(--text-light); }
+    .domain-status.checking { color: var(--text-light); }
+    .domain-status.available .domain-status-dot { background: var(--sage); }
+    .domain-status.available { color: var(--sage); }
+    .domain-status.taken .domain-status-dot { background: #C0706A; }
+    .domain-status.taken { color: #C0706A; }
+
     /* ─── Responsive ─────────────────────────────────────── */
     @media (max-width: 640px) {
       .page-wrap {
@@ -1493,7 +1599,7 @@
       <div class="step-connector" id="conn-1-2"></div>
       <div class="step-node" id="node-2">
         <div class="step-circle" id="circle-2">2</div>
-        <span class="step-label" id="label-2">Sections</span>
+        <span class="step-label" id="label-2">What's Included</span>
       </div>
       <div class="step-connector" id="conn-2-3"></div>
       <div class="step-node" id="node-3">
@@ -1596,6 +1702,10 @@
                   oninput="updateSlugPreview(this.value)" />
               </div>
               <span class="field-error" id="err-pageSlug">Please enter a preferred URL (letters, numbers, and hyphens only).</span>
+              <div class="domain-status" id="domainStatus">
+                <span class="domain-status-dot"></span>
+                <span id="domainStatusText"></span>
+              </div>
               <label class="still-deciding-label" style="margin-top:8px">
                 <input type="checkbox" id="wantCustomDomain" />
                 <span>I want a custom domain <span style="color:var(--gold,#b8972a);font-weight:600;">+₱1,800 (one year)</span></span>
@@ -1611,25 +1721,19 @@
         </div>
       </div>
 
-      <!-- ── Step 2: Core Sections ──────────────────────── -->
-      <div class="step-panel" id="step-2" role="tabpanel" aria-label="Step 2: Core Sections">
+      <!-- ── Step 2: What's Included ──────────────────── -->
+      <div class="step-panel" id="step-2" role="tabpanel" aria-label="Step 2: What's Included">
         <div class="step-header">
           <p class="step-number">Step 02 / 05</p>
-          <h2 class="step-title">Your Page Sections</h2>
-          <p class="step-desc">Every Eventful package includes these beautifully crafted sections — no extras needed to
-            look amazing.</p>
+          <h2 class="step-title">Everything You Get</h2>
+          <p class="step-desc">Every Eventful page comes with these beautifully crafted sections — no extras needed to look stunning.</p>
         </div>
         <div class="step-body">
-          <div class="section-group">
-            <p class="group-label">Included in all packages</p>
-            <div class="checkbox-grid" id="coreSectionsGrid">
-              <!-- Populated by JS -->
-            </div>
-          </div>
+          <div class="included-grid" id="coreSectionsGrid"><!-- Populated by JS --></div>
         </div>
         <div class="step-nav">
           <button class="btn btn-ghost" onclick="goBack(2)">← Back</button>
-          <button class="btn btn-primary" onclick="goNext(2)">Continue →</button>
+          <button class="btn btn-primary" onclick="goNext(2)">Looks great — Continue →</button>
         </div>
       </div>
 
@@ -1638,8 +1742,7 @@
         <div class="step-header">
           <p class="step-number">Step 03 / 05</p>
           <h2 class="step-title">Functional Add-Ons</h2>
-          <p class="step-desc">Enhance your guests' experience with these practical features. Select as many as you'd
-            like.</p>
+          <p class="step-desc">Enhance your guests' experience with these practical features. Select as many as you'd like.</p>
         </div>
         <div class="step-body">
           <div class="checkbox-grid" id="functionalAddOnsGrid">
@@ -1652,7 +1755,7 @@
         </div>
       </div>
 
-      <!-- ── Step 4: Premium Add-Ons ────────────────────── -->
+      <!-- ── Step 3: Premium Add-Ons ────────────────────── -->
       <div class="step-panel" id="step-4" role="tabpanel" aria-label="Step 4: Premium Add-Ons">
         <div class="step-header">
           <p class="step-number">Step 04 / 05</p>
@@ -1700,7 +1803,7 @@
         </div>
       </div>
 
-      <!-- ── Step 5: Summary ────────────────────────────── -->
+      <!-- ── Step 4: Summary ────────────────────────────── -->
       <div class="step-panel" id="step-5" role="tabpanel" aria-label="Step 5: Summary">
         <div class="step-header">
           <p class="step-number">Step 05 / 05</p>
@@ -1804,17 +1907,8 @@
             <span class="payment-upload-preview-name" id="previewName"></span>
             <button class="payment-upload-remove" onclick="removeReceipt()" title="Remove">✕</button>
           </div>
-          <!-- No-receipt warning -->
-<div class="no-receipt-warning" id="noReceiptWarning" style="display:none">
-  <p>You haven't uploaded a receipt yet. What would you like to do?</p>
-  <div class="no-receipt-actions">
-    <button class="btn btn-ghost" onclick="goBackToSummary()">← Go Back</button>
-    <button class="btn btn-primary" onclick="saveForLater()">Save for Later</button>
-  </div>
-</div>
-
           <button class="btn-confirm-payment" id="confirmPaymentBtn" onclick="confirmPayment()">
-            Complete Payment ✦
+            Done — I've Sent Payment ✦
           </button>
         </div>
       </div>
@@ -1824,7 +1918,7 @@
         <div class="status-icon success">🌸</div>
         <h2 class="status-title">You're on your way!</h2>
         <p class="status-text">We've received your request, <strong id="successEmail"></strong>. Please email your photos and videos to <a href="mailto:hello@eventful.page" style="color:var(--gold);font-weight:600">hello@eventful.page</a>, or simply share a link to your publicly accessible cloud folder (e.g. Google Drive).<br><br>We will reach out via the email or phone number you provided. Alternatively, you can <a href="https://m.me/ezragubatanga" target="_blank" rel="noopener" style="color:var(--gold);font-weight:600">message me on Facebook</a> and send your receipt so we can proceed sooner.</p>
-        <a href="index.html" class="btn btn-primary" style="margin:0 auto">← Back to Eventful</a>
+        <a href="/" class="btn btn-primary" style="margin:0 auto">← Back to Eventful</a>
       </div>
 
       <!-- ── Error Screen ────────────────────────────────── -->
@@ -1847,6 +1941,12 @@
         Want a simpler process? <span class="chat-link">Message me on Facebook</span>
       </a>
     </div>
+
+  <!-- Price Bar -->
+  <div class="price-bar" id="priceBar">
+    <span class="price-bar-label">Running total</span>
+    <span class="price-bar-amount" id="priceBarAmount">₱4,000</span>
+  </div>
 
   </div><!-- /.page-wrap -->
 
@@ -1898,14 +1998,7 @@
 
     function renderCoreSection() {
       const grid = document.getElementById('coreSectionsGrid');
-      grid.innerHTML = CORE_SECTIONS.map(name => `
-        <label class="check-item locked is-checked" tabindex="0" aria-disabled="true">
-          <input type="checkbox" checked disabled/>
-          <span class="custom-check">${checkSVG()}</span>
-          <span class="check-text">${name}</span>
-          <span class="locked-badge">Included</span>
-        </label>
-      `).join('');
+      grid.innerHTML = CORE_SECTIONS.map(name => `<span class="included-tag">${name}</span>`).join('');
     }
 
     function renderFunctionalAddOns() {
@@ -1942,6 +2035,7 @@
       cb.checked = !cb.checked;
       labelEl.classList.toggle('is-checked', cb.checked);
       labelEl.setAttribute('aria-checked', cb.checked);
+      updatePriceBar();
     }
 
     function togglePremium(id, labelEl) {
@@ -1949,6 +2043,7 @@
       cb.checked = !cb.checked;
       labelEl.classList.toggle('is-checked', cb.checked);
       labelEl.setAttribute('aria-checked', cb.checked);
+      updatePriceBar();
     }
 
     function setAmPm(val) {
@@ -1964,6 +2059,17 @@
       return `${h}:${m} ${ampm}`;
     }
 
+    // ── Taken slugs — update when a new couple page is deployed ──
+    const TAKEN_SLUGS = [
+      // System paths
+      'onboarding',
+      'form',
+      'v2',
+      // Couple pages
+      'sofia-and-carlos',
+      'anna-and-marco',
+    ];
+
     function updateSlugPreview(val) {
       const isCustomDomain = document.getElementById('wantCustomDomain').checked;
       const sanitized = val.toLowerCase().replace(isCustomDomain ? /[^a-z0-9-.]/g : /[^a-z0-9-]/g, '');
@@ -1972,6 +2078,23 @@
       const wrap = el.closest('.slug-wrap');
       wrap.classList.remove('error');
       document.getElementById('err-pageSlug').classList.remove('visible');
+      if (!isCustomDomain) checkSlugAvailability(sanitized);
+    }
+
+    function checkSlugAvailability(slug) {
+      const statusEl = document.getElementById('domainStatus');
+      const textEl = document.getElementById('domainStatusText');
+      if (!slug || slug.length < 2) {
+        statusEl.className = 'domain-status';
+        return;
+      }
+      if (TAKEN_SLUGS.includes(slug)) {
+        statusEl.className = 'domain-status taken visible';
+        textEl.textContent = 'This URL is already taken';
+      } else {
+        statusEl.className = 'domain-status available visible';
+        textEl.textContent = 'Available ✓';
+      }
     }
 
     function removeAddon(id) {
@@ -1995,6 +2118,7 @@
         lbl.setAttribute('aria-checked', v === value);
         rb.checked = v === value;
       });
+      updatePriceBar();
     }
 
     // ── Stepper UI ────────────────────────────────────────────
@@ -2048,7 +2172,19 @@
       currentStep = n;
       updateStepper(n);
       if (n === TOTAL_STEPS) buildSummary();
+      const priceBar = document.getElementById('priceBar');
+      if (n === 3 || n === 4) {
+        updatePriceBar();
+        priceBar.classList.add('visible');
+      } else {
+        priceBar.classList.remove('visible');
+      }
       window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+    function updatePriceBar() {
+      const { total } = calcPrice();
+      document.getElementById('priceBarAmount').textContent = `₱${total.toLocaleString()}`;
     }
 
     // ── Validation ────────────────────────────────────────────
@@ -2141,7 +2277,7 @@
         <span><span class="summary-meta-label">Location</span>${venue ? venue + ', ' : ''}${loc}</span>
         <span><span class="summary-meta-label">Email</span><span style="pointer-events:none;text-decoration:none;color:inherit">${email}</span></span>
         <span><span class="summary-meta-label">Link</span>${document.getElementById('wantCustomDomain').checked ? 'Custom domain' : 'eventful.page/' + slug}</span>
-        <span><span class="summary-meta-label">Delivery</span>${isRush ? 'Rush (3 days)' : 'Standard (7 days)'}</span>
+        <span><span class="summary-meta-label">Delivery</span>${isRush ? 'Rush (3 days)' : 'Standard (5 days)'}</span>
       `;
 
       const specialReqs = document.getElementById('specialRequests')?.value.trim();
@@ -2214,7 +2350,7 @@
         coreSections: CORE_SECTIONS,
         functionalAddOns: selFnLabels,
         premiumAddOns: selPrLabels,
-        delivery: document.getElementById('delivery-rush')?.checked ? 'Rush (3 days) +₱1,800' : 'Standard (7 days)',
+        delivery: document.getElementById('delivery-rush')?.checked ? 'Rush (3 days) +₱1,800' : 'Standard (5 days)',
         specialRequests: document.getElementById('specialRequests')?.value.trim() || '',
         estimatedPrice: total,
         submittedAt: new Date().toISOString(),
@@ -2229,9 +2365,19 @@
     let _receiptFileName = null;
 
     function handleSubmit() {
-      // Show payment modal with dynamic amount
       const { total } = calcPrice();
       document.getElementById('modalAmount').textContent = `₱${total.toLocaleString()}`;
+
+      // Submit order now (fire-and-forget) — receipt sent separately
+      const payload = buildPayload();
+      payload.paymentStatus = 'pending';
+      fetch(APPS_SCRIPT_URL, {
+        method: 'POST',
+        mode: 'no-cors',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(payload),
+      }).catch(() => {});
+
       document.getElementById('paymentModal').classList.add('open');
       document.body.style.overflow = 'hidden';
     }
@@ -2270,7 +2416,6 @@
 
     function closePaymentModal() {
       document.getElementById('paymentModal').classList.remove('open');
-      document.getElementById('noReceiptWarning').style.display = 'none';
       document.body.style.overflow = '';
     }
 
@@ -2317,18 +2462,15 @@
 
     function goBackToSummary() {
       closePaymentModal();
-      document.getElementById('noReceiptWarning').style.display = 'none';
     }
 
     function saveForLater() {
       const payload = buildPayload();
-      // Also store raw IDs for checkbox restore
       payload._functionalIds = getSelectedFunctional();
       payload._premiumIds = getSelectedPremium();
       payload._rushDelivery = document.getElementById('delivery-rush')?.checked || false;
       localStorage.setItem('eventful_saved', JSON.stringify(payload));
       closePaymentModal();
-      document.getElementById('noReceiptWarning').style.display = 'none';
       document.getElementById('loadSavedBtn').style.display = '';
       alert('Your details have been saved in this browser. You can return anytime to complete your payment.');
     }
@@ -2381,22 +2523,14 @@
     }
 
     async function confirmPayment() {
-      // If no receipt, show the warning instead
-      if (!_receiptFile) {
-        document.getElementById('noReceiptWarning').style.display = '';
-        return;
-      }
-      document.getElementById('noReceiptWarning').style.display = 'none';
-
       const btn = document.getElementById('confirmPaymentBtn');
       btn.disabled = true;
-      btn.innerHTML = `<span class="spinner"></span> Uploading receipt…`;
 
-      const payload = buildPayload();
-      payload.paymentStatus = 'receipt_uploaded';
-
-      // Upload receipt image to Cloudinary if one was selected
+      // If receipt uploaded, send a follow-up submission with the receipt URL
       if (_receiptFile) {
+        btn.innerHTML = `<span class="spinner"></span> Uploading receipt…`;
+        const payload = buildPayload();
+        payload.paymentStatus = 'receipt_uploaded';
         try {
           const formData = new FormData();
           formData.append('file', _receiptFile);
@@ -2409,23 +2543,20 @@
           const data = await res.json();
           if (data.secure_url) payload.receiptUrl = data.secure_url;
         } catch (_) {}
+        btn.innerHTML = `<span class="spinner"></span> Confirming…`;
+        fetch(APPS_SCRIPT_URL, {
+          method: 'POST',
+          mode: 'no-cors',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(payload),
+        }).catch(() => {});
       }
 
-      btn.innerHTML = `<span class="spinner"></span> Submitting…`;
-
-      // Fire-and-forget — no-cors returns an opaque response we can never read
-      fetch(APPS_SCRIPT_URL, {
-        method: 'POST',
-        mode: 'no-cors',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(payload),
-      }).catch(() => {});
-
-      // Don't gate the UX on an unreadable response — show success after brief delay
+      const email = document.getElementById('email').value.trim();
       setTimeout(() => {
         closePaymentModal();
-        showSuccess(payload.email);
-      }, 800);
+        showSuccess(email);
+      }, 600);
     }
 
     function showSuccess(email) {
@@ -2495,16 +2626,35 @@
 
     // "I want a custom domain" checkbox
     document.getElementById('wantCustomDomain').addEventListener('change', function () {
-      document.getElementById('slugPrefix').textContent = this.checked ? 'https://www.' : 'eventful.page/';
+      const isCustom = this.checked;
+      document.getElementById('slugPrefix').textContent = isCustom ? 'https://www.' : 'eventful.page/';
       const slugInput = document.getElementById('pageSlug');
-      slugInput.placeholder = this.checked ? 'sofia-and-carlos.com' : 'sofia-and-carlos';
-      // Auto-check or uncheck the premium domain addon in step 4
+      slugInput.placeholder = isCustom ? 'sofia-and-carlos.com' : 'sofia-and-carlos';
+
+      // Auto-append or strip .com
+      if (!_slugManuallyEdited) {
+        autoGenerateSlug();
+      } else {
+        let val = slugInput.value.trim().replace(/\.com$/, '');
+        if (isCustom) val = val + '.com';
+        slugInput.value = val;
+        updateSlugPreview(val);
+        if (isCustom) checkDomainAvailability(val);
+      }
+
+      // Reset status and re-check with the appropriate checker
+      document.getElementById('domainStatus').className = 'domain-status';
+      const currentVal = document.getElementById('pageSlug').value.trim();
+      if (isCustom) checkDomainAvailability(currentVal);
+      else checkSlugAvailability(currentVal);
+
+      // Auto-check or uncheck the premium domain addon in step 3 (formerly 4)
       const domainCb = document.getElementById('pa-domain');
       const domainLbl = document.getElementById('lbl-pa-domain');
       if (domainCb && domainLbl) {
-        domainCb.checked = this.checked;
-        domainLbl.classList.toggle('is-checked', this.checked);
-        domainLbl.setAttribute('aria-checked', this.checked);
+        domainCb.checked = isCustom;
+        domainLbl.classList.toggle('is-checked', isCustom);
+        domainLbl.setAttribute('aria-checked', isCustom);
       }
       calcPrice();
     });
@@ -2517,8 +2667,74 @@
       document.getElementById('err-contactNumber')?.classList.remove('visible');
     });
 
+    // ── Auto-generate slug from names ─────────────────────────
+    let _slugManuallyEdited = false;
+
+    function autoGenerateSlug() {
+      if (_slugManuallyEdited) return;
+      const bride = document.getElementById('brideName').value.trim().split(' ')[0].toLowerCase().replace(/[^a-z]/g, '');
+      const groom = document.getElementById('groomName').value.trim().split(' ')[0].toLowerCase().replace(/[^a-z]/g, '');
+      if (!bride && !groom) return;
+      const isCustom = document.getElementById('wantCustomDomain').checked;
+      const base = [bride, groom].filter(Boolean).join('-');
+      document.getElementById('pageSlug').value = isCustom ? `${base}.com` : base;
+      updateSlugPreview(document.getElementById('pageSlug').value);
+      if (isCustom) checkDomainAvailability(`${base}.com`);
+    }
+
+    document.getElementById('groomName').addEventListener('input', () => {
+      document.getElementById('groomName').classList.remove('error');
+      document.getElementById('err-groomName')?.classList.remove('visible');
+      autoGenerateSlug();
+    });
+
+    document.getElementById('brideName').addEventListener('input', () => {
+      document.getElementById('brideName').classList.remove('error');
+      document.getElementById('err-brideName')?.classList.remove('visible');
+      autoGenerateSlug();
+    });
+
+    document.getElementById('pageSlug').addEventListener('input', () => {
+      _slugManuallyEdited = true;
+      const isCustom = document.getElementById('wantCustomDomain').checked;
+      const val = document.getElementById('pageSlug').value.trim();
+      if (isCustom) checkDomainAvailability(val);
+      else checkSlugAvailability(val);
+    });
+
+    // ── Domain availability check ─────────────────────────────
+    let _domainCheckTimer = null;
+
+    function checkDomainAvailability(domain) {
+      const statusEl = document.getElementById('domainStatus');
+      const textEl = document.getElementById('domainStatusText');
+      if (!domain || domain.length < 4 || !domain.includes('.')) {
+        statusEl.className = 'domain-status';
+        return;
+      }
+      clearTimeout(_domainCheckTimer);
+      statusEl.className = 'domain-status checking visible';
+      textEl.textContent = 'Checking availability…';
+      _domainCheckTimer = setTimeout(async () => {
+        try {
+          const res = await fetch(`https://dns.google/resolve?name=${encodeURIComponent(domain)}&type=A`);
+          const data = await res.json();
+          if (data.Status === 3) {
+            // NXDOMAIN — domain likely available
+            statusEl.className = 'domain-status available visible';
+            textEl.textContent = 'Likely available ✓';
+          } else {
+            statusEl.className = 'domain-status taken visible';
+            textEl.textContent = 'May already be registered';
+          }
+        } catch {
+          statusEl.className = 'domain-status';
+        }
+      }, 600);
+    }
+
     // Live validation clear
-    ['groomName', 'brideName', 'weddingDate', 'location', 'venueName', 'email'].forEach(id => {
+    ['weddingDate', 'location', 'venueName', 'email'].forEach(id => {
       document.getElementById(id)?.addEventListener('input', () => {
         document.getElementById(id).classList.remove('error');
         document.getElementById(`err-${id}`)?.classList.remove('visible');
