@@ -23,7 +23,6 @@ type: project
 - Meal Selection — ₱600
 - Featured Video — ₱400
 - Gift Registry Integration — ₱600
-- Calendar Integration — ₱400
 
 **Premium Add-Ons**
 - Digital Invite + QR Code — ₱1,200

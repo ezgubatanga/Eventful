@@ -1351,8 +1351,8 @@ section { padding: 88px 24px; }
 .transport-subtitle { font-size: 0.84rem; color: var(--text-muted); margin-bottom: 28px; line-height: 1.6; }
 .transport-items    { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; }
 .transport-item     { display: flex; flex-direction: column; gap: 6px; }
-.transport-icon     { color: var(--gold); margin-bottom: 4px; }
-.transport-icon svg { display: block; }
+.transport-icon     { color: var(--gold); margin-bottom: 4px; display: flex; align-items: center; justify-content: center; width: 28px; height: 28px; }
+.transport-icon svg { display: block; width: 24px; height: 24px; }
 .transport-label    { font-weight: 600; font-size: 0.88rem; color: var(--text-main); }
 .transport-info     { font-size: 0.82rem; color: var(--text-muted); line-height: 1.6; }
 

@@ -383,6 +383,14 @@
       color: #9A7833;
       font-weight: 600;
       margin-left: -8px;
+      overflow: hidden;
+    }
+
+    .trust-avatar img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
     }
 
     .trust-avatars .trust-avatar:first-child {
@@ -1247,6 +1255,15 @@
       justify-content: center;
       font-size: 0.75rem;
       font-weight: 600;
+      overflow: hidden;
+      flex-shrink: 0;
+    }
+
+    .author-avatar img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
     }
 
     .author-name {
@@ -1329,6 +1346,7 @@
       flex-wrap: wrap;
       position: relative;
       z-index: 1;
+      margin-top: 32px;
     }
 
     .cta-note {
@@ -1578,6 +1596,10 @@
 
       .hero-phone {
         width: 240px;
+      }
+
+      .footer-copy {
+        text-align: left;
       }
     }
 
@@ -1923,10 +1945,9 @@
           </div>
           <div class="hero-trust fade-up delay-4">
             <div class="trust-avatars">
-              <div class="trust-avatar">MC</div>
-              <div class="trust-avatar">SL</div>
-              <div class="trust-avatar">DA</div>
-              <div class="trust-avatar">+</div>
+              <div class="trust-avatar"><img src="https://images.unsplash.com/photo-1718006915613-bcb972cabdb1?w=64&h=64&fit=crop&crop=face" alt="Couple" /></div>
+              <div class="trust-avatar"><img src="https://images.unsplash.com/photo-1587603012658-98e623dcbaf5?w=64&h=64&fit=crop&crop=face" alt="Couple" /></div>
+              <div class="trust-avatar"><img src="https://images.unsplash.com/photo-1672390933634-6ccb1da5fa40?w=64&h=64&fit=crop&crop=face" alt="Couple" /></div>
             </div>
             <span>Trusted by 200+ couples in the Philippines</span>
           </div>
@@ -2068,7 +2089,7 @@
         <div class="how-step">
           <div class="step-num">02</div>
           <h3>Choose Features</h3>
-          <p>Pick from functional add-ons like background music or meal selection, and premium features like live guest tracking or a custom domain.</p>
+          <p>Pick from functional add-ons like background music or meal selection, and premium features.</p>
         </div>
         <div class="how-step">
           <div class="step-num">03</div>
@@ -2101,8 +2122,7 @@
         <div class="showcase-card" onclick="window.open('/anna-and-marco','_blank')">
           <div class="showcase-img"></div>
           <div class="showcase-body">
-            <span class="showcase-eyebrow">Live Example</span>
-            <div class="showcase-name">Anna &amp; Marco</div>
+<div class="showcase-name">Anna &amp; Marco</div>
             <div class="showcase-date">September 20, 2026 · Rome, Italy</div>
             <div class="showcase-divider"></div>
             <p class="showcase-desc">Deep plum and terracotta — bespoke, dramatic, and full of personality. Every detail tailored to the couple.</p>
@@ -2195,7 +2215,7 @@
           <p class="testimonial-text">"We had our page live two days after filling out the form. Our guests kept telling
             us how beautiful it looked. The RSVP tracking was a game-changer."</p>
           <div class="testimonial-author">
-            <div class="author-avatar" style="background:var(--gold-light);color:#9A7833;">SC</div>
+            <div class="author-avatar"><img src="https://images.unsplash.com/photo-1718006915613-bcb972cabdb1?w=64&h=64&fit=crop&crop=face" alt="Sofia & Carlos" /></div>
             <div>
               <div class="author-name">Sofia & Carlos</div>
               <div class="author-meta">Married June 2025 · Manila</div>
@@ -2207,9 +2227,9 @@
           <p class="testimonial-text">"The email reminders and live dashboard made coordinating so easy. By wedding
             week, I had zero panicked texts from family about directions."</p>
           <div class="testimonial-author">
-            <div class="author-avatar" style="background:var(--sage-light);color:var(--sage);">AM</div>
+            <div class="author-avatar"><img src="https://images.unsplash.com/photo-1587603012658-98e623dcbaf5?w=64&h=64&fit=crop&crop=face" alt="Camille & Rafael" /></div>
             <div>
-              <div class="author-name">Anna & Marco</div>
+              <div class="author-name">Camille & Rafael</div>
               <div class="author-meta">Married September 2025 · Cebu</div>
             </div>
           </div>
@@ -2219,7 +2239,7 @@
           <p class="testimonial-text">"Worth every peso. The digital QR invite meant we didn't need to print anything.
             The page looked stunning on every device, especially mobile."</p>
           <div class="testimonial-author">
-            <div class="author-avatar" style="background:rgba(209,163,164,0.2);color:#A87070;">LJ</div>
+            <div class="author-avatar"><img src="https://images.unsplash.com/photo-1672390933634-6ccb1da5fa40?w=64&h=64&fit=crop&crop=face" alt="Lia & James" /></div>
             <div>
               <div class="author-name">Lia & James</div>
               <div class="author-meta">Married November 2025 · Tagaytay</div>
@@ -2236,12 +2256,9 @@
       <div class="cta-card">
         <span class="eyebrow">Ready to begin?</span>
         <h2>Your wedding page is<br /><em>waiting to be created</em></h2>
-        <p>Fill out our simple 5-step form and receive a personalized preview within 7 days. No payment needed to
-          start.</p>
         <div class="cta-actions">
           <a href="/onboarding" class="btn btn-gold" id="bottom-cta">Create My Wedding Page ✦</a>
         </div>
-        <span class="cta-note">No commitment. We'll contact you with a preview first.</span>
       </div>
     </div>
   </section>
@@ -2258,7 +2275,7 @@
           <a href="/onboarding">Get Started</a>
           <a href="mailto:hello@eventful.page">Contact</a>
         </div>
-        <span class="footer-copy">Made with ♡ for couples.</span>
+        <span class="footer-copy">Made with <span style="color:#e05a5a;">♥</span> for couples.</span>
       </div>
     </div>
   </footer>
