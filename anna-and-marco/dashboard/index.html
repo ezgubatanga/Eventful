@@ -370,17 +370,10 @@
       .dots-dropdown, .btn-dots, .action-btn { display: none !important; }
       table th.screen-only, table td.screen-only { display: none !important; }
       table th.print-only, table td.print-only { display: table-cell !important; white-space: normal; word-break: break-word; }
-      table td, table th { white-space: normal !important; word-break: break-word; overflow: visible !important; }
-      table { font-size: 0.7rem; table-layout: fixed; width: 100%; }
-      /* Name Phone Going Guest Meal Message */
-      thead th:nth-child(1) { width: 17%; }
-      thead th:nth-child(2) { width: 14%; }
-      thead th:nth-child(3) { width: 9%;  }
-      thead th:nth-child(4) { width: 9%;  }
-      thead th:nth-child(5) { width: 17%; }
-      thead th:nth-child(6) { width: 34%; }
-      table td, table th { padding: 6px 4px; }
+      table { font-size: 0.7rem; table-layout: auto; width: 100%; }
+      table td, table th { padding: 6px 4px; white-space: normal; word-break: break-word; overflow: visible; }
       table thead th { white-space: nowrap; }
+      @page { margin: 10mm; }
       #rsvp-section-title::after { content: 'RSVPs'; }
       #rsvp-section-title { font-size: 0; }
       #rsvp-section-title::after { font-size: 0.75rem; letter-spacing: 0.1em; }
