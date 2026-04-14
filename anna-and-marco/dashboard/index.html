@@ -601,11 +601,13 @@
       tbody td:nth-child(5) { display: none; }
       /* Compact Going + Guests columns */
       thead th:nth-child(2),
-      tbody td:nth-child(2),
+      tbody td:nth-child(2) { width: 1px; white-space: nowrap; padding-left: 8px; padding-right: 8px; }
       thead th:nth-child(3),
-      tbody td:nth-child(3) { width: 1px; white-space: nowrap; padding-left: 10px; padding-right: 10px; }
+      tbody td:nth-child(3) { width: 1px; white-space: nowrap; padding-left: 8px; padding-right: 8px; text-align: center; }
       /* Compact meal text */
       tbody td:nth-child(4) { font-size: 0.76rem; max-width: 90px; white-space: normal; }
+      /* 3-dots breathing room */
+      .td-actions { padding-right: 16px !important; }
       /* Show 3-dots, hide text buttons */
       .btn-contact, .btn-remove { display: none; }
       .btn-dots { display: inline-flex; }
@@ -705,7 +707,7 @@
             <tr>
               <th>Name</th>
               <th>Going</th>
-              <th>Guests</th>
+              <th style="text-align:center">Guests</th>
               <th>Meal</th>
               <th>Date</th>
               <th class="th-actions"></th>
