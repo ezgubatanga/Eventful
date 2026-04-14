@@ -1,7 +1,7 @@
 // Anna & Marco — RSVP to Google Sheets
 // Deploy as Web App: Execute as Me, Anyone can access
 
-const SHEET_ID   = 'YOUR_GOOGLE_SHEET_ID_HERE';
+const SHEET_ID   = '1UdaACtGxNvgPut1UpF8qioRvoIKK6XOMjE-tkw6fBOQ';
 const SHEET_NAME = 'RSVPs';
 
 function doPost(e) {
