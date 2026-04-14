@@ -372,6 +372,9 @@
       table th.print-only, table td.print-only { display: table-cell !important; white-space: normal; word-break: break-word; }
       table td, table th { white-space: normal !important; word-break: break-word; overflow: visible !important; }
       table { font-size: 0.7rem; table-layout: auto; width: 100%; }
+      #rsvp-section-title::after { content: 'RSVPs'; }
+      #rsvp-section-title { font-size: 0; }
+      #rsvp-section-title::after { font-size: 0.75rem; letter-spacing: 0.1em; }
       .badge { border: none; background: none !important; color: inherit !important; padding: 0; }
     }
 
@@ -729,7 +732,6 @@
               <th>Going</th>
               <th>Guest</th>
               <th>Meal</th>
-              <th class="print-only">Plus-One Meal</th>
               <th>Date</th>
               <th class="print-only">Message</th>
               <th class="th-actions screen-only"></th>
@@ -899,7 +901,6 @@
           }</td>
           <td class="td-muted">${r.attend !== 'yes' ? '0' : r.guests === '2' ? '2' : '1'}</td>
           <td class="td-muted">${esc(MEAL_LABELS[r.meal] || r.meal || '—')}</td>
-          <td class="print-only">${esc(MEAL_LABELS[r.meal2] || r.meal2 || '—')}</td>
           <td class="td-muted">${esc(r.ts)}</td>
           <td class="print-only">${esc(r.message || '—')}</td>
           <td class="td-actions">
