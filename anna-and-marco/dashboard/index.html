@@ -749,6 +749,7 @@
         document.getElementById('state-loading').style.display = 'none';
         document.getElementById('content').style.display       = 'block';
       } catch (err) {
+        console.error('loadData error:', err);
         document.getElementById('state-loading').style.display = 'none';
         document.getElementById('state-error').style.display   = 'flex';
       }
