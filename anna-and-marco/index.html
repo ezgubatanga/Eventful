@@ -910,7 +910,7 @@
         email:   document.getElementById('rsvp-email').value.trim(),
         phone:   document.getElementById('rsvp-phone').value.trim(),
         attend,
-        guests:  document.getElementById('rsvp-guests').value,
+        guests:  attend === 'no' ? '0' : document.getElementById('rsvp-guests').value,
         meal:    document.getElementById('rsvp-meal').value,
         meal2:   document.getElementById('rsvp-meal-guest2').value,
         message: document.getElementById('rsvp-message').value.trim()
