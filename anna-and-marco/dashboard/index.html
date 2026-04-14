@@ -859,7 +859,7 @@
             ? '<span class="badge badge-going">Yes</span>'
             : '<span class="badge badge-no">No</span>'
           }</td>
-          <td class="td-muted">${r.guests === '2' ? '2' : '1'}</td>
+          <td class="td-muted">${r.attend !== 'yes' ? '0' : r.guests === '2' ? '2' : '1'}</td>
           <td class="td-muted">${esc(MEAL_LABELS[r.meal] || r.meal || '—')}</td>
           <td class="td-muted">${esc(r.ts)}</td>
           <td class="td-actions">
