@@ -870,21 +870,53 @@
     }
 
     // ── RSVP ──────────────────────────────────────────────
-    document.getElementById('rsvpForm').addEventListener('submit', function(e) {
+    const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycby_76GRlL3winhIyIaTQ1_YnVZK_T6hzgeF3VQorm4dnMoOY0PoIYjYgGEzIdM8CoXf/exec';
+
+    document.getElementById('rsvpForm').addEventListener('submit', async function(e) {
       e.preventDefault();
       const fb     = document.getElementById('rsvp-feedback');
+      const btn    = this.querySelector('.rsvp-submit');
       const name   = document.getElementById('rsvp-name').value.trim();
       const attend = document.getElementById('rsvp-attend').value;
-      fb.style.display = 'block';
-      if (attend === 'yes') {
-        fb.textContent = `Thank you, ${name}! We can't wait to celebrate with you in Rome. 🥂`;
-        fb.style.color = '#C8976A';
-      } else {
-        fb.textContent = `We'll miss you, ${name}. Thank you for letting us know. 💛`;
-        fb.style.color = '#6B5060';
+
+      btn.disabled    = true;
+      btn.textContent = 'Sending…';
+      fb.style.display = 'none';
+
+      const payload = {
+        name,
+        email:   document.getElementById('rsvp-email').value.trim(),
+        phone:   document.getElementById('rsvp-phone').value.trim(),
+        attend,
+        guests:  document.getElementById('rsvp-guests').value,
+        meal:    document.getElementById('rsvp-meal').value,
+        meal2:   document.getElementById('rsvp-meal-guest2').value,
+        message: document.getElementById('rsvp-message').value.trim()
+      };
+
+      try {
+        await fetch(SCRIPT_URL, {
+          method: 'POST',
+          body:   JSON.stringify(payload)
+        });
+        fb.style.display = 'block';
+        if (attend === 'yes') {
+          fb.textContent = `Thank you, ${name}! We can't wait to celebrate with you in Rome.`;
+          fb.style.color = '#C5A059';
+        } else {
+          fb.textContent = `We'll miss you, ${name}. Thank you for letting us know.`;
+          fb.style.color = '#9E9890';
+        }
+        this.reset();
+        meal2Field.classList.remove('visible');
+      } catch (err) {
+        fb.style.display = 'block';
+        fb.textContent   = 'Something went wrong. Please try again or contact us directly.';
+        fb.style.color   = '#D1A3A4';
+      } finally {
+        btn.disabled    = false;
+        btn.textContent = 'Send RSVP ✦';
       }
-      this.reset();
-      meal2Field.classList.remove('visible');
     });
   </script>
 </body>
