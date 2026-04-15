@@ -1044,9 +1044,14 @@
        Adjacent same-bg sections get 200px gap (bottom+top).
        Zero the top of the following section → gap = 100px.  */
     .features     { padding-top: 0; }  /* follows white dashboard-preview */
-    .included     { padding-top: 0; }  /* follows white showcase */
-    .pricing      { padding-top: 0; }  /* follows white included */
-    .testimonials { padding-top: 0; }  /* follows gradient faq */
+    .how-it-works { padding-top: 0; }  /* follows features */
+    .showcase     { padding-top: 0; }  /* follows how-it-works */
+    .included     { padding-top: 0; }  /* follows showcase */
+    .included     { padding-bottom: 60px; }  /* tighten gap before pricing */
+    .pricing      { padding-top: 0; }  /* follows included */
+    .testimonials { padding-top: 0; }  /* follows pricing */
+    .faq          { padding-top: 0; }  /* follows testimonials */
+    .cta-banner   { padding-top: 0; }  /* follows faq */
 
     /* ─── FEATURES ────────────────────────────────────────── */
     .section-header {
@@ -1757,9 +1762,14 @@
 
       /* Same-bg spacing still applies on mobile */
       .features,
+      .how-it-works,
+      .showcase,
       .included,
       .pricing,
-      .testimonials { padding-top: 0; }
+      .testimonials,
+      .faq,
+      .cta-banner { padding-top: 0; }
+      .included { padding-bottom: 40px; }
 
       .section-header {
         margin-bottom: 36px;
@@ -2221,7 +2231,7 @@
 
     /* ─── FAQ ────────────────────────────────────────── */
     .faq {
-      padding: 96px 0;
+      padding: 0 0 96px;
       background: linear-gradient(180deg, transparent 0%, rgba(245,241,235,0.5) 50%, transparent 100%);
     }
 
