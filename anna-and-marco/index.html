@@ -24,24 +24,10 @@
   <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Parisienne&family=Playfair+Display:ital,wght@0,400;0,700;1,400;1,700&family=Cormorant+Infant:ital,wght@0,300;0,400;0,500;0,600;1,400;1,500&family=Outfit:wght@300;400;500;600&display=swap" />
   <link href="https://fonts.googleapis.com/css2?family=Parisienne&family=Playfair+Display:ital,wght@0,400;0,700;1,400;1,700&family=Cormorant+Infant:ital,wght@0,300;0,400;0,500;0,600;1,400;1,500&family=Outfit:wght@300;400;500;600&display=swap" rel="stylesheet" media="print" onload="this.media='all'" />
   <noscript><link href="https://fonts.googleapis.com/css2?family=Parisienne&family=Playfair+Display:ital,wght@0,400;0,700;1,400;1,700&family=Cormorant+Infant:ital,wght@0,300;0,400;0,500;0,600;1,400;1,500&family=Outfit:wght@300;400;500;600&display=swap" rel="stylesheet" /></noscript>
-  <link rel="stylesheet" href="/anna-and-marco/anna-marco.min.css" />
+  <link rel="stylesheet" href="/anna-and-marco/anna-marco.css" />
 </head>
 
 <body>
-
-  <!-- ── Password Gate ────────────────────────────────── -->
-  <div id="password-overlay" class="password-overlay">
-    <div class="password-inner">
-      <span class="password-eyebrow">Private Page</span>
-      <h2 class="password-title">Anna &amp; Marco</h2>
-      <p class="password-sub">This page is private. Please enter the password from your invitation to continue.</p>
-      <div class="password-field">
-        <input class="password-input" type="text" id="password-input" placeholder="Enter password" autocomplete="off" value="AnnaMarco2026" />
-        <button class="password-submit" id="password-submit">Continue</button>
-      </div>
-      <p class="password-error" id="password-error"></p>
-    </div>
-  </div>
 
   <!-- ── Preloader ────────────────────────────────────── -->
   <div id="page-preloader" class="preloader-overlay">
@@ -648,6 +634,20 @@
     </div>
   </section>
 
+  <!-- ── Dashboard ────────────────────────────────────── -->
+  <section class="dashboard-cta" id="dashboard">
+    <div class="container">
+      <span class="section-eyebrow">For the Couple &amp; Organizer</span>
+      <h2 class="section-title">RSVP Dashboard</h2>
+      <p class="section-lead">Track guest responses, meal choices, and messages in one place.</p>
+      <a class="dashboard-cta-btn" href="/anna-and-marco/dashboard/">View Dashboard</a>
+      <p class="dashboard-cta-note">
+        <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display:inline;vertical-align:middle;margin-right:5px;"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+        In a live wedding page, dashboard access is restricted to the couple and their organizer via a private password.
+      </p>
+    </div>
+  </section>
+
   <!-- ── Lightbox ─────────────────────────────────────── -->
   <div id="lightbox" class="lightbox" role="dialog" aria-modal="true" aria-label="Photo lightbox">
     <button class="lightbox-close" id="lightbox-close" aria-label="Close photo">&times;</button>
@@ -813,32 +813,6 @@
       }
     });
 
-
-    // ── Password protection ───────────────────────────────
-    (function () {
-      const PASS    = 'AnnaMarco2026';
-      const overlay = document.getElementById('password-overlay');
-      const input   = document.getElementById('password-input');
-      const btn     = document.getElementById('password-submit');
-      const err     = document.getElementById('password-error');
-      if (sessionStorage.getItem('am_auth') === '1') { overlay.classList.add('hidden'); return; }
-      // Lock scroll while password overlay is visible
-      document.body.style.overflow = 'hidden';
-      function attempt() {
-        if (input.value.trim() === PASS) {
-          sessionStorage.setItem('am_auth', '1');
-          overlay.classList.add('hidden');
-          document.body.style.overflow = '';
-          window.scrollTo(0, 0);
-        } else {
-          err.textContent = 'Incorrect password. Please check your invitation.';
-          input.value = '';
-          input.focus();
-        }
-      }
-      btn.addEventListener('click', attempt);
-      input.addEventListener('keydown', e => { if (e.key === 'Enter') attempt(); });
-    })();
 
     // ── Scroll reveals ────────────────────────────────────
     const revealObserver = new IntersectionObserver((entries) => {

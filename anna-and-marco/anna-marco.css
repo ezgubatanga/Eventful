@@ -1066,6 +1066,53 @@ section { padding: 88px 24px; }
 
 .contact-card-detail a:hover { color: var(--gold-dark); }
 
+/* ─── Dashboard CTA ──────────────────────────────────── */
+.dashboard-cta {
+  background: var(--surface);
+  border-top: 1px solid rgba(197,160,89,0.12);
+  text-align: center;
+}
+
+.dashboard-cta .section-title {
+  font-family: 'Outfit', sans-serif;
+  font-weight: 300;
+  letter-spacing: 0.04em;
+  font-size: clamp(1.8rem, 3.5vw, 2.4rem);
+}
+
+.dashboard-cta .section-lead {
+  margin: 0 auto;
+}
+
+.dashboard-cta-btn {
+  display: inline-block;
+  margin-top: 32px;
+  padding: 14px 40px;
+  background: var(--gold);
+  color: #fff;
+  font-family: 'Outfit', sans-serif;
+  font-size: 0.88rem;
+  font-weight: 600;
+  letter-spacing: 0.07em;
+  text-transform: uppercase;
+  text-decoration: none;
+  border-radius: 999px;
+  box-shadow: var(--shadow-gold);
+  transition: background var(--transition), transform var(--transition);
+}
+.dashboard-cta-btn:hover { background: var(--gold-dark); transform: translateY(-2px); }
+
+.dashboard-cta-note {
+  margin-top: 16px;
+  font-size: 0.78rem;
+  color: var(--text-muted);
+  font-family: 'Outfit', sans-serif;
+  line-height: 1.6;
+  max-width: 440px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
 /* ─── Footer ─────────────────────────────────────────── */
 .footer {
   position: relative;
@@ -1441,66 +1488,9 @@ section { padding: 88px 24px; }
 }
 .print-btn:hover { border-color: var(--plum); color: var(--gold); background: var(--plum-light); transform: translateY(-1px); }
 
-/* ─── Password Overlay ───────────────────────────────── */
-.password-overlay {
-  position: fixed; inset: 0; z-index: 200000;
-  background: var(--bg);
-  display: flex; flex-direction: column;
-  align-items: center; justify-content: center;
-  padding: 24px;
-  transition: opacity 0.5s ease, visibility 0.5s ease;
-}
-.password-overlay.hidden { opacity: 0; visibility: hidden; pointer-events: none; }
-
-.password-inner { max-width: 400px; width: 100%; text-align: center; }
-
-.password-eyebrow {
-  font-size: 0.68rem; letter-spacing: 0.32em;
-  text-transform: uppercase; color: var(--gold);
-  font-weight: 600; margin-bottom: 16px; display: block;
-}
-.password-title {
-  font-family: 'Cormorant Infant', serif;
-  font-size: 2.2rem; font-weight: 500;
-  color: var(--text-main); margin-bottom: 8px;
-}
-.password-sub {
-  font-size: 0.88rem; color: var(--text-muted);
-  margin-bottom: 32px; line-height: 1.6;
-}
-.password-field { display: flex; flex-direction: column; gap: 10px; margin-bottom: 10px; }
-
-.password-input {
-  width: 100%; padding: 14px 18px;
-  background: var(--surface);
-  border: 1.5px solid rgba(197,160,89,0.25);
-  border-radius: 12px;
-  font-family: 'Outfit', sans-serif; font-size: 1rem;
-  color: var(--text-main); text-align: center;
-  letter-spacing: 0.18em; outline: none;
-  transition: border-color var(--transition), box-shadow var(--transition);
-}
-.password-input:focus { border-color: var(--plum); box-shadow: 0 0 0 3px rgba(197,160,89,0.14); }
-
-.password-submit {
-  width: 100%; padding: 14px;
-  background: var(--gold); color: #fff;
-  border: none; border-radius: 999px;
-  font-family: 'Outfit', sans-serif;
-  font-size: 0.9rem; font-weight: 600; letter-spacing: 0.06em;
-  cursor: pointer; box-shadow: var(--shadow-gold);
-  transition: background var(--transition), transform var(--transition);
-}
-.password-submit:hover { background: var(--gold-dark); transform: translateY(-1px); }
-
-.password-error {
-  font-size: 0.82rem; color: var(--rose);
-  min-height: 20px; line-height: 1.4;
-}
-
 /* ─── @media print ───────────────────────────────────── */
 @media print {
-  .password-overlay, .preloader-overlay, .nav, .music-btn,
+  .preloader-overlay, .nav, .music-btn,
   .hero, .countdown-bar, .story, .timeline, .venue,
   .accommodation, .gallery, .video-section, .registry,
   .dress-faq, .rsvp, .contact, .footer, .lightbox { display: none !important; }

@@ -131,7 +131,9 @@
       font-size: 1.1rem;
       color: var(--gold);
       font-weight: 400;
+      text-decoration: none;
     }
+    .nav-brand:hover { opacity: 0.8; }
     .nav-brand span { color: var(--muted); font-size: 0.8rem; font-family: 'Outfit', sans-serif; margin-left: 10px; font-weight: 400; }
     .nav-refresh {
       display: flex;
@@ -378,6 +380,11 @@
       #rsvp-section-title { font-size: 0; }
       #rsvp-section-title::after { font-size: 0.75rem; letter-spacing: 0.1em; }
       .badge { border: none; background: none !important; color: inherit !important; padding: 0; }
+      @page landscape { size: landscape; }
+      @media (orientation: landscape) {
+        thead th:nth-child(5) { width: 22%; } /* Meal — fixed width, more breathing room */
+        table td, table th { padding: 6px 10px; }
+      }
     }
 
     /* ── Recent table ── */
@@ -392,14 +399,15 @@
       border-collapse: collapse;
       table-layout: fixed;
     }
-    /* Column widths: Name | Going | Guests | Meal | Date | Actions */
-    thead th:nth-child(1) { width: 20%; }
-    thead th:nth-child(2) { width: 10%; }
-    thead th:nth-child(3) { width: 9%; }
-    thead th:nth-child(4) { width: auto; } /* fills remaining */
-    thead th:nth-child(5) { width: 9%; }
+    /* 1=Name 2=Phone(hidden) 3=Going 4=Guest 5=Meal 6=Date 7=Message(hidden) 8=Actions */
+    thead th:nth-child(1) { width: 22%; }
+    thead th:nth-child(3) { width: 10%; }
+    thead th:nth-child(4) { width: 8%; }
+    thead th:nth-child(5) { width: 18%; }
+    thead th:nth-child(6) { width: 10%; }
+    thead th:nth-child(8) { width: auto; } /* actions fills rest */
     tbody td { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
-    tbody td:nth-child(4) { white-space: normal; } /* Meal can wrap */
+    tbody td:nth-child(5) { white-space: normal; } /* Meal can wrap */
     .td-actions { overflow: visible; white-space: nowrap; width: 1px; } /* shrink to content, never clip */
     thead th {
       padding: 12px 18px;
@@ -658,6 +666,7 @@
       <input class="auth-input" type="text" id="auth-input" value="AnnaMarco2026" autocomplete="current-password" />
       <button class="auth-btn" id="auth-btn">Enter</button>
       <div class="auth-error" id="auth-error">Incorrect password.</div>
+      <div class="auth-error" id="auth-lockout" style="display:none;"></div>
     </div>
   </div>
 
@@ -677,7 +686,7 @@
 
   <!-- Nav -->
   <nav class="nav">
-    <div class="nav-brand">Anna &amp; Marco <span>RSVP Dashboard</span></div>
+    <a class="nav-brand" href="/anna-and-marco/">Anna &amp; Marco <span>RSVP Dashboard</span></a>
     <button class="nav-refresh" id="refresh-btn" aria-label="Refresh data">
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
         <polyline points="23 4 23 10 17 10"/><polyline points="1 20 1 14 7 14"/>
@@ -762,21 +771,65 @@
     };
 
     // ── Auth ──
-    const overlay  = document.getElementById('auth-overlay');
-    const authBtn  = document.getElementById('auth-btn');
-    const authIn   = document.getElementById('auth-input');
-    const authErr  = document.getElementById('auth-error');
-    const mainEl   = document.getElementById('main');
+    const overlay   = document.getElementById('auth-overlay');
+    const authBtn   = document.getElementById('auth-btn');
+    const authIn    = document.getElementById('auth-input');
+    const authErr   = document.getElementById('auth-error');
+    const authLock  = document.getElementById('auth-lockout');
+    const mainEl    = document.getElementById('main');
+
+    let failCount     = 0;  // total wrong attempts this session
+    let lockoutTimer  = null;
+
+    // lockout schedule: after N total fails → lockout for M seconds
+    // [5 fails → 60s], [8 fails → 180s], repeat 180s every 3 after
+    function getLockoutSeconds(fails) {
+      if (fails >= 8) return 180;
+      if (fails >= 5) return 60;
+      return 0;
+    }
+
+    function startLockout(seconds) {
+      authBtn.disabled = true;
+      authIn.disabled  = true;
+      authErr.style.display = 'none';
+
+      let remaining = seconds;
+      function tick() {
+        const m = Math.floor(remaining / 60);
+        const s = remaining % 60;
+        authLock.style.display = 'block';
+        authLock.textContent = `Too many attempts. Try again in ${m > 0 ? m + 'm ' : ''}${s}s.`;
+        if (remaining <= 0) {
+          authLock.style.display = 'none';
+          authBtn.disabled = false;
+          authIn.disabled  = false;
+          authIn.value = '';
+          authIn.focus();
+          return;
+        }
+        remaining--;
+        lockoutTimer = setTimeout(tick, 1000);
+      }
+      tick();
+    }
 
     function unlock() {
+      if (lockoutTimer !== null || authBtn.disabled) return;
       if (authIn.value === PASS) {
         overlay.style.display = 'none';
         mainEl.style.display  = 'block';
         loadData();
       } else {
-        authErr.style.display = 'block';
-        authIn.value = '';
-        authIn.focus();
+        failCount++;
+        const lockSecs = getLockoutSeconds(failCount);
+        if (lockSecs > 0) {
+          startLockout(lockSecs);
+        } else {
+          authErr.style.display = 'block';
+          authIn.value = '';
+          authIn.focus();
+        }
       }
     }
 
