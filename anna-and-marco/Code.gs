@@ -155,3 +155,77 @@ function json(obj, callback) {
     .createTextOutput(JSON.stringify(obj))
     .setMimeType(ContentService.MimeType.JSON);
 }
+
+function sendReminderEmail(toEmail, toName, coupleName, weddingDate, weddingUrl) {
+  const apiKey = PropertiesService.getScriptProperties().getProperty('RESEND_API_KEY');
+
+  const payload = {
+    from: 'Eventful <hello@eventful.page>',
+    to: [toEmail],
+    reply_to: 'hello@eventful.page',
+    subject: `A reminder — ${coupleName}'s Wedding`,
+    html: `
+      <div style="font-family:Arial,sans-serif;max-width:560px;margin:0 auto;color:#2a2a2a;">
+        <p style="font-size:1.1rem;">Dear ${toName},</p>
+        <p>This is a friendly reminder that you're invited to celebrate the wedding of <strong>${coupleName}</strong> on <strong>${weddingDate}</strong>.</p>
+        <p>
+          <a href="${weddingUrl}" style="display:inline-block;padding:12px 32px;background:#C5A059;color:#fff;text-decoration:none;border-radius:999px;font-family:Arial,sans-serif;font-size:0.9rem;font-weight:600;">
+            View Wedding Page
+          </a>
+        </p>
+        <p style="color:#888;font-size:0.85rem;">If you haven't RSVP'd yet, please do so at your earliest convenience.</p>
+        <hr style="border:none;border-top:1px solid #eee;margin:32px 0;" />
+        <p style="color:#aaa;font-size:0.78rem;">Sent by Eventful · hello@eventful.page</p>
+      </div>
+    `
+  };
+
+  const options = {
+    method: 'post',
+    contentType: 'application/json',
+    headers: { Authorization: `Bearer ${apiKey}` },
+    payload: JSON.stringify(payload),
+    muteHttpExceptions: true
+  };
+
+  const response = UrlFetchApp.fetch('https://api.resend.com/emails', options);
+  Logger.log(response.getContentText());
+}
+
+function sendWeddingReminders() {
+  const WEDDING_DATE = new Date('2026-09-20'); // ← update per couple
+  const COUPLE_NAME  = 'Anna & Marco';
+  const WEDDING_URL  = 'https://eventful.page/anna-and-marco';
+  const DAYS_BEFORE  = 1; // send 1 days before
+
+  const today = new Date();
+  today.setHours(0, 0, 0, 0);
+  const triggerDate = new Date(WEDDING_DATE);
+  triggerDate.setDate(triggerDate.getDate() - DAYS_BEFORE);
+  triggerDate.setHours(0, 0, 0, 0);
+
+  if (today.getTime() !== triggerDate.getTime()) return; // not today
+
+  const sheet = SpreadsheetApp.getActiveSpreadsheet().getActiveSheet();
+  const rows  = sheet.getDataRange().getValues();
+
+  rows.slice(1).forEach(row => {
+    const name      = row[1];
+    const email     = row[2];
+    const attending = String(row[4]).toLowerCase();
+    if (attending !== 'yes' || !email) return;
+
+    sendReminderEmail(email, name.split(' ')[0], COUPLE_NAME, 'September 20, 2026', WEDDING_URL);
+  });
+}
+
+function testReminder() {
+  sendReminderEmail(
+    'ezgubatanga@gmail.com',        // your own email
+    'Ezra',
+    'Anna & Marco',
+    'September 20, 2026',
+    'https://eventful.page/anna-and-marco'
+  );
+}
+

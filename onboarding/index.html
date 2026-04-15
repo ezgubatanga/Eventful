@@ -1571,6 +1571,78 @@
         padding: 14px 28px;
       }
     }
+
+    /* ─── Color Palette Picker ───────────────────────────── */
+    .palette-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 10px;
+      margin-bottom: 14px;
+    }
+
+    .palette-option {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 8px;
+      padding: 12px 10px;
+      border: 1.5px solid #E0DAD2;
+      border-radius: var(--radius);
+      background: #FDFCFB;
+      cursor: pointer;
+      transition: var(--transition);
+      user-select: none;
+    }
+
+    .palette-option:hover {
+      border-color: var(--gold-mid);
+      background: #fff;
+    }
+
+    .palette-option.selected {
+      border-color: var(--gold);
+      background: var(--gold-light);
+      box-shadow: 0 0 0 3px var(--gold-light);
+    }
+
+    .palette-swatches {
+      display: flex;
+      gap: 4px;
+    }
+
+    .palette-swatch {
+      width: 18px;
+      height: 18px;
+      border-radius: 50%;
+      border: 1px solid rgba(0,0,0,0.08);
+      flex-shrink: 0;
+    }
+
+    .palette-name {
+      font-size: 0.72rem;
+      font-family: 'Outfit', sans-serif;
+      font-weight: 500;
+      color: var(--text-muted);
+      text-align: center;
+      line-height: 1.3;
+    }
+
+    .palette-option.selected .palette-name {
+      color: var(--text-main);
+    }
+
+    .palette-hint {
+      font-size: 0.78rem;
+      color: var(--text-light);
+      font-family: 'Outfit', sans-serif;
+      margin-bottom: 10px;
+    }
+
+    @media (max-width: 600px) {
+      .palette-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+    }
   </style>
 </head>
 
@@ -1711,6 +1783,79 @@
                 <span>I want a custom domain <span style="color:var(--gold,#b8972a);font-weight:600;">+₱1,800 (one year)</span></span>
               </label>
             </div>
+            <div class="field-group field-full" style="margin-top:4px;">
+              <label class="field-label">Color Palette</label>
+              <p class="palette-hint">Pick a vibe — we'll match your page to it. Skip if you're not sure yet.</p>
+              <div class="palette-grid" id="paletteGrid">
+                <div class="palette-option" data-palette="Blush & Sage" onclick="selectPalette(this)">
+                  <div class="palette-swatches">
+                    <div class="palette-swatch" style="background:#E8C4B8;"></div>
+                    <div class="palette-swatch" style="background:#A8BEA8;"></div>
+                    <div class="palette-swatch" style="background:#F5EDE8;"></div>
+                  </div>
+                  <span class="palette-name">Blush & Sage</span>
+                </div>
+                <div class="palette-option" data-palette="Navy & Gold" onclick="selectPalette(this)">
+                  <div class="palette-swatches">
+                    <div class="palette-swatch" style="background:#1A2E4A;"></div>
+                    <div class="palette-swatch" style="background:#C5A059;"></div>
+                    <div class="palette-swatch" style="background:#F5F0E8;"></div>
+                  </div>
+                  <span class="palette-name">Navy & Gold</span>
+                </div>
+                <div class="palette-option" data-palette="Dusty Rose & Mauve" onclick="selectPalette(this)">
+                  <div class="palette-swatches">
+                    <div class="palette-swatch" style="background:#D4A5A0;"></div>
+                    <div class="palette-swatch" style="background:#9B7B8A;"></div>
+                    <div class="palette-swatch" style="background:#F0E8EC;"></div>
+                  </div>
+                  <span class="palette-name">Dusty Rose & Mauve</span>
+                </div>
+                <div class="palette-option" data-palette="Plum & Terracotta" onclick="selectPalette(this)">
+                  <div class="palette-swatches">
+                    <div class="palette-swatch" style="background:#5C2D5E;"></div>
+                    <div class="palette-swatch" style="background:#C4684C;"></div>
+                    <div class="palette-swatch" style="background:#F2E8E0;"></div>
+                  </div>
+                  <span class="palette-name">Plum & Terracotta</span>
+                </div>
+                <div class="palette-option" data-palette="Ivory & Champagne" onclick="selectPalette(this)">
+                  <div class="palette-swatches">
+                    <div class="palette-swatch" style="background:#F5F0E8;"></div>
+                    <div class="palette-swatch" style="background:#D4B896;"></div>
+                    <div class="palette-swatch" style="background:#E8E0D4;"></div>
+                  </div>
+                  <span class="palette-name">Ivory & Champagne</span>
+                </div>
+                <div class="palette-option" data-palette="Sage & Terracotta" onclick="selectPalette(this)">
+                  <div class="palette-swatches">
+                    <div class="palette-swatch" style="background:#7A8C6E;"></div>
+                    <div class="palette-swatch" style="background:#C47B5A;"></div>
+                    <div class="palette-swatch" style="background:#F0EAE0;"></div>
+                  </div>
+                  <span class="palette-name">Sage & Terracotta</span>
+                </div>
+                <div class="palette-option" data-palette="Midnight & Blush" onclick="selectPalette(this)">
+                  <div class="palette-swatches">
+                    <div class="palette-swatch" style="background:#1C1C2E;"></div>
+                    <div class="palette-swatch" style="background:#E8C4B8;"></div>
+                    <div class="palette-swatch" style="background:#C8B8D0;"></div>
+                  </div>
+                  <span class="palette-name">Midnight & Blush</span>
+                </div>
+                <div class="palette-option" data-palette="Lavender & Gold" onclick="selectPalette(this)">
+                  <div class="palette-swatches">
+                    <div class="palette-swatch" style="background:#B5A5C8;"></div>
+                    <div class="palette-swatch" style="background:#C5A059;"></div>
+                    <div class="palette-swatch" style="background:#F0EDF5;"></div>
+                  </div>
+                  <span class="palette-name">Lavender & Gold</span>
+                </div>
+              </div>
+              <input class="field-input" type="text" id="colorPalette" name="colorPalette"
+                placeholder="Or describe it — e.g. 'dusty blue and white with gold accents'" autocomplete="off" />
+            </div>
+
           </div>
         </div>
         <div class="step-nav">
@@ -1996,6 +2141,27 @@
       </svg>`;
     }
 
+    // ── Color Palette Picker ──────────────────────────────────
+    function selectPalette(el) {
+      document.querySelectorAll('.palette-option').forEach(o => o.classList.remove('selected'));
+      el.classList.add('selected');
+      const name = el.dataset.palette;
+      const input = document.getElementById('colorPalette');
+      input.value = name;
+      input.dispatchEvent(new Event('input'));
+    }
+
+    // Clicking the text field deselects palette chips
+    document.addEventListener('DOMContentLoaded', () => {
+      document.getElementById('colorPalette').addEventListener('input', function() {
+        const typed = this.value.trim();
+        const activeChip = document.querySelector('.palette-option.selected');
+        if (activeChip && activeChip.dataset.palette !== typed) {
+          activeChip.classList.remove('selected');
+        }
+      });
+    });
+
     function renderCoreSection() {
       const grid = document.getElementById('coreSectionsGrid');
       grid.innerHTML = CORE_SECTIONS.map(name => `<span class="included-tag">${name}</span>`).join('');
@@ -2278,6 +2444,7 @@
         <span><span class="summary-meta-label">Email</span><span style="pointer-events:none;text-decoration:none;color:inherit">${email}</span></span>
         <span><span class="summary-meta-label">Link</span>${document.getElementById('wantCustomDomain').checked ? 'Custom domain' : 'eventful.page/' + slug}</span>
         <span><span class="summary-meta-label">Delivery</span>${isRush ? 'Rush (3 days)' : 'Standard (5 days)'}</span>
+        ${document.getElementById('colorPalette').value.trim() ? `<span><span class="summary-meta-label">Palette</span>${document.getElementById('colorPalette').value.trim()}</span>` : ''}
       `;
 
       const specialReqs = document.getElementById('specialRequests')?.value.trim();
@@ -2347,6 +2514,7 @@
         venueName: document.getElementById('venueName').value.trim(),
         ceremonyTime: getCeremonyTime(),
         pageSlug: document.getElementById('pageSlug').value.trim(),
+        colorPalette: document.getElementById('colorPalette').value.trim() || 'Not specified',
         coreSections: CORE_SECTIONS,
         functionalAddOns: selFnLabels,
         premiumAddOns: selPrLabels,

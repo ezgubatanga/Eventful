@@ -1040,6 +1040,14 @@
       text-overflow: ellipsis;
     }
 
+    /* ─── SAME-BG SPACING ───────────────────────────────────
+       Adjacent same-bg sections get 200px gap (bottom+top).
+       Zero the top of the following section → gap = 100px.  */
+    .features     { padding-top: 0; }  /* follows white dashboard-preview */
+    .included     { padding-top: 0; }  /* follows white showcase */
+    .pricing      { padding-top: 0; }  /* follows white included */
+    .testimonials { padding-top: 0; }  /* follows gradient faq */
+
     /* ─── FEATURES ────────────────────────────────────────── */
     .section-header {
       text-align: center;
@@ -1361,6 +1369,7 @@
       display: flex;
       align-items: center;
       gap: 8px;
+      position: relative;
     }
 
     .dot {
@@ -1382,11 +1391,13 @@
     }
 
     .included-visual-url {
-      flex: 1;
-      text-align: center;
+      position: absolute;
+      left: 50%;
+      transform: translateX(-50%);
       font-size: 0.72rem;
       color: rgba(255, 255, 255, 0.4);
       font-family: 'Outfit', sans-serif;
+      pointer-events: none;
     }
 
     .visual-content {
@@ -1428,6 +1439,12 @@
     .status-premium {
       background: var(--gold-light);
       color: #9A7833;
+    }
+
+    .status-addon {
+      background: rgba(95, 113, 97, 0.06);
+      color: #5F7161;
+      border: 1px solid rgba(95, 113, 97, 0.18);
     }
 
     /* ─── TESTIMONIALS ────────────────────────────────────── */
@@ -1731,10 +1748,18 @@
       .how-it-works,
       .showcase,
       .included,
+      .pricing,
+      .faq,
       .testimonials,
       .cta-banner {
         padding: 50px 0;
       }
+
+      /* Same-bg spacing still applies on mobile */
+      .features,
+      .included,
+      .pricing,
+      .testimonials { padding-top: 0; }
 
       .section-header {
         margin-bottom: 36px;
@@ -1975,6 +2000,305 @@
         opacity: 0;
       }
     }
+
+    /* ─── HERO FOUNDER BADGE ─────────────────────────── */
+    .hero-founder-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: linear-gradient(135deg, rgba(197,160,89,0.14), rgba(197,160,89,0.07));
+      border: 1px solid rgba(197,160,89,0.35);
+      color: #9A7833;
+      font-size: 0.82rem;
+      font-weight: 500;
+      font-family: 'Outfit', sans-serif;
+      padding: 9px 18px;
+      border-radius: 100px;
+      line-height: 1.4;
+    }
+
+    /* ─── SOCIAL PROOF ───────────────────────────────── */
+    .social-proof {
+      padding: 56px 0 0;
+    }
+
+    .social-proof-inner {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 36px;
+    }
+
+    .slot-counter {
+      text-align: center;
+    }
+
+    .slot-counter-label {
+      font-size: 0.75rem;
+      font-family: 'Outfit', sans-serif;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      color: var(--text-light);
+      margin-bottom: 14px;
+    }
+
+    .slot-track {
+      display: flex;
+      gap: 5px;
+      justify-content: center;
+      margin-bottom: 12px;
+    }
+
+    .slot-pip {
+      width: 22px;
+      height: 8px;
+      border-radius: 4px;
+    }
+
+    .slot-pip.filled {
+      background: var(--gold);
+    }
+
+    .slot-pip.empty {
+      background: rgba(197,160,89,0.15);
+      border: 1px solid rgba(197,160,89,0.25);
+    }
+
+    .slot-counter-text {
+      font-size: 0.88rem;
+      color: var(--text-muted);
+      font-family: 'Outfit', sans-serif;
+    }
+
+    .slot-counter-text strong {
+      color: var(--text-main);
+      font-weight: 600;
+    }
+
+    .proof-quote {
+      max-width: 520px;
+      width: 100%;
+      text-align: center;
+      background: var(--surface);
+      border: 1px solid rgba(197,160,89,0.2);
+      border-radius: var(--radius-lg);
+      padding: 28px 32px;
+      box-shadow: var(--shadow-sm);
+    }
+
+    .proof-quote-text {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.2rem;
+      font-style: italic;
+      color: var(--text-main);
+      line-height: 1.65;
+      margin-bottom: 14px;
+    }
+
+    .proof-quote-attr {
+      font-size: 0.8rem;
+      color: var(--text-muted);
+      font-family: 'Outfit', sans-serif;
+    }
+
+    /* ─── PRICING ────────────────────────────────────── */
+    .pricing {
+      padding: 96px 0;
+    }
+
+    .pricing-cards {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 20px;
+      max-width: 620px;
+      margin: 48px auto 0;
+    }
+
+    .pricing-card {
+      background: var(--surface);
+      border: 1px solid rgba(42,37,32,0.1);
+      border-radius: var(--radius-lg);
+      padding: 36px 28px;
+      position: relative;
+    }
+
+    .pricing-card.featured {
+      border-color: var(--gold);
+      box-shadow: 0 0 0 1px var(--gold), var(--shadow-sm);
+    }
+
+    .pricing-card-badge {
+      position: absolute;
+      top: -13px;
+      left: 50%;
+      transform: translateX(-50%);
+      background: var(--gold);
+      color: #fff;
+      font-size: 0.7rem;
+      font-weight: 700;
+      font-family: 'Outfit', sans-serif;
+      letter-spacing: 0.07em;
+      text-transform: uppercase;
+      padding: 4px 14px;
+      border-radius: 100px;
+      white-space: nowrap;
+    }
+
+    .pricing-card-name {
+      font-family: 'Outfit', sans-serif;
+      font-size: 0.78rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.09em;
+      color: var(--text-muted);
+      margin-bottom: 12px;
+    }
+
+    .pricing-card-price {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 2.5rem;
+      font-weight: 600;
+      color: var(--text-main);
+      line-height: 1;
+      margin-bottom: 4px;
+    }
+
+    .pricing-card-delivery {
+      font-size: 0.82rem;
+      color: var(--text-muted);
+      font-family: 'Outfit', sans-serif;
+      margin-bottom: 24px;
+      padding-bottom: 20px;
+      border-bottom: 1px solid rgba(42,37,32,0.07);
+    }
+
+    .pricing-features {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      margin-bottom: 28px;
+    }
+
+    .pricing-features li {
+      display: flex;
+      align-items: flex-start;
+      gap: 9px;
+      font-size: 0.87rem;
+      font-family: 'Outfit', sans-serif;
+      color: var(--text-main);
+      line-height: 1.4;
+    }
+
+    .pricing-features li .pf-check {
+      color: var(--sage);
+      flex-shrink: 0;
+      margin-top: 1px;
+    }
+
+    .pricing-note {
+      text-align: center;
+      max-width: 480px;
+      margin: 20px auto 0;
+      font-size: 0.82rem;
+      color: var(--text-muted);
+      font-family: 'Outfit', sans-serif;
+      line-height: 1.6;
+    }
+
+    .pricing-note strong {
+      color: var(--gold);
+      font-weight: 600;
+    }
+
+    @media (max-width: 540px) {
+      .pricing-cards {
+        grid-template-columns: 1fr;
+        max-width: 340px;
+      }
+    }
+
+    /* ─── FAQ ────────────────────────────────────────── */
+    .faq {
+      padding: 96px 0;
+      background: linear-gradient(180deg, transparent 0%, rgba(245,241,235,0.5) 50%, transparent 100%);
+    }
+
+    .faq-list {
+      max-width: 680px;
+      margin: 48px auto 0;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    .faq-item {
+      background: var(--surface);
+      border: 1px solid rgba(42,37,32,0.08);
+      border-radius: var(--radius);
+      overflow: hidden;
+      transition: border-color 0.2s;
+    }
+
+    .faq-item.open {
+      border-color: rgba(197,160,89,0.3);
+    }
+
+    .faq-q {
+      width: 100%;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 20px 24px;
+      font-family: 'Outfit', sans-serif;
+      font-size: 0.93rem;
+      font-weight: 500;
+      color: var(--text-main);
+      background: none;
+      border: none;
+      cursor: pointer;
+      text-align: left;
+      gap: 16px;
+    }
+
+    .faq-q:hover {
+      background: rgba(197,160,89,0.04);
+    }
+
+    .faq-icon {
+      flex-shrink: 0;
+      width: 22px;
+      height: 22px;
+      border-radius: 50%;
+      border: 1.5px solid rgba(42,37,32,0.18);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1rem;
+      color: var(--text-muted);
+      transition: transform 0.25s ease, border-color 0.25s, color 0.25s;
+      line-height: 1;
+    }
+
+    .faq-item.open .faq-icon {
+      transform: rotate(45deg);
+      border-color: var(--gold);
+      color: var(--gold);
+    }
+
+    .faq-a {
+      display: none;
+      padding: 0 24px 20px;
+      font-family: 'Outfit', sans-serif;
+      font-size: 0.88rem;
+      color: var(--text-muted);
+      line-height: 1.75;
+    }
+
+    .faq-item.open .faq-a {
+      display: block;
+    }
   </style>
 </head>
 
@@ -2158,7 +2482,8 @@
         <ul class="nav-links">
           <li><a href="#features">Features</a></li>
           <li><a href="#how-it-works">How it works</a></li>
-          <li><a href="#showcase">Examples</a></li>
+          <li><a href="#pricing">Pricing</a></li>
+          <li><a href="#faq">FAQ</a></li>
           <li><a href="/onboarding" class="btn btn-gold" style="padding:10px 22px;font-size:0.85rem">Get Started ✦</a></li>
         </ul>
       </div>
@@ -2185,12 +2510,7 @@
             <a href="https://www.eventful.page/anna-and-marco" class="btn btn-outline">View Demo</a>
           </div>
           <div class="hero-trust fade-up delay-4">
-            <div class="trust-avatars">
-              <div class="trust-avatar"><img src="https://images.unsplash.com/photo-1718006915613-bcb972cabdb1?w=64&h=64&fit=crop&crop=face" alt="Couple" /></div>
-              <div class="trust-avatar"><img src="https://images.unsplash.com/photo-1587603012658-98e623dcbaf5?w=64&h=64&fit=crop&crop=face" alt="Couple" /></div>
-              <div class="trust-avatar"><img src="https://images.unsplash.com/photo-1672390933634-6ccb1da5fa40?w=64&h=64&fit=crop&crop=face" alt="Couple" /></div>
-            </div>
-            <span>Trusted by 200+ couples in the Philippines</span>
+            <span class="hero-founder-badge">🎉 Now onboarding first 20 couples at ₱4,000 — slots filling up</span>
           </div>
         </div>
 
@@ -2246,32 +2566,46 @@
     </div>
   </section>
 
-  <!-- ═══ PROOF BAR ══════════════════════════════════════════ -->
-  <div class="proof-bar">
+  <!-- ═══ SOCIAL PROOF ════════════════════════════════════════ -->
+  <section class="social-proof">
     <div class="container">
-      <div class="proof-inner">
-        <div class="proof-stat">
-          <div class="proof-number">200+</div>
-          <div class="proof-label">Wedding pages created</div>
+      <div class="social-proof-inner">
+
+        <div class="slot-counter">
+          <p class="slot-counter-label">Founding spots</p>
+          <div class="slot-track">
+            <div class="slot-pip filled"></div>
+            <div class="slot-pip filled"></div>
+            <div class="slot-pip filled"></div>
+            <div class="slot-pip filled"></div>
+            <div class="slot-pip filled"></div>
+            <div class="slot-pip filled"></div>
+            <div class="slot-pip filled"></div>
+            <div class="slot-pip empty"></div>
+            <div class="slot-pip empty"></div>
+            <div class="slot-pip empty"></div>
+            <div class="slot-pip empty"></div>
+            <div class="slot-pip empty"></div>
+            <div class="slot-pip empty"></div>
+            <div class="slot-pip empty"></div>
+            <div class="slot-pip empty"></div>
+            <div class="slot-pip empty"></div>
+            <div class="slot-pip empty"></div>
+            <div class="slot-pip empty"></div>
+            <div class="slot-pip empty"></div>
+            <div class="slot-pip empty"></div>
+          </div>
+          <p class="slot-counter-text"><strong>7 of 20 slots</strong> taken at the founding rate</p>
         </div>
-        <div class="proof-divider"></div>
-        <div class="proof-stat">
-          <div class="proof-number">98%</div>
-          <div class="proof-label">Guest RSVP rate</div>
+
+        <div class="proof-quote">
+          <p class="proof-quote-text">"Even as a demo, this looked better than most wedding websites I've seen. I'd pay for this in a heartbeat."</p>
+          <p class="proof-quote-attr">— Early demo viewer</p>
         </div>
-        <div class="proof-divider"></div>
-        <div class="proof-stat">
-          <div class="proof-number">10+</div>
-          <div class="proof-label">Free sections included</div>
-        </div>
-        <div class="proof-divider"></div>
-        <div class="proof-stat">
-          <div class="proof-number">24h</div>
-          <div class="proof-label">Preview delivery</div>
-        </div>
+
       </div>
     </div>
-  </div>
+  </section>
 
   <!-- ═══ DASHBOARD PREVIEW ══════════════════════════════════ -->
   <section class="dashboard-preview">
@@ -2281,7 +2615,7 @@
         <div class="dashboard-preview-text">
           <span class="eyebrow">RSVP Dashboard</span>
           <h2>Always know who's coming</h2>
-          <p>Every Eventful page comes with a private dashboard — track your headcount, meal choices, and messages in real time, all in one place.</p>
+          <p>Every Eventful page comes with a private dashboard — only you and your partner can see it. Track your headcount, meal choices, and messages in real time. No more counting replies in Viber group chats.</p>
           <ul class="dashboard-feature-list">
             <li>Live headcount with going &amp; declined breakdown</li>
             <li>Meal selection summary per guest</li>
@@ -2439,7 +2773,7 @@
         <div class="how-step">
           <div class="step-num">03</div>
           <h3>We Build It</h3>
-          <p>Our team crafts your page and delivers it within 7 days — or choose Rush delivery for a 3-day turnaround.</p>
+          <p>Your page is built and delivered within <strong>5 days</strong>. Need it sooner? Rush delivery gets it to you in <strong>2 days</strong>.</p>
         </div>
         <div class="how-step">
           <div class="step-num">04</div>
@@ -2486,14 +2820,14 @@
       <div class="included-inner">
         <div class="included-left">
           <span class="eyebrow">What's included</span>
-          <h2>10 beautiful sections in every package</h2>
+          <h2>Everything you need, in every package</h2>
           <p>Every Eventful wedding page comes with a complete set of professionally designed sections — no extras
             needed to look stunning.</p>
           <div class="check-list">
             <div class="check-list-item"><span class="chk">✓</span> Couple's Story & Photo Gallery</div>
             <div class="check-list-item"><span class="chk">✓</span> Schedule & Timeline for the big day</div>
             <div class="check-list-item"><span class="chk">✓</span> Venue Info with Google Maps</div>
-            <div class="check-list-item"><span class="chk">✓</span> RSVP Form & Contact Info</div>
+            <div class="check-list-item"><span class="chk">✓</span> RSVP Form, Dashboard & Contact Info</div>
             <div class="check-list-item"><span class="chk">✓</span> Countdown Timer, Dress Code & FAQ</div>
           </div>
           <a href="/onboarding" class="btn btn-gold" style="margin-top:32px;display:inline-flex;" id="inc-cta">Customize
@@ -2521,7 +2855,7 @@
               <span class="status status-included">Included</span>
             </div>
             <div class="visual-section-row">
-              <span class="name">RSVP Form</span>
+              <span class="name">RSVP Form & Dashboard</span>
               <span class="status status-included">Included</span>
             </div>
             <div class="visual-section-row">
@@ -2529,15 +2863,19 @@
               <span class="status status-included">Included</span>
             </div>
             <div class="visual-section-row">
+              <span class="name">Background Music</span>
+              <span class="status status-addon">+ Add-On</span>
+            </div>
+            <div class="visual-section-row">
+              <span class="name">Meal Selection</span>
+              <span class="status status-addon">+ Add-On</span>
+            </div>
+            <div class="visual-section-row">
               <span class="name">Digital Invite + QR Code</span>
               <span class="status status-premium">✦ Premium</span>
             </div>
             <div class="visual-section-row">
-              <span class="name">Guest Photo Submissions</span>
-              <span class="status status-premium">✦ Premium</span>
-            </div>
-            <div class="visual-section-row">
-              <span class="name">Live Guest Tracking Dashboard</span>
+              <span class="name">Email Reminders</span>
               <span class="status status-premium">✦ Premium</span>
             </div>
           </div>
@@ -2546,50 +2884,133 @@
     </div>
   </section>
 
-  <!-- ═══ TESTIMONIALS ════════════════════════════════════════ -->
+  <!-- ═══ PRICING ══════════════════════════════════════════════ -->
+  <section class="pricing" id="pricing">
+    <div class="container">
+      <div class="section-header">
+        <span class="eyebrow">Pricing</span>
+        <h2>Simple, honest pricing</h2>
+        <p>No subscriptions. No surprises. Pay once, your page stays up.</p>
+      </div>
+
+      <div class="pricing-cards">
+        <div class="pricing-card">
+          <p class="pricing-card-name">Starter</p>
+          <p class="pricing-card-price">₱4,000</p>
+          <p class="pricing-card-delivery">Delivered in 5 days</p>
+          <ul class="pricing-features">
+            <li><span class="pf-check">✓</span> All 10 included sections</li>
+            <li><span class="pf-check">✓</span> RSVP form &amp; dashboard</li>
+            <li><span class="pf-check">✓</span> Custom shareable link</li>
+            <li><span class="pf-check">✓</span> Add-ons available</li>
+            <li><span class="pf-check">✓</span> Edits always welcome</li>
+          </ul>
+          <a href="/onboarding" class="btn btn-outline" style="width:100%;justify-content:center;">Get Started →</a>
+        </div>
+        <div class="pricing-card featured">
+          <div class="pricing-card-badge">Rush</div>
+          <p class="pricing-card-name">Rush</p>
+          <p class="pricing-card-price">₱5,800</p>
+          <p class="pricing-card-delivery">Delivered in 2 days</p>
+          <ul class="pricing-features">
+            <li><span class="pf-check">✓</span> Everything in Starter</li>
+            <li><span class="pf-check">✓</span> Priority build queue</li>
+            <li><span class="pf-check">✓</span> 2-day turnaround</li>
+            <li><span class="pf-check">✓</span> Add-ons available</li>
+            <li><span class="pf-check">✓</span> Edits always welcome</li>
+          </ul>
+          <a href="/onboarding" class="btn btn-gold" style="width:100%;justify-content:center;">Get Started ✦</a>
+        </div>
+      </div>
+
+      <p class="pricing-note"><strong>Introductory founder's rate</strong> — price increases after the first 20 couples. Add-ons like background music, meal selection, and premium features are optional extras.</p>
+    </div>
+  </section>
+
+  <!-- ═══ FOUNDER NOTE ════════════════════════════════════════ -->
   <section class="testimonials" id="testimonials">
     <div class="container">
       <div class="section-header">
-        <span class="eyebrow">Love notes</span>
-        <h2>What couples are saying</h2>
+        <span class="eyebrow">Early access</span>
+        <h2>Be one of our first couples</h2>
+        <p>Eventful is just getting started — and that's a good thing for you.</p>
       </div>
 
-      <div class="testimonials-grid">
-        <div class="testimonial-card">
-          <div class="stars">★★★★★</div>
-          <p class="testimonial-text">"We had our page live two days after filling out the form. Our guests kept telling
-            us how beautiful it looked. The RSVP tracking was a game-changer."</p>
+      <div class="testimonials-grid" style="grid-template-columns: 1fr 1fr; max-width: 720px; margin: 0 auto;">
+        <div class="testimonial-card" style="grid-column: span 2;">
+          <p class="testimonial-text">"Even as a demo, this looked better than most wedding websites I've seen. I'd pay for this in a heartbeat."</p>
           <div class="testimonial-author">
-            <div class="author-avatar"><img src="https://images.unsplash.com/photo-1718006915613-bcb972cabdb1?w=64&h=64&fit=crop&crop=face" alt="Sofia & Carlos" /></div>
             <div>
-              <div class="author-name">Sofia & Carlos</div>
-              <div class="author-meta">Married June 2025 · Manila</div>
+              <div class="author-name">Early demo viewer</div>
+              <div class="author-meta">Saw the Anna &amp; Marco demo</div>
             </div>
           </div>
         </div>
         <div class="testimonial-card">
-          <div class="stars">★★★★★</div>
-          <p class="testimonial-text">"The email reminders and live dashboard made coordinating so easy. By wedding
-            week, I had zero panicked texts from family about directions."</p>
+          <p class="testimonial-text" style="font-size:0.95rem;">"The first 20 couples get this at ₱4,000 — the founding rate — and help shape what Eventful becomes. Your feedback directly influences what we build next."</p>
           <div class="testimonial-author">
-            <div class="author-avatar"><img src="https://images.unsplash.com/photo-1587603012658-98e623dcbaf5?w=64&h=64&fit=crop&crop=face" alt="Camille & Rafael" /></div>
             <div>
-              <div class="author-name">Camille & Rafael</div>
-              <div class="author-meta">Married September 2025 · Cebu</div>
+              <div class="author-name">Ezra, founder</div>
+              <div class="author-meta">Eventful · Philippines</div>
             </div>
           </div>
         </div>
-        <div class="testimonial-card">
-          <div class="stars">★★★★★</div>
-          <p class="testimonial-text">"Worth every peso. The digital QR invite meant we didn't need to print anything.
-            The page looked stunning on every device, especially mobile."</p>
-          <div class="testimonial-author">
-            <div class="author-avatar"><img src="https://images.unsplash.com/photo-1672390933634-6ccb1da5fa40?w=64&h=64&fit=crop&crop=face" alt="Lia & James" /></div>
-            <div>
-              <div class="author-name">Lia & James</div>
-              <div class="author-meta">Married November 2025 · Tagaytay</div>
-            </div>
-          </div>
+        <div class="testimonial-card" style="display:flex;flex-direction:column;justify-content:center;gap:16px;background:linear-gradient(135deg,rgba(197,160,89,0.08),rgba(197,160,89,0.03));border-color:rgba(197,160,89,0.2);">
+          <p style="font-family:'Outfit',sans-serif;font-size:0.88rem;color:var(--text-muted);line-height:1.7;">What founding couples get:</p>
+          <ul style="list-style:none;display:flex;flex-direction:column;gap:8px;font-family:'Outfit',sans-serif;font-size:0.88rem;color:var(--text-main);">
+            <li><span style="color:var(--sage);margin-right:8px;">✓</span> Founding rate locked forever</li>
+            <li><span style="color:var(--sage);margin-right:8px;">✓</span> Priority support &amp; edits</li>
+            <li><span style="color:var(--sage);margin-right:8px;">✓</span> Input on new features</li>
+            <li><span style="color:var(--sage);margin-right:8px;">✓</span> Bragging rights</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══ FAQ ══════════════════════════════════════════════════ -->
+  <section class="faq" id="faq">
+    <div class="container">
+      <div class="section-header">
+        <span class="eyebrow">Questions</span>
+        <h2>Before you get started</h2>
+      </div>
+
+      <div class="faq-list">
+        <div class="faq-item">
+          <button class="faq-q" onclick="toggleFaq(this)">
+            Can I edit my page after it's live?
+            <span class="faq-icon">+</span>
+          </button>
+          <p class="faq-a">Yes — edits are always welcome. Just send us a message and we'll update your page. Minor changes (text, dates, schedule) are free.</p>
+        </div>
+        <div class="faq-item">
+          <button class="faq-q" onclick="toggleFaq(this)">
+            What if my wedding date changes?
+            <span class="faq-icon">+</span>
+          </button>
+          <p class="faq-a">We'll update it for free. Life happens — just let us know and your countdown, schedule, and all date references get updated right away.</p>
+        </div>
+        <div class="faq-item">
+          <button class="faq-q" onclick="toggleFaq(this)">
+            How do I send my photos?
+            <span class="faq-icon">+</span>
+          </button>
+          <p class="faq-a">After payment, we'll send you instructions. You can share photos via email or a Google Drive link — whichever is easier for you.</p>
+        </div>
+        <div class="faq-item">
+          <button class="faq-q" onclick="toggleFaq(this)">
+            Is ₱4,000 the final price?
+            <span class="faq-icon">+</span>
+          </button>
+          <p class="faq-a">Yes — no hidden fees. The base price covers everything in the package. Add-ons like background music, meal selection, and premium features are optional and clearly priced before you confirm.</p>
+        </div>
+        <div class="faq-item">
+          <button class="faq-q" onclick="toggleFaq(this)">
+            What payment methods do you accept?
+            <span class="faq-icon">+</span>
+          </button>
+          <p class="faq-a">GCash and BPI. We'll send payment instructions once we confirm your order details.</p>
         </div>
       </div>
     </div>
@@ -2600,7 +3021,8 @@
     <div class="container">
       <div class="cta-card">
         <span class="eyebrow">Ready to begin?</span>
-        <h2>Your wedding page is<br /><em>waiting to be created</em></h2>
+        <h2>Only 20 couples get<br /><em>this founding rate</em></h2>
+        <p style="font-family:'Outfit',sans-serif;font-size:0.95rem;color:rgba(255,255,255,0.65);margin-top:8px;margin-bottom:0;">Yours could be next. Slots are filling up.</p>
         <div class="cta-actions">
           <a href="/onboarding" class="btn btn-gold" id="bottom-cta">Create My Wedding Page ✦</a>
         </div>
@@ -2822,6 +3244,14 @@
       }
       requestAnimationFrame(tick);
     })();
+
+    // FAQ toggle
+    function toggleFaq(btn) {
+      const item = btn.closest('.faq-item');
+      const isOpen = item.classList.contains('open');
+      document.querySelectorAll('.faq-item.open').forEach(el => el.classList.remove('open'));
+      if (!isOpen) item.classList.add('open');
+    }
 
     // Smooth scroll
     document.querySelectorAll('a[href^="#"]').forEach(a => {
