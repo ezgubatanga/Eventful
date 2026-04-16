@@ -1,0 +1,101 @@
+couple_id,name,email,phone,attend,guests,meal,meal2,message,created_at
+anna-and-marco,Sofia Reyes,sofia.reyes@gmail.com,639171234567,yes,2,chicken,beef,"So excited for your big day!",2026-01-12T09:12:34
+anna-and-marco,Marco Dela Cruz,marco.dc@yahoo.com,639281234567,yes,1,beef,,"Congratulations!",2026-01-13T09:12:34
+anna-and-marco,Isabella Santos,bella.santos@gmail.com,639391234567,yes,2,fish,vegetarian,"Can't wait!",2026-01-14T09:12:34
+anna-and-marco,Carlos Mendoza,cmendoza@gmail.com,639451234567,no,0,,,"Sorry, can't make it. Wishing you both the best!",2026-01-15T09:12:34
+anna-and-marco,Camille Torres,cam.torres@outlook.com,639561234567,yes,1,vegetarian,,"We'll be there!",2026-01-16T09:12:34
+anna-and-marco,Daniel Ramos,dramos@gmail.com,639671234567,yes,2,beef,chicken,"Looking forward to it!",2026-01-17T09:12:34
+anna-and-marco,Gabrielle Lim,gab.lim@gmail.com,639781234567,yes,1,chicken,,,2026-01-18T09:12:34
+anna-and-marco,Miguel Flores,miguelflores@gmail.com,639891234567,no,0,,,"Sadly we have a prior commitment.",2026-01-19T09:12:34
+anna-and-marco,Anika Villanueva,anika.v@gmail.com,639901234567,yes,2,fish,fish,,2026-01-20T09:12:34
+anna-and-marco,Ramon Cruz,ramonc@yahoo.com,639121234567,yes,1,beef,,"See you there!",2026-01-21T09:12:34
+anna-and-marco,Beatrice Gonzales,bea.gonzales@gmail.com,639231234567,yes,2,chicken,vegetarian,"So happy for you two!",2026-01-22T09:12:34
+anna-and-marco,Jerome Navarro,jerome.nav@gmail.com,639341234567,yes,1,vegetarian,,,2026-01-23T09:12:34
+anna-and-marco,Tricia Aquino,tricia.aquino@gmail.com,639451234568,no,0,,,"Unfortunately we'll be out of the country.",2026-01-24T09:12:34
+anna-and-marco,Andrei Bautista,andrei.b@gmail.com,639561234568,yes,2,beef,beef,,2026-01-25T09:12:34
+anna-and-marco,Mia Pascual,mia.pascual@outlook.com,639671234568,yes,1,fish,,"Congratulations to the happy couple!",2026-01-26T09:12:34
+anna-and-marco,Kevin Castillo,kev.castillo@gmail.com,639781234568,yes,1,chicken,,,2026-01-27T09:12:34
+anna-and-marco,Rina Espiritu,rina.e@gmail.com,639891234568,no,0,,,"We'll miss it but sending love!",2026-01-28T09:12:34
+anna-and-marco,Paolo Dizon,paolo.dizon@gmail.com,639901234568,yes,2,vegetarian,chicken,,2026-01-29T09:12:34
+anna-and-marco,Chesca Macaraeg,chesca.m@gmail.com,639121234568,yes,1,beef,,"We'll be there with bells on!",2026-01-30T09:12:34
+anna-and-marco,Nathan Soriano,nathan.soriano@yahoo.com,639231234568,yes,2,chicken,fish,,2026-01-31T09:12:34
+anna-and-marco,Leila Mendez,leila.mendez@gmail.com,639341234568,yes,1,fish,,,2026-02-01T09:12:34
+anna-and-marco,Christian Uy,christian.uy@gmail.com,639451234569,no,0,,,"Family emergency. Sorry!",2026-02-02T09:12:34
+anna-and-marco,Francesca Ocampo,fran.ocampo@gmail.com,639561234569,yes,2,beef,vegetarian,,2026-02-03T09:12:34
+anna-and-marco,Adrian Salazar,adrian.s@gmail.com,639671234569,yes,1,vegetarian,,"Can't wait to celebrate with you!",2026-02-04T09:12:34
+anna-and-marco,Bianca Reyes,bianca.reyes@gmail.com,639781234569,yes,2,chicken,beef,"So thrilled to be part of your special day!",2026-02-05T09:12:34
+anna-and-marco,Diego Tan,diego.tan@yahoo.com,639891234569,yes,1,beef,,"Congratulations Anna and Marco!",2026-02-06T09:12:34
+anna-and-marco,Sophia Lim,sophia.lim@gmail.com,639901234569,no,0,,,"Prior engagement, but wishing you a beautiful day!",2026-02-07T09:12:34
+anna-and-marco,Rafael Morales,rafael.m@gmail.com,639121234569,yes,2,fish,chicken,,2026-02-08T09:12:34
+anna-and-marco,Katrina Sison,kat.sison@outlook.com,639231234569,yes,1,vegetarian,,"We'll be there!",2026-02-09T09:12:34
+anna-and-marco,Luis Aguilar,luis.aguilar@gmail.com,639341234569,yes,2,beef,fish,"So happy for you both!",2026-02-10T09:12:34
+anna-and-marco,Marielle Domingo,marielle.d@gmail.com,639451234570,yes,1,chicken,,,2026-02-11T09:12:34
+anna-and-marco,Patrick Reyes,pat.reyes@gmail.com,639561234570,no,0,,,"Can't make it this time, sending my love!",2026-02-12T09:12:34
+anna-and-marco,Janine Medina,janine.medina@gmail.com,639671234570,yes,2,fish,vegetarian,,2026-02-13T09:12:34
+anna-and-marco,Emilio Santos,emilio.s@yahoo.com,639781234570,yes,1,beef,,"See you at the celebration!",2026-02-14T09:12:34
+anna-and-marco,Clarisse Gutierrez,clarisse.g@gmail.com,639891234570,yes,2,vegetarian,beef,"Wishing you both a lifetime of happiness!",2026-02-15T09:12:34
+anna-and-marco,Vincent Dela Rosa,vince.delarosa@gmail.com,639901234570,yes,1,chicken,,,2026-02-16T09:12:34
+anna-and-marco,Nichole Bernardo,nichole.b@gmail.com,639121234570,no,0,,,"So sorry to miss it!",2026-02-17T09:12:34
+anna-and-marco,Alec Ramos,alec.ramos@gmail.com,639231234570,yes,2,beef,chicken,"Can't wait!",2026-02-18T09:12:34
+anna-and-marco,Therese Villanueva,therese.v@outlook.com,639341234570,yes,1,fish,,"Congratulations!",2026-02-19T09:12:34
+anna-and-marco,Jerome Alcantara,jerome.alc@gmail.com,639451234571,yes,1,vegetarian,,,2026-02-20T09:12:34
+anna-and-marco,Kristina Ocampo,kris.ocampo@gmail.com,639561234571,yes,2,chicken,fish,"So excited for you two!",2026-02-21T09:12:34
+anna-and-marco,Ronaldo Cruz,ronaldo.c@yahoo.com,639671234571,no,0,,,"Sending all our love from afar!",2026-02-22T09:12:34
+anna-and-marco,Pamela Flores,pam.flores@gmail.com,639781234571,yes,2,beef,vegetarian,,2026-02-23T09:12:34
+anna-and-marco,Samuel Natividad,sam.nat@gmail.com,639891234571,yes,1,fish,,"Looking forward to celebrating with you!",2026-02-24T09:12:34
+anna-and-marco,Angela Bautista,angela.bautista@gmail.com,639901234571,yes,2,vegetarian,chicken,,2026-02-25T09:12:34
+anna-and-marco,Benedict Tiu,ben.tiu@gmail.com,639121234571,no,0,,,"Unfortunately out of town that weekend.",2026-02-26T09:12:34
+anna-and-marco,Roselle Aquino,roselle.aquino@outlook.com,639231234571,yes,1,chicken,,"Can't wait to witness your big day!",2026-02-27T09:12:34
+anna-and-marco,Gerald Soriano,gerald.s@gmail.com,639341234571,yes,2,beef,fish,,2026-02-28T09:12:34
+anna-and-marco,Maricel Espiritu,maricel.e@gmail.com,639451234572,yes,1,vegetarian,,"So happy for you both!",2026-03-01T09:12:34
+anna-and-marco,Franco Castillo,franco.castillo@gmail.com,639561234572,yes,2,fish,beef,"Counting down the days!",2026-03-02T09:12:34
+anna-and-marco,Lara Villanueva,lara.v@gmail.com,639341234569,yes,2,fish,chicken,"We're so thrilled for you both!",2026-03-03T09:12:34
+anna-and-marco,Jose Reyes,jose.reyes@yahoo.com,639451234569,yes,1,beef,,"Congratulations!",2026-03-04T09:12:34
+anna-and-marco,Francesca Tan,fran.tan@gmail.com,639561234569,no,0,,,"So sorry we can't make it. Sending love!",2026-03-05T09:12:34
+anna-and-marco,Angelo Ong,angelo.ong@gmail.com,639671234569,yes,2,chicken,beef,"Can't wait to celebrate with you!",2026-03-06T09:12:34
+anna-and-marco,Marga Cruz,marga.cruz@outlook.com,639781234569,yes,1,vegetarian,,,2026-03-07T09:12:34
+anna-and-marco,Rico Santos,rico.santos@gmail.com,639891234569,yes,2,beef,fish,"See you at the altar!",2026-03-08T09:12:34
+anna-and-marco,Denise Lim,denise.lim@gmail.com,639901234569,yes,1,chicken,,"So happy for you two!",2026-03-09T09:12:34
+anna-and-marco,Alvin Mendoza,alvin.m@yahoo.com,639121234569,no,0,,,"Wish we could be there. Cheers!",2026-03-10T09:12:34
+anna-and-marco,Patricia Buenaventura,pat.buena@gmail.com,639231234569,yes,2,fish,vegetarian,,2026-03-11T09:12:34
+anna-and-marco,Emmanuel Garcia,emman.garcia@gmail.com,639341234570,yes,1,beef,,"Looking forward to it!",2026-03-12T09:12:34
+anna-and-marco,Veronica Dela Rosa,vero.delarosa@gmail.com,639451234570,yes,2,chicken,chicken,"We'll be there!",2026-03-13T09:12:34
+anna-and-marco,Bryan Navarro,bryan.nav@gmail.com,639561234570,yes,1,fish,,,2026-03-14T09:12:34
+anna-and-marco,Sheila Bautista,sheila.b@outlook.com,639671234570,no,0,,,"We have a prior engagement, so sorry!",2026-03-15T09:12:34
+anna-and-marco,Karl Ramos,karl.ramos@gmail.com,639781234570,yes,2,vegetarian,beef,"Excited to witness your big day!",2026-03-16T09:12:34
+anna-and-marco,Jasmine Flores,jasmine.f@gmail.com,639891234570,yes,1,chicken,,,2026-03-17T09:12:34
+anna-and-marco,Gerald Pascual,gerald.p@yahoo.com,639901234570,yes,2,beef,fish,"Congratulations to the lovely couple!",2026-03-18T09:12:34
+anna-and-marco,Diane Castillo,diane.castillo@gmail.com,639121234570,yes,1,fish,,"So excited!",2026-03-19T09:12:34
+anna-and-marco,Ronnie Aquino,ronnie.aq@gmail.com,639231234570,no,0,,,"Sad to miss it. All our love!",2026-03-20T09:12:34
+anna-and-marco,Cristine Soriano,cris.soriano@gmail.com,639341234571,yes,2,chicken,vegetarian,,2026-03-21T09:12:34
+anna-and-marco,Marc Espiritu,marc.e@gmail.com,639451234571,yes,1,beef,,"See you there!",2026-03-22T09:12:34
+anna-and-marco,Joanna Macaraeg,jo.macaraeg@outlook.com,639561234571,yes,2,fish,chicken,"We're so honored to be invited!",2026-03-23T09:12:34
+anna-and-marco,Dominic Torres,dom.torres@gmail.com,639671234571,yes,1,vegetarian,,,2026-03-24T09:12:34
+anna-and-marco,Stella Dizon,stella.dizon@gmail.com,639781234571,no,0,,,"Unfortunately can't attend. Wishing you a beautiful day!",2026-03-25T09:12:34
+anna-and-marco,Felix Gonzales,felix.g@yahoo.com,639891234571,yes,2,beef,beef,"Can't wait!",2026-03-26T09:12:34
+anna-and-marco,Pia Villanueva,pia.v@gmail.com,639901234571,yes,1,chicken,,,2026-03-27T09:12:34
+anna-and-marco,Rafael Cruz,rafa.cruz@gmail.com,639121234571,yes,2,fish,vegetarian,"So happy for you!",2026-03-28T09:12:34
+anna-and-marco,Lena Ong,lena.ong@gmail.com,639231234571,yes,1,beef,,"Congratulations!",2026-03-29T09:12:34
+anna-and-marco,Ivan Reyes,ivan.reyes@outlook.com,639341234572,no,0,,,"Sorry we'll miss it. Many blessings!",2026-03-30T09:12:34
+anna-and-marco,Carmela Santos,carme.santos@gmail.com,639451234572,yes,2,chicken,fish,,2026-03-31T09:12:34
+anna-and-marco,Noel Dela Cruz,noel.dc@gmail.com,639561234572,yes,1,vegetarian,,"We'll be there!",2026-04-01T09:12:34
+anna-and-marco,Abigail Tan,abby.tan@gmail.com,639671234572,yes,2,beef,chicken,"So thrilled for both of you!",2026-04-02T09:12:34
+anna-and-marco,Miguel Navarro,mig.navarro@yahoo.com,639781234572,yes,1,fish,,,2026-04-03T09:12:34
+anna-and-marco,Trina Mendoza,trina.m@gmail.com,639891234572,no,0,,,"Can't make it but sending warm wishes!",2026-04-04T09:12:34
+anna-and-marco,Louie Bautista,louie.b@gmail.com,639901234572,yes,2,chicken,beef,,2026-04-05T09:12:34
+anna-and-marco,Hazel Garcia,hazel.g@outlook.com,639121234572,yes,1,vegetarian,,"Looking forward to the celebration!",2026-04-06T09:12:34
+anna-and-marco,Vincent Ramos,vin.ramos@gmail.com,639231234572,yes,2,beef,fish,"Honored to be invited!",2026-04-07T09:12:34
+anna-and-marco,Monique Flores,moni.flores@gmail.com,639341234573,yes,1,chicken,,,2026-04-08T09:12:34
+anna-and-marco,Chester Lim,chester.lim@yahoo.com,639451234573,no,0,,,"We'll be abroad that weekend. Congratulations!",2026-04-09T09:12:34
+anna-and-marco,Rowena Espiritu,row.espiritu@gmail.com,639561234573,yes,2,fish,chicken,"So excited to celebrate with you!",2026-04-10T09:12:34
+anna-and-marco,Justin Castillo,justin.c@gmail.com,639671234573,yes,1,beef,,"See you soon!",2026-04-11T09:12:34
+anna-and-marco,Andrea Pascual,andrea.p@gmail.com,639781234573,yes,2,vegetarian,beef,,2026-04-12T09:12:34
+anna-and-marco,Lawrence Soriano,law.soriano@outlook.com,639891234573,no,0,,,"Sadly we have a family trip. Sending love!",2026-04-13T09:12:34
+anna-and-marco,Bianca Aquino,bianca.aq@gmail.com,639901234573,yes,1,chicken,,"Congratulations!",2026-04-14T09:12:34
+anna-and-marco,Erwin Dizon,erwin.dizon@gmail.com,639121234573,yes,2,fish,fish,"Can't wait to witness your love!",2026-04-15T09:12:34
+anna-and-marco,Marielle Torres,mari.torres@yahoo.com,639231234573,yes,1,beef,,,2026-04-16T09:12:34
+anna-and-marco,Aldrin Gonzales,aldrin.g@gmail.com,639341234574,yes,2,chicken,vegetarian,"We'll be there with joy!",2026-04-17T09:12:34
+anna-and-marco,Trisha Villanueva,trish.v@gmail.com,639451234574,no,0,,,"So sorry to miss it. Best wishes always!",2026-04-18T09:12:34
+anna-and-marco,Gino Cruz,gino.cruz@gmail.com,639561234574,yes,1,vegetarian,,,2026-04-19T09:12:34
+anna-and-marco,Yvonne Ong,yvonne.ong@outlook.com,639671234574,yes,2,beef,chicken,"Congratulations to the happy couple!",2026-04-20T09:12:34
+anna-and-marco,Paolo Reyes,paolo.reyes@gmail.com,639781234574,yes,1,fish,,"So happy for you both!",2026-04-21T09:12:34
