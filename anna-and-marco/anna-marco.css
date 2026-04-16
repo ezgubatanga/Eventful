@@ -1596,6 +1596,233 @@ section { padding: 88px 24px; }
   text-align: center;
 }
 
+/* ─── Registry Modal ─────────────────────────────────── */
+.registry-modal {
+  position: fixed;
+  inset: 0;
+  background: rgba(10,5,10,0.88);
+  z-index: 10000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 24px;
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.3s ease, visibility 0.3s ease;
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+}
+.registry-modal.open { opacity: 1; visibility: visible; }
+
+.registry-modal-card {
+  background: var(--surface);
+  border: 1px solid var(--gold-mid);
+  border-radius: var(--radius-lg);
+  padding: 36px 28px 28px;
+  max-width: 420px;
+  width: 100%;
+  max-height: 80vh;
+  overflow-y: auto;
+  scrollbar-width: none;
+  position: relative;
+  box-shadow: var(--shadow-md), 0 0 40px rgba(197,160,89,0.10);
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+.registry-modal-card::-webkit-scrollbar { display: none; }
+
+.registry-modal-close {
+  position: absolute;
+  top: 14px; right: 18px;
+  background: none; border: none;
+  color: var(--text-muted);
+  font-size: 1.6rem;
+  cursor: pointer;
+  line-height: 1;
+  padding: 4px;
+  transition: color var(--transition), transform var(--transition);
+}
+.registry-modal-close:hover { color: var(--text-main); transform: rotate(90deg); }
+
+.registry-modal-title {
+  font-family: 'Cormorant Infant', serif;
+  font-size: 1.4rem;
+  font-weight: 500;
+  color: var(--text-main);
+}
+
+.registry-modal-items {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.registry-modal-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 14px 16px;
+  background: var(--surface-2);
+  border: 1px solid rgba(197,160,89,0.12);
+  border-radius: 12px;
+}
+
+.registry-item-left {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+}
+
+.registry-item-name {
+  font-family: 'Outfit', sans-serif;
+  font-size: 0.88rem;
+  font-weight: 500;
+  color: var(--text-main);
+}
+
+.registry-item-note {
+  font-size: 0.76rem;
+  color: var(--text-muted);
+}
+
+.registry-item-price {
+  font-family: 'Outfit', sans-serif;
+  font-size: 0.82rem;
+  font-weight: 600;
+  color: var(--gold);
+  white-space: nowrap;
+}
+
+/* ─── GCash Modal ─────────────────────────────────────── */
+.gcash-modal {
+  position: fixed;
+  inset: 0;
+  background: rgba(10,5,10,0.88);
+  z-index: 10000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 24px;
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.3s ease, visibility 0.3s ease;
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+}
+.gcash-modal.open { opacity: 1; visibility: visible; }
+
+.gcash-modal-card {
+  background: var(--surface);
+  border: 1px solid var(--gold-mid);
+  border-radius: var(--radius-lg);
+  padding: 36px 32px 28px;
+  max-width: 320px;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 16px;
+  position: relative;
+  box-shadow: var(--shadow-md), 0 0 40px rgba(197,160,89,0.12);
+}
+
+.gcash-modal-close {
+  position: absolute;
+  top: 14px; right: 18px;
+  background: none; border: none;
+  color: var(--text-muted);
+  font-size: 1.6rem;
+  cursor: pointer;
+  line-height: 1;
+  padding: 4px;
+  transition: color var(--transition), transform var(--transition);
+}
+.gcash-modal-close:hover { color: var(--text-main); transform: rotate(90deg); }
+
+.gcash-modal-title {
+  font-family: 'Outfit', sans-serif;
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--gold);
+}
+
+.gcash-qr {
+  width: 200px;
+  height: 200px;
+  object-fit: contain;
+  border-radius: 12px;
+  border: 1px solid var(--gold-mid);
+  padding: 10px;
+  background: #fff;
+}
+
+.gcash-info {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  width: 100%;
+}
+
+.gcash-name {
+  font-family: 'Cormorant Infant', serif;
+  font-size: 1.4rem;
+  font-weight: 500;
+  color: var(--text-main);
+}
+
+.gcash-number-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.gcash-number {
+  font-family: 'Outfit', sans-serif;
+  font-size: 1rem;
+  font-weight: 500;
+  color: var(--text-muted);
+  letter-spacing: 0.04em;
+}
+
+.gcash-copy-btn {
+  background: var(--gold-light);
+  border: 1px solid var(--gold-mid);
+  border-radius: 8px;
+  color: var(--gold);
+  cursor: pointer;
+  padding: 5px 7px;
+  display: flex;
+  align-items: center;
+  transition: background var(--transition), color var(--transition);
+}
+.gcash-copy-btn:hover { background: var(--gold-mid); }
+.gcash-copy-btn.copied { color: #7BBF7A; border-color: rgba(123,191,122,0.4); background: rgba(123,191,122,0.08); }
+
+.gcash-download-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  font-family: 'Outfit', sans-serif;
+  font-size: 0.8rem;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  color: var(--gold);
+  background: var(--gold-light);
+  border: 1px solid var(--gold-mid);
+  border-radius: 999px;
+  padding: 9px 20px;
+  text-decoration: none;
+  transition: background var(--transition), gap var(--transition);
+  width: 100%;
+  justify-content: center;
+}
+.gcash-download-btn:hover { background: var(--gold-mid); }
+
 /* ─── Print Button ───────────────────────────────────── */
 .print-btn {
   display: inline-flex; align-items: center; gap: 8px;

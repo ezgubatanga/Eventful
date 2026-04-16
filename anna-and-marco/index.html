@@ -542,17 +542,17 @@
         <div class="registry-card">
           <p class="registry-card-name">Our Home</p>
           <p class="registry-card-desc">Curated picks for our new home together — from kitchen essentials to cozy décor.</p>
-          <a href="#" class="registry-link">View Registry →</a>
+          <a href="#" class="registry-link" id="home-registry-trigger">View Registry →</a>
         </div>
         <div class="registry-card">
           <p class="registry-card-name">Honeymoon Fund</p>
           <p class="registry-card-desc">Help us fund adventures on our honeymoon through the Amalfi Coast and beyond.</p>
-          <a href="#" class="registry-link">Contribute →</a>
+          <a href="#" class="registry-link" id="gcash-trigger">Contribute →</a>
         </div>
         <div class="registry-card">
           <p class="registry-card-name">Wish List</p>
           <p class="registry-card-desc">A hand-picked selection of items we've been dreaming about for our life together.</p>
-          <a href="#" class="registry-link">View List →</a>
+          <a href="#" class="registry-link" id="wishlist-trigger">View List →</a>
         </div>
       </div>
     </div>
@@ -743,6 +743,37 @@
     Create your own page
     <svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
   </a>
+
+  <!-- ── Registry Modal ───────────────────────────────── -->
+  <div id="registry-modal" class="registry-modal" role="dialog" aria-modal="true">
+    <div class="registry-modal-card">
+      <button class="registry-modal-close" id="registry-modal-close" aria-label="Close">&times;</button>
+      <p class="registry-modal-title" id="registry-modal-title"></p>
+      <div class="registry-modal-items" id="registry-modal-items"></div>
+    </div>
+  </div>
+
+  <!-- ── GCash Modal ───────────────────────────────────── -->
+  <div id="gcash-modal" class="gcash-modal" role="dialog" aria-modal="true" aria-label="GCash payment">
+    <div class="gcash-modal-card">
+      <button class="gcash-modal-close" id="gcash-modal-close" aria-label="Close">&times;</button>
+      <p class="gcash-modal-title">GCash</p>
+      <img class="gcash-qr" src="/onboarding/qr.jpg" alt="GCash QR Code" />
+      <div class="gcash-info">
+        <p class="gcash-name">Ezra John Gubatanga</p>
+        <div class="gcash-number-row">
+          <span class="gcash-number">09473575780</span>
+          <button class="gcash-copy-btn" id="gcash-copy-btn" aria-label="Copy number" title="Copy number">
+            <svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="14" height="14" x="8" y="8" rx="2" ry="2"/><path d="M4 16c-1.1 0-2-.9-2-2V4c0-1.1.9-2 2-2h10c1.1 0 2 .9 2 2"/></svg>
+          </button>
+        </div>
+      </div>
+      <a class="gcash-download-btn" id="gcash-download-btn" href="/onboarding/qr.jpg" download="gcash-qr.jpg">
+        <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+        Download QR
+      </a>
+    </div>
+  </div>
 
   <!-- ── Lightbox ─────────────────────────────────────── -->
   <div id="lightbox" class="lightbox" role="dialog" aria-modal="true" aria-label="Photo lightbox">
@@ -960,6 +991,99 @@
       lightbox.classList.remove('open');
       document.body.style.overflow = '';
     }
+
+    // ── Registry Modal ────────────────────────────────────
+    const REGISTRY_DATA = {
+      home: {
+        title: 'Our Home',
+        items: [
+          { name: 'KitchenAid Stand Mixer', note: 'Artisan Series, 5 Qt', price: '~₱22,000' },
+          { name: 'Le Creuset Dutch Oven', note: '5.3L, Cerise Red', price: '~₱18,500' },
+          { name: 'Nespresso Vertuo Machine', note: 'Coffee & Espresso', price: '~₱9,800' },
+          { name: 'Linen Duvet Cover Set', note: 'King, Warm White', price: '~₱7,500' },
+          { name: 'Staub Cast Iron Pan', note: '28cm, Matte Black', price: '~₱12,000' },
+          { name: 'Bamboo Cutting Board Set', note: 'Set of 3', price: '~₱2,400' },
+          { name: 'Scented Candle Collection', note: 'Diptyque, Set of 4', price: '~₱6,200' },
+          { name: 'Ceramic Dinner Set', note: '12 pieces, Ivory', price: '~₱8,900' },
+        ]
+      },
+      wishlist: {
+        title: 'Wish List',
+        items: [
+          { name: 'Polaroid Now Camera', note: 'Cream + Film Pack', price: '~₱6,500' },
+          { name: 'Kindle Paperwhite', note: '16GB, Signature Edition', price: '~₱9,200' },
+          { name: 'Vinyl Record Player', note: 'Audio-Technica AT-LP60X', price: '~₱11,000' },
+          { name: 'Espresso Cup Set', note: 'Handmade Ceramic, Set of 4', price: '~₱3,800' },
+          { name: 'Weekend Getaway Fund', note: 'Contribute any amount', price: 'Open' },
+          { name: 'Hiking Backpack', note: 'Osprey Farpoint 40L', price: '~₱8,400' },
+          { name: 'Book Subscription', note: '1-year plan', price: '~₱4,200' },
+        ]
+      }
+    };
+
+    const registryModal      = document.getElementById('registry-modal');
+    const registryModalTitle = document.getElementById('registry-modal-title');
+    const registryModalItems = document.getElementById('registry-modal-items');
+    const registryModalClose = document.getElementById('registry-modal-close');
+
+    function openRegistryModal(type) {
+      const data = REGISTRY_DATA[type];
+      registryModalTitle.textContent = data.title;
+      registryModalItems.innerHTML = data.items.map(item => `
+        <div class="registry-modal-item">
+          <div class="registry-item-left">
+            <span class="registry-item-name">${item.name}</span>
+            <span class="registry-item-note">${item.note}</span>
+          </div>
+          <span class="registry-item-price">${item.price}</span>
+        </div>
+      `).join('');
+      registryModal.classList.add('open');
+      document.body.style.overflow = 'hidden';
+    }
+
+    function closeRegistryModal() {
+      registryModal.classList.remove('open');
+      document.body.style.overflow = '';
+    }
+
+    document.getElementById('home-registry-trigger').addEventListener('click', e => { e.preventDefault(); openRegistryModal('home'); });
+    document.getElementById('wishlist-trigger').addEventListener('click', e => { e.preventDefault(); openRegistryModal('wishlist'); });
+    registryModalClose.addEventListener('click', closeRegistryModal);
+    registryModal.addEventListener('click', e => { if (e.target === registryModal) closeRegistryModal(); });
+    document.addEventListener('keydown', e => { if (e.key === 'Escape' && registryModal.classList.contains('open')) closeRegistryModal(); });
+
+    // ── GCash Modal ───────────────────────────────────────
+    const gcashModal      = document.getElementById('gcash-modal');
+    const gcashTrigger    = document.getElementById('gcash-trigger');
+    const gcashModalClose = document.getElementById('gcash-modal-close');
+    const gcashCopyBtn    = document.getElementById('gcash-copy-btn');
+
+    gcashTrigger.addEventListener('click', e => {
+      e.preventDefault();
+      gcashModal.classList.add('open');
+      document.body.style.overflow = 'hidden';
+    });
+
+    function closeGcashModal() {
+      gcashModal.classList.remove('open');
+      document.body.style.overflow = '';
+    }
+
+    gcashModalClose.addEventListener('click', closeGcashModal);
+    gcashModal.addEventListener('click', e => { if (e.target === gcashModal) closeGcashModal(); });
+    document.addEventListener('keydown', e => { if (e.key === 'Escape' && gcashModal.classList.contains('open')) closeGcashModal(); });
+
+    gcashCopyBtn.addEventListener('click', () => {
+      navigator.clipboard.writeText('09473575780').then(() => {
+        gcashCopyBtn.classList.add('copied');
+        gcashCopyBtn.setAttribute('title', 'Copied!');
+        setTimeout(() => {
+          gcashCopyBtn.classList.remove('copied');
+          gcashCopyBtn.setAttribute('title', 'Copy number');
+        }, 2000);
+      });
+    });
 
     // ── RSVP ──────────────────────────────────────────────
     const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbxlzoxREgePvEsPzO1Gn53qG483GknKqpaX24kglO54tVRIPJJtd0VG3BpMgKdOimVtBQ/exec';

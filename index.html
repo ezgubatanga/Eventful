@@ -1888,13 +1888,19 @@
         text-align: left;
       }
 
-      .slot-pip {
-        width: 9px;
-        height: 6px;
+      .slot-track {
+        display: grid;
+        grid-template-columns: repeat(10, 1fr);
+        gap: 4px;
+        width: 100%;
+        max-width: 280px;
+        margin-left: auto;
+        margin-right: auto;
       }
 
-      .slot-track {
-        gap: 2px;
+      .slot-pip {
+        width: 100%;
+        height: 7px;
       }
 
       .slot-rate {
