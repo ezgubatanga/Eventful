@@ -1105,9 +1105,6 @@
       overflow: hidden;
     }
 
-    .feature-card:hover {
-      box-shadow: var(--shadow-sm);
-    }
 
     .feature-icon {
       position: absolute;
@@ -2223,7 +2220,15 @@
 
     .slot-pip.empty {
       background: rgba(42,37,32,0.25);
-      border: 1px solid rgba(42,37,32,0.4);
+    }
+
+    @keyframes pip-pulse {
+      0%, 100% { background: rgba(42,37,32,0.25); }
+      50%       { background: #2A2520; }
+    }
+
+    .slot-pip.pulsing {
+      animation: pip-pulse 1.4s ease-in-out infinite;
     }
 
     .slot-counter-text {
@@ -2452,23 +2457,17 @@
 
     .faq-icon {
       flex-shrink: 0;
-      width: 22px;
-      height: 22px;
-      border-radius: 50%;
-      border: 1.5px solid rgba(42,37,32,0.18);
+      width: 20px;
+      height: 20px;
       display: flex;
       align-items: center;
       justify-content: center;
-      font-size: 1rem;
-      color: var(--text-muted);
-      transition: transform 0.25s ease, border-color 0.25s, color 0.25s;
-      line-height: 1;
+      transition: transform 0.25s ease;
+      color: var(--gold);
     }
 
     .faq-item.open .faq-icon {
-      transform: rotate(45deg);
-      border-color: var(--gold);
-      color: var(--gold);
+      transform: rotate(180deg);
     }
 
     .faq-a {
@@ -2786,7 +2785,7 @@
             <div class="slot-pip filled"></div>
             <div class="slot-pip filled"></div>
             <div class="slot-pip filled"></div>
-            <div class="slot-pip empty"></div>
+            <div class="slot-pip empty pulsing"></div>
             <div class="slot-pip empty"></div>
             <div class="slot-pip empty"></div>
             <div class="slot-pip empty"></div>
@@ -2934,24 +2933,24 @@
           <p>Guests respond in seconds. Track attendance, meal choices, and plus-ones from a live dashboard.</p>
         </div>
         <div class="feature-card">
-          <h3>Venue & Maps</h3>
-          <p>Embed Google Maps directions, venue details, and travel tips so every guest arrives stress-free.</p>
+          <h3>Your Story, Beautifully Told</h3>
+          <p>A dedicated section for your photos and love story — the heart of every Eventful page.</p>
         </div>
         <div class="feature-card">
-          <h3>Background Music</h3>
-          <p>Set the mood the moment guests open your page — link a Spotify playlist or your chosen song.</p>
+          <h3>Schedule & Timeline</h3>
+          <p>Every moment of your big day, laid out for guests — ceremony, reception, and everything in between.</p>
+        </div>
+        <div class="feature-card">
+          <h3>Venue Info + Maps</h3>
+          <p>Embedded Google Maps, directions, and travel tips so every guest arrives on time and stress-free.</p>
         </div>
         <div class="feature-card">
           <h3>Countdown Timer</h3>
           <p>Build anticipation with a real-time countdown included in every package — no extras needed.</p>
         </div>
         <div class="feature-card">
-          <h3>Digital Invite + QR Code</h3>
-          <p>A scannable QR code guests can save and share — no printing, no postage, no waste.</p>
-        </div>
-        <div class="feature-card">
-          <h3>Live Guest Tracking</h3>
-          <p>Monitor RSVPs in real time — see who's coming, meal choices, and more.</p>
+          <h3>Custom Shareable Link</h3>
+          <p>Your own eventful.page/your-names link — ready to share by message, story, or save-the-date.</p>
         </div>
       </div>
     </div>
@@ -3147,9 +3146,10 @@
         <div class="testimonial-card">
           <p class="testimonial-text" style="font-size:0.95rem;">"The first 20 couples get this at ₱4,000 — the founding rate — and help shape what Eventful becomes. Your feedback directly influences what we build next."</p>
           <div class="testimonial-author">
+            <img src="/onboarding/me.jpg" alt="Ezra" style="width:40px;height:40px;border-radius:50%;object-fit:cover;flex-shrink:0;" />
             <div>
               <div class="author-name">Ezra, founder</div>
-              <div class="author-meta">Eventful · Philippines</div>
+              <div class="author-meta">Eventful Wedding Pages</div>
             </div>
           </div>
         </div>
@@ -3178,35 +3178,35 @@
         <div class="faq-item">
           <button class="faq-q" onclick="toggleFaq(this)">
             Can I request edits after my page is live?
-            <span class="faq-icon">+</span>
+            <span class="faq-icon"><svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M3 5.5L8 10.5L13 5.5" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
           </button>
           <p class="faq-a">Yes — edits are always welcome. Just send us a message and we'll update your page. Minor changes (text, dates, schedule) are free.</p>
         </div>
         <div class="faq-item">
           <button class="faq-q" onclick="toggleFaq(this)">
             What if my wedding date changes?
-            <span class="faq-icon">+</span>
+            <span class="faq-icon"><svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M3 5.5L8 10.5L13 5.5" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
           </button>
           <p class="faq-a">We'll update it for free. Life happens — just let us know and your countdown, schedule, and all date references get updated right away.</p>
         </div>
         <div class="faq-item">
           <button class="faq-q" onclick="toggleFaq(this)">
             How do I send my photos?
-            <span class="faq-icon">+</span>
+            <span class="faq-icon"><svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M3 5.5L8 10.5L13 5.5" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
           </button>
           <p class="faq-a">After payment, we'll send you instructions. You can share photos via email or a Google Drive link — whichever is easier for you.</p>
         </div>
         <div class="faq-item">
           <button class="faq-q" onclick="toggleFaq(this)">
             Is ₱4,000 the final price?
-            <span class="faq-icon">+</span>
+            <span class="faq-icon"><svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M3 5.5L8 10.5L13 5.5" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
           </button>
           <p class="faq-a">Yes — no hidden fees. The base price covers everything in the package. Add-ons like background music, meal selection, and premium features are optional and clearly priced before you confirm.</p>
         </div>
         <div class="faq-item">
           <button class="faq-q" onclick="toggleFaq(this)">
             What payment methods do you accept?
-            <span class="faq-icon">+</span>
+            <span class="faq-icon"><svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M3 5.5L8 10.5L13 5.5" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
           </button>
           <p class="faq-a">GCash and BPI. We'll send payment instructions once we confirm your order details.</p>
         </div>
@@ -3526,9 +3526,11 @@
         const label = document.getElementById('slot-counter-text');
 
         if (track) {
-          track.innerHTML = Array.from({ length: TOTAL }, (_, i) =>
-            `<div class="slot-pip ${i < taken ? 'filled' : 'empty'}"></div>`
-          ).join('');
+          track.innerHTML = Array.from({ length: TOTAL }, (_, i) => {
+            if (i < taken) return `<div class="slot-pip filled"></div>`;
+            if (i === taken) return `<div class="slot-pip empty pulsing"></div>`;
+            return `<div class="slot-pip empty"></div>`;
+          }).join('');
         }
         if (label) {
           label.innerHTML = `<strong>${taken} of ${TOTAL} slots</strong> taken<span class="slot-rate"> at the founding rate</span>`;
