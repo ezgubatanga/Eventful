@@ -2107,8 +2107,8 @@
       <!-- ── Success Screen ─────────────────────────────── -->
       <div class="status-screen" id="successScreen">
         <div class="status-icon success">🌸</div>
-        <h2 class="status-title">You're on your way!</h2>
-        <p class="status-text">We've received your request, <strong id="successEmail"></strong>. Please email your photos and videos to <a href="mailto:hello@eventful.page" style="color:var(--gold);font-weight:600">hello@eventful.page</a>, or simply share a link to your publicly accessible cloud folder (e.g. Google Drive).<br><br>We will reach out via the email or phone number you provided. Alternatively, you can <a href="https://m.me/ezragubatanga" target="_blank" rel="noopener" style="color:var(--gold);font-weight:600">message me on Facebook</a> and send your receipt so we can proceed sooner.</p>
+        <h2 class="status-title">Request received</h2>
+        <p class="status-text">Thank you, <strong id="successEmail"></strong>. Your order has been submitted and your receipt is under review.<br><br>To help us get started, please send your photos and videos to <a href="mailto:hello@eventful.page" style="color:var(--gold);font-weight:600">hello@eventful.page</a> or share a Google Drive link with view access.<br><br>We will follow up within 24 hours via the contact details you provided.</p>
         <a href="/" class="btn btn-primary" style="margin:0 auto">← Back to Eventful</a>
       </div>
 
@@ -2753,34 +2753,38 @@
     }
 
     async function confirmPayment() {
+      if (!_receiptFile) {
+        const zone = document.getElementById('uploadZone');
+        if (zone) { zone.style.outline = '2px solid #c0392b'; setTimeout(() => zone.style.outline = '', 2000); }
+        return;
+      }
+
       const btn = document.getElementById('confirmPaymentBtn');
       btn.disabled = true;
       const email = document.getElementById('email').value.trim();
 
       try {
-        if (_receiptFile) {
-          btn.innerHTML = `<span class="spinner"></span> Uploading receipt…`;
-          let receipt_url = null;
-          try {
-            const ext  = _receiptFile.name.split('.').pop();
-            const path = `onboarding/${Date.now()}.${ext}`;
-            const { error: uploadErr } = await db.storage
-              .from('receipts')
-              .upload(path, _receiptFile, { upsert: false });
-            if (!uploadErr) {
-              const { data: urlData } = db.storage.from('receipts').getPublicUrl(path);
-              receipt_url = urlData.publicUrl;
-            }
-          } catch (_) {}
-
-          btn.innerHTML = `<span class="spinner"></span> Confirming…`;
-          if (_orderId) {
-            try {
-              await db.from('orders')
-                .update({ payment_status: 'receipt_uploaded', receipt_url })
-                .eq('id', _orderId);
-            } catch (_) {}
+        btn.innerHTML = `<span class="spinner"></span> Uploading receipt…`;
+        let receipt_url = null;
+        try {
+          const ext  = _receiptFile.name.split('.').pop();
+          const path = `onboarding/${Date.now()}.${ext}`;
+          const { error: uploadErr } = await db.storage
+            .from('receipts')
+            .upload(path, _receiptFile, { upsert: false });
+          if (!uploadErr) {
+            const { data: urlData } = db.storage.from('receipts').getPublicUrl(path);
+            receipt_url = urlData.publicUrl;
           }
+        } catch (_) {}
+
+        btn.innerHTML = `<span class="spinner"></span> Confirming…`;
+        if (_orderId) {
+          try {
+            await db.from('orders')
+              .update({ payment_status: 'receipt_uploaded', receipt_url })
+              .eq('id', _orderId);
+          } catch (_) {}
         }
       } finally {
         setTimeout(() => {
