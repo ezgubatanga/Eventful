@@ -1,0 +1,11 @@
+{
+  "version": "2.0.0",
+  "tasks": [
+    {
+      "label": "Commit & Push",
+      "type": "shell",
+      "command": "git add -A && git commit -m 'update' && git push",
+      "presentation": { "reveal": "silent" }
+    }
+  ]
+}
