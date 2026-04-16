@@ -1508,7 +1508,7 @@
       line-height: 1.75;
       font-style: italic;
       margin-bottom: 20px;
-      font-family: 'DM Serif Display', serif;
+      font-family: 'Outfit', sans-serif;
       font-size: 1.05rem;
     }
 
@@ -2287,12 +2287,18 @@
     }
 
     .pricing-card-price {
-      font-family: 'DM Serif Display', serif;
+      font-family: 'Outfit', sans-serif;
       font-size: 2.5rem;
-      font-weight: 600;
+      font-weight: 700;
       color: var(--text-main);
       line-height: 1;
       margin-bottom: 4px;
+    }
+    .price-currency {
+      font-weight: 400;
+      font-size: 1.5rem;
+      vertical-align: 0.2em;
+      margin-right: 1px;
     }
 
     .pricing-card-delivery {
@@ -3051,7 +3057,7 @@
       <div class="pricing-cards">
         <div class="pricing-card">
           <p class="pricing-card-name">Starter</p>
-          <p class="pricing-card-price">₱4,000</p>
+          <p class="pricing-card-price"><span class="price-currency">₱</span>4,000</p>
           <p class="pricing-card-delivery">Delivered in 5 days</p>
           <ul class="pricing-features">
             <li><span class="pf-check">✓</span> All 10 included sections</li>
@@ -3065,7 +3071,7 @@
         <div class="pricing-card featured">
           <div class="pricing-card-badge">Rush</div>
           <p class="pricing-card-name">Rush</p>
-          <p class="pricing-card-price">₱5,800</p>
+          <p class="pricing-card-price"><span class="price-currency">₱</span>5,800</p>
           <p class="pricing-card-delivery">Delivered in 2 days</p>
           <ul class="pricing-features">
             <li><span class="pf-check">✓</span> Everything in Starter</li>
