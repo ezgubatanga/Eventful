@@ -931,7 +931,7 @@
 
       try {
         const { data: rows, error } = await db
-          .from('rsvps')
+          .from('anna_marco_rsvp')
           .select('*')
           .eq('couple_id', 'anna-and-marco')
           .order('created_at', { ascending: false });

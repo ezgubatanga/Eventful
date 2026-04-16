@@ -1178,7 +1178,7 @@
       };
 
       try {
-        const { error } = await db.from('rsvps').insert(payload);
+        const { error } = await db.from('anna_marco_rsvp').insert(payload);
         if (error) throw error;
         fb.style.display = 'block';
         if (attend === 'yes') {
