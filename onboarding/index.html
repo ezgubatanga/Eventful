@@ -1424,21 +1424,21 @@
     .included-summary::-webkit-details-marker { display: none; }
 
     .included-grid {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 10px;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 8px;
     }
 
     .included-tag {
-      display: inline-flex;
+      display: flex;
       align-items: center;
-      gap: 7px;
+      gap: 8px;
       font-size: 0.85rem;
       background: var(--sage-light);
       color: var(--sage);
       border: 1px solid rgba(95, 113, 97, 0.2);
-      border-radius: 999px;
-      padding: 8px 16px;
+      border-radius: 12px;
+      padding: 10px 14px;
       font-weight: 500;
     }
 
@@ -2109,14 +2109,14 @@
       'Accommodation Recommendations',
       'Things to Do Nearby',
       'Photo Gallery',
+      'Featured Video',
       'Dress Code & FAQ',
       'Countdown Timer',
       'RSVP Form',
-      'RSVP Dashboard',
       'Contact Info',
       'Mobile-Optimized Design',
       'Custom Shareable Link',
-      'Featured Video',
+      'RSVP Dashboard',
     ];
 
     const FUNCTIONAL_ADDONS = [
