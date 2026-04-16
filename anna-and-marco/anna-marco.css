@@ -1208,6 +1208,47 @@ section { padding: 88px 24px; }
 
 .footer-powered a:hover { opacity: 0.65; }
 
+/* ─── Demo CTA ───────────────────────────────────────── */
+.demo-cta {
+  position: fixed;
+  bottom: 28px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 200;
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  padding: 11px 20px;
+  background: rgba(35,32,24,0.88);
+  border: 1.5px solid rgba(197,160,89,0.45);
+  border-radius: 999px;
+  color: var(--gold);
+  font-family: 'Outfit', sans-serif;
+  font-size: 0.78rem;
+  font-weight: 600;
+  letter-spacing: 0.05em;
+  text-decoration: none;
+  white-space: nowrap;
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  box-shadow: 0 4px 16px rgba(0,0,0,0.40);
+  transition: border-color var(--transition), box-shadow var(--transition), transform var(--transition);
+}
+.demo-cta:hover {
+  border-color: var(--gold);
+  box-shadow: var(--shadow-gold);
+  transform: translateX(-50%) translateY(-2px);
+}
+
+@media (max-width: 768px) {
+  .demo-cta {
+    bottom: 20px;
+    font-size: 0.72rem;
+    padding: 9px 16px;
+    max-width: calc(100vw - 144px);
+  }
+}
+
 /* ─── Hamburger ──────────────────────────────────────── */
 .hamburger{display:none;cursor:pointer}
 .hamburger input{display:none}
@@ -1417,6 +1458,61 @@ section { padding: 88px 24px; }
 }
 .accommodation-link:hover { gap: 10px; color: var(--gold-dark); }
 
+/* ─── Things to Do ───────────────────────────────────── */
+.activities { background: var(--surface); }
+
+.activities-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 16px;
+  margin-top: 44px;
+}
+
+.activity-card {
+  background: var(--surface-2);
+  border-radius: var(--radius);
+  padding: 26px 22px;
+  border: 1px solid rgba(197,160,89,0.18);
+  box-shadow: var(--shadow-sm);
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  transition: box-shadow var(--transition), transform var(--transition);
+}
+.activity-card:hover { box-shadow: var(--shadow-md); transform: translateY(-3px); }
+
+.activity-tag {
+  font-size: 0.62rem;
+  text-transform: uppercase;
+  letter-spacing: 0.2em;
+  font-weight: 700;
+  color: var(--gold);
+  display: block;
+}
+
+.activity-icon {
+  color: var(--gold);
+  display: flex;
+  align-items: center;
+  margin: 4px 0 2px;
+}
+.activity-icon svg { display: block; }
+
+.activity-name {
+  font-family: 'Cormorant Infant', serif;
+  font-size: 1.12rem;
+  font-weight: 500;
+  color: var(--text-main);
+  line-height: 1.25;
+}
+
+.activity-desc {
+  font-size: 0.83rem;
+  color: var(--text-muted);
+  line-height: 1.65;
+  flex: 1;
+}
+
 /* ─── Transportation ─────────────────────────────────── */
 .transport-block {
   margin-top: 44px;
@@ -1425,7 +1521,7 @@ section { padding: 88px 24px; }
   border: 1px solid rgba(197,160,89,0.18);
   padding: 32px 36px;
 }
-.transport-title    { font-family: 'Cormorant Infant', serif; font-size: 1.3rem; font-weight: 500; color: var(--text-main); margin-bottom: 6px; }
+.transport-title    { font-family: 'Cormorant Infant', serif; font-size: 1.6rem; font-weight: 500; color: var(--text-main); margin-bottom: 6px; }
 .transport-subtitle { font-size: 0.84rem; color: var(--text-muted); margin-bottom: 28px; line-height: 1.6; }
 .transport-items    { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; }
 .transport-item     { display: flex; flex-direction: column; gap: 6px; }
@@ -1519,7 +1615,7 @@ section { padding: 88px 24px; }
 @media print {
   .preloader-overlay, .nav, .music-btn,
   .hero, .countdown-bar, .story, .timeline, .venue,
-  .accommodation, .gallery, .video-section, .registry,
+  .accommodation, .activities, .gallery, .video-section, .registry,
   .dress-faq, .rsvp, .contact, .footer, .lightbox { display: none !important; }
 
   .schedule { display: block !important; padding: 16px 0; }
@@ -1545,7 +1641,8 @@ section { padding: 88px 24px; }
   .timeline-item:nth-child(even) .timeline-year    { grid-column: 2; text-align: left; padding-left: 0; }
   .timeline-item:nth-child(even) .timeline-content { grid-column: 2; }
   .timeline-item:nth-child(even) .timeline-content:hover { transform: translateX(3px); }
-  .accommodation-cards { grid-template-columns: 1fr; }
+  .accommodation-cards,
+  .activities-grid { grid-template-columns: 1fr; }
   .transport-items  { grid-template-columns: 1fr; gap: 20px; }
   .transport-block  { padding: 24px 20px; }
   .weather-card     { flex-direction: column; align-items: flex-start; gap: 20px; padding: 24px 20px; }

@@ -126,6 +126,54 @@
       padding: 0 28px;
       height: 60px;
     }
+    .nav-left {
+      display: flex;
+      align-items: center;
+      gap: 4px;
+    }
+    .nav-right {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .nav-cta {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 7px 14px;
+      background: var(--gold-light);
+      border: 1px solid var(--border-mid);
+      border-radius: 8px;
+      color: var(--gold);
+      font-family: 'Outfit', sans-serif;
+      font-size: 0.8rem;
+      font-weight: 600;
+      letter-spacing: 0.03em;
+      text-decoration: none;
+      white-space: nowrap;
+      transition: background 0.2s, border-color 0.2s;
+    }
+    .nav-cta:hover { background: var(--gold-mid); border-color: var(--gold); }
+    @media (max-width: 480px) {
+      .nav-cta span { display: none; }
+    }
+
+    .nav-back {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 32px;
+      height: 32px;
+      border-radius: 8px;
+      border: 1px solid var(--border-mid);
+      color: var(--gold);
+      text-decoration: none;
+      flex-shrink: 0;
+      transition: background 0.2s, border-color 0.2s;
+      margin-right: 4px;
+    }
+    .nav-back:hover { background: var(--gold-light); border-color: var(--gold); }
+
     .nav-brand {
       font-family: 'Cormorant Garamond', serif;
       font-size: 1.1rem;
@@ -670,30 +718,37 @@
     </div>
   </div>
 
-  <!-- Remove confirm modal -->
+  <!-- Demo restriction modal -->
   <div class="modal-backdrop" id="remove-modal">
     <div class="modal">
-      <div class="modal-title" style="color:var(--red)">Remove RSVP</div>
-      <div class="modal-sub">This cannot be undone.</div>
-      <div class="remove-name" id="remove-modal-name"></div>
-      <div class="remove-warn">Permanently delete this RSVP entry from the sheet?</div>
-      <div class="remove-actions">
-        <button class="btn-cancel-rm" id="remove-modal-cancel">Cancel</button>
-        <button class="btn-confirm-rm" id="remove-modal-confirm">Delete</button>
-      </div>
+      <div class="modal-title">Demo Mode</div>
+      <div class="modal-sub" id="remove-modal-name"></div>
+      <div class="remove-warn" style="margin-bottom:0">Deleting RSVPs is not available on the demo page. On a live wedding page, the couple can remove entries directly from their dashboard.</div>
+      <button class="modal-close" id="remove-modal-cancel">Got it</button>
     </div>
   </div>
 
   <!-- Nav -->
   <nav class="nav">
-    <a class="nav-brand" href="/anna-and-marco/">Anna &amp; Marco <span>RSVP Dashboard</span></a>
-    <button class="nav-refresh" id="refresh-btn" aria-label="Refresh data">
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-        <polyline points="23 4 23 10 17 10"/><polyline points="1 20 1 14 7 14"/>
-        <path d="M3.51 9a9 9 0 0 1 14.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0 0 20.49 15"/>
-      </svg>
-      Refresh
-    </button>
+    <div class="nav-left">
+      <a class="nav-back" href="/anna-and-marco/" aria-label="Back to wedding page">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"/></svg>
+      </a>
+      <a class="nav-brand" href="/anna-and-marco/">Anna &amp; Marco <span>RSVP Dashboard</span></a>
+    </div>
+    <div class="nav-right">
+      <button class="nav-refresh" id="refresh-btn" aria-label="Refresh data">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <polyline points="23 4 23 10 17 10"/><polyline points="1 20 1 14 7 14"/>
+          <path d="M3.51 9a9 9 0 0 1 14.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0 0 20.49 15"/>
+        </svg>
+        Refresh
+      </button>
+      <a class="nav-cta" href="/onboarding/">
+        Create your own page
+        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
+      </a>
+    </div>
   </nav>
 
   <!-- Main -->
@@ -1025,39 +1080,17 @@
     }
     document.addEventListener('click', closeAllDropdowns);
 
-    // ── Remove modal ──
-    const removeModal    = document.getElementById('remove-modal');
+    // ── Remove modal (demo — deletion blocked) ──
+    const removeModal     = document.getElementById('remove-modal');
     const removeModalName = document.getElementById('remove-modal-name');
-    const removeConfirm  = document.getElementById('remove-modal-confirm');
-    let   pendingRemove  = null;
 
     document.getElementById('remove-modal-cancel').addEventListener('click', () => removeModal.classList.remove('open'));
     removeModal.addEventListener('click', e => { if (e.target === removeModal) removeModal.classList.remove('open'); });
 
     function openRemoveModal(r) {
-      pendingRemove = r;
       removeModalName.textContent = r.name;
       removeModal.classList.add('open');
     }
-
-    removeConfirm.addEventListener('click', async () => {
-      if (!pendingRemove) return;
-      removeConfirm.textContent = 'Deleting…';
-      removeConfirm.disabled = true;
-      try {
-        await fetch(SCRIPT_URL + '?action=delete&row=' + pendingRemove.row, { mode: 'no-cors' });
-        // Optimistically remove from allRecent
-        allRecent = allRecent.filter(r => r !== pendingRemove);
-        pendingRemove = null;
-        removeModal.classList.remove('open');
-        renderTable();
-      } catch (e) {
-        removeConfirm.textContent = 'Error — retry';
-      } finally {
-        removeConfirm.textContent = 'Delete';
-        removeConfirm.disabled = false;
-      }
-    });
 
     function renderMealBars(meals, max) {
       const order = ['beef', 'chicken', 'fish', 'vegetarian'];

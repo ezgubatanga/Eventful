@@ -1464,6 +1464,12 @@
       margin-top: 60px;
     }
 
+    .ea-grid {
+      grid-template-columns: 1fr 1fr !important;
+      max-width: 720px;
+      margin: 48px auto 0 !important;
+    }
+
     .testimonial-card {
       background: var(--surface);
       border-radius: var(--radius-lg);
@@ -1851,6 +1857,10 @@
 
       .testimonials-grid {
         grid-template-columns: 1fr;
+      }
+
+      .ea-grid {
+        grid-template-columns: 1fr !important;
       }
 
       .showcase-grid,
@@ -2283,6 +2293,7 @@
       cursor: pointer;
       text-align: left;
       gap: 16px;
+      -webkit-tap-highlight-color: transparent;
     }
 
     .faq-q:hover {
@@ -2311,16 +2322,19 @@
     }
 
     .faq-a {
-      display: none;
-      padding: 0 24px 20px;
+      max-height: 0;
+      overflow: hidden;
+      padding: 0 24px;
       font-family: 'Outfit', sans-serif;
       font-size: 0.88rem;
       color: var(--text-muted);
       line-height: 1.75;
+      transition: max-height 0.35s ease, padding 0.35s ease;
     }
 
     .faq-item.open .faq-a {
-      display: block;
+      max-height: 300px;
+      padding: 0 24px 20px;
     }
   </style>
 </head>
@@ -2959,16 +2973,7 @@
         <p>Eventful is just getting started — and that's a good thing for you.</p>
       </div>
 
-      <div class="testimonials-grid" style="grid-template-columns: 1fr 1fr; max-width: 720px; margin: 0 auto;">
-        <div class="testimonial-card" style="grid-column: span 2;">
-          <p class="testimonial-text">"Even as a demo, this looked better than most wedding websites I've seen. I'd pay for this in a heartbeat."</p>
-          <div class="testimonial-author">
-            <div>
-              <div class="author-name">Early demo viewer</div>
-              <div class="author-meta">Saw the Anna &amp; Marco demo</div>
-            </div>
-          </div>
-        </div>
+      <div class="testimonials-grid ea-grid">
         <div class="testimonial-card">
           <p class="testimonial-text" style="font-size:0.95rem;">"The first 20 couples get this at ₱4,000 — the founding rate — and help shape what Eventful becomes. Your feedback directly influences what we build next."</p>
           <div class="testimonial-author">
@@ -3002,7 +3007,7 @@
       <div class="faq-list">
         <div class="faq-item">
           <button class="faq-q" onclick="toggleFaq(this)">
-            Can I edit my page after it's live?
+            Can I request edits after my page is live?
             <span class="faq-icon">+</span>
           </button>
           <p class="faq-a">Yes — edits are always welcome. Just send us a message and we'll update your page. Minor changes (text, dates, schedule) are free.</p>
