@@ -520,6 +520,13 @@
       white-space: nowrap;
     }
     .action-btn:active { transform: scale(0.97); }
+    .btn-message {
+      background: rgba(127,168,130,0.08);
+      border-color: rgba(127,168,130,0.25);
+      color: var(--green);
+      margin-right: 6px;
+    }
+    .btn-message:hover { background: rgba(127,168,130,0.16); }
     .btn-contact {
       background: var(--gold-light);
       border-color: var(--border-mid);
@@ -708,7 +715,7 @@
       /* Actions: shrink to dots button, no clipping */
       .td-actions { padding-left: 4px; padding-right: 20px !important; white-space: nowrap; overflow: visible; }
       /* Show 3-dots, hide text buttons */
-      .btn-contact, .btn-remove { display: none; }
+      .btn-message, .btn-contact, .btn-remove { display: none; }
       .btn-dots { display: inline-flex; }
     }
   </style>
@@ -751,6 +758,16 @@
       <div class="modal-sub" id="remove-modal-name"></div>
       <div class="remove-warn" style="margin-bottom:0">Deleting RSVPs is not available on the demo page. On a live wedding page, the couple can remove entries directly from their dashboard.</div>
       <button class="modal-close" id="remove-modal-cancel">Got it</button>
+    </div>
+  </div>
+
+  <!-- Message modal -->
+  <div class="modal-backdrop" id="message-modal">
+    <div class="modal">
+      <div class="modal-title" id="message-modal-name"></div>
+
+      <div id="message-modal-body" style="font-size:0.88rem;color:var(--text);line-height:1.6;white-space:pre-wrap;"></div>
+      <button class="modal-close" id="message-modal-close">Close</button>
     </div>
   </div>
 
@@ -1076,6 +1093,10 @@
           <td class="td-muted screen-only">${esc(r.ts)}</td>
           <td class="print-only">${esc(r.message || '—')}</td>
           <td class="td-actions">
+            ${r.message ? `<button class="action-btn btn-message" id="btn-msg-${i}">
+              <svg class="btn-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+              View Message
+            </button>` : ''}
             ${r.phone ? `<a class="action-btn btn-contact" href="tel:${String(r.phone)}" target="_blank">
               <svg class="btn-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.08 12a19.79 19.79 0 0 1-3-8.6A2 2 0 0 1 3.05 1h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L7.09 8.91a16 16 0 0 0 5.93 5.93l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
               Contact
@@ -1088,6 +1109,10 @@
               <svg viewBox="0 0 24 24" fill="currentColor"><circle cx="5" cy="12" r="2"/><circle cx="12" cy="12" r="2"/><circle cx="19" cy="12" r="2"/></svg>
             </button>
             <div class="dots-dropdown" id="dots-dd-${i}">
+              ${r.message ? `<button class="dots-item" id="dots-msg-${i}" style="color:var(--green)">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+                View Message
+              </button>` : ''}
               ${r.phone ? `<a class="dots-item dots-item-contact" href="tel:${String(r.phone)}" target="_blank">
                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.08 12a19.79 19.79 0 0 1-3-8.6A2 2 0 0 1 3.05 1h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L7.09 8.91a16 16 0 0 0 5.93 5.93l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
                 Contact
@@ -1103,6 +1128,11 @@
 
       // Attach listeners directly to each button — no delegation, no stale closures
       visible.forEach((r, i) => {
+        const btnMsg = document.getElementById('btn-msg-' + i);
+        if (btnMsg) btnMsg.addEventListener('click', e => {
+          e.stopPropagation();
+          openMessageModal(r);
+        });
         document.getElementById('btn-remove-' + i).addEventListener('click', e => {
           e.stopPropagation();
           openRemoveModal(r);
@@ -1113,6 +1143,12 @@
           const isOpen = dd.classList.contains('open');
           closeAllDropdowns();
           if (!isOpen) dd.classList.add('open');
+        });
+        const dotsMsg = document.getElementById('dots-msg-' + i);
+        if (dotsMsg) dotsMsg.addEventListener('click', e => {
+          e.stopPropagation();
+          closeAllDropdowns();
+          openMessageModal(r);
         });
         const dotsDelete = document.getElementById('dots-delete-' + i);
         if (dotsDelete) dotsDelete.addEventListener('click', e => {
@@ -1148,6 +1184,20 @@
 
     document.getElementById('remove-modal-cancel').addEventListener('click', () => removeModal.classList.remove('open'));
     removeModal.addEventListener('click', e => { if (e.target === removeModal) removeModal.classList.remove('open'); });
+
+    // ── Message modal ──
+    const messageModal     = document.getElementById('message-modal');
+    const messageModalName = document.getElementById('message-modal-name');
+    const messageModalBody = document.getElementById('message-modal-body');
+
+    document.getElementById('message-modal-close').addEventListener('click', () => messageModal.classList.remove('open'));
+    messageModal.addEventListener('click', e => { if (e.target === messageModal) messageModal.classList.remove('open'); });
+
+    function openMessageModal(r) {
+      messageModalName.textContent = r.name;
+      messageModalBody.textContent = r.message;
+      messageModal.classList.add('open');
+    }
 
     function openRemoveModal(r) {
       removeModalName.textContent = r.name;
