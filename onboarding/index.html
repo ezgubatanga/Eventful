@@ -1036,7 +1036,11 @@
       position: relative;
       max-height: 90vh;
       overflow-y: auto;
+      scrollbar-width: none;
+      -ms-overflow-style: none;
     }
+
+    .payment-modal::-webkit-scrollbar { display: none; }
 
     .payment-modal-close {
       position: absolute;
@@ -2751,36 +2755,39 @@
     async function confirmPayment() {
       const btn = document.getElementById('confirmPaymentBtn');
       btn.disabled = true;
-
-      if (_receiptFile) {
-        btn.innerHTML = `<span class="spinner"></span> Uploading receipt…`;
-        let receipt_url = null;
-        try {
-          const ext  = _receiptFile.name.split('.').pop();
-          const path = `onboarding/${Date.now()}.${ext}`;
-          const { error: uploadErr } = await db.storage
-            .from('receipts')
-            .upload(path, _receiptFile, { upsert: false });
-          if (!uploadErr) {
-            const { data: urlData } = db.storage.from('receipts').getPublicUrl(path);
-            receipt_url = urlData.publicUrl;
-          }
-        } catch (_) {}
-
-        btn.innerHTML = `<span class="spinner"></span> Confirming…`;
-        if (_orderId) {
-          await db.from('orders')
-            .update({ payment_status: 'receipt_uploaded', receipt_url })
-            .eq('id', _orderId)
-            .catch(() => {});
-        }
-      }
-
       const email = document.getElementById('email').value.trim();
-      setTimeout(() => {
-        closePaymentModal();
-        showSuccess(email);
-      }, 600);
+
+      try {
+        if (_receiptFile) {
+          btn.innerHTML = `<span class="spinner"></span> Uploading receipt…`;
+          let receipt_url = null;
+          try {
+            const ext  = _receiptFile.name.split('.').pop();
+            const path = `onboarding/${Date.now()}.${ext}`;
+            const { error: uploadErr } = await db.storage
+              .from('receipts')
+              .upload(path, _receiptFile, { upsert: false });
+            if (!uploadErr) {
+              const { data: urlData } = db.storage.from('receipts').getPublicUrl(path);
+              receipt_url = urlData.publicUrl;
+            }
+          } catch (_) {}
+
+          btn.innerHTML = `<span class="spinner"></span> Confirming…`;
+          if (_orderId) {
+            try {
+              await db.from('orders')
+                .update({ payment_status: 'receipt_uploaded', receipt_url })
+                .eq('id', _orderId);
+            } catch (_) {}
+          }
+        }
+      } finally {
+        setTimeout(() => {
+          closePaymentModal();
+          showSuccess(email);
+        }, 600);
+      }
     }
 
     function showSuccess(email) {
