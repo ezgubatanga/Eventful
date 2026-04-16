@@ -210,13 +210,18 @@
     }
 
     .btn-gold {
-      background: var(--gold);
+      background: linear-gradient(135deg, #C5A059 0%, #E0BC72 50%, #C5A059 100%);
+      background-size: 200% 100%;
       color: #fff !important;
+      box-shadow: 0 4px 24px rgba(197,160,89,0.35), inset 0 1px 0 rgba(255,255,255,0.15);
+      padding: 15px 38px;
     }
 
     .btn-gold:hover {
-      background: #B8903F;
+      background-position: 100% 0;
+      background: linear-gradient(135deg, #E0BC72 0%, #F0D08A 50%, #E0BC72 100%);
       transform: translateY(-3px);
+      box-shadow: 0 8px 32px rgba(197,160,89,0.5), inset 0 1px 0 rgba(255,255,255,0.2);
     }
 
     .btn-gold:active {
@@ -1550,6 +1555,7 @@
     }
 
     /* ─── CTA BANNER ──────────────────────────────────────── */
+
    .cta-card {
       background: linear-gradient(135deg, #2A2520 0%, #3D3530 50%, #4A3E37 100%);
       border-radius: var(--radius-xl);
@@ -1557,33 +1563,53 @@
       text-align: center;
       position: relative;
       overflow: hidden;
+      /* grain texture */
+      isolation: isolate;
     }
 
+    /* grain/noise overlay */
     .cta-card::before {
-      content: '♡';
+      content: '';
       position: absolute;
-      font-size: 20rem;
-      color: rgba(197, 160, 89, 0.04);
-      top: 50%;
-      left: 50%;
-      transform: translate(-50%, -50%);
-      font-family: 'Bricolage Grotesque', sans-serif;
+      inset: 0;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+      opacity: 0.03;
       pointer-events: none;
+      z-index: 0;
     }
 
+    /* radial glow behind headline + vignette on edges */
     .cta-card::after {
       content: '';
       position: absolute;
-      top: -100px;
-      right: -100px;
-      width: 400px;
-      height: 400px;
-      background: radial-gradient(circle, rgba(197, 160, 89, 0.1), transparent 70%);
+      inset: 0;
+      background:
+        radial-gradient(ellipse 60% 50% at 50% 45%, rgba(197,160,89,0.13) 0%, transparent 70%),
+        radial-gradient(ellipse 100% 100% at 50% 50%, transparent 55%, rgba(0,0,0,0.35) 100%);
       pointer-events: none;
+      z-index: 0;
+    }
+
+    /* heart symbol */
+    .cta-card .cta-heart {
+      position: absolute;
+      font-size: 32rem;
+      color: rgba(197, 160, 89, 0.055);
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -48%);
+      font-family: 'Bricolage Grotesque', sans-serif;
+      pointer-events: none;
+      filter: blur(6px);
+      z-index: 0;
+      line-height: 1;
+      user-select: none;
     }
 
     .cta-card .eyebrow {
       margin-bottom: 16px;
+      position: relative;
+      z-index: 1;
     }
 
     .cta-card h2 {
@@ -1595,9 +1621,31 @@
       z-index: 1;
     }
 
+    /* "Only 20 couples get" — tighter, smaller */
+    .cta-card h2 .cta-line1 {
+      display: block;
+      font-size: 0.72em;
+      letter-spacing: -0.01em;
+      font-weight: 500;
+      opacity: 0.85;
+    }
+
+    /* "20" — dominant */
+    .cta-card h2 .cta-num {
+      font-size: 1.15em;
+      font-weight: 800;
+    }
+
+    /* "this founding rate" — larger, spaced, gold */
     .cta-card h2 em {
-      color: var(--gold);
+      display: block;
       font-style: italic;
+      font-size: 1.08em;
+      letter-spacing: 0.03em;
+      background: linear-gradient(90deg, #C5A059 0%, #E8C97A 50%, #C5A059 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
     }
 
     .cta-card p {
@@ -1928,7 +1976,7 @@
         grid-template-columns: repeat(10, 1fr);
         gap: 4px;
         width: 100%;
-        max-width: 280px;
+        max-width: 520px;
         margin-left: auto;
         margin-right: auto;
       }
@@ -1939,7 +1987,13 @@
       }
 
       .slot-rate {
-        display: block;
+        display: inline;
+      }
+
+      .slot-counter {
+        padding: 0 6px;
+        width: 100%;
+        box-sizing: border-box;
       }
     }
 
@@ -2094,7 +2148,7 @@
     /* ─── SOCIAL PROOF ───────────────────────────────── */
     .social-proof {
       padding: 64px 0;
-      background: var(--gold);
+      background: #dfc48a;
       position: relative;
       overflow: hidden;
     }
@@ -2122,7 +2176,7 @@
       top: -160px;
       left: -100px;
       background: radial-gradient(circle, rgba(255,248,220,0.45) 0%, transparent 70%);
-      animation: blob-drift 9s ease-in-out infinite;
+      animation: blob-drift 6s ease-in-out infinite;
     }
 
     .social-proof::after {
@@ -2131,7 +2185,7 @@
       bottom: -120px;
       right: -80px;
       background: radial-gradient(circle, rgba(255,248,220,0.35) 0%, transparent 70%);
-      animation: blob-drift-r 11s ease-in-out infinite;
+      animation: blob-drift-r 7.5s ease-in-out infinite;
     }
 
     .social-proof-inner {
@@ -2153,7 +2207,7 @@
       font-weight: 600;
       text-transform: uppercase;
       letter-spacing: 0.1em;
-      color: #3A2F25;
+      color: #221A12;
       margin-bottom: 14px;
     }
 
@@ -2181,12 +2235,12 @@
 
     .slot-counter-text {
       font-size: 0.88rem;
-      color: #3A2F25;
+      color: #221A12;
       font-family: 'Outfit', sans-serif;
     }
 
     .slot-counter-text strong {
-      color: #2A2520;
+      color: #17120D;
       font-weight: 600;
     }
 
@@ -2205,14 +2259,14 @@
       font-size: 1rem;
       font-style: italic;
       font-weight: 400;
-      color: #2A2520;
+      color: #17120D;
       line-height: 1.65;
       margin-bottom: 14px;
     }
 
     .proof-quote-attr {
       font-size: 0.8rem;
-      color: #3A2F25;
+      color: #221A12;
       font-family: 'Outfit', sans-serif;
     }
 
@@ -2359,7 +2413,6 @@
     /* ─── FAQ ────────────────────────────────────────── */
     .faq {
       padding: 0 0 96px;
-      background: linear-gradient(180deg, transparent 0%, rgba(245,241,235,0.5) 50%, transparent 100%);
     }
 
     .faq-list {
@@ -3173,10 +3226,14 @@
     <div class="container">
       <div class="cta-card">
         <span class="eyebrow">Ready to begin?</span>
-        <h2>Only 20 couples get<br /><em>this founding rate</em></h2>
-        <p style="font-family:'Outfit',sans-serif;font-size:0.95rem;color:rgba(255,255,255,0.65);margin-top:8px;margin-bottom:0;">Yours could be next. Slots are filling up.</p>
+        <span class="cta-heart" aria-hidden="true">♡</span>
+        <h2>
+          <span class="cta-line1">Only <span class="cta-num">20</span> couples get</span>
+          <em>this founding rate</em>
+        </h2>
+        <p style="font-family:'Outfit',sans-serif;font-size:0.95rem;color:rgba(255,255,255,0.65);margin-top:8px;margin-bottom:0;">The ₱4,000 pricing is limited to the first 20 couples only. Regular rate will apply afterwards.</p>
         <div class="cta-actions">
-          <a href="/onboarding" class="btn btn-gold" id="bottom-cta">Claim Your Founding Spot ✦</a>
+          <a href="/onboarding" class="btn btn-gold" id="bottom-cta">Secure Your Founding Rate ✦</a>
         </div>
       </div>
     </div>
@@ -3185,6 +3242,7 @@
   </main>
   <!-- ═══ FOOTER ═══════════════════════════════════════════════ -->
   <footer class="footer">
+
     <div class="container">
       <div class="footer-inner">
         <span class="footer-brand"><img src="logo.webp" alt="Eventful Logo" height="24"
