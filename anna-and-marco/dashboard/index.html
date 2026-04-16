@@ -16,6 +16,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&family=Cormorant+Garamond:ital,wght@0,400;0,500;1,400&display=swap" rel="stylesheet" />
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
   <style>
     :root {
       --bg:         #1A1714;
@@ -840,8 +841,9 @@
   </main>
 
   <script>
-    const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbxlzoxREgePvEsPzO1Gn53qG483GknKqpaX24kglO54tVRIPJJtd0VG3BpMgKdOimVtBQ/exec';
-    const PASS       = 'AnnaMarco2026';
+    const { createClient } = supabase;
+    const db   = createClient('https://auohzxsufvdgdrhtlpib.supabase.co', 'sb_publishable_sRKhjg0x42oqn0obrF3rYQ_fsAypvL0');
+    const PASS = 'AnnaMarco2026';
 
     const MEAL_LABELS = {
       beef:        'Braised Beef Tenderloin',
@@ -928,10 +930,45 @@
       document.getElementById('content').style.display       = 'none';
 
       try {
-        const res  = await fetch(SCRIPT_URL + '?action=data');
-        const data = await res.json();
-        allRecent = data.recent || [];
-        render(data);
+        const { data: rows, error } = await db
+          .from('rsvps')
+          .select('*')
+          .eq('couple_id', 'anna-and-marco')
+          .order('created_at', { ascending: false });
+
+        if (error) throw error;
+
+        const going    = rows.filter(r => r.attend === 'yes');
+        const notGoing = rows.filter(r => r.attend === 'no');
+        const plusOnes = going.filter(r => r.guests === '2').length;
+        const meals = {}, meals2 = {};
+        going.forEach(r => {
+          if (r.meal)  meals[r.meal]   = (meals[r.meal]  || 0) + 1;
+          if (r.meal2) meals2[r.meal2] = (meals2[r.meal2] || 0) + 1;
+        });
+
+        allRecent = rows.map(r => ({
+          name:    r.name,
+          email:   r.email,
+          phone:   r.phone,
+          attend:  r.attend,
+          guests:  r.guests,
+          meal:    r.meal,
+          meal2:   r.meal2,
+          message: r.message,
+          ts:      new Date(r.created_at).toLocaleDateString('en-GB', { day: 'numeric', month: 'short', year: 'numeric' })
+        }));
+
+        render({
+          total:     rows.length,
+          going:     going.length,
+          notGoing:  notGoing.length,
+          plusOnes,
+          headcount: going.length + plusOnes,
+          meals,
+          meals2
+        });
+
         document.getElementById('state-loading').style.display = 'none';
         document.getElementById('content').style.display       = 'block';
       } catch (err) {

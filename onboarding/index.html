@@ -27,6 +27,7 @@
   <meta name="twitter:image" content="https://eventful.page/eventful.webp" />
   <meta name="agd-partner-manual-verification" />
   <link rel="icon" type="image/webp" href="https://eventful.page/favicon.webp" />
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
   <script type="application/ld+json">
   {
     "@context": "https://schema.org",
@@ -2139,7 +2140,8 @@
   <!-- ═══════════════════════════ JS ══════════════════════════ -->
   <script>
     // ── Config ────────────────────────────────────────────────
-    const APPS_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbxP4YLK1Cb59h0l8FNIh0UhubFolWQ_b5O-GGd64gmABuVy2XIq66oFo6iY0U4XlezgSw/exec';
+    const { createClient } = supabase;
+    const db = createClient('https://auohzxsufvdgdrhtlpib.supabase.co', 'sb_publishable_sRKhjg0x42oqn0obrF3rYQ_fsAypvL0');
 
     // ── Data ──────────────────────────────────────────────────
     const CORE_SECTIONS = [
@@ -2569,25 +2571,38 @@
     }
 
     // ── Payment Modal ─────────────────────────────────────────
-    const CLOUDINARY_CLOUD = 'dvdekmzqn';
-    const CLOUDINARY_PRESET = 'Eventful';
-
     let _receiptFile = null;
     let _receiptFileName = null;
+    let _orderId = null;
 
-    function handleSubmit() {
+    async function handleSubmit() {
       const { total } = calcPrice();
       document.getElementById('modalAmount').textContent = `₱${total.toLocaleString()}`;
 
-      // Submit order now (fire-and-forget) — receipt sent separately
+      // Insert order into Supabase
       const payload = buildPayload();
-      payload.paymentStatus = 'pending';
-      fetch(APPS_SCRIPT_URL, {
-        method: 'POST',
-        mode: 'no-cors',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(payload),
-      }).catch(() => {});
+      const { data, error } = await db.from('orders').insert({
+        groom_name:        payload.groomName,
+        bride_name:        payload.brideName,
+        wedding_date:      payload.weddingDate,
+        email:             payload.email,
+        contact_number:    payload.contactNumber,
+        location:          payload.location,
+        venue_name:        payload.venueName,
+        ceremony_time:     payload.ceremonyTime,
+        page_slug:         payload.pageSlug,
+        color_palette:     payload.colorPalette,
+        core_sections:     payload.coreSections,
+        functional_add_ons: payload.functionalAddOns,
+        premium_add_ons:   payload.premiumAddOns,
+        delivery:          payload.delivery,
+        special_requests:  payload.specialRequests,
+        estimated_price:   payload.estimatedPrice,
+        payment_status:    'pending',
+        submitted_at:      payload.submittedAt,
+      }).select('id').single();
+
+      if (!error && data) _orderId = data.id;
 
       document.getElementById('paymentModal').classList.add('open');
       document.body.style.overflow = 'hidden';
@@ -2737,30 +2752,28 @@
       const btn = document.getElementById('confirmPaymentBtn');
       btn.disabled = true;
 
-      // If receipt uploaded, send a follow-up submission with the receipt URL
       if (_receiptFile) {
         btn.innerHTML = `<span class="spinner"></span> Uploading receipt…`;
-        const payload = buildPayload();
-        payload.paymentStatus = 'receipt_uploaded';
+        let receipt_url = null;
         try {
-          const formData = new FormData();
-          formData.append('file', _receiptFile);
-          formData.append('upload_preset', CLOUDINARY_PRESET);
-          formData.append('folder', 'receipts');
-          const res = await fetch(`https://api.cloudinary.com/v1_1/${CLOUDINARY_CLOUD}/image/upload`, {
-            method: 'POST',
-            body: formData,
-          });
-          const data = await res.json();
-          if (data.secure_url) payload.receiptUrl = data.secure_url;
+          const ext  = _receiptFile.name.split('.').pop();
+          const path = `onboarding/${Date.now()}.${ext}`;
+          const { error: uploadErr } = await db.storage
+            .from('receipts')
+            .upload(path, _receiptFile, { upsert: false });
+          if (!uploadErr) {
+            const { data: urlData } = db.storage.from('receipts').getPublicUrl(path);
+            receipt_url = urlData.publicUrl;
+          }
         } catch (_) {}
+
         btn.innerHTML = `<span class="spinner"></span> Confirming…`;
-        fetch(APPS_SCRIPT_URL, {
-          method: 'POST',
-          mode: 'no-cors',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify(payload),
-        }).catch(() => {});
+        if (_orderId) {
+          await db.from('orders')
+            .update({ payment_status: 'receipt_uploaded', receipt_url })
+            .eq('id', _orderId)
+            .catch(() => {});
+        }
       }
 
       const email = document.getElementById('email').value.trim();

@@ -34,6 +34,7 @@
   <link href="https://fonts.googleapis.com/css2?family=Parisienne&family=Playfair+Display:ital,wght@0,400;0,700;1,400;1,700&family=Cormorant+Infant:ital,wght@0,300;0,400;0,500;0,600;1,400;1,500&family=Outfit:wght@300;400;500;600&display=swap" rel="stylesheet" media="print" onload="this.media='all'" />
   <noscript><link href="https://fonts.googleapis.com/css2?family=Parisienne&family=Playfair+Display:ital,wght@0,400;0,700;1,400;1,700&family=Cormorant+Infant:ital,wght@0,300;0,400;0,500;0,600;1,400;1,500&family=Outfit:wght@300;400;500;600&display=swap" rel="stylesheet" /></noscript>
   <link rel="stylesheet" href="/anna-and-marco/anna-marco.css" />
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
   <script type="application/ld+json">
   {
     "@context": "https://schema.org",
@@ -1134,7 +1135,8 @@
     });
 
     // ── RSVP ──────────────────────────────────────────────
-    const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbxlzoxREgePvEsPzO1Gn53qG483GknKqpaX24kglO54tVRIPJJtd0VG3BpMgKdOimVtBQ/exec';
+    const { createClient } = supabase;
+    const db = createClient('https://auohzxsufvdgdrhtlpib.supabase.co', 'sb_publishable_sRKhjg0x42oqn0obrF3rYQ_fsAypvL0');
 
     document.getElementById('rsvpForm').addEventListener('submit', async function(e) {
       e.preventDefault();
@@ -1147,7 +1149,23 @@
       btn.textContent = 'Sending…';
       fb.style.display = 'none';
 
+      // Handle receipt upload if present
+      let receipt_url = null;
+      const receiptFile = document.getElementById('rsvp-receipt')?.files?.[0];
+      if (receiptFile) {
+        const ext  = receiptFile.name.split('.').pop();
+        const path = `anna-and-marco/${Date.now()}.${ext}`;
+        const { error: uploadErr } = await db.storage
+          .from('receipts')
+          .upload(path, receiptFile, { upsert: false });
+        if (!uploadErr) {
+          const { data: urlData } = db.storage.from('receipts').getPublicUrl(path);
+          receipt_url = urlData.publicUrl;
+        }
+      }
+
       const payload = {
+        couple_id: 'anna-and-marco',
         name,
         email:   document.getElementById('rsvp-email').value.trim(),
         phone:   document.getElementById('rsvp-phone').value.trim(),
@@ -1155,14 +1173,13 @@
         guests:  attend === 'no' ? '0' : document.getElementById('rsvp-guests').value,
         meal:    document.getElementById('rsvp-meal').value,
         meal2:   document.getElementById('rsvp-meal-guest2').value,
-        message: document.getElementById('rsvp-message').value.trim()
+        message: document.getElementById('rsvp-message').value.trim(),
+        receipt_url
       };
 
       try {
-        await fetch(SCRIPT_URL + '?' + new URLSearchParams(payload), {
-          method: 'GET',
-          mode:   'no-cors'
-        });
+        const { error } = await db.from('rsvps').insert(payload);
+        if (error) throw error;
         fb.style.display = 'block';
         if (attend === 'yes') {
           fb.textContent = `Thank you, ${name}! We can't wait to celebrate with you in Rome.`;
