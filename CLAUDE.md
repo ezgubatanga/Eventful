@@ -30,7 +30,7 @@ anna-and-marco/            ← Demo couple page
 ## Two Distinct CSS Systems
 
 **Root pages** (`index.html`, `onboarding/index.html`) share `styles.css`:
-- Fonts: Cormorant Garamond + Outfit
+- Fonts: Bricolage Grotesque + Outfit
 - Color tokens: `--primary` (sage green `#5F7161`), `--gold`, `--rose`, `--champagne`
 
 **Couple pages** each have their own CSS:
