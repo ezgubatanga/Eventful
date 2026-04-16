@@ -15,24 +15,26 @@ Eventful is a platform that creates bespoke wedding websites for couples. Each c
 ```
 /                          ← Eventful marketing site
   index.html               ← Landing page
-  styles.css               ← Shared CSS for root pages (landing + form)
+  styles.css               ← Shared CSS for root pages
   script.js                ← JS for the RSVP form on the landing page
-  form/index.html          ← Lead-gen inquiry form for prospective couples (uses styles.css)
   logo.webp / favicon.webp / eventful.webp / pexels-junerydocto.webp / Perfect.mp3
 
-sofia-and-carlos/          ← Example couple page
+onboarding/index.html      ← Lead-gen onboarding flow for prospective couples
+
+anna-and-marco/            ← Demo couple page
   index.html               ← Self-contained wedding page
-  sofia-carlos.css         ← Custom CSS for this couple only
+  anna-marco.css           ← Custom CSS for this couple only
+  dashboard/index.html     ← RSVP dashboard demo
 ```
 
 ## Two Distinct CSS Systems
 
-**Root pages** (`index.html`, `form/index.html`) share `styles.css`:
+**Root pages** (`index.html`, `onboarding/index.html`) share `styles.css`:
 - Fonts: Cormorant Garamond + Outfit
 - Color tokens: `--primary` (sage green `#5F7161`), `--gold`, `--rose`, `--champagne`
 
 **Couple pages** each have their own CSS:
-- Fonts can differ per couple (Sofia uses Great Vibes + Cormorant Infant + Outfit)
+- Fonts can differ per couple (Anna & Marco uses Parisienne + Cormorant Infant + Outfit)
 - Each page defines its own `:root` tokens for full visual identity control
 - Goal: move toward a shared base wedding CSS that couples' pages override via their own token values, rather than duplicating all structure
 
@@ -40,7 +42,7 @@ sofia-and-carlos/          ← Example couple page
 
 VS Code → GitHub → Vercel. No build step. All files are served as-is.
 
-CSS paths in couple pages must use absolute URLs (e.g., `/sofia-and-carlos/sofia-carlos.css`) to avoid Vercel trailing-slash routing issues.
+CSS paths in couple pages must use absolute URLs (e.g., `/anna-and-marco/anna-marco.css`) to avoid Vercel trailing-slash routing issues.
 
 ## Adding a New Couple's Page
 
@@ -48,7 +50,7 @@ CSS paths in couple pages must use absolute URLs (e.g., `/sofia-and-carlos/sofia
 2. Link the CSS with an absolute path: `href="/[couple-name]/[couple-name].css"`
 3. Add the favicon: `<link rel="icon" type="image/webp" href="/favicon.webp" />`
 4. Define `:root` tokens at the top of the couple's CSS to establish their color palette
-5. Each page is fully self-contained — inline the countdown and RSVP JS directly in the HTML `<script>` tag (see sofia-and-carlos pattern)
+5. Each page is fully self-contained — inline the countdown and RSVP JS directly in the HTML `<script>` tag (see anna-and-marco pattern)
 
 ## Smooth Scroll
 
@@ -80,14 +82,14 @@ The `- 72` offset accounts for the fixed nav height.
 
 ## Preloader
 
-Every page must include the animated gold preloader. Pattern from `sofia-and-carlos`:
+Every page must include the animated gold preloader. Pattern from `anna-and-marco`:
 - CSS: `.preloader-overlay` + `.loader` + `flowe-one/two/three` keyframes in the couple's CSS file. Uses `var(--bg)` for background and `var(--gold)` for the spinner color.
 - HTML: `<div id="page-preloader" class="preloader-overlay">` with three SVGs (`#pegtopone`, `#pegtoptwo`, `#pegtopthree`). Each SVG must use **unique** gradient/filter/mask IDs (suffix `-a`, `-b`, `-c`) to avoid conflicts.
 - JS: `window.addEventListener('load', () => setTimeout(() => preloader.classList.add('hidden'), 300))`
 
 ## Mobile Nav (Hamburger)
 
-All wedding pages must include a hamburger menu for mobile (`≤768px`). Pattern from `sofia-and-carlos`:
+All wedding pages must include a hamburger menu for mobile (`≤768px`). Pattern from `anna-and-marco`:
 - Button: `.nav-hamburger#nav-hamburger` with 3 `<span>` children
 - Menu: `<ul class="nav-links" id="nav-links">`
 - CSS: hamburger + animated open state in the couple's CSS file
@@ -187,9 +189,6 @@ Add a `.video-section` with a `.video-wrapper` containing an `<iframe>`. Aspect 
 
 ### Gift Registry
 Add a `.registry` section with `.registry-cards` (3-column grid). Each card has an icon, name, description, and link. Pattern from `anna-and-marco`.
-
-### Calendar Integration
-Add `.calendar-add` below the schedule grid with two `.calendar-btn` links: Google Calendar (constructed URL) and Apple Calendar (generated `.ics` Blob). Build both in JS after `DOMContentLoaded`. Pattern from `anna-and-marco`.
 
 ## Build Tooling (Future Consideration)
 
