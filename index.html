@@ -3576,11 +3576,16 @@
 
     // Scroll-triggered section animations
     const st = (trigger, targets, vars) =>
-      gsap.from(targets, { scrollTrigger: { trigger, start: 'top 85%', once: true }, ...vars });
+      gsap.from(targets, {
+        scrollTrigger: { trigger, start: 'top 85%', once: true },
+        immediateRender: false,
+        ...vars,
+      });
 
     document.querySelectorAll('.section-header').forEach(el =>
       gsap.from(el.children, {
         scrollTrigger: { trigger: el, start: 'top 85%', once: true },
+        immediateRender: false,
         opacity: 0, y: 18, duration: 0.5, stagger: 0.1, ease: 'power2.out',
       })
     );
