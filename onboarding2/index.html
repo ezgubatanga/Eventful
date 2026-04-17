@@ -58,7 +58,6 @@
     /* ── Progress ──────────────────────────────── */
     .ob-progress {
       margin-bottom: 24px;
-      transition: opacity 0.3s;
     }
     .ob-progress.hidden { opacity: 0; pointer-events: none; height: 0; margin: 0; overflow: hidden; }
     .ob-progress-header {
@@ -95,11 +94,6 @@
     }
     .ob-screen.active {
       display: flex;
-      animation: fadeUp 0.38s ease both;
-    }
-    @keyframes fadeUp {
-      from { opacity: 0; transform: translateY(14px); }
-      to   { opacity: 1; transform: translateY(0); }
     }
 
     /* ── Back ──────────────────────────────────── */
@@ -459,16 +453,6 @@
     .ob-preview-wrap--dramatic .ob-preview-badge    { background: rgba(255,255,255,0.05); border-color: rgba(255,255,255,0.10); color: rgba(255,255,255,0.45); }
     .ob-preview-wrap--dramatic .ob-preview-hook     { color: rgba(255,255,255,0.28); }
 
-    /* staggered card reveal */
-    @keyframes fadeInUp {
-      from { opacity: 0; transform: translateY(8px); }
-      to   { opacity: 1; transform: translateY(0); }
-    }
-    .ob-preview-card.revealed .ob-preview-names    { animation: fadeInUp 0.45s ease both; animation-delay: 0.05s; }
-    .ob-preview-card.revealed .ob-preview-date     { animation: fadeInUp 0.45s ease both; animation-delay: 0.20s; }
-    .ob-preview-card.revealed .ob-preview-location { animation: fadeInUp 0.45s ease both; animation-delay: 0.30s; }
-    .ob-preview-card.revealed .ob-preview-badge    { animation: fadeInUp 0.45s ease both; animation-delay: 0.45s; }
-    .ob-preview-card.revealed .ob-preview-hook     { animation: fadeInUp 0.45s ease both; animation-delay: 0.60s; }
 
     /* ghost sections */
     .ob-ghost-sections {
@@ -814,13 +798,15 @@
 
 </div>
 
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
 <script>
   let selectedStyle = 'Minimal & Modern';
+  let _animating    = false;
 
   const STEPS = {
-    1: { label: 'Step 1 of 3 — Your Event',        fill: '33%'  },
-    2: { label: 'Step 2 of 3 — Your Style',        fill: '66%'  },
-    3: { label: 'Step 3 of 3 — Personal Touches',  fill: '100%' },
+    1: { label: 'Step 1 of 3 — Your Event',       fill: '33%'  },
+    2: { label: 'Step 2 of 3 — Your Style',       fill: '66%'  },
+    3: { label: 'Step 3 of 3 — Personal Touches', fill: '100%' },
   };
 
   const SCREENS = {
@@ -830,27 +816,59 @@
 
   const BACK_TARGETS = { 2: 1, 3: 2 };
 
-  function goTo(step) {
-    document.querySelectorAll('.ob-screen').forEach(s => s.classList.remove('active'));
-    document.getElementById(SCREENS[step]).classList.add('active');
+  function goTo(step, dir) {
+    if (_animating) return;
+    _animating = true;
 
+    const forward = dir !== 'back';
+    const xIn     = forward ? 22 : -22;
+
+    const curr    = document.querySelector('.ob-screen.active');
+    const next    = document.getElementById(SCREENS[step]);
     const prog    = document.getElementById('ob-progress');
     const backBtn = document.getElementById('ob-back-btn');
+    const fill    = document.getElementById('prog-fill');
+
     if (STEPS[step]) {
       prog.classList.remove('hidden');
       document.getElementById('prog-label').textContent = STEPS[step].label;
-      document.getElementById('prog-fill').style.width  = STEPS[step].fill;
       if (BACK_TARGETS[step] !== undefined) {
         backBtn.style.display = 'inline-flex';
-        backBtn.onclick = () => goTo(BACK_TARGETS[step]);
+        backBtn.onclick = () => goTo(BACK_TARGETS[step], 'back');
       } else {
         backBtn.style.display = 'none';
       }
     } else {
       prog.classList.add('hidden');
     }
+
     if (step === 2) updateStylePreviews();
     window.scrollTo(0, 0);
+
+    const enterNext = () => {
+      gsap.set(next, { display: 'flex', opacity: 0, x: xIn });
+      next.classList.add('active');
+      gsap.to(next, {
+        opacity: 1, x: 0, duration: 0.28, ease: 'power2.out',
+        onComplete: () => { _animating = false; },
+      });
+      if (STEPS[step]) {
+        gsap.to(fill, { width: STEPS[step].fill, duration: 0.45, ease: 'power2.out' });
+      }
+    };
+
+    if (curr) {
+      gsap.to(curr, {
+        opacity: 0, duration: 0.18, ease: 'power2.in',
+        onComplete: () => {
+          curr.classList.remove('active');
+          gsap.set(curr, { clearProps: 'all' });
+          enterNext();
+        },
+      });
+    } else {
+      enterNext();
+    }
   }
 
   function updateStylePreviews() {
@@ -866,6 +884,7 @@
     document.querySelectorAll('.ob-style-card').forEach(c => c.classList.remove('selected'));
     card.classList.add('selected');
     selectedStyle = card.dataset.style;
+    gsap.fromTo(card, { scale: 0.97 }, { scale: 1, duration: 0.3, ease: 'back.out(2)' });
   }
 
   function showPreview() {
@@ -879,20 +898,36 @@
     document.getElementById('p-style').textContent    = selectedStyle;
 
     const STYLE_CLASS = {
-      'Minimal & Modern':  'ob-preview-wrap--minimal',
-      'Romantic & Soft':   'ob-preview-wrap--romantic',
-      'Elegant & Timeless':'ob-preview-wrap--elegant',
-      'Bold & Dramatic':   'ob-preview-wrap--dramatic',
+      'Minimal & Modern':   'ob-preview-wrap--minimal',
+      'Romantic & Soft':    'ob-preview-wrap--romantic',
+      'Elegant & Timeless': 'ob-preview-wrap--elegant',
+      'Bold & Dramatic':    'ob-preview-wrap--dramatic',
     };
     const wrap = document.getElementById('preview-wrap');
-    wrap.classList.remove('ob-preview-wrap--minimal', 'ob-preview-wrap--romantic', 'ob-preview-wrap--dramatic');
+    wrap.classList.remove('ob-preview-wrap--minimal', 'ob-preview-wrap--romantic', 'ob-preview-wrap--elegant', 'ob-preview-wrap--dramatic');
     wrap.classList.add(STYLE_CLASS[selectedStyle] || 'ob-preview-wrap--minimal');
 
-    const card = document.getElementById('preview-card');
-    card.classList.remove('revealed');
     goTo('preview');
-    setTimeout(() => card.classList.add('revealed'), 60);
+
+    const card      = document.getElementById('preview-card');
+    const cardEls   = card.querySelectorAll('p, div, span');
+    const ghostSecs = document.querySelectorAll('.ob-ghost-section');
+
+    gsap.set([...cardEls, ...ghostSecs], { opacity: 0, y: 8 });
+    gsap.timeline({ delay: 0.32 })
+      .to(cardEls,   { opacity: 1, y: 0, duration: 0.38, ease: 'power2.out', stagger: 0.07 })
+      .to(ghostSecs, { opacity: 1, y: 0, duration: 0.3,  ease: 'power2.out', stagger: 0.1  }, '-=0.1');
   }
+
+  window.addEventListener('DOMContentLoaded', () => {
+    gsap.timeline({ defaults: { ease: 'power2.out' } })
+      .from('.ob-logo',       { opacity: 0, y: -10, duration: 0.4 })
+      .from('.ob-progress',   { opacity: 0, duration: 0.3 }, '-=0.15')
+      .from('#s1 .ob-headline', { opacity: 0, y: 14, duration: 0.4 }, '-=0.1')
+      .from('#s1 .ob-subtext',  { opacity: 0, y: 8,  duration: 0.35 }, '-=0.2')
+      .from('#s1 .ob-field',    { opacity: 0, y: 8,  duration: 0.35, stagger: 0.09 }, '-=0.2')
+      .from('#s1 .ob-cta',      { opacity: 0, y: 6,  duration: 0.3  }, '-=0.1');
+  });
 
 </script>
 
