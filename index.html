@@ -2214,8 +2214,20 @@
       border-radius: 4px;
     }
 
+    @keyframes pip-pop {
+      0%   { transform: scale(0); opacity: 0; }
+      60%  { transform: scale(1.35); opacity: 1; }
+      100% { transform: scale(1); opacity: 1; }
+    }
+
     .slot-pip.filled {
       background: #2A2520;
+      opacity: 0;
+      transform: scale(0);
+    }
+
+    .slot-pip.filled.popped {
+      animation: pip-pop 0.35s cubic-bezier(.34,1.56,.64,1) forwards;
     }
 
     .slot-pip.empty {
@@ -2228,6 +2240,11 @@
     }
 
     .slot-pip.pulsing {
+      opacity: 0;
+    }
+
+    .slot-pip.pulsing.popped {
+      opacity: 1;
       animation: pip-pulse 1.4s ease-in-out infinite;
     }
 
@@ -3531,6 +3548,7 @@
             if (i === taken) return `<div class="slot-pip empty pulsing"></div>`;
             return `<div class="slot-pip empty"></div>`;
           }).join('');
+          if (window._slotAnim) { window._slotAnim.done = false; window._slotAnim.run(); }
         }
         if (label) {
           label.innerHTML = `<strong>${taken} of ${TOTAL} slots</strong> taken<span class="slot-rate"> at the founding rate</span>`;
@@ -3538,6 +3556,36 @@
       } catch (e) {
         // silently fail — static fallback remains visible
       }
+    })();
+  </script>
+
+  <script>
+    (function () {
+      window._slotAnim = { inView: false, done: false };
+
+      window._slotAnim.run = function () {
+        if (window._slotAnim.done || !window._slotAnim.inView) return;
+        window._slotAnim.done = true;
+        const filled = document.querySelectorAll('#slot-track .slot-pip.filled');
+        const pulsing = document.querySelector('#slot-track .slot-pip.pulsing');
+        filled.forEach((pip, i) => {
+          setTimeout(() => pip.classList.add('popped'), i * 80);
+        });
+        if (pulsing) {
+          setTimeout(() => pulsing.classList.add('popped'), filled.length * 80 + 180);
+        }
+      };
+
+      const observer = new IntersectionObserver(entries => {
+        if (entries[0].isIntersecting) {
+          window._slotAnim.inView = true;
+          window._slotAnim.run();
+          observer.disconnect();
+        }
+      }, { threshold: 0.5 });
+
+      const track = document.getElementById('slot-track');
+      if (track) observer.observe(track);
     })();
   </script>
 
