@@ -47,22 +47,12 @@
     .ob-logo {
       display: flex;
       align-items: center;
-      gap: 9px;
       margin-bottom: 44px;
       text-decoration: none;
     }
-    .ob-logo svg {
-      width: 26px;
-      height: 26px;
-      color: var(--gold);
-      flex-shrink: 0;
-    }
-    .ob-logo-text {
-      font-family: 'Bricolage Grotesque', sans-serif;
-      font-size: 1.05rem;
-      font-weight: 500;
-      color: var(--text);
-      letter-spacing: 0.02em;
+    .ob-logo-img {
+      height: 28px;
+      width: auto;
     }
 
     /* ── Progress ──────────────────────────────── */
@@ -70,7 +60,7 @@
       margin-bottom: 40px;
       transition: opacity 0.3s;
     }
-    .ob-progress.hidden { opacity: 0; pointer-events: none; }
+    .ob-progress.hidden { opacity: 0; pointer-events: none; height: 0; margin: 0; overflow: hidden; }
     .ob-progress-label {
       font-size: 0.7rem;
       text-transform: uppercase;
@@ -349,25 +339,27 @@
     /* ── Payment ───────────────────────────────── */
     .ob-features {
       list-style: none;
-      display: flex;
-      flex-direction: column;
-      gap: 13px;
+      column-count: 2;
+      column-gap: 20px;
       margin-bottom: 28px;
     }
     .ob-features li {
       display: flex;
-      align-items: flex-start;
-      gap: 10px;
-      font-size: 0.9rem;
+      align-items: baseline;
+      gap: 7px;
+      font-size: 0.82rem;
       color: var(--text);
-      line-height: 1.45;
+      line-height: 1.35;
+      margin-bottom: 10px;
+      break-inside: avoid;
     }
     .ob-features li::before {
       content: '✦';
       color: var(--gold);
-      font-size: 0.6rem;
-      margin-top: 4px;
+      font-size: 0.5rem;
       flex-shrink: 0;
+      position: relative;
+      top: -1px;
     }
     .ob-price-block {
       background: var(--surface);
@@ -460,10 +452,7 @@
 
   <!-- Logo -->
   <a href="/" class="ob-logo">
-    <svg viewBox="0 0 100 100" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
-      <path d="M63,37c-6.7-4-4-27-13-27s-6.3,23-13,27-27,4-27,13,20.3,9,27,13,4,27,13,27,6.3-23,13-27,27-4,27-13-20.3-9-27-13Z"/>
-    </svg>
-    <span class="ob-logo-text">Eventful</span>
+    <img src="/logo.webp" alt="Eventful" class="ob-logo-img" />
   </a>
 
   <!-- Progress bar -->
@@ -581,18 +570,29 @@
     <h1 class="ob-headline">Unlock your full wedding page ✦</h1>
     <p class="ob-subtext">We'll finalize your design and prepare it for sharing</p>
     <ul class="ob-features">
-      <li>Fully designed wedding page</li>
-      <li>Personalized layout & styling</li>
-      <li>RSVP system + guest dashboard</li>
-      <li>Unlimited edits until you love it</li>
-      <li>Private shareable link</li>
+      <li>Couple's Story</li>
+      <li>Relationship Timeline</li>
+      <li>Schedule & Timeline</li>
+      <li>Venue Info / Google Maps</li>
+      <li>Accommodation Recommendations</li>
+      <li>Things to Do Nearby</li>
+      <li>Photo Gallery</li>
+      <li>Featured Video</li>
+      <li>Dress Code & FAQ</li>
+      <li>Countdown Timer</li>
+      <li>RSVP Form</li>
+      <li>Contact Info</li>
+      <li>RSVP Dashboard</li>
+      <li>Mobile-Optimized Design</li>
+      <li>Personalized Layout & Style</li>
+      <li>Custom Shareable Link</li>
     </ul>
     <div class="ob-price-block">
       <p class="ob-price">₱4,000</p>
       <p class="ob-price-label">Full Wedding Page</p>
       <p class="ob-price-founding">Founding rate — limited slots</p>
     </div>
-    <p class="ob-urgency">Only a few founding spots left</p>
+
     <button class="ob-cta" onclick="goTo('confirm')">Secure My Page ✦</button>
     <p class="ob-pay-reassurance">We refine everything with you — no stress, no guesswork</p>
   </div>
