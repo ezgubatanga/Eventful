@@ -1,0 +1,668 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Get Started · Eventful</title>
+  <link rel="icon" type="image/webp" href="/favicon.webp" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,300;12..96,400;12..96,500;12..96,600;12..96,700&family=Outfit:wght@300;400;500;600&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --bg:        #FAF8F5;
+      --surface:   #FFFFFF;
+      --surface-2: #F2EFE9;
+      --gold:      #9A7228;
+      --gold-dim:  rgba(154,114,40,0.10);
+      --text:      #1C1208;
+      --muted:     rgba(28,18,8,0.50);
+      --radius:    14px;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: auto; }
+
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: 'Outfit', sans-serif;
+      min-height: 100dvh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    /* ── Layout ────────────────────────────────── */
+    .ob-wrap {
+      width: 100%;
+      max-width: 520px;
+      padding: 44px 24px 88px;
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+    }
+
+    /* ── Logo ──────────────────────────────────── */
+    .ob-logo {
+      display: flex;
+      align-items: center;
+      gap: 9px;
+      margin-bottom: 44px;
+      text-decoration: none;
+    }
+    .ob-logo svg {
+      width: 26px;
+      height: 26px;
+      color: var(--gold);
+      flex-shrink: 0;
+    }
+    .ob-logo-text {
+      font-family: 'Bricolage Grotesque', sans-serif;
+      font-size: 1.05rem;
+      font-weight: 500;
+      color: var(--text);
+      letter-spacing: 0.02em;
+    }
+
+    /* ── Progress ──────────────────────────────── */
+    .ob-progress {
+      margin-bottom: 40px;
+      transition: opacity 0.3s;
+    }
+    .ob-progress.hidden { opacity: 0; pointer-events: none; }
+    .ob-progress-label {
+      font-size: 0.7rem;
+      text-transform: uppercase;
+      letter-spacing: 0.2em;
+      color: var(--gold);
+      font-weight: 600;
+      margin-bottom: 10px;
+    }
+    .ob-progress-track {
+      height: 2px;
+      background: rgba(154,114,40,0.15);
+      border-radius: 2px;
+      overflow: hidden;
+    }
+    .ob-progress-fill {
+      height: 100%;
+      background: var(--gold);
+      border-radius: 2px;
+      transition: width 0.5s cubic-bezier(.4,0,.2,1);
+    }
+
+    /* ── Screen ────────────────────────────────── */
+    .ob-screen {
+      display: none;
+      flex-direction: column;
+      flex: 1;
+    }
+    .ob-screen.active {
+      display: flex;
+      animation: fadeUp 0.38s ease both;
+    }
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(14px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    /* ── Back ──────────────────────────────────── */
+    .ob-back {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 0.8rem;
+      color: var(--muted);
+      background: none;
+      border: none;
+      cursor: pointer;
+      padding: 0;
+      margin-bottom: 28px;
+      transition: color 0.2s;
+      font-family: 'Outfit', sans-serif;
+    }
+    .ob-back:hover { color: var(--text); }
+    .ob-back svg { width: 14px; height: 14px; }
+
+    /* ── Headings ──────────────────────────────── */
+    .ob-headline {
+      font-family: 'Bricolage Grotesque', sans-serif;
+      font-size: clamp(1.55rem, 5vw, 2.1rem);
+      font-weight: 400;
+      line-height: 1.15;
+      margin-bottom: 10px;
+      color: var(--text);
+    }
+    .ob-subtext {
+      font-size: 0.88rem;
+      color: var(--muted);
+      line-height: 1.65;
+      margin-bottom: 36px;
+    }
+
+    /* ── Fields ────────────────────────────────── */
+    .ob-fields {
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+      margin-bottom: 28px;
+    }
+    .ob-field {
+      display: flex;
+      flex-direction: column;
+      gap: 7px;
+    }
+    .ob-label {
+      font-size: 0.72rem;
+      text-transform: uppercase;
+      letter-spacing: 0.15em;
+      color: var(--muted);
+      font-weight: 500;
+    }
+    .ob-input {
+      background: var(--surface);
+      border: 1px solid rgba(154,114,40,0.22);
+      border-radius: 12px;
+      padding: 15px 18px;
+      font-family: 'Outfit', sans-serif;
+      font-size: 1rem;
+      color: var(--text);
+      outline: none;
+      transition: border-color 0.2s, box-shadow 0.2s;
+      width: 100%;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.06);
+    }
+    .ob-input::placeholder { color: rgba(28,18,8,0.28); }
+    .ob-input:focus {
+      border-color: rgba(154,114,40,0.50);
+      box-shadow: 0 0 0 3px rgba(154,114,40,0.10);
+    }
+    textarea.ob-input {
+      resize: vertical;
+      min-height: 84px;
+      line-height: 1.6;
+    }
+
+
+
+    /* ── Style Cards ───────────────────────────── */
+    .ob-style-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 10px;
+      margin-bottom: 24px;
+    }
+    .ob-style-card {
+      background: var(--surface);
+      border: 1.5px solid rgba(154,114,40,0.18);
+      border-radius: var(--radius);
+      padding: 18px 16px;
+      cursor: pointer;
+      transition: border-color 0.2s, background 0.2s, transform 0.15s;
+      display: flex;
+      flex-direction: column;
+      gap: 5px;
+      user-select: none;
+      -webkit-tap-highlight-color: transparent;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.06);
+    }
+    .ob-style-card:hover { border-color: rgba(154,114,40,0.38); transform: translateY(-1px); }
+    .ob-style-card.selected { border-color: var(--gold); background: var(--gold-dim); }
+    .ob-style-dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      margin-bottom: 6px;
+      flex-shrink: 0;
+    }
+    .ob-style-name {
+      font-family: 'Bricolage Grotesque', sans-serif;
+      font-size: 0.88rem;
+      font-weight: 500;
+      color: var(--text);
+      line-height: 1.2;
+    }
+    .ob-style-desc {
+      font-size: 0.72rem;
+      color: var(--muted);
+      line-height: 1.45;
+    }
+
+    /* ── Reassurance ───────────────────────────── */
+    .ob-reassurance {
+      font-size: 0.82rem;
+      color: var(--muted);
+      margin-bottom: 28px;
+      text-align: center;
+    }
+    .ob-trust {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 7px;
+      font-size: 0.78rem;
+      color: var(--muted);
+      margin-bottom: 24px;
+    }
+
+    /* ── CTA ───────────────────────────────────── */
+    .ob-cta {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      background: var(--gold);
+      color: #FFFFFF;
+      font-family: 'Bricolage Grotesque', sans-serif;
+      font-size: 0.95rem;
+      font-weight: 600;
+      letter-spacing: 0.03em;
+      padding: 16px 32px;
+      border-radius: 50px;
+      border: none;
+      cursor: pointer;
+      transition: background 0.2s, transform 0.15s;
+      text-decoration: none;
+      width: 100%;
+      margin-top: auto;
+    }
+    .ob-cta:hover { background: #d4af6a; transform: translateY(-1px); }
+    .ob-cta:active { transform: translateY(0); }
+
+    .ob-cta-ghost {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: transparent;
+      border: 1.5px solid rgba(154,114,40,0.38);
+      color: var(--gold);
+      font-family: 'Bricolage Grotesque', sans-serif;
+      font-size: 0.88rem;
+      font-weight: 500;
+      padding: 14px 28px;
+      border-radius: 50px;
+      cursor: pointer;
+      width: 100%;
+      text-align: center;
+      transition: border-color 0.2s, background 0.2s;
+      text-decoration: none;
+      margin-top: 12px;
+    }
+    .ob-cta-ghost:hover { border-color: var(--gold); background: var(--gold-dim); }
+
+    /* ── Preview Card ──────────────────────────── */
+    .ob-preview-card {
+      background: var(--surface);
+      border: 1px solid rgba(154,114,40,0.22);
+      border-radius: 20px;
+      padding: 36px 28px;
+      margin-bottom: 28px;
+      text-align: center;
+      box-shadow: 0 2px 12px rgba(0,0,0,0.07);
+    }
+    .ob-preview-names {
+      font-family: 'Bricolage Grotesque', sans-serif;
+      font-size: clamp(1.7rem, 6vw, 2.5rem);
+      font-weight: 400;
+      color: var(--text);
+      margin-bottom: 10px;
+      line-height: 1.1;
+    }
+    .ob-preview-date {
+      font-size: 0.78rem;
+      color: var(--gold);
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      margin-bottom: 5px;
+    }
+    .ob-preview-location {
+      font-size: 0.84rem;
+      color: var(--muted);
+      margin-bottom: 20px;
+    }
+    .ob-preview-divider {
+      width: 36px;
+      height: 1px;
+      background: rgba(154,114,40,0.25);
+      margin: 18px auto;
+    }
+    .ob-preview-badge {
+      display: inline-block;
+      background: var(--gold-dim);
+      border: 1px solid rgba(154,114,40,0.28);
+      color: var(--gold);
+      font-size: 0.68rem;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      padding: 5px 14px;
+      border-radius: 50px;
+      font-weight: 500;
+    }
+    .ob-preview-hook {
+      font-size: 0.86rem;
+      color: var(--muted);
+      font-style: italic;
+      line-height: 1.6;
+    }
+
+    /* ── Payment ───────────────────────────────── */
+    .ob-features {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 13px;
+      margin-bottom: 28px;
+    }
+    .ob-features li {
+      display: flex;
+      align-items: flex-start;
+      gap: 10px;
+      font-size: 0.9rem;
+      color: var(--text);
+      line-height: 1.45;
+    }
+    .ob-features li::before {
+      content: '✦';
+      color: var(--gold);
+      font-size: 0.6rem;
+      margin-top: 4px;
+      flex-shrink: 0;
+    }
+    .ob-price-block {
+      background: var(--surface);
+      border: 1px solid rgba(154,114,40,0.22);
+      border-radius: 16px;
+      padding: 24px;
+      text-align: center;
+      margin-bottom: 14px;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.06);
+    }
+    .ob-price {
+      font-family: 'Bricolage Grotesque', sans-serif;
+      font-size: 2.1rem;
+      font-weight: 500;
+      color: var(--text);
+      margin-bottom: 4px;
+    }
+    .ob-price-label {
+      font-size: 0.8rem;
+      color: var(--muted);
+      margin-bottom: 6px;
+    }
+    .ob-price-founding {
+      font-size: 0.72rem;
+      color: var(--gold);
+      letter-spacing: 0.06em;
+    }
+    .ob-urgency {
+      font-size: 0.78rem;
+      color: var(--muted);
+      text-align: center;
+      margin-bottom: 24px;
+    }
+    .ob-pay-reassurance {
+      font-size: 0.78rem;
+      color: var(--muted);
+      text-align: center;
+      margin-top: 16px;
+      line-height: 1.6;
+    }
+
+    /* ── Confirmation ──────────────────────────── */
+    .ob-confirm-icon {
+      width: 52px;
+      height: 52px;
+      background: var(--gold-dim);
+      border: 1px solid rgba(154,114,40,0.28);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin: 0 auto 24px;
+      color: var(--gold);
+      font-size: 1.25rem;
+    }
+    .ob-next-steps {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+      margin-bottom: 28px;
+      width: 100%;
+    }
+    .ob-next-steps li {
+      display: flex;
+      align-items: flex-start;
+      gap: 12px;
+      font-size: 0.9rem;
+      color: var(--text);
+      line-height: 1.5;
+    }
+    .ob-step-icon { flex-shrink: 0; }
+    .ob-confirm-note {
+      font-size: 0.8rem;
+      color: var(--muted);
+      text-align: center;
+      line-height: 1.65;
+      margin-bottom: 32px;
+    }
+
+    @media (max-width: 400px) {
+      .ob-wrap { padding: 32px 18px 72px; }
+      .ob-style-grid { gap: 8px; }
+    }
+  </style>
+</head>
+<body>
+
+<div class="ob-wrap">
+
+  <!-- Logo -->
+  <a href="/" class="ob-logo">
+    <svg viewBox="0 0 100 100" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+      <path d="M63,37c-6.7-4-4-27-13-27s-6.3,23-13,27-27,4-27,13,20.3,9,27,13,4,27,13,27,6.3-23,13-27,27-4,27-13-20.3-9-27-13Z"/>
+    </svg>
+    <span class="ob-logo-text">Eventful</span>
+  </a>
+
+  <!-- Progress bar -->
+  <div class="ob-progress" id="ob-progress">
+    <p class="ob-progress-label" id="prog-label">Step 1 of 3 — Your Event</p>
+    <div class="ob-progress-track">
+      <div class="ob-progress-fill" id="prog-fill" style="width:33%"></div>
+    </div>
+  </div>
+
+  <!-- ── Step 1: Basics ─────────────────────────── -->
+  <div class="ob-screen active" id="s1">
+    <h1 class="ob-headline">Let's create your wedding page ✦</h1>
+    <p class="ob-subtext">Just the essentials — we'll turn this into your first preview</p>
+    <div class="ob-fields">
+      <div class="ob-field">
+        <label class="ob-label" for="f-names">Your Names</label>
+        <input class="ob-input" type="text" id="f-names" placeholder="Anna & Marco" autocomplete="off" />
+      </div>
+      <div class="ob-field">
+        <label class="ob-label" for="f-date">Event Date</label>
+        <input class="ob-input" type="text" id="f-date" placeholder="When's the big day?" autocomplete="off" />
+      </div>
+      <div class="ob-field">
+        <label class="ob-label" for="f-location">Location / Venue</label>
+        <input class="ob-input" type="text" id="f-location" placeholder="City, venue, or destination" autocomplete="off" />
+      </div>
+    </div>
+    <button class="ob-cta" onclick="goTo(2)">Continue ✦</button>
+  </div>
+
+  <!-- ── Step 2: Style ──────────────────────────── -->
+  <div class="ob-screen" id="s2">
+    <button class="ob-back" onclick="goTo(1)">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"/></svg>
+      Back
+    </button>
+    <h1 class="ob-headline">Choose your aesthetic ✦</h1>
+    <p class="ob-subtext">We'll design everything around this</p>
+    <div class="ob-style-grid">
+      <div class="ob-style-card" data-style="Minimal & Modern" onclick="selectStyle(this)">
+        <div class="ob-style-dot" style="background:#D0CCC4;"></div>
+        <p class="ob-style-name">Minimal & Modern</p>
+        <p class="ob-style-desc">Clean lines, soft tones, quiet luxury</p>
+      </div>
+      <div class="ob-style-card" data-style="Romantic & Soft" onclick="selectStyle(this)">
+        <div class="ob-style-dot" style="background:#E8C0BF;"></div>
+        <p class="ob-style-name">Romantic & Soft</p>
+        <p class="ob-style-desc">Blush, florals, warmth, and tenderness</p>
+      </div>
+      <div class="ob-style-card" data-style="Elegant & Timeless" onclick="selectStyle(this)">
+        <div class="ob-style-dot" style="background:#C5A059;"></div>
+        <p class="ob-style-name">Elegant & Timeless</p>
+        <p class="ob-style-desc">Gold, ivory, sophistication that lasts</p>
+      </div>
+      <div class="ob-style-card" data-style="Bold & Dramatic" onclick="selectStyle(this)">
+        <div class="ob-style-dot" style="background:#3D2D4A;"></div>
+        <p class="ob-style-name">Bold & Dramatic</p>
+        <p class="ob-style-desc">Deep tones, strong contrast, maximum impact</p>
+      </div>
+    </div>
+    <div class="ob-field" style="margin-bottom:24px;">
+      <label class="ob-label">Anything specific you love?</label>
+      <textarea class="ob-input" id="f-inspo" placeholder="Colors, themes, inspirations…"></textarea>
+    </div>
+    <p class="ob-reassurance">We'll refine every detail with you</p>
+    <button class="ob-cta" onclick="goTo(3)">Continue ✦</button>
+  </div>
+
+  <!-- ── Step 3: Details ────────────────────────── -->
+  <div class="ob-screen" id="s3">
+    <button class="ob-back" onclick="goTo(2)">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"/></svg>
+      Back
+    </button>
+    <h1 class="ob-headline">Make it yours <span style="opacity:0.45;font-size:0.85em;">(optional)</span></h1>
+    <p class="ob-subtext">You can skip this and edit later anytime</p>
+    <div class="ob-fields">
+      <div class="ob-field">
+        <label class="ob-label" for="f-story">Your Story</label>
+        <textarea class="ob-input" id="f-story" placeholder="How it all began…"></textarea>
+      </div>
+      <div class="ob-field">
+        <label class="ob-label">Photos</label>
+        <input class="ob-input" type="file" id="f-photos" accept="image/*" multiple style="padding:12px 18px;cursor:pointer;" />
+      </div>
+      <div class="ob-field">
+        <label class="ob-label" for="f-notes">Guest Details</label>
+        <textarea class="ob-input" id="f-notes" placeholder="Timeline, dress code, notes…"></textarea>
+      </div>
+    </div>
+    <p class="ob-trust">🔒 Your information is private and secure</p>
+    <button class="ob-cta" onclick="showPreview()">Generate My Page ✦</button>
+  </div>
+
+  <!-- ── Preview Screen ────────────────────────── -->
+  <div class="ob-screen" id="s-preview">
+    <h1 class="ob-headline">Your page is coming to life ✦</h1>
+    <p class="ob-subtext">Here's a first look — designed from your details</p>
+    <div class="ob-preview-card">
+      <p class="ob-preview-names" id="p-names">—</p>
+      <p class="ob-preview-date" id="p-date"></p>
+      <p class="ob-preview-location" id="p-location"></p>
+      <div class="ob-preview-divider"></div>
+      <span class="ob-preview-badge" id="p-style"></span>
+      <div class="ob-preview-divider"></div>
+      <p class="ob-preview-hook">Imagine sharing this with your guests ✨</p>
+    </div>
+    <p class="ob-subtext" style="text-align:center;">We'll now complete and refine your full page</p>
+    <button class="ob-cta" onclick="goTo('payment')">Continue ✦</button>
+  </div>
+
+  <!-- ── Payment Screen ────────────────────────── -->
+  <div class="ob-screen" id="s-payment">
+    <h1 class="ob-headline">Unlock your full wedding page ✦</h1>
+    <p class="ob-subtext">We'll finalize your design and prepare it for sharing</p>
+    <ul class="ob-features">
+      <li>Fully designed wedding page</li>
+      <li>Personalized layout & styling</li>
+      <li>RSVP system + guest dashboard</li>
+      <li>Unlimited edits until you love it</li>
+      <li>Private shareable link</li>
+    </ul>
+    <div class="ob-price-block">
+      <p class="ob-price">₱4,000</p>
+      <p class="ob-price-label">Full Wedding Page</p>
+      <p class="ob-price-founding">Founding rate — limited slots</p>
+    </div>
+    <p class="ob-urgency">Only a few founding spots left</p>
+    <button class="ob-cta" onclick="goTo('confirm')">Secure My Page ✦</button>
+    <p class="ob-pay-reassurance">We refine everything with you — no stress, no guesswork</p>
+  </div>
+
+  <!-- ── Confirmation Screen ───────────────────── -->
+  <div class="ob-screen" id="s-confirm" style="align-items:center;justify-content:center;text-align:center;">
+    <div class="ob-confirm-icon">✦</div>
+    <h1 class="ob-headline">You're in ✦</h1>
+    <p class="ob-subtext">Your wedding page is now in progress</p>
+    <ul class="ob-next-steps" style="text-align:left;">
+      <li><span class="ob-step-icon">✨</span> We design your full page</li>
+      <li><span class="ob-step-icon">📩</span> You'll receive your first draft in 24–48 hours</li>
+      <li><span class="ob-step-icon">🔁</span> Request edits anytime</li>
+      <li><span class="ob-step-icon">🚀</span> Share your page once ready</li>
+    </ul>
+    <p class="ob-confirm-note">We'll message you as soon as it's ready — you won't miss it</p>
+    <a href="#" class="ob-cta-ghost">Add more details →</a>
+  </div>
+
+</div>
+
+<script>
+  let selectedStyle = 'Elegant & Timeless';
+
+  const STEPS = {
+    1: { label: 'Step 1 of 3 — Your Event',        fill: '33%'  },
+    2: { label: 'Step 2 of 3 — Your Style',        fill: '66%'  },
+    3: { label: 'Step 3 of 3 — Personal Touches',  fill: '100%' },
+  };
+
+  const SCREENS = {
+    1: 's1', 2: 's2', 3: 's3',
+    preview: 's-preview', payment: 's-payment', confirm: 's-confirm'
+  };
+
+  function goTo(step) {
+    document.querySelectorAll('.ob-screen').forEach(s => s.classList.remove('active'));
+    document.getElementById(SCREENS[step]).classList.add('active');
+
+    const prog = document.getElementById('ob-progress');
+    if (STEPS[step]) {
+      prog.classList.remove('hidden');
+      document.getElementById('prog-label').textContent = STEPS[step].label;
+      document.getElementById('prog-fill').style.width  = STEPS[step].fill;
+    } else {
+      prog.classList.add('hidden');
+    }
+    window.scrollTo(0, 0);
+  }
+
+  function selectStyle(card) {
+    document.querySelectorAll('.ob-style-card').forEach(c => c.classList.remove('selected'));
+    card.classList.add('selected');
+    selectedStyle = card.dataset.style;
+  }
+
+  function showPreview() {
+    const names    = document.getElementById('f-names').value.trim()    || '—';
+    const date     = document.getElementById('f-date').value.trim()     || '';
+    const location = document.getElementById('f-location').value.trim() || '';
+
+    document.getElementById('p-names').textContent    = names;
+    document.getElementById('p-date').textContent     = date.toUpperCase();
+    document.getElementById('p-location').textContent = location;
+    document.getElementById('p-style').textContent    = selectedStyle;
+
+    goTo('preview');
+  }
+
+</script>
+
+</body>
+</html>
