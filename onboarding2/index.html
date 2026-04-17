@@ -47,7 +47,7 @@
     .ob-logo {
       display: flex;
       align-items: center;
-      margin-bottom: 44px;
+      margin-bottom: 24px;
       text-decoration: none;
     }
     .ob-logo-img {
@@ -57,17 +57,22 @@
 
     /* ── Progress ──────────────────────────────── */
     .ob-progress {
-      margin-bottom: 40px;
+      margin-bottom: 24px;
       transition: opacity 0.3s;
     }
     .ob-progress.hidden { opacity: 0; pointer-events: none; height: 0; margin: 0; overflow: hidden; }
+    .ob-progress-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 10px;
+    }
     .ob-progress-label {
       font-size: 0.7rem;
       text-transform: uppercase;
       letter-spacing: 0.2em;
       color: var(--gold);
       font-weight: 600;
-      margin-bottom: 10px;
     }
     .ob-progress-track {
       height: 2px;
@@ -102,18 +107,20 @@
       display: inline-flex;
       align-items: center;
       gap: 6px;
-      font-size: 0.8rem;
+      font-size: 0.7rem;
+      text-transform: uppercase;
+      letter-spacing: 0.15em;
       color: var(--muted);
       background: none;
       border: none;
       cursor: pointer;
       padding: 0;
-      margin-bottom: 28px;
       transition: color 0.2s;
       font-family: 'Outfit', sans-serif;
+      font-weight: 500;
     }
     .ob-back:hover { color: var(--text); }
-    .ob-back svg { width: 14px; height: 14px; }
+    .ob-back svg { width: 13px; height: 13px; }
 
     /* ── Headings ──────────────────────────────── */
     .ob-headline {
@@ -128,7 +135,7 @@
       font-size: 0.88rem;
       color: var(--muted);
       line-height: 1.65;
-      margin-bottom: 36px;
+      margin-bottom: 24px;
     }
 
     /* ── Fields ────────────────────────────────── */
@@ -457,7 +464,13 @@
 
   <!-- Progress bar -->
   <div class="ob-progress" id="ob-progress">
-    <p class="ob-progress-label" id="prog-label">Step 1 of 3 — Your Event</p>
+    <div class="ob-progress-header">
+      <p class="ob-progress-label" id="prog-label">Step 1 of 3 — Your Event</p>
+      <button class="ob-back" id="ob-back-btn" style="display:none;" onclick="">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"/></svg>
+        Back
+      </button>
+    </div>
     <div class="ob-progress-track">
       <div class="ob-progress-fill" id="prog-fill" style="width:33%"></div>
     </div>
@@ -486,10 +499,6 @@
 
   <!-- ── Step 2: Style ──────────────────────────── -->
   <div class="ob-screen" id="s2">
-    <button class="ob-back" onclick="goTo(1)">
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"/></svg>
-      Back
-    </button>
     <h1 class="ob-headline">Choose your aesthetic ✦</h1>
     <p class="ob-subtext">We'll design everything around this</p>
     <div class="ob-style-grid">
@@ -524,10 +533,6 @@
 
   <!-- ── Step 3: Details ────────────────────────── -->
   <div class="ob-screen" id="s3">
-    <button class="ob-back" onclick="goTo(2)">
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"/></svg>
-      Back
-    </button>
     <h1 class="ob-headline">Make it yours <span style="opacity:0.45;font-size:0.85em;">(optional)</span></h1>
     <p class="ob-subtext">You can skip this and edit later anytime</p>
     <div class="ob-fields">
@@ -628,15 +633,24 @@
     preview: 's-preview', payment: 's-payment', confirm: 's-confirm'
   };
 
+  const BACK_TARGETS = { 2: 1, 3: 2 };
+
   function goTo(step) {
     document.querySelectorAll('.ob-screen').forEach(s => s.classList.remove('active'));
     document.getElementById(SCREENS[step]).classList.add('active');
 
-    const prog = document.getElementById('ob-progress');
+    const prog    = document.getElementById('ob-progress');
+    const backBtn = document.getElementById('ob-back-btn');
     if (STEPS[step]) {
       prog.classList.remove('hidden');
       document.getElementById('prog-label').textContent = STEPS[step].label;
       document.getElementById('prog-fill').style.width  = STEPS[step].fill;
+      if (BACK_TARGETS[step] !== undefined) {
+        backBtn.style.display = 'inline-flex';
+        backBtn.onclick = () => goTo(BACK_TARGETS[step]);
+      } else {
+        backBtn.style.display = 'none';
+      }
     } else {
       prog.classList.add('hidden');
     }
