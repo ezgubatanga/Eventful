@@ -191,40 +191,93 @@
       margin-bottom: 24px;
     }
     .ob-style-card {
-      background: var(--surface);
-      border: 1.5px solid rgba(154,114,40,0.18);
       border-radius: var(--radius);
-      padding: 18px 16px;
       cursor: pointer;
-      transition: border-color 0.2s, background 0.2s, transform 0.15s;
+      transition: border-color 0.2s, transform 0.15s, box-shadow 0.2s;
       display: flex;
       flex-direction: column;
-      gap: 5px;
       user-select: none;
       -webkit-tap-highlight-color: transparent;
-      box-shadow: 0 1px 3px rgba(0,0,0,0.06);
+      overflow: hidden;
+      border: 1.5px solid transparent;
     }
-    .ob-style-card:hover { border-color: rgba(154,114,40,0.38); transform: translateY(-1px); }
-    .ob-style-card.selected { border-color: var(--gold); background: var(--gold-dim); }
-    .ob-style-dot {
-      width: 8px;
-      height: 8px;
-      border-radius: 50%;
-      margin-bottom: 6px;
-      flex-shrink: 0;
+    .ob-style-card:hover { transform: translateY(-2px); box-shadow: 0 4px 14px rgba(0,0,0,0.10); }
+
+    /* theme backgrounds + borders */
+    .ob-style-card--minimal  { background: #FFFFFF; border-color: #E6E4E0; }
+    .ob-style-card--romantic { background: #FEF4EF; border-color: rgba(210,155,135,0.28); }
+    .ob-style-card--elegant  { background: #FDFAF3; border-color: rgba(197,160,89,0.28); }
+    .ob-style-card--dramatic { background: #1A1018; border-color: rgba(255,255,255,0.08); }
+
+    /* hover */
+    .ob-style-card--minimal:hover  { border-color: #C8C5BF; }
+    .ob-style-card--romantic:hover { border-color: rgba(210,155,135,0.55); }
+    .ob-style-card--elegant:hover  { border-color: rgba(197,160,89,0.52); }
+    .ob-style-card--dramatic:hover { border-color: rgba(255,255,255,0.22); }
+
+    /* selected */
+    .ob-style-card--minimal.selected,
+    .ob-style-card--romantic.selected,
+    .ob-style-card--elegant.selected  { border-color: var(--gold); box-shadow: 0 0 0 2px rgba(154,114,40,0.15); }
+    .ob-style-card--dramatic.selected { border-color: rgba(255,255,255,0.55); box-shadow: 0 0 0 2px rgba(255,255,255,0.10); }
+
+    /* preview area */
+    .ob-style-preview {
+      padding: 16px 14px 12px;
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
     }
-    .ob-style-name {
-      font-family: 'Bricolage Grotesque', sans-serif;
+    .ob-stp-names {
       font-size: 0.88rem;
-      font-weight: 500;
-      color: var(--text);
       line-height: 1.2;
+      margin-bottom: 7px;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
     }
-    .ob-style-desc {
-      font-size: 0.72rem;
-      color: var(--muted);
-      line-height: 1.45;
+    .ob-stp-sep { margin-bottom: 7px; }
+    .ob-stp-date  { font-size: 0.58rem; letter-spacing: 0.16em; text-transform: uppercase; margin-bottom: 3px; }
+    .ob-stp-location { font-size: 0.6rem; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+
+    /* minimal theme type */
+    .ob-style-card--minimal .ob-stp-names    { font-family: 'Outfit', sans-serif; font-weight: 500; color: #2C2C2C; }
+    .ob-style-card--minimal .ob-stp-sep      { width: 100%; height: 1px; background: #EBEBEB; }
+    .ob-style-card--minimal .ob-stp-date     { font-family: 'Outfit', sans-serif; color: #A0A0A0; }
+    .ob-style-card--minimal .ob-stp-location { font-family: 'Outfit', sans-serif; color: #C0C0C0; }
+
+    /* romantic theme type */
+    .ob-style-card--romantic .ob-stp-names    { font-family: 'Bricolage Grotesque', sans-serif; font-weight: 300; font-style: italic; color: #8B5E52; }
+    .ob-style-card--romantic .ob-stp-sep      { width: 22px; height: 1px; background: rgba(196,149,122,0.45); }
+    .ob-style-card--romantic .ob-stp-date     { font-family: 'Outfit', sans-serif; color: #C4957A; letter-spacing: 0.09em; }
+    .ob-style-card--romantic .ob-stp-location { font-family: 'Outfit', sans-serif; color: rgba(196,149,122,0.65); }
+
+    /* elegant theme type */
+    .ob-style-card--elegant .ob-stp-names    { font-family: 'Bricolage Grotesque', sans-serif; font-weight: 400; color: #2C2218; letter-spacing: 0.03em; text-align: center; }
+    .ob-style-card--elegant .ob-stp-sep      { width: 24px; height: 1px; background: rgba(154,114,40,0.38); margin: 0 auto 7px; }
+    .ob-style-card--elegant .ob-stp-date     { font-family: 'Outfit', sans-serif; color: #9A7228; text-align: center; }
+    .ob-style-card--elegant .ob-stp-location { font-family: 'Outfit', sans-serif; color: rgba(154,114,40,0.6); text-align: center; }
+
+    /* dramatic theme type */
+    .ob-style-card--dramatic .ob-stp-names    { font-family: 'Bricolage Grotesque', sans-serif; font-weight: 600; color: #F2EDF2; }
+    .ob-style-card--dramatic .ob-stp-sep      { width: 100%; height: 1px; background: rgba(255,255,255,0.10); }
+    .ob-style-card--dramatic .ob-stp-date     { font-family: 'Outfit', sans-serif; color: rgba(242,237,242,0.42); }
+    .ob-style-card--dramatic .ob-stp-location { font-family: 'Outfit', sans-serif; color: rgba(242,237,242,0.26); }
+
+    /* theme label */
+    .ob-style-name {
+      font-family: 'Outfit', sans-serif;
+      font-size: 0.66rem;
+      font-weight: 500;
+      letter-spacing: 0.06em;
+      padding: 8px 14px 11px;
+      border-top: 1px solid rgba(0,0,0,0.06);
+      color: rgba(28,18,8,0.45);
     }
+    .ob-style-card--dramatic .ob-style-name { color: rgba(255,255,255,0.3); border-top-color: rgba(255,255,255,0.07); }
+    .ob-style-card.selected .ob-style-name { color: var(--gold); }
+    .ob-style-card--dramatic.selected .ob-style-name { color: rgba(255,255,255,0.65); }
 
     /* ── Reassurance ───────────────────────────── */
     .ob-reassurance {
@@ -288,105 +341,47 @@
     }
     .ob-cta-ghost:hover { border-color: var(--gold); background: var(--gold-dim); }
 
-    /* ── Preview Card ──────────────────────────── */
-    /* ── Preview card effects ──────────────────── */
-    @keyframes blob-drift-1 {
-      0%,100% { transform: translate(0,0) scale(1); }
-      33%      { transform: translate(18px,-22px) scale(1.08); }
-      66%      { transform: translate(-12px,14px) scale(0.94); }
-    }
-    @keyframes blob-drift-2 {
-      0%,100% { transform: translate(0,0) scale(1); }
-      40%      { transform: translate(-20px,16px) scale(1.1); }
-      70%      { transform: translate(14px,-10px) scale(0.92); }
-    }
-    @keyframes blob-drift-3 {
-      0%,100% { transform: translate(0,0) scale(1); }
-      30%      { transform: translate(10px,20px) scale(0.96); }
-      65%      { transform: translate(-16px,-14px) scale(1.06); }
-    }
-    @keyframes shimmer-sweep {
-      0%        { transform: translateX(-150%) skewX(-18deg); opacity: 0; }
-      8%        { opacity: 1; }
-      42%       { opacity: 1; }
-      50%       { transform: translateX(250%) skewX(-18deg); opacity: 0; }
-      100%      { transform: translateX(250%) skewX(-18deg); opacity: 0; }
-    }
-    @keyframes sparkle-rise {
-      0%   { opacity: 0; transform: translateY(0) scale(0.6); }
-      20%  { opacity: 1; }
-      100% { opacity: 0; transform: translateY(-80px) scale(1.1); }
-    }
-    .ob-preview-card {
-      background: linear-gradient(135deg, #fffdf7 0%, #fdf6e3 50%, #fffaf0 100%);
-      border: 1.5px solid rgba(154,114,40,0.35);
+    /* ── Preview Wrap ─────────────────────────── */
+    .ob-preview-wrap {
+      --wrap-bg:     #FFFFFF;
+      --wrap-border: #E6E4E0;
+      --ghost-label: rgba(0,0,0,0.20);
+      --ghost-line:  rgba(0,0,0,0.06);
+      --ghost-sep:   rgba(0,0,0,0.07);
+      background:    var(--wrap-bg);
+      border:        1px solid var(--wrap-border);
       border-radius: 20px;
-      padding: 36px 28px;
+      overflow:      hidden;
+      box-shadow:    0 2px 12px rgba(0,0,0,0.07);
       margin-bottom: 28px;
+      position:      relative;
+    }
+    .ob-preview-wrap--romantic {
+      --wrap-bg:     #FEF4EF;
+      --wrap-border: rgba(210,155,135,0.28);
+      --ghost-label: rgba(139,94,82,0.28);
+      --ghost-line:  rgba(139,94,82,0.09);
+      --ghost-sep:   rgba(210,155,135,0.14);
+    }
+    .ob-preview-wrap--elegant {
+      --wrap-bg:     #FDFAF3;
+      --wrap-border: rgba(197,160,89,0.28);
+      --ghost-label: rgba(154,114,40,0.30);
+      --ghost-line:  rgba(154,114,40,0.09);
+      --ghost-sep:   rgba(197,160,89,0.14);
+    }
+    .ob-preview-wrap--dramatic {
+      --wrap-bg:     #1A1018;
+      --wrap-border: rgba(255,255,255,0.08);
+      --ghost-label: rgba(255,255,255,0.24);
+      --ghost-line:  rgba(255,255,255,0.07);
+      --ghost-sep:   rgba(255,255,255,0.06);
+    }
+
+    /* ── Preview Card ──────────────────────────── */
+    .ob-preview-card {
+      padding: 36px 28px 24px;
       text-align: center;
-      box-shadow: 0 2px 20px rgba(0,0,0,0.08);
-      position: relative;
-      overflow: hidden;
-    }
-    .ob-preview-card > * { position: relative; z-index: 1; }
-
-    /* blobs */
-    .pc-blob {
-      position: absolute;
-      border-radius: 50%;
-      filter: blur(38px);
-      opacity: 0.28;
-      pointer-events: none;
-      z-index: 0;
-    }
-    .pc-blob-1 {
-      width: 160px; height: 160px;
-      background: #C5A059;
-      top: -40px; left: -40px;
-      animation: blob-drift-1 9s ease-in-out infinite;
-    }
-    .pc-blob-2 {
-      width: 130px; height: 130px;
-      background: #C5A059;
-      bottom: -30px; right: -30px;
-      animation: blob-drift-2 11s ease-in-out infinite;
-    }
-    .pc-blob-3 {
-      width: 110px; height: 110px;
-      background: #C5A059;
-      top: 50%; left: 50%;
-      transform: translate(-50%,-50%);
-      animation: blob-drift-3 13s ease-in-out infinite;
-    }
-
-    /* shimmer */
-    .pc-shimmer {
-      position: absolute;
-      inset: 0;
-      z-index: 0;
-      pointer-events: none;
-      overflow: hidden;
-    }
-    .pc-shimmer::after {
-      content: '';
-      position: absolute;
-      top: 0; left: 0;
-      width: 40%;
-      height: 100%;
-      background: linear-gradient(90deg, transparent, rgba(255,255,255,0.55), transparent);
-      animation: shimmer-sweep 6s ease-in-out infinite;
-      animation-delay: 1s;
-    }
-
-    /* sparkles */
-    .pc-sparkle {
-      position: absolute;
-      font-size: 0.65rem;
-      color: var(--gold);
-      pointer-events: none;
-      z-index: 0;
-      animation: sparkle-rise 3s ease-in-out infinite;
-      opacity: 0;
     }
     .ob-preview-names {
       font-family: 'Bricolage Grotesque', sans-serif;
@@ -431,6 +426,81 @@
       color: var(--muted);
       font-style: italic;
       line-height: 1.6;
+      margin-top: 16px;
+      margin-bottom: 0;
+    }
+
+    /* per-theme preview content */
+    .ob-preview-wrap--minimal .ob-preview-names     { font-family: 'Outfit', sans-serif; font-weight: 500; color: #2C2C2C; }
+    .ob-preview-wrap--minimal .ob-preview-date      { color: #A0A0A0; }
+    .ob-preview-wrap--minimal .ob-preview-location  { color: #C0C0C0; }
+    .ob-preview-wrap--minimal .ob-preview-divider   { width: 100%; background: #EBEBEB; margin: 14px auto; }
+    .ob-preview-wrap--minimal .ob-preview-badge     { background: rgba(0,0,0,0.04); border-color: rgba(0,0,0,0.09); color: #888; }
+    .ob-preview-wrap--minimal .ob-preview-hook      { color: rgba(0,0,0,0.35); }
+
+    .ob-preview-wrap--romantic .ob-preview-names    { font-family: 'Bricolage Grotesque', sans-serif; font-weight: 300; font-style: italic; color: #8B5E52; }
+    .ob-preview-wrap--romantic .ob-preview-date     { color: #C4957A; }
+    .ob-preview-wrap--romantic .ob-preview-location { color: rgba(196,149,122,0.65); }
+    .ob-preview-wrap--romantic .ob-preview-divider  { width: 22px; background: rgba(210,155,135,0.5); }
+    .ob-preview-wrap--romantic .ob-preview-badge    { background: rgba(210,155,135,0.10); border-color: rgba(210,155,135,0.30); color: #A0735E; }
+    .ob-preview-wrap--romantic .ob-preview-hook     { color: rgba(139,94,82,0.45); }
+
+    .ob-preview-wrap--elegant .ob-preview-names    { font-family: 'Bricolage Grotesque', sans-serif; font-weight: 400; color: #2C2218; letter-spacing: 0.03em; }
+    .ob-preview-wrap--elegant .ob-preview-date     { color: #9A7228; }
+    .ob-preview-wrap--elegant .ob-preview-location { color: rgba(154,114,40,0.60); }
+    .ob-preview-wrap--elegant .ob-preview-divider  { width: 24px; background: rgba(154,114,40,0.38); }
+    .ob-preview-wrap--elegant .ob-preview-badge    { background: rgba(154,114,40,0.08); border-color: rgba(154,114,40,0.22); color: #9A7228; }
+    .ob-preview-wrap--elegant .ob-preview-hook     { color: rgba(44,34,24,0.38); }
+
+    .ob-preview-wrap--dramatic .ob-preview-names    { font-family: 'Bricolage Grotesque', sans-serif; font-weight: 600; color: #F2EDF2; }
+    .ob-preview-wrap--dramatic .ob-preview-date     { color: rgba(255,255,255,0.40); }
+    .ob-preview-wrap--dramatic .ob-preview-location { color: rgba(255,255,255,0.28); }
+    .ob-preview-wrap--dramatic .ob-preview-divider  { background: rgba(255,255,255,0.10); }
+    .ob-preview-wrap--dramatic .ob-preview-badge    { background: rgba(255,255,255,0.05); border-color: rgba(255,255,255,0.10); color: rgba(255,255,255,0.45); }
+    .ob-preview-wrap--dramatic .ob-preview-hook     { color: rgba(255,255,255,0.28); }
+
+    /* staggered card reveal */
+    @keyframes fadeInUp {
+      from { opacity: 0; transform: translateY(8px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+    .ob-preview-card.revealed .ob-preview-names    { animation: fadeInUp 0.45s ease both; animation-delay: 0.05s; }
+    .ob-preview-card.revealed .ob-preview-date     { animation: fadeInUp 0.45s ease both; animation-delay: 0.20s; }
+    .ob-preview-card.revealed .ob-preview-location { animation: fadeInUp 0.45s ease both; animation-delay: 0.30s; }
+    .ob-preview-card.revealed .ob-preview-badge    { animation: fadeInUp 0.45s ease both; animation-delay: 0.45s; }
+    .ob-preview-card.revealed .ob-preview-hook     { animation: fadeInUp 0.45s ease both; animation-delay: 0.60s; }
+
+    /* ghost sections */
+    .ob-ghost-sections {
+      display: flex;
+      flex-direction: column;
+      pointer-events: none;
+    }
+    .ob-ghost-section {
+      padding: 14px 20px;
+      border-bottom: 1px solid var(--ghost-sep);
+    }
+    .ob-ghost-label {
+      font-size: 0.6rem;
+      text-transform: uppercase;
+      letter-spacing: 0.18em;
+      color: var(--ghost-label);
+      margin-bottom: 8px;
+      font-weight: 600;
+    }
+    .ob-ghost-line {
+      height: 5px;
+      background: var(--ghost-line);
+      border-radius: 4px;
+      margin-bottom: 6px;
+    }
+    .ob-ghost-line.short { width: 58%; }
+    .ob-ghost-fade {
+      position: absolute;
+      bottom: 0; left: 0; right: 0;
+      height: 80px;
+      background: linear-gradient(to bottom, transparent, var(--wrap-bg));
+      pointer-events: none;
     }
 
     /* ── Payment ───────────────────────────────── */
@@ -592,25 +662,41 @@
     <h1 class="ob-headline">Choose your aesthetic ✦</h1>
 
     <div class="ob-style-grid">
-      <div class="ob-style-card" data-style="Minimal & Modern" onclick="selectStyle(this)">
-        <div class="ob-style-dot" style="background:#D0CCC4;"></div>
+      <div class="ob-style-card ob-style-card--minimal" data-style="Minimal & Modern" onclick="selectStyle(this)">
+        <div class="ob-style-preview">
+          <p class="ob-stp-names stp-names"></p>
+          <div class="ob-stp-sep"></div>
+          <p class="ob-stp-date stp-date"></p>
+          <p class="ob-stp-location stp-location"></p>
+        </div>
         <p class="ob-style-name">Minimal & Modern</p>
-        <p class="ob-style-desc">Clean lines, soft tones, quiet luxury</p>
       </div>
-      <div class="ob-style-card" data-style="Romantic & Soft" onclick="selectStyle(this)">
-        <div class="ob-style-dot" style="background:#E8C0BF;"></div>
+      <div class="ob-style-card ob-style-card--romantic" data-style="Romantic & Soft" onclick="selectStyle(this)">
+        <div class="ob-style-preview">
+          <p class="ob-stp-names stp-names"></p>
+          <div class="ob-stp-sep"></div>
+          <p class="ob-stp-date stp-date"></p>
+          <p class="ob-stp-location stp-location"></p>
+        </div>
         <p class="ob-style-name">Romantic & Soft</p>
-        <p class="ob-style-desc">Blush, florals, warmth, and tenderness</p>
       </div>
-      <div class="ob-style-card" data-style="Elegant & Timeless" onclick="selectStyle(this)">
-        <div class="ob-style-dot" style="background:#C5A059;"></div>
+      <div class="ob-style-card ob-style-card--elegant" data-style="Elegant & Timeless" onclick="selectStyle(this)">
+        <div class="ob-style-preview">
+          <p class="ob-stp-names stp-names"></p>
+          <div class="ob-stp-sep"></div>
+          <p class="ob-stp-date stp-date"></p>
+          <p class="ob-stp-location stp-location"></p>
+        </div>
         <p class="ob-style-name">Elegant & Timeless</p>
-        <p class="ob-style-desc">Gold, ivory, sophistication that lasts</p>
       </div>
-      <div class="ob-style-card" data-style="Bold & Dramatic" onclick="selectStyle(this)">
-        <div class="ob-style-dot" style="background:#3D2D4A;"></div>
+      <div class="ob-style-card ob-style-card--dramatic" data-style="Bold & Dramatic" onclick="selectStyle(this)">
+        <div class="ob-style-preview">
+          <p class="ob-stp-names stp-names"></p>
+          <div class="ob-stp-sep"></div>
+          <p class="ob-stp-date stp-date"></p>
+          <p class="ob-stp-location stp-location"></p>
+        </div>
         <p class="ob-style-name">Bold & Dramatic</p>
-        <p class="ob-style-desc">Deep tones, strong contrast, maximum impact</p>
       </div>
     </div>
     <div class="ob-field" style="margin-bottom:24px;">
@@ -646,25 +732,37 @@
   <!-- ── Preview Screen ────────────────────────── -->
   <div class="ob-screen" id="s-preview">
     <h1 class="ob-headline">Your page is coming to life ✦</h1>
-    <p class="ob-subtext">Here's a first look — designed from your details</p>
-    <div class="ob-preview-card" id="preview-card">
-      <!-- blobs -->
-      <div class="pc-blob pc-blob-1"></div>
-      <div class="pc-blob pc-blob-2"></div>
-      <div class="pc-blob pc-blob-3"></div>
-      <!-- shimmer -->
-      <div class="pc-shimmer"></div>
-      <!-- content -->
-      <p class="ob-preview-names" id="p-names">—</p>
-      <p class="ob-preview-date" id="p-date"></p>
-      <p class="ob-preview-location" id="p-location"></p>
-      <div class="ob-preview-divider"></div>
-      <span class="ob-preview-badge" id="p-style"></span>
-      <div class="ob-preview-divider"></div>
-      <p class="ob-preview-hook">Imagine sharing this with your guests ✨</p>
+    <p class="ob-subtext">A preview of your page style — we'll fully design it next</p>
+    <div id="preview-wrap" class="ob-preview-wrap ob-preview-wrap--minimal">
+      <div class="ob-preview-card" id="preview-card">
+        <p class="ob-preview-names" id="p-names">—</p>
+        <p class="ob-preview-date" id="p-date"></p>
+        <p class="ob-preview-location" id="p-location"></p>
+        <div class="ob-preview-divider"></div>
+        <span class="ob-preview-badge" id="p-style"></span>
+        <div class="ob-preview-divider"></div>
+        <p class="ob-preview-hook">Your guests will see this — beautifully designed, all in one place ✨</p>
+      </div>
+      <div class="ob-ghost-sections">
+        <div class="ob-ghost-section">
+          <div class="ob-ghost-label">Our Story</div>
+          <div class="ob-ghost-line"></div>
+          <div class="ob-ghost-line short"></div>
+        </div>
+        <div class="ob-ghost-section">
+          <div class="ob-ghost-label">Event Timeline</div>
+          <div class="ob-ghost-line"></div>
+          <div class="ob-ghost-line short"></div>
+        </div>
+        <div class="ob-ghost-section">
+          <div class="ob-ghost-label">RSVP</div>
+          <div class="ob-ghost-line"></div>
+        </div>
+      </div>
+      <div class="ob-ghost-fade"></div>
     </div>
-    <p class="ob-subtext" style="text-align:center;">We'll now complete and refine your full page</p>
-    <button class="ob-cta" onclick="goTo('payment')">Continue ✦</button>
+    <p class="ob-subtext" style="text-align:center;">Next, we'll complete your full wedding page — refined and ready to share ✦</p>
+    <button class="ob-cta" onclick="goTo('payment')">Continue to your full page ✦</button>
   </div>
 
   <!-- ── Payment Screen ────────────────────────── -->
@@ -717,7 +815,7 @@
 </div>
 
 <script>
-  let selectedStyle = 'Elegant & Timeless';
+  let selectedStyle = 'Minimal & Modern';
 
   const STEPS = {
     1: { label: 'Step 1 of 3 — Your Event',        fill: '33%'  },
@@ -751,7 +849,17 @@
     } else {
       prog.classList.add('hidden');
     }
+    if (step === 2) updateStylePreviews();
     window.scrollTo(0, 0);
+  }
+
+  function updateStylePreviews() {
+    const names    = document.getElementById('f-names').value.trim()    || 'Your Names';
+    const date     = document.getElementById('f-date').value.trim()     || 'Your Date';
+    const location = document.getElementById('f-location').value.trim() || 'Your Venue';
+    document.querySelectorAll('.stp-names').forEach(el => el.textContent = names);
+    document.querySelectorAll('.stp-date').forEach(el => el.textContent = date);
+    document.querySelectorAll('.stp-location').forEach(el => el.textContent = location);
   }
 
   function selectStyle(card) {
@@ -761,7 +869,7 @@
   }
 
   function showPreview() {
-    const names    = document.getElementById('f-names').value.trim()    || '—';
+    const names    = document.getElementById('f-names').value.trim()    || 'Your Names';
     const date     = document.getElementById('f-date').value.trim()     || '';
     const location = document.getElementById('f-location').value.trim() || '';
 
@@ -770,26 +878,20 @@
     document.getElementById('p-location').textContent = location;
     document.getElementById('p-style').textContent    = selectedStyle;
 
-    goTo('preview');
-    initSparkles();
-  }
+    const STYLE_CLASS = {
+      'Minimal & Modern':  'ob-preview-wrap--minimal',
+      'Romantic & Soft':   'ob-preview-wrap--romantic',
+      'Elegant & Timeless':'ob-preview-wrap--elegant',
+      'Bold & Dramatic':   'ob-preview-wrap--dramatic',
+    };
+    const wrap = document.getElementById('preview-wrap');
+    wrap.classList.remove('ob-preview-wrap--minimal', 'ob-preview-wrap--romantic', 'ob-preview-wrap--dramatic');
+    wrap.classList.add(STYLE_CLASS[selectedStyle] || 'ob-preview-wrap--minimal');
 
-  function initSparkles() {
     const card = document.getElementById('preview-card');
-    // remove existing sparkles
-    card.querySelectorAll('.pc-sparkle').forEach(s => s.remove());
-    const count = 7;
-    for (let i = 0; i < count; i++) {
-      const s = document.createElement('span');
-      s.className = 'pc-sparkle';
-      s.textContent = '✦';
-      s.style.left  = (10 + Math.random() * 80) + '%';
-      s.style.bottom = (5 + Math.random() * 30) + '%';
-      s.style.animationDelay    = (Math.random() * 4) + 's';
-      s.style.animationDuration = (2.5 + Math.random() * 2) + 's';
-      s.style.fontSize = (0.5 + Math.random() * 0.5) + 'rem';
-      card.appendChild(s);
-    }
+    card.classList.remove('revealed');
+    goTo('preview');
+    setTimeout(() => card.classList.add('revealed'), 60);
   }
 
 </script>
