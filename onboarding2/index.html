@@ -289,14 +289,104 @@
     .ob-cta-ghost:hover { border-color: var(--gold); background: var(--gold-dim); }
 
     /* ── Preview Card ──────────────────────────── */
+    /* ── Preview card effects ──────────────────── */
+    @keyframes blob-drift-1 {
+      0%,100% { transform: translate(0,0) scale(1); }
+      33%      { transform: translate(18px,-22px) scale(1.08); }
+      66%      { transform: translate(-12px,14px) scale(0.94); }
+    }
+    @keyframes blob-drift-2 {
+      0%,100% { transform: translate(0,0) scale(1); }
+      40%      { transform: translate(-20px,16px) scale(1.1); }
+      70%      { transform: translate(14px,-10px) scale(0.92); }
+    }
+    @keyframes blob-drift-3 {
+      0%,100% { transform: translate(0,0) scale(1); }
+      30%      { transform: translate(10px,20px) scale(0.96); }
+      65%      { transform: translate(-16px,-14px) scale(1.06); }
+    }
+    @keyframes shimmer-sweep {
+      0%        { transform: translateX(-150%) skewX(-18deg); opacity: 0; }
+      8%        { opacity: 1; }
+      42%       { opacity: 1; }
+      50%       { transform: translateX(250%) skewX(-18deg); opacity: 0; }
+      100%      { transform: translateX(250%) skewX(-18deg); opacity: 0; }
+    }
+    @keyframes sparkle-rise {
+      0%   { opacity: 0; transform: translateY(0) scale(0.6); }
+      20%  { opacity: 1; }
+      100% { opacity: 0; transform: translateY(-80px) scale(1.1); }
+    }
     .ob-preview-card {
-      background: var(--surface);
-      border: 1px solid rgba(154,114,40,0.22);
+      background: linear-gradient(135deg, #fffdf7 0%, #fdf6e3 50%, #fffaf0 100%);
+      border: 1.5px solid rgba(154,114,40,0.35);
       border-radius: 20px;
       padding: 36px 28px;
       margin-bottom: 28px;
       text-align: center;
-      box-shadow: 0 2px 12px rgba(0,0,0,0.07);
+      box-shadow: 0 2px 20px rgba(0,0,0,0.08);
+      position: relative;
+      overflow: hidden;
+    }
+    .ob-preview-card > * { position: relative; z-index: 1; }
+
+    /* blobs */
+    .pc-blob {
+      position: absolute;
+      border-radius: 50%;
+      filter: blur(38px);
+      opacity: 0.28;
+      pointer-events: none;
+      z-index: 0;
+    }
+    .pc-blob-1 {
+      width: 160px; height: 160px;
+      background: #C5A059;
+      top: -40px; left: -40px;
+      animation: blob-drift-1 9s ease-in-out infinite;
+    }
+    .pc-blob-2 {
+      width: 130px; height: 130px;
+      background: #C5A059;
+      bottom: -30px; right: -30px;
+      animation: blob-drift-2 11s ease-in-out infinite;
+    }
+    .pc-blob-3 {
+      width: 110px; height: 110px;
+      background: #C5A059;
+      top: 50%; left: 50%;
+      transform: translate(-50%,-50%);
+      animation: blob-drift-3 13s ease-in-out infinite;
+    }
+
+    /* shimmer */
+    .pc-shimmer {
+      position: absolute;
+      inset: 0;
+      z-index: 0;
+      pointer-events: none;
+      overflow: hidden;
+    }
+    .pc-shimmer::after {
+      content: '';
+      position: absolute;
+      top: 0; left: 0;
+      width: 40%;
+      height: 100%;
+      background: linear-gradient(90deg, transparent, rgba(255,255,255,0.55), transparent);
+      animation: shimmer-sweep 6s ease-in-out infinite;
+      animation-delay: 1s;
+    }
+
+    /* sparkles */
+    .pc-sparkle {
+      position: absolute;
+      font-size: 0.65rem;
+      color: var(--gold);
+      pointer-events: none;
+      z-index: 0;
+      animation: sparkle-rise 3s ease-in-out infinite;
+      opacity: 0;
     }
     .ob-preview-names {
       font-family: 'Bricolage Grotesque', sans-serif;
@@ -500,7 +590,7 @@
   <!-- ── Step 2: Style ──────────────────────────── -->
   <div class="ob-screen" id="s2">
     <h1 class="ob-headline">Choose your aesthetic ✦</h1>
-    <p class="ob-subtext">We'll design everything around this</p>
+
     <div class="ob-style-grid">
       <div class="ob-style-card" data-style="Minimal & Modern" onclick="selectStyle(this)">
         <div class="ob-style-dot" style="background:#D0CCC4;"></div>
@@ -527,7 +617,7 @@
       <label class="ob-label">Anything specific you love?</label>
       <textarea class="ob-input" id="f-inspo" placeholder="Colors, themes, inspirations…"></textarea>
     </div>
-    <p class="ob-reassurance">We'll refine every detail with you</p>
+
     <button class="ob-cta" onclick="goTo(3)">Continue ✦</button>
   </div>
 
@@ -549,15 +639,22 @@
         <textarea class="ob-input" id="f-notes" placeholder="Timeline, dress code, notes…"></textarea>
       </div>
     </div>
-    <p class="ob-trust">🔒 Your information is private and secure</p>
     <button class="ob-cta" onclick="showPreview()">Generate My Page ✦</button>
+    <p class="ob-trust" style="margin-top:12px;margin-bottom:0;">🔒 Your information is private and secure</p>
   </div>
 
   <!-- ── Preview Screen ────────────────────────── -->
   <div class="ob-screen" id="s-preview">
     <h1 class="ob-headline">Your page is coming to life ✦</h1>
     <p class="ob-subtext">Here's a first look — designed from your details</p>
-    <div class="ob-preview-card">
+    <div class="ob-preview-card" id="preview-card">
+      <!-- blobs -->
+      <div class="pc-blob pc-blob-1"></div>
+      <div class="pc-blob pc-blob-2"></div>
+      <div class="pc-blob pc-blob-3"></div>
+      <!-- shimmer -->
+      <div class="pc-shimmer"></div>
+      <!-- content -->
       <p class="ob-preview-names" id="p-names">—</p>
       <p class="ob-preview-date" id="p-date"></p>
       <p class="ob-preview-location" id="p-location"></p>
@@ -674,6 +771,25 @@
     document.getElementById('p-style').textContent    = selectedStyle;
 
     goTo('preview');
+    initSparkles();
+  }
+
+  function initSparkles() {
+    const card = document.getElementById('preview-card');
+    // remove existing sparkles
+    card.querySelectorAll('.pc-sparkle').forEach(s => s.remove());
+    const count = 7;
+    for (let i = 0; i < count; i++) {
+      const s = document.createElement('span');
+      s.className = 'pc-sparkle';
+      s.textContent = '✦';
+      s.style.left  = (10 + Math.random() * 80) + '%';
+      s.style.bottom = (5 + Math.random() * 30) + '%';
+      s.style.animationDelay    = (Math.random() * 4) + 's';
+      s.style.animationDuration = (2.5 + Math.random() * 2) + 's';
+      s.style.fontSize = (0.5 + Math.random() * 0.5) + 'rem';
+      card.appendChild(s);
+    }
   }
 
 </script>
