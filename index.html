@@ -3568,11 +3568,12 @@
         window._slotAnim.done = true;
         const filled = document.querySelectorAll('#slot-track .slot-pip.filled');
         const pulsing = document.querySelector('#slot-track .slot-pip.pulsing');
+        const delay = 300;
         filled.forEach((pip, i) => {
-          setTimeout(() => pip.classList.add('popped'), i * 80);
+          setTimeout(() => pip.classList.add('popped'), delay + i * 80);
         });
         if (pulsing) {
-          setTimeout(() => pulsing.classList.add('popped'), filled.length * 80 + 180);
+          setTimeout(() => pulsing.classList.add('popped'), delay + filled.length * 80 + 180);
         }
       };
 
