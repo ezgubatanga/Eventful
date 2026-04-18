@@ -1069,7 +1069,7 @@
           }
           loadData();
         })
-        .subscribe();
+        .subscribe(status => console.log('[Realtime] status:', status));
     }
 
     function unsubscribeRealtime() {
