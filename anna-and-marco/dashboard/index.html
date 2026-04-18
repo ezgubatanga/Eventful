@@ -208,6 +208,37 @@
     }
     .nav-refresh:hover { background: var(--gold-mid); }
     .nav-refresh svg { width: 14px; height: 14px; }
+    .nav-notify {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 34px;
+      height: 34px;
+      background: var(--gold-light);
+      border: 1px solid var(--border-mid);
+      border-radius: 8px;
+      color: var(--gold);
+      cursor: pointer;
+      transition: background 0.2s, border-color 0.2s;
+      position: relative;
+      flex-shrink: 0;
+    }
+    .nav-notify:hover { background: var(--gold-mid); border-color: var(--gold); }
+    .nav-notify svg { width: 15px; height: 15px; }
+    .nav-notify.enabled { background: var(--gold); color: #1A1714; border-color: var(--gold); }
+    .nav-notify.enabled:hover { background: var(--gold-dark); }
+    .notify-dot {
+      position: absolute;
+      top: 5px;
+      right: 5px;
+      width: 7px;
+      height: 7px;
+      background: var(--green);
+      border-radius: 50%;
+      border: 1.5px solid var(--bg);
+      display: none;
+    }
+    .nav-notify.enabled .notify-dot { display: block; }
 
     /* ── Main ── */
     .main {
@@ -780,6 +811,12 @@
       <a class="nav-brand" href="/anna-and-marco/">Anna &amp; Marco <span>RSVP Dashboard</span></a>
     </div>
     <div class="nav-right">
+      <button class="nav-notify" id="notify-btn" aria-label="Enable RSVP notifications" title="Get notified when a new RSVP arrives">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 0 1-3.46 0"/>
+        </svg>
+        <span class="notify-dot"></span>
+      </button>
       <button class="nav-refresh" id="refresh-btn" aria-label="Refresh data">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
           <polyline points="23 4 23 10 17 10"/><polyline points="1 20 1 14 7 14"/>
@@ -919,6 +956,7 @@
         overlay.style.display = 'none';
         mainEl.style.display  = 'block';
         loadData();
+        initNotifyIfGranted();
       } else {
         failCount++;
         const lockSecs = getLockoutSeconds(failCount);
@@ -996,6 +1034,75 @@
     }
 
     document.getElementById('refresh-btn').addEventListener('click', loadData);
+
+    // ── Notifications + Realtime ──
+    const notifyBtn = document.getElementById('notify-btn');
+    let realtimeChannel = null;
+
+    function updateNotifyBtn(granted) {
+      if (granted) {
+        notifyBtn.classList.add('enabled');
+        notifyBtn.title = 'Notifications enabled — click to disable';
+      } else {
+        notifyBtn.classList.remove('enabled');
+        notifyBtn.title = 'Get notified when a new RSVP arrives';
+      }
+    }
+
+    function subscribeRealtime() {
+      if (realtimeChannel) return;
+      realtimeChannel = db
+        .channel('anna-marco-rsvp-inserts')
+        .on('postgres_changes', {
+          event:  'INSERT',
+          schema: 'public',
+          table:  'anna_marco_rsvp',
+          filter: 'couple_id=eq.anna-and-marco'
+        }, payload => {
+          const r = payload.new;
+          const attending = r.attend === 'yes' ? 'is attending' : 'declined';
+          if (Notification.permission === 'granted') {
+            new Notification('New RSVP — Anna & Marco', {
+              body: `${r.name || 'Someone'} ${attending}`,
+              icon: '/favicon.webp'
+            });
+          }
+          loadData();
+        })
+        .subscribe();
+    }
+
+    function unsubscribeRealtime() {
+      if (realtimeChannel) {
+        db.removeChannel(realtimeChannel);
+        realtimeChannel = null;
+      }
+    }
+
+    notifyBtn.addEventListener('click', async () => {
+      if (Notification.permission === 'granted' && realtimeChannel) {
+        unsubscribeRealtime();
+        updateNotifyBtn(false);
+        return;
+      }
+      if (Notification.permission === 'denied') {
+        alert('Notifications are blocked. Enable them in your browser site settings, then try again.');
+        return;
+      }
+      const result = await Notification.requestPermission();
+      if (result === 'granted') {
+        subscribeRealtime();
+        updateNotifyBtn(true);
+        new Notification('Anna & Marco Dashboard', { body: 'You\'ll be notified when a new RSVP arrives.', icon: '/favicon.webp' });
+      }
+    });
+
+    function initNotifyIfGranted() {
+      if (Notification.permission === 'granted') {
+        subscribeRealtime();
+        updateNotifyBtn(true);
+      }
+    }
 
     // ── Filter pills ──
     document.querySelectorAll('.filter-pill').forEach(pill => {
