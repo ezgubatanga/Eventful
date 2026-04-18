@@ -1,14 +1,16 @@
+Compressing manually per caveman rules.
+
 # CLAUDE.md
 
-This file provides guidance to Claude Code (claude.ai/code) when working with code in this repository.
+Guidance for Claude Code (claude.ai/code) in this repo.
 
 ## Communication Style
 
-Keep all responses minimal. No preamble, no summaries, no filler.
+Minimal responses. No preamble, no summaries, no filler.
 
 ## What is Eventful
 
-Eventful is a platform that creates bespoke wedding websites for couples. Each couple gets their own subdirectory with a fully custom look and feel.
+Platform builds bespoke wedding websites. Each couple gets own subdirectory, custom look and feel.
 
 ## Project Structure
 
@@ -33,28 +35,28 @@ anna-and-marco/            ← Demo couple page
 - Fonts: Bricolage Grotesque + Outfit
 - Color tokens: `--primary` (sage green `#5F7161`), `--gold`, `--rose`, `--champagne`
 
-**Couple pages** each have their own CSS:
-- Fonts can differ per couple (Anna & Marco uses Parisienne + Cormorant Infant + Outfit)
-- Each page defines its own `:root` tokens for full visual identity control
-- Goal: move toward a shared base wedding CSS that couples' pages override via their own token values, rather than duplicating all structure
+**Couple pages** each have own CSS:
+- Fonts differ per couple (Anna & Marco: Parisienne + Cormorant Infant + Outfit)
+- Each page defines own `:root` tokens for full visual identity
+- Goal: shared base wedding CSS couples override via own tokens, not full duplication
 
 ## Deployment
 
-VS Code → GitHub → Vercel. No build step. All files are served as-is.
+VS Code → GitHub → Vercel. No build step. Files served as-is.
 
-CSS paths in couple pages must use absolute URLs (e.g., `/anna-and-marco/anna-marco.css`) to avoid Vercel trailing-slash routing issues.
+CSS paths in couple pages must use absolute URLs (e.g., `/anna-and-marco/anna-marco.css`) — avoids Vercel trailing-slash routing issues.
 
 ## Adding a New Couple's Page
 
 1. Create `[couple-name]/index.html` and `[couple-name]/[couple-name].css`
-2. Link the CSS with an absolute path: `href="/[couple-name]/[couple-name].css"`
-3. Add the favicon: `<link rel="icon" type="image/webp" href="/favicon.webp" />`
-4. Define `:root` tokens at the top of the couple's CSS to establish their color palette
-5. Each page is fully self-contained — inline the countdown and RSVP JS directly in the HTML `<script>` tag (see anna-and-marco pattern)
+2. Link CSS with absolute path: `href="/[couple-name]/[couple-name].css"`
+3. Add favicon: `<link rel="icon" type="image/webp" href="/favicon.webp" />`
+4. Define `:root` tokens at top of couple's CSS for color palette
+5. Pages fully self-contained — inline countdown and RSVP JS in `<script>` tag (see anna-and-marco)
 
 ## Smooth Scroll
 
-All pages use JS-driven ease-in/out scroll (quadratic bezier) instead of CSS `scroll-behavior: smooth`. Set `html { scroll-behavior: auto }` in CSS. Add this to every page's `<script>` block:
+All pages use JS-driven ease-in/out scroll (quadratic bezier), not CSS `scroll-behavior: smooth`. Set `html { scroll-behavior: auto }`. Add to every page's `<script>` block:
 
 ```js
 document.querySelectorAll('a[href^="#"]').forEach(a => {
@@ -78,30 +80,30 @@ document.querySelectorAll('a[href^="#"]').forEach(a => {
 });
 ```
 
-The `- 72` offset accounts for the fixed nav height.
+`- 72` offset = fixed nav height.
 
 ## Preloader
 
-Every page must include the animated gold preloader. Pattern from `anna-and-marco`:
-- CSS: `.preloader-overlay` + `.loader` + `flowe-one/two/three` keyframes in the couple's CSS file. Uses `var(--bg)` for background and `var(--gold)` for the spinner color.
-- HTML: `<div id="page-preloader" class="preloader-overlay">` with three SVGs (`#pegtopone`, `#pegtoptwo`, `#pegtopthree`). Each SVG must use **unique** gradient/filter/mask IDs (suffix `-a`, `-b`, `-c`) to avoid conflicts.
+Every page needs animated gold preloader. Pattern from `anna-and-marco`:
+- CSS: `.preloader-overlay` + `.loader` + `flowe-one/two/three` keyframes in couple's CSS. Uses `var(--bg)` background, `var(--gold)` spinner.
+- HTML: `<div id="page-preloader" class="preloader-overlay">` with three SVGs (`#pegtopone`, `#pegtoptwo`, `#pegtopthree`). Each SVG needs **unique** gradient/filter/mask IDs (suffix `-a`, `-b`, `-c`) to avoid conflicts.
 - JS: `window.addEventListener('load', () => setTimeout(() => preloader.classList.add('hidden'), 300))`
 
 ## Mobile Nav (Hamburger)
 
-All wedding pages must include a hamburger menu for mobile (`≤768px`). Pattern from `anna-and-marco`:
+All wedding pages need hamburger menu for mobile (`≤768px`). Pattern from `anna-and-marco`:
 - Button: `.nav-hamburger#nav-hamburger` with 3 `<span>` children
 - Menu: `<ul class="nav-links" id="nav-links">`
-- CSS: hamburger + animated open state in the couple's CSS file
-- JS: toggle `.open` on both elements; close on any link click; inline in the page `<script>` block
+- CSS: hamburger + animated open state in couple's CSS
+- JS: toggle `.open` on both elements; close on link click; inline in `<script>` block
 
 ## Social Sharing Meta Tags
 
-Every page (root and couple pages) must include Open Graph and Twitter Card meta tags. For couple pages, source the values as follows:
+Every page needs Open Graph and Twitter Card meta tags. Couple page values:
 
-- `og:title` / `twitter:title` — from the page `<title>`
-- `og:description` / `twitter:description` — from the `.hero-location` text
-- `og:image` / `twitter:image` — from the hero section background image URL, resized to `w=1200`
+- `og:title` / `twitter:title` — from page `<title>`
+- `og:description` / `twitter:description` — from `.hero-location` text
+- `og:image` / `twitter:image` — hero background image URL, resized to `w=1200`
 - `og:type` — always `website`
 - `twitter:card` — always `summary_large_image`
 
@@ -119,7 +121,7 @@ Every page (root and couple pages) must include Open Graph and Twitter Card meta
 
 ## RSVP Form — Required Fields
 
-The RSVP form must include a **Phone Number** field (optional, `type="tel"`) after the email field:
+RSVP must include **Phone Number** field (optional, `type="tel"`) after email:
 
 ```html
 <div class="rsvp-field">
@@ -128,11 +130,11 @@ The RSVP form must include a **Phone Number** field (optional, `type="tel"`) aft
 </div>
 ```
 
-Standard field order: Full Name → Email → Phone Number → Will you attend? → Number of guests → Message.
+Field order: Full Name → Email → Phone Number → Will you attend? → Number of guests → Message.
 
 ## RSVP Form — Plus-One Restriction
 
-The "Number of guests" field must always indicate that a plus-one is only permitted if the invitation explicitly allows it:
+"Number of guests" must indicate plus-one only if invitation allows:
 
 ```html
 <select class="rsvp-input" id="rsvp-guests">
@@ -142,7 +144,7 @@ The "Number of guests" field must always indicate that a plus-one is only permit
 <p class="rsvp-hint">A plus-one may only be brought if your invitation explicitly includes one.</p>
 ```
 
-Add `.rsvp-hint` to the couple's CSS:
+Add `.rsvp-hint` to couple's CSS:
 
 ```css
 .rsvp-hint {
@@ -156,14 +158,14 @@ Add `.rsvp-hint` to the couple's CSS:
 
 ## Contact Cards
 
-Use inline SVG icons — never emojis. The icon span uses `.contact-card-icon` with `color: var(--gold)` and `svg { display: block }`. Standard icons: person SVG for bride/groom, clipboard SVG for coordinator.
+Inline SVG icons only — no emojis. Icon span uses `.contact-card-icon` with `color: var(--gold)` and `svg { display: block }`. Standard: person SVG for bride/groom, clipboard SVG for coordinator.
 
 ## Functional Add-Ons (Patterns)
 
 ### Background Music
-Place the mp3 inside the couple's folder. Add an `<audio>` element and a floating `.music-btn` button (bottom-right corner). Toggle play/pause and the `.playing` class + pulsing animation in JS. Pattern from `anna-and-marco`.
+mp3 in couple's folder. Add `<audio>` + floating `.music-btn` (bottom-right). Toggle play/pause and `.playing` class + pulse animation in JS. Pattern from `anna-and-marco`.
 
-Always include tab visibility handling — pause when tab hides, resume only if audio was playing when user left:
+Include tab visibility handling — pause on hide, resume only if was playing:
 
 ```js
 let _musicPausedByTab = false;
@@ -177,7 +179,7 @@ document.addEventListener('visibilitychange', () => {
 ```
 
 ### Meal Selection
-Add a `<select id="rsvp-meal">` field in the RSVP grid. Add a second meal field (`id="rsvp-meal-guest2"`) with class `rsvp-meal-guest2` (hidden by default). In JS, listen to the guests dropdown: show the second field when value is `'2'`, hide and reset it otherwise.
+Add `<select id="rsvp-meal">` in RSVP grid. Add second meal field (`id="rsvp-meal-guest2"`, class `rsvp-meal-guest2`, hidden by default). JS: show second field when guests = `'2'`, hide and reset otherwise.
 
 ```css
 .rsvp-meal-guest2 { display: none; }
@@ -185,11 +187,11 @@ Add a `<select id="rsvp-meal">` field in the RSVP grid. Add a second meal field 
 ```
 
 ### Featured Video
-Add a `.video-section` with a `.video-wrapper` containing an `<iframe>`. Aspect ratio 16/9. Pattern from `anna-and-marco`.
+`.video-section` with `.video-wrapper` containing `<iframe>`. Aspect ratio 16/9. Pattern from `anna-and-marco`.
 
 ### Gift Registry
-Add a `.registry` section with `.registry-cards` (3-column grid). Each card has an icon, name, description, and link. Pattern from `anna-and-marco`.
+`.registry` section with `.registry-cards` (3-column grid). Each card: icon, name, description, link. Pattern from `anna-and-marco`.
 
 ## Build Tooling (Future Consideration)
 
-There is currently no bundler or build step. As more couple pages are added, a lightweight bundler (e.g., Vite) would enable shared HTML component templates, CSS base layers with per-couple overrides, and minification — reducing copy-paste overhead between pages.
+No bundler or build step. As pages grow, lightweight bundler (e.g., Vite) would enable shared HTML templates, CSS base layers with per-couple overrides, minification — cuts copy-paste overhead.

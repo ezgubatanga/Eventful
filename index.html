@@ -132,6 +132,18 @@
     }
 
     /* ─── Animations ──────────────────────────────────────── */
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(28px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    .fade-up { opacity: 0; animation: fadeUp 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards; }
+    .delay-1 { animation-delay: 0.1s; }
+    .delay-2 { animation-delay: 0.22s; }
+    .delay-3 { animation-delay: 0.34s; }
+    .delay-4 { animation-delay: 0.46s; }
+    .delay-5 { animation-delay: 0.58s; }
+
     @keyframes floatY {
 
       0%,
@@ -2181,15 +2193,13 @@
     }
 
     @keyframes pip-pop {
-      0%   { transform: scale(0); opacity: 0; }
-      60%  { transform: scale(1.35); opacity: 1; }
-      100% { transform: scale(1); opacity: 1; }
+      0%   { transform: scale(1);    background: rgba(42,37,32,0.25); }
+      60%  { transform: scale(1.35); background: #2A2520; }
+      100% { transform: scale(1);    background: #2A2520; }
     }
 
     .slot-pip.filled {
-      background: #2A2520;
-      opacity: 0;
-      transform: scale(0);
+      background: rgba(42,37,32,0.25);
     }
 
     .slot-pip.filled.popped {
@@ -2206,7 +2216,6 @@
     }
 
     .slot-pip.pulsing {
-      opacity: 0;
     }
 
     .slot-pip.pulsing.popped {
@@ -2684,24 +2693,24 @@
 
         <!-- Left: copy -->
         <div>
-          <h1>
+          <h1 class="fade-up delay-1">
             Your love story<br />deserves a<br />beautiful page
           </h1>
-          <p class="hero-sub">
+          <p class="hero-sub fade-up delay-2">
             Eventful crafts stunning, personalized wedding landing pages — with RSVP, venue info, gallery, countdown
             timers, and more. No code. No stress.
           </p>
-          <div class="hero-actions">
+          <div class="hero-actions fade-up delay-3">
             <a href="/onboarding" class="btn btn-gold" id="hero-cta">Get Started ✦</a>
             <a href="https://www.eventful.page/anna-and-marco" class="btn btn-outline">View Demo</a>
           </div>
-          <div class="hero-trust">
+          <div class="hero-trust fade-up delay-4">
             <span class="hero-founder-badge">🎉 Now onboarding first 20 couples at ₱4,000 — slots filling up</span>
           </div>
         </div>
 
         <!-- Right: live preview -->
-        <div class="hero-visual">
+        <div class="hero-visual fade-up delay-2">
           <div class="preview-phone-shell">
             <div class="preview-phone-inner">
               <video class="prev-hero-video" autoplay muted loop playsinline disablepictureinpicture>
@@ -3535,11 +3544,14 @@
         const filled = document.querySelectorAll('#slot-track .slot-pip.filled');
         const pulsing = document.querySelector('#slot-track .slot-pip.pulsing');
         const delay = 300;
+        const stagger = 160;
+        const popDuration = 350;
         filled.forEach((pip, i) => {
-          setTimeout(() => pip.classList.add('popped'), delay + i * 80);
+          setTimeout(() => pip.classList.add('popped'), delay + i * stagger);
         });
         if (pulsing) {
-          setTimeout(() => pulsing.classList.add('popped'), delay + filled.length * 80 + 180);
+          const pulsingStart = delay + (filled.length - 1) * stagger + popDuration + 120;
+          setTimeout(() => pulsing.classList.add('popped'), pulsingStart);
         }
       };
 
@@ -3556,70 +3568,6 @@
     })();
   </script>
 
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
-  <script>
-    gsap.registerPlugin(ScrollTrigger);
-
-    // Hero — fires after preloader clears (load + 300ms)
-    window.addEventListener('load', () => {
-      setTimeout(() => {
-        gsap.timeline({ defaults: { ease: 'power2.out' } })
-          .from('.nav',         { opacity: 0, y: -16, duration: 0.4 })
-          .from('.hero h1',     { opacity: 0, y: 22,  duration: 0.55 }, '-=0.1')
-          .from('.hero-sub',    { opacity: 0, y: 14,  duration: 0.45 }, '-=0.25')
-          .from('.hero-actions',{ opacity: 0, y: 10,  duration: 0.4  }, '-=0.2')
-          .from('.hero-trust',  { opacity: 0, y: 8,   duration: 0.35 }, '-=0.15')
-          .from('.hero-visual', { opacity: 0, x: 24,  duration: 0.6  }, '-=0.45');
-      }, 380);
-    });
-
-    // Scroll-triggered section animations
-    const st = (trigger, targets, vars) =>
-      gsap.from(targets, {
-        scrollTrigger: { trigger, start: 'top 85%', once: true },
-        immediateRender: false,
-        ...vars,
-      });
-
-    document.querySelectorAll('.section-header').forEach(el =>
-      gsap.from(el.children, {
-        scrollTrigger: { trigger: el, start: 'top 85%', once: true },
-        immediateRender: false,
-        opacity: 0, y: 18, duration: 0.5, stagger: 0.1, ease: 'power2.out',
-      })
-    );
-
-    st('.social-proof-inner', '.social-proof-inner > *',
-      { opacity: 0, y: 18, duration: 0.45, stagger: 0.12, ease: 'power2.out' });
-
-    st('.features-grid', '.feature-card',
-      { opacity: 0, y: 22, duration: 0.45, stagger: 0.09, ease: 'power2.out' });
-
-    st('.steps-list', '.how-step',
-      { opacity: 0, y: 20, duration: 0.45, stagger: 0.1, ease: 'power2.out' });
-
-    st('.showcase-grid', '.showcase-card',
-      { opacity: 0, y: 24, duration: 0.5, ease: 'power2.out' });
-
-    st('.included-inner', '.included-left',
-      { opacity: 0, x: -22, duration: 0.55, ease: 'power2.out' });
-
-    st('.included-inner', '.included-visual',
-      { opacity: 0, x: 22, duration: 0.55, ease: 'power2.out' });
-
-    st('.pricing-cards', '.pricing-card',
-      { opacity: 0, y: 24, duration: 0.45, stagger: 0.12, ease: 'power2.out' });
-
-    st('.testimonials-grid', '.testimonial-card',
-      { opacity: 0, y: 20, duration: 0.45, stagger: 0.1, ease: 'power2.out' });
-
-    st('.faq-list', '.faq-item',
-      { opacity: 0, y: 14, duration: 0.4, stagger: 0.07, ease: 'power2.out' });
-
-    st('.cta-banner', '.cta-card',
-      { opacity: 0, y: 24, duration: 0.55, ease: 'power2.out' });
-  </script>
 
 </body>
 
