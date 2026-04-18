@@ -1056,8 +1056,7 @@
         .on('postgres_changes', {
           event:  'INSERT',
           schema: 'public',
-          table:  'anna_marco_rsvp',
-          filter: 'couple_id=eq.anna-and-marco'
+          table:  'anna_marco_rsvp'
         }, payload => {
           const r = payload.new;
           const attending = r.attend === 'yes' ? 'is attending' : 'declined';
