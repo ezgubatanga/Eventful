@@ -485,15 +485,27 @@
       border-collapse: collapse;
       table-layout: fixed;
     }
-    /* 1=Name 2=Phone(hidden) 3=Going 4=Guest 5=Meal 6=Date 7=Message(hidden) 8=Actions */
-    thead th:nth-child(1) { width: 22%; }
-    thead th:nth-child(3) { width: 10%; }
-    thead th:nth-child(4) { width: 8%; }
-    thead th:nth-child(5) { width: 18%; }
-    thead th:nth-child(6) { width: 10%; }
-    thead th:nth-child(8) { width: auto; } /* actions fills rest */
+    /* 1=Name 2=Phone(print) 3=Going 4=Guest 5=Meal 6=Date 7=Message 8=Message(print) 9=Actions */
+    thead th:nth-child(1) { width: 17%; }
+    thead th:nth-child(3) { width: 9%; }
+    thead th:nth-child(4) { width: 7%; }
+    thead th:nth-child(5) { width: 14%; }
+    thead th:nth-child(6) { width: 9%; }
+    thead th:nth-child(7) { width: 22%; }
+    thead th:nth-child(9) { width: auto; }
     tbody td { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
     tbody td:nth-child(5) { white-space: normal; } /* Meal can wrap */
+    .col-message { }
+    .msg-cell {
+      display: -webkit-box;
+      -webkit-line-clamp: 2;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
+      white-space: normal;
+      line-height: 1.45;
+      cursor: pointer;
+    }
+    .msg-cell:hover { color: var(--text); }
     .td-actions { overflow: visible; white-space: nowrap; width: 1px; } /* shrink to content, never clip */
     thead th {
       padding: 12px 18px;
@@ -743,8 +755,9 @@
       thead th:nth-child(4) { padding-left: 4px; }
       /* Actions: shrink to dots button, no clipping */
       .td-actions { padding-left: 4px; padding-right: 20px !important; white-space: nowrap; overflow: visible; }
-      /* Show 3-dots, hide text buttons */
-      .btn-message, .btn-contact, .btn-remove { display: none; }
+      /* Hide message column and text buttons on mobile */
+      .col-message { display: none; }
+      .btn-contact, .btn-remove { display: none; }
       .btn-dots { display: inline-flex; }
     }
   </style>
@@ -877,6 +890,7 @@
               <th>Guest</th>
               <th>Meal</th>
               <th class="screen-only">Date</th>
+              <th class="col-message screen-only">Message</th>
               <th class="print-only">Message</th>
               <th class="th-actions screen-only"></th>
             </tr>
@@ -1220,12 +1234,9 @@
           <td class="td-muted">${r.attend !== 'yes' ? '0' : r.guests === '2' ? '2' : '1'}</td>
           <td class="td-muted">${esc(MEAL_LABELS[r.meal] || r.meal || '—')}</td>
           <td class="td-muted screen-only">${esc(r.ts)}</td>
+          <td class="col-message td-muted screen-only">${r.message ? `<div class="msg-cell" id="td-msg-${i}" title="${esc(r.message)}">${esc(r.message)}</div>` : '<span style="color:var(--light)">—</span>'}</td>
           <td class="print-only">${esc(r.message || '—')}</td>
           <td class="td-actions">
-            ${r.message ? `<button class="action-btn btn-message" id="btn-msg-${i}">
-              <svg class="btn-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
-              View Message
-            </button>` : ''}
             ${r.phone ? `<a class="action-btn btn-contact" href="tel:${String(r.phone)}" target="_blank">
               <svg class="btn-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.08 12a19.79 19.79 0 0 1-3-8.6A2 2 0 0 1 3.05 1h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L7.09 8.91a16 16 0 0 0 5.93 5.93l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
               Contact
@@ -1257,8 +1268,8 @@
 
       // Attach listeners directly to each button — no delegation, no stale closures
       visible.forEach((r, i) => {
-        const btnMsg = document.getElementById('btn-msg-' + i);
-        if (btnMsg) btnMsg.addEventListener('click', e => {
+        const tdMsg = document.getElementById('td-msg-' + i);
+        if (tdMsg) tdMsg.addEventListener('click', e => {
           e.stopPropagation();
           openMessageModal(r);
         });
