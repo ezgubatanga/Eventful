@@ -879,158 +879,174 @@
     }
     .dash-mock-topbar {
       background: #141210;
-      padding: 14px 20px;
+      padding: 12px 18px;
       display: flex;
       align-items: center;
       justify-content: space-between;
       border-bottom: 1px solid rgba(255,255,255,0.06);
     }
-    .dash-mock-title {
-      font-size: 0.78rem;
-      font-weight: 600;
-      letter-spacing: 0.12em;
-      color: rgba(255,255,255,0.5);
-      text-transform: uppercase;
+    .dash-mock-brand { display: flex; flex-direction: row; align-items: flex-end; gap: 8px; }
+    .dash-mock-couple { font-size: 0.8rem; font-weight: 600; color: rgba(255,255,255,0.85); }
+    .dash-mock-subtitle { font-size: 0.62rem; color: rgba(255,255,255,0.35); letter-spacing: 0.03em; }
+    .dash-mock-topbar-right { display: flex; align-items: center; gap: 6px; }
+    .dash-mock-bell-btn {
+      width: 26px; height: 26px;
+      display: flex; align-items: center; justify-content: center;
+      border-radius: 6px;
+      border: 1px solid rgba(255,255,255,0.1);
+      color: rgba(255,255,255,0.4);
     }
-    .dash-mock-dot {
-      width: 8px; height: 8px;
-      border-radius: 50%;
-      background: var(--gold);
-      opacity: 0.7;
+    .dash-mock-refresh-btn {
+      display: inline-flex; align-items: center; gap: 5px;
+      padding: 5px 10px;
+      border-radius: 6px;
+      border: 1px solid rgba(197,160,89,0.35);
+      color: #C5A059;
+      font-size: 0.6rem; font-weight: 500;
+      white-space: nowrap;
     }
-    .dash-mock-body {
-      padding: 20px;
-    }
+    .dash-mock-body { padding: 14px 16px; }
     .dash-mock-kpis {
       display: grid;
-      grid-template-columns: repeat(4, 1fr);
-      gap: 10px;
-      margin-bottom: 20px;
+      grid-template-columns: repeat(5, 1fr);
+      gap: 8px;
+      margin-bottom: 14px;
     }
     .dash-mock-kpi {
       background: rgba(255,255,255,0.04);
       border: 1px solid rgba(255,255,255,0.07);
       border-radius: 10px;
-      padding: 12px 14px;
+      padding: 9px 11px;
     }
     .dash-mock-kpi-label {
-      font-size: 0.6rem;
+      font-size: 0.52rem;
       color: rgba(255,255,255,0.35);
       text-transform: uppercase;
       letter-spacing: 0.08em;
-      margin-bottom: 6px;
+      margin-bottom: 4px;
+      line-height: 1.3;
     }
     .dash-mock-kpi-value {
-      font-size: 1.4rem;
+      font-size: 1.25rem;
       font-weight: 600;
       color: #fff;
       line-height: 1;
+      margin-bottom: 3px;
     }
-    .dash-mock-kpi-value.gold { color: #C5A059; }
-    .dash-mock-table-header {
-      display: flex;
+    .dash-mock-kpi-sub { font-size: 0.5rem; color: rgba(255,255,255,0.22); line-height: 1.3; }
+    .dash-mock-kpi-value.gold  { color: #C5A059; }
+    .dash-mock-kpi-value.green { color: #8aab8c; }
+    .dash-mock-kpi-value.rose  { color: #c47a7a; }
+
+    /* Meal choices bar chart */
+    .dash-mock-meals {
+      background: rgba(255,255,255,0.03);
+      border: 1px solid rgba(255,255,255,0.07);
+      border-radius: 10px;
+      padding: 11px 13px;
+      margin-bottom: 14px;
+    }
+    .dash-mock-meals-title {
+      font-size: 0.58rem; font-weight: 600;
+      letter-spacing: 0.1em; text-transform: uppercase;
+      color: rgba(255,255,255,0.4);
+      margin-bottom: 4px;
+    }
+    .dash-mock-meals-sub {
+      font-size: 0.5rem; color: rgba(255,255,255,0.22);
+      letter-spacing: 0.05em; text-transform: uppercase;
+      margin-bottom: 9px;
+    }
+    .dash-mock-meal-rows { display: flex; flex-direction: column; gap: 5px; }
+    .dash-mock-meal-row {
+      display: grid;
+      grid-template-columns: 130px 1fr 20px;
       align-items: center;
-      justify-content: space-between;
-      margin-bottom: 12px;
+      gap: 8px;
+    }
+    .dash-mock-meal-name {
+      font-size: 0.6rem; color: rgba(255,255,255,0.55);
+      white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+    }
+    .dash-mock-bar-wrap {
+      height: 5px; background: rgba(255,255,255,0.07); border-radius: 3px; overflow: hidden;
+    }
+    .dash-mock-bar-fill { height: 100%; background: #C5A059; border-radius: 3px; }
+    .dash-mock-meal-count { font-size: 0.6rem; color: rgba(255,255,255,0.45); text-align: right; }
+
+    /* Recent RSVPs table */
+    .dash-mock-table-header {
+      display: flex; align-items: center; justify-content: space-between; margin-bottom: 10px;
     }
     .dash-mock-table-title {
-      font-size: 0.65rem;
-      font-weight: 600;
-      letter-spacing: 0.1em;
-      text-transform: uppercase;
+      font-size: 0.6rem; font-weight: 600;
+      letter-spacing: 0.1em; text-transform: uppercase;
       color: rgba(255,255,255,0.4);
     }
-    .dash-mock-pills {
-      display: flex;
-      gap: 6px;
-    }
+    .dash-mock-pills { display: flex; gap: 5px; }
     .dash-mock-pill {
-      font-size: 0.6rem;
-      padding: 3px 10px;
-      border-radius: 20px;
-      border: 1px solid rgba(255,255,255,0.12);
+      font-size: 0.56rem; padding: 3px 9px;
+      border-radius: 20px; border: 1px solid rgba(255,255,255,0.12);
       color: rgba(255,255,255,0.35);
     }
-    .dash-mock-pill.active {
-      border-color: #C5A059;
-      color: #C5A059;
-    }
-    .dash-mock-rows {
-      display: flex;
-      flex-direction: column;
-      gap: 2px;
-    }
+    .dash-mock-pill.active { border-color: #C5A059; color: #C5A059; }
+    .dash-mock-rows { display: flex; flex-direction: column; gap: 2px; }
     .dash-mock-row {
       display: grid;
-      grid-template-columns: 1fr 56px 36px 1fr 44px;
-      column-gap: 0;
+      grid-template-columns: 1fr 42px 20px 1fr 60px 1fr 94px;
       align-items: center;
-      padding: 9px 12px;
+      padding: 8px 10px;
       border-radius: 8px;
       background: rgba(255,255,255,0.025);
       border: 1px solid rgba(255,255,255,0.04);
-      gap: 8px;
+      gap: 6px;
     }
     .dash-mock-row-name {
-      font-size: 0.72rem;
-      color: rgba(255,255,255,0.75);
+      font-size: 0.68rem; color: rgba(255,255,255,0.75);
+      white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
     }
     .dash-mock-badge {
-      font-size: 0.58rem;
-      padding: 2px 8px;
-      border-radius: 20px;
-      font-weight: 600;
-      display: inline-block;
+      font-size: 0.55rem; padding: 2px 7px;
+      border-radius: 20px; font-weight: 600; display: inline-block; white-space: nowrap;
     }
     .dash-mock-badge.yes { background: rgba(95,113,97,0.2); color: #8aab8c; }
     .dash-mock-badge.no  { background: rgba(180,80,80,0.15); color: #c47a7a; }
-    .dash-mock-row-going {
-      display: flex;
-      align-items: center;
+    .dash-mock-row-going { display: flex; align-items: center; }
+    .dash-mock-row-guests { font-size: 0.65rem; color: rgba(255,255,255,0.35); text-align: center; }
+    .dash-mock-row-meal {
+      font-size: 0.63rem; color: rgba(255,255,255,0.3);
+      white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
     }
-    .dash-mock-row-guests {
-      font-size: 0.7rem;
-      color: rgba(255,255,255,0.35);
+    .dash-mock-row-date { font-size: 0.6rem; color: rgba(255,255,255,0.3); white-space: nowrap; }
+    .dash-mock-row-msg {
+      font-size: 0.6rem; color: rgba(255,255,255,0.3);
+      white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
     }
-    .dash-mock-row-meal { padding-left: 16px; }
+    .dash-mock-row-actions { display: flex; gap: 4px; align-items: center; justify-content: flex-end; }
     .dash-mock-row-head {
       background: transparent !important;
       border-color: transparent !important;
       padding-bottom: 4px;
     }
     .dash-mock-row-head div {
-      font-size: 0.58rem;
-      font-weight: 600;
-      letter-spacing: 0.1em;
-      text-transform: uppercase;
+      font-size: 0.54rem; font-weight: 600;
+      letter-spacing: 0.1em; text-transform: uppercase;
       color: rgba(255,255,255,0.25) !important;
     }
-    .dash-mock-row-actions {
-      display: flex;
-      gap: 6px;
-      align-items: center;
-      justify-content: flex-end;
+    .dash-mock-btn-contact {
+      display: inline-flex; align-items: center; gap: 3px;
+      padding: 3px 7px; border-radius: 20px;
+      border: 1px solid rgba(197,160,89,0.35);
+      color: #C5A059; font-size: 0.55rem; white-space: nowrap;
     }
-    .dash-mock-icon {
-      width: 22px;
-      height: 22px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      border-radius: 6px;
-      background: rgba(255,255,255,0.05);
-      color: rgba(255,255,255,0.3);
-      flex-shrink: 0;
+    .dash-mock-btn-remove {
+      display: inline-flex; align-items: center; gap: 3px;
+      padding: 3px 7px; border-radius: 20px;
+      border: 1px solid rgba(196,122,122,0.3);
+      color: #c47a7a; font-size: 0.55rem; white-space: nowrap;
     }
-    .dash-mock-icon svg { display: block; }
-    .dash-mock-row-head .dash-mock-row-actions { visibility: hidden; }
-    .dash-mock-row-meal {
-      font-size: 0.68rem;
-      color: rgba(255,255,255,0.3);
-      white-space: nowrap;
-      overflow: hidden;
-      text-overflow: ellipsis;
-    }
+    .dash-mock-btn-contact svg,
+    .dash-mock-btn-remove svg { display: block; flex-shrink: 0; }
 
     /* ─── SAME-BG SPACING ───────────────────────────────────
        Adjacent same-bg sections get 200px gap (bottom+top).
@@ -2828,26 +2844,72 @@
 
         <div class="dash-mock">
           <div class="dash-mock-topbar">
-            <div class="dash-mock-title">RSVP Dashboard</div>
-            <div class="dash-mock-dot"></div>
+            <div class="dash-mock-brand">
+              <span class="dash-mock-couple">Anna &amp; Marco</span>
+              <span class="dash-mock-subtitle">RSVP Dashboard</span>
+            </div>
+            <div class="dash-mock-topbar-right">
+              <span class="dash-mock-bell-btn">
+                <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 0 1-3.46 0"/></svg>
+              </span>
+              <span class="dash-mock-refresh-btn">
+                <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="23 4 23 10 17 10"/><polyline points="1 20 1 14 7 14"/><path d="M3.51 9a9 9 0 0 1 14.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0 0 20.49 15"/></svg>
+                Refresh
+              </span>
+            </div>
           </div>
           <div class="dash-mock-body">
             <div class="dash-mock-kpis">
               <div class="dash-mock-kpi">
-                <div class="dash-mock-kpi-label">Total</div>
-                <div class="dash-mock-kpi-value gold">50</div>
+                <div class="dash-mock-kpi-label">Total RSVPs</div>
+                <div class="dash-mock-kpi-value gold">100</div>
+                <div class="dash-mock-kpi-sub">responses received</div>
               </div>
               <div class="dash-mock-kpi">
                 <div class="dash-mock-kpi-label">Attending</div>
-                <div class="dash-mock-kpi-value">42</div>
+                <div class="dash-mock-kpi-value green">80</div>
+                <div class="dash-mock-kpi-sub">confirmed yes</div>
               </div>
               <div class="dash-mock-kpi">
-                <div class="dash-mock-kpi-label">Declined</div>
-                <div class="dash-mock-kpi-value">8</div>
+                <div class="dash-mock-kpi-label">Not Attending</div>
+                <div class="dash-mock-kpi-value rose">20</div>
+                <div class="dash-mock-kpi-sub">regrets received</div>
               </div>
               <div class="dash-mock-kpi">
-                <div class="dash-mock-kpi-label">Headcount</div>
-                <div class="dash-mock-kpi-value">57</div>
+                <div class="dash-mock-kpi-label">Plus-Ones</div>
+                <div class="dash-mock-kpi-value">40</div>
+                <div class="dash-mock-kpi-sub">bringing a guest</div>
+              </div>
+              <div class="dash-mock-kpi">
+                <div class="dash-mock-kpi-label">Total Headcount</div>
+                <div class="dash-mock-kpi-value">120</div>
+                <div class="dash-mock-kpi-sub">expected guests</div>
+              </div>
+            </div>
+            <div class="dash-mock-meals">
+              <div class="dash-mock-meals-title">Meal Choices</div>
+              <div class="dash-mock-meals-sub">All meal choices (guests + plus-ones)</div>
+              <div class="dash-mock-meal-rows">
+                <div class="dash-mock-meal-row">
+                  <div class="dash-mock-meal-name">Braised Beef Tenderloin</div>
+                  <div class="dash-mock-bar-wrap"><div class="dash-mock-bar-fill" style="width:85%"></div></div>
+                  <div class="dash-mock-meal-count">34</div>
+                </div>
+                <div class="dash-mock-meal-row">
+                  <div class="dash-mock-meal-name">Herb-Roasted Chicken</div>
+                  <div class="dash-mock-bar-wrap"><div class="dash-mock-bar-fill" style="width:80%"></div></div>
+                  <div class="dash-mock-meal-count">32</div>
+                </div>
+                <div class="dash-mock-meal-row">
+                  <div class="dash-mock-meal-name">Pan-Seared Sea Bass</div>
+                  <div class="dash-mock-bar-wrap"><div class="dash-mock-bar-fill" style="width:72%"></div></div>
+                  <div class="dash-mock-meal-count">29</div>
+                </div>
+                <div class="dash-mock-meal-row">
+                  <div class="dash-mock-meal-name">Roasted Vegetable Risotto</div>
+                  <div class="dash-mock-bar-wrap"><div class="dash-mock-bar-fill" style="width:62%"></div></div>
+                  <div class="dash-mock-meal-count">25</div>
+                </div>
               </div>
             </div>
             <div class="dash-mock-table-header">
@@ -2862,44 +2924,47 @@
               <div class="dash-mock-row dash-mock-row-head">
                 <div class="dash-mock-row-name">Name</div>
                 <div class="dash-mock-row-going">Going</div>
-                <div class="dash-mock-row-guests">Guests</div>
+                <div class="dash-mock-row-guests">Guest</div>
                 <div class="dash-mock-row-meal">Meal</div>
+                <div class="dash-mock-row-date">Date</div>
+                <div class="dash-mock-row-msg">Message</div>
                 <div class="dash-mock-row-actions"></div>
               </div>
               <div class="dash-mock-row">
-                <div class="dash-mock-row-name">Sofia Reyes</div>
-                <div class="dash-mock-row-going"><span class="dash-mock-badge yes">Yes</span></div>
-                <div class="dash-mock-row-guests">2</div>
-                <div class="dash-mock-row-meal">Herb-Roasted Chicken</div>
-                <div class="dash-mock-row-actions"><span class="dash-mock-icon"><svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.08 12a19.79 19.79 0 0 1-3-8.6A2 2 0 0 1 3.05 1h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L7.09 8.91a16 16 0 0 0 5.93 5.93l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg></span><span class="dash-mock-icon"><svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="3 6 5 6 21 6"/><path d="M19 6l-1 14H6L5 6"/><path d="M10 11v6"/><path d="M14 11v6"/><path d="M9 6V4h6v2"/></svg></span></div>
-              </div>
-              <div class="dash-mock-row">
-                <div class="dash-mock-row-name">Marco Dela Cruz</div>
+                <div class="dash-mock-row-name">Paolo Reyes</div>
                 <div class="dash-mock-row-going"><span class="dash-mock-badge yes">Yes</span></div>
                 <div class="dash-mock-row-guests">1</div>
-                <div class="dash-mock-row-meal">Braised Beef Tenderloin</div>
-                <div class="dash-mock-row-actions"><span class="dash-mock-icon"><svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.08 12a19.79 19.79 0 0 1-3-8.6A2 2 0 0 1 3.05 1h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L7.09 8.91a16 16 0 0 0 5.93 5.93l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg></span><span class="dash-mock-icon"><svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="3 6 5 6 21 6"/><path d="M19 6l-1 14H6L5 6"/><path d="M10 11v6"/><path d="M14 11v6"/><path d="M9 6V4h6v2"/></svg></span></div>
-              </div>
-              <div class="dash-mock-row">
-                <div class="dash-mock-row-name">Isabella Santos</div>
-                <div class="dash-mock-row-going"><span class="dash-mock-badge yes">Yes</span></div>
-                <div class="dash-mock-row-guests">2</div>
                 <div class="dash-mock-row-meal">Pan-Seared Sea Bass</div>
-                <div class="dash-mock-row-actions"><span class="dash-mock-icon"><svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.08 12a19.79 19.79 0 0 1-3-8.6A2 2 0 0 1 3.05 1h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L7.09 8.91a16 16 0 0 0 5.93 5.93l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg></span><span class="dash-mock-icon"><svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="3 6 5 6 21 6"/><path d="M19 6l-1 14H6L5 6"/><path d="M10 11v6"/><path d="M14 11v6"/><path d="M9 6V4h6v2"/></svg></span></div>
+                <div class="dash-mock-row-date">21 Apr 2026</div>
+                <div class="dash-mock-row-msg">So happy for you both!</div>
+                <div class="dash-mock-row-actions">
+                  <span class="dash-mock-btn-contact"><svg width="9" height="9" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.08 12a19.79 19.79 0 0 1-3-8.6A2 2 0 0 1 3.05 1h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L7.09 8.91a16 16 0 0 0 5.93 5.93l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg>Contact</span>
+                  <span class="dash-mock-btn-remove"><svg width="9" height="9" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="3 6 5 6 21 6"/><path d="M19 6l-1 14H6L5 6"/><path d="M10 11v6"/><path d="M14 11v6"/><path d="M9 6V4h6v2"/></svg>Remove</span>
+                </div>
               </div>
               <div class="dash-mock-row">
-                <div class="dash-mock-row-name">Carlos Mendoza</div>
-                <div class="dash-mock-row-going"><span class="dash-mock-badge no">No</span></div>
-                <div class="dash-mock-row-guests">0</div>
-                <div class="dash-mock-row-meal">—</div>
-                <div class="dash-mock-row-actions"><span class="dash-mock-icon"><svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.08 12a19.79 19.79 0 0 1-3-8.6A2 2 0 0 1 3.05 1h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L7.09 8.91a16 16 0 0 0 5.93 5.93l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg></span><span class="dash-mock-icon"><svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="3 6 5 6 21 6"/><path d="M19 6l-1 14H6L5 6"/><path d="M10 11v6"/><path d="M14 11v6"/><path d="M9 6V4h6v2"/></svg></span></div>
+                <div class="dash-mock-row-name">Yvonne Ong</div>
+                <div class="dash-mock-row-going"><span class="dash-mock-badge yes">Yes</span></div>
+                <div class="dash-mock-row-guests">2</div>
+                <div class="dash-mock-row-meal">Braised Beef Tenderloin</div>
+                <div class="dash-mock-row-date">20 Apr 2026</div>
+                <div class="dash-mock-row-msg">Congratulations to the happy couple!</div>
+                <div class="dash-mock-row-actions">
+                  <span class="dash-mock-btn-contact"><svg width="9" height="9" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.08 12a19.79 19.79 0 0 1-3-8.6A2 2 0 0 1 3.05 1h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L7.09 8.91a16 16 0 0 0 5.93 5.93l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg>Contact</span>
+                  <span class="dash-mock-btn-remove"><svg width="9" height="9" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="3 6 5 6 21 6"/><path d="M19 6l-1 14H6L5 6"/><path d="M10 11v6"/><path d="M14 11v6"/><path d="M9 6V4h6v2"/></svg>Remove</span>
+                </div>
               </div>
               <div class="dash-mock-row">
-                <div class="dash-mock-row-name">Camille Torres</div>
+                <div class="dash-mock-row-name">Gino Cruz</div>
                 <div class="dash-mock-row-going"><span class="dash-mock-badge yes">Yes</span></div>
                 <div class="dash-mock-row-guests">1</div>
-                <div class="dash-mock-row-meal">Roasted Veg Risotto</div>
-                <div class="dash-mock-row-actions"><span class="dash-mock-icon"><svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.08 12a19.79 19.79 0 0 1-3-8.6A2 2 0 0 1 3.05 1h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L7.09 8.91a16 16 0 0 0 5.93 5.93l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg></span><span class="dash-mock-icon"><svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="3 6 5 6 21 6"/><path d="M19 6l-1 14H6L5 6"/><path d="M10 11v6"/><path d="M14 11v6"/><path d="M9 6V4h6v2"/></svg></span></div>
+                <div class="dash-mock-row-meal">Roasted Vegetable Risotto</div>
+                <div class="dash-mock-row-date">19 Apr 2026</div>
+                <div class="dash-mock-row-msg">—</div>
+                <div class="dash-mock-row-actions">
+                  <span class="dash-mock-btn-contact"><svg width="9" height="9" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.08 12a19.79 19.79 0 0 1-3-8.6A2 2 0 0 1 3.05 1h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L7.09 8.91a16 16 0 0 0 5.93 5.93l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg>Contact</span>
+                  <span class="dash-mock-btn-remove"><svg width="9" height="9" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="3 6 5 6 21 6"/><path d="M19 6l-1 14H6L5 6"/><path d="M10 11v6"/><path d="M14 11v6"/><path d="M9 6V4h6v2"/></svg>Remove</span>
+                </div>
               </div>
             </div>
           </div>
