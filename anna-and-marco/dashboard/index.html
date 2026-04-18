@@ -760,6 +760,8 @@
       .btn-contact, .btn-remove { display: none; }
       .btn-dots { display: inline-flex; }
       .nav-refresh, .nav-notify { display: none; }
+      .nav-brand { white-space: nowrap; font-size: 0.95rem; }
+      .nav-brand span { margin-left: 4px; }
     }
   </style>
   <!-- Meta Pixel Code -->
@@ -1233,7 +1235,7 @@
             : '<span class="badge badge-no">No</span>'
           }</td>
           <td class="td-muted">${r.attend !== 'yes' ? '0' : r.guests === '2' ? '2' : '1'}</td>
-          <td class="td-muted">${esc(MEAL_LABELS[r.meal] || r.meal || '—')}</td>
+          <td class="td-muted">${esc(MEAL_LABELS[r.meal] || r.meal || '—')}${r.meal2 ? `<br><span style="opacity:0.6;font-size:0.75em">+1: ${esc(MEAL_LABELS[r.meal2] || r.meal2)}</span>` : ''}</td>
           <td class="td-muted screen-only">${esc(r.ts)}</td>
           <td class="col-message td-muted screen-only">${r.message ? `<div class="msg-cell" id="td-msg-${i}" title="${esc(r.message)}">${esc(r.message)}</div>` : '<span style="color:var(--light)">—</span>'}</td>
           <td class="print-only">${esc(r.message || '—')}</td>
