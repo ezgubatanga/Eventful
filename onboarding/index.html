@@ -2333,6 +2333,8 @@
       updatePriceBar();
     }
 
+    if (new URLSearchParams(location.search).get('plan') === 'rush') selectDelivery('rush');
+
     // ── Stepper UI ────────────────────────────────────────────
     function updateStepper(active) {
       for (let i = 1; i <= TOTAL_STEPS; i++) {
