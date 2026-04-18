@@ -1063,10 +1063,13 @@
           const attending = r.attend === 'yes' ? 'is attending' : 'declined';
           playChime();
           if (Notification.permission === 'granted') {
-            new Notification('New RSVP — Anna & Marco', {
-              body: `${r.name || 'Someone'} ${attending}`,
-              icon: '/favicon.webp'
-            });
+            try {
+              const n = new Notification('New RSVP — Anna & Marco', {
+                body: `${r.name || 'Someone'} ${attending}`
+              });
+              n.onerror = e => console.error('[Notification] error:', e);
+              console.log('[Notification] fired:', n);
+            } catch (e) { console.error('[Notification] threw:', e); }
           }
           loadData();
         })
