@@ -1149,21 +1149,6 @@
       btn.textContent = 'Sending…';
       fb.style.display = 'none';
 
-      // Handle receipt upload if present
-      let receipt_url = null;
-      const receiptFile = document.getElementById('rsvp-receipt')?.files?.[0];
-      if (receiptFile) {
-        const ext  = receiptFile.name.split('.').pop();
-        const path = `anna-and-marco/${Date.now()}.${ext}`;
-        const { error: uploadErr } = await db.storage
-          .from('receipts')
-          .upload(path, receiptFile, { upsert: false });
-        if (!uploadErr) {
-          const { data: urlData } = db.storage.from('receipts').getPublicUrl(path);
-          receipt_url = urlData.publicUrl;
-        }
-      }
-
       const payload = {
         couple_id: 'anna-and-marco',
         name,
@@ -1173,8 +1158,7 @@
         guests:  attend === 'no' ? '0' : document.getElementById('rsvp-guests').value,
         meal:    document.getElementById('rsvp-meal').value,
         meal2:   document.getElementById('rsvp-meal-guest2').value,
-        message: document.getElementById('rsvp-message').value.trim(),
-        receipt_url
+        message: document.getElementById('rsvp-message').value.trim()
       };
 
       try {
@@ -1191,6 +1175,7 @@
         this.reset();
         meal2Field.classList.remove('visible');
       } catch (err) {
+        console.error('RSVP insert error:', err);
         fb.style.display = 'block';
         fb.textContent   = 'Something went wrong. Please try again or contact us directly.';
         fb.style.color   = '#D1A3A4';
