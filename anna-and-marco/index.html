@@ -1145,6 +1145,19 @@
       const name   = document.getElementById('rsvp-name').value.trim();
       const attend = document.getElementById('rsvp-attend').value;
 
+      if (attend === 'yes' && !document.getElementById('rsvp-meal').value) {
+        fb.style.display = 'block';
+        fb.textContent   = 'Please select your meal choice.';
+        fb.style.color   = '#D1A3A4';
+        return;
+      }
+      if (attend === 'yes' && document.getElementById('rsvp-guests').value === '2' && !document.getElementById('rsvp-meal-guest2').value) {
+        fb.style.display = 'block';
+        fb.textContent   = 'Please select a meal choice for your plus-one.';
+        fb.style.color   = '#D1A3A4';
+        return;
+      }
+
       btn.disabled    = true;
       btn.textContent = 'Sending…';
       fb.style.display = 'none';

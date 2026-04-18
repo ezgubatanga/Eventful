@@ -181,6 +181,8 @@ document.addEventListener('visibilitychange', () => {
 ### Meal Selection
 Add `<select id="rsvp-meal">` in RSVP grid. Add second meal field (`id="rsvp-meal-guest2"`, class `rsvp-meal-guest2`, hidden by default). JS: show second field when guests = `'2'`, hide and reset otherwise.
 
+Meal selection is a paid feature — only include it on couple pages if the couple purchased it. When present, validate in submit handler: if `attend === 'yes'` and meal empty, block submit with error. Same for plus-one meal if guests = `'2'`.
+
 ```css
 .rsvp-meal-guest2 { display: none; }
 .rsvp-meal-guest2.visible { display: flex; }
