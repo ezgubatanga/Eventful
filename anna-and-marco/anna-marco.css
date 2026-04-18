@@ -1840,10 +1840,11 @@ section { padding: 88px 24px; }
 
 /* ─── @media print ───────────────────────────────────── */
 @media print {
-  .preloader-overlay, .nav, .music-btn,
+  .preloader-overlay, .nav, .music-btn, .back-btn,
   .hero, .countdown-bar, .story, .timeline, .venue,
   .accommodation, .activities, .gallery, .video-section, .registry,
-  .dress-faq, .rsvp, .contact, .footer, .lightbox { display: none !important; }
+  .dress-faq, .rsvp, .contact, .footer, .lightbox,
+  .dashboard-cta, .demo-cta { display: none !important; }
 
   .schedule { display: block !important; padding: 16px 0; }
   .schedule-grid { grid-template-columns: 1fr 1fr; gap: 8px; break-inside: avoid; }

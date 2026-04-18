@@ -1396,6 +1396,56 @@
       margin: 0 auto 28px;
     }
 
+    /* ─── Continue Editing Section ──────────────────────── */
+    .continue-editing-section {
+      display: none;
+      text-align: left;
+      margin-top: 28px;
+      border-top: 1px solid rgba(220, 215, 207, 0.5);
+      padding-top: 28px;
+    }
+
+    .continue-editing-section.open {
+      display: block;
+    }
+
+    .continue-editing-title {
+      font-family: 'Bricolage Grotesque', sans-serif;
+      font-size: 1.1rem;
+      font-weight: 500;
+      color: var(--text-main);
+      margin-bottom: 6px;
+      text-align: center;
+    }
+
+    .continue-editing-desc {
+      font-size: 0.85rem;
+      color: var(--text-muted);
+      text-align: center;
+      margin-bottom: 20px;
+    }
+
+    .btn-continue-editing {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      background: transparent;
+      border: 1.5px solid var(--gold);
+      color: var(--gold);
+      font-family: 'Outfit', sans-serif;
+      font-size: 0.9rem;
+      font-weight: 600;
+      padding: 10px 22px;
+      border-radius: 50px;
+      cursor: pointer;
+      margin: 0 auto;
+      transition: var(--transition);
+    }
+
+    .btn-continue-editing:hover {
+      background: var(--gold-light);
+    }
+
     /* ─── Error message ──────────────────────────────────── */
     .field-error {
       font-size: 0.8rem;
@@ -1767,36 +1817,9 @@
               </label>
             </div>
             <div class="field-group">
-              <label class="field-label">Ceremony Time <span class="req" id="ceremonyTimeReq">*</span></label>
-              <div class="time-picker">
-                <select class="field-input time-select" id="ceremonyHour" name="ceremonyHour">
-                  <option value="">Hour</option>
-                  <option>1</option><option>2</option><option>3</option><option>4</option>
-                  <option>5</option><option>6</option><option>7</option><option>8</option>
-                  <option>9</option><option>10</option><option>11</option><option>12</option>
-                </select>
-                <span class="time-colon">:</span>
-                <select class="field-input time-select" id="ceremonyMinute" name="ceremonyMinute">
-                  <option value="">Min</option>
-                  <option value="00" selected>00</option><option value="15">15</option>
-                  <option value="30">30</option><option value="45">45</option>
-                </select>
-                <div class="ampm-toggle">
-                  <button type="button" class="ampm-btn" id="amBtn" onclick="setAmPm('AM')">AM</button>
-                  <button type="button" class="ampm-btn active" id="pmBtn" onclick="setAmPm('PM')">PM</button>
-                </div>
-              </div>
-              <span class="field-error" id="err-ceremonyTime">Please select the ceremony time.</span>
-            </div>
-            <div class="field-group">
               <label class="field-label" for="location">Ceremony Location <span class="req" id="locationReq">*</span></label>
               <input class="field-input" type="text" id="location" name="location" placeholder="" required />
               <span class="field-error" id="err-location">Please enter the ceremony location.</span>
-            </div>
-            <div class="field-group">
-              <label class="field-label" for="venueName">Reception Location <span class="req" id="venueNameReq">*</span></label>
-              <input class="field-input" type="text" id="venueName" name="venueName" placeholder="" required />
-              <span class="field-error" id="err-venueName">Please enter the reception location.</span>
             </div>
             <div class="field-group">
               <label class="field-label" for="email">Email Address <span class="req">*</span></label>
@@ -2106,7 +2129,44 @@
         <div class="status-icon success">🌸</div>
         <h2 class="status-title">Request received</h2>
         <p class="status-text">Thank you, <strong id="successEmail"></strong>. Your order has been submitted and your receipt is under review.<br><br>To help us get started, please send your photos and videos to <a href="mailto:hello@eventful.page" style="color:var(--gold);font-weight:600">hello@eventful.page</a> or share a Google Drive link with view access.<br><br>We will follow up within 24 hours via the contact details you provided.</p>
-        <a href="/" class="btn btn-primary" style="margin:0 auto">← Back to Eventful</a>
+        <div style="display:flex;gap:12px;justify-content:center;flex-wrap:wrap;">
+          <a href="/" class="btn btn-primary">← Back to Eventful</a>
+          <button class="btn-continue-editing" id="continueEditingBtn" onclick="toggleContinueEditing()">+ Continue Editing</button>
+        </div>
+        <div class="continue-editing-section" id="continueEditingSection">
+          <p class="continue-editing-title">A few more details</p>
+          <p class="continue-editing-desc">Add these now or we'll confirm them with you later.</p>
+          <div class="fields-grid">
+            <div class="field-group">
+              <label class="field-label">Ceremony Time</label>
+              <div class="time-picker">
+                <select class="field-input time-select" id="ceremonyHour" name="ceremonyHour">
+                  <option value="">Hour</option>
+                  <option>1</option><option>2</option><option>3</option><option>4</option>
+                  <option>5</option><option>6</option><option>7</option><option>8</option>
+                  <option>9</option><option>10</option><option>11</option><option>12</option>
+                </select>
+                <span class="time-colon">:</span>
+                <select class="field-input time-select" id="ceremonyMinute" name="ceremonyMinute">
+                  <option value="">Min</option>
+                  <option value="00" selected>00</option><option value="15">15</option>
+                  <option value="30">30</option><option value="45">45</option>
+                </select>
+                <div class="ampm-toggle">
+                  <button type="button" class="ampm-btn" id="amBtn" onclick="setAmPm('AM')">AM</button>
+                  <button type="button" class="ampm-btn active" id="pmBtn" onclick="setAmPm('PM')">PM</button>
+                </div>
+              </div>
+            </div>
+            <div class="field-group">
+              <label class="field-label" for="venueName">Reception Location</label>
+              <input class="field-input" type="text" id="venueName" name="venueName" placeholder="e.g. The Grand Ballroom" />
+            </div>
+          </div>
+          <div style="text-align:center;margin-top:20px;">
+            <button class="btn btn-primary" id="saveDetailsBtn" onclick="saveContinueEditing()">Save Details</button>
+          </div>
+        </div>
       </div>
 
       <!-- ── Error Screen ────────────────────────────────── -->
@@ -2409,7 +2469,6 @@
         { id: 'brideName', errId: 'err-brideName', test: v => v.trim().length > 0 },
         { id: 'weddingDate', errId: 'err-weddingDate', test: v => document.getElementById('stillDeciding').checked || !!v },
         { id: 'location', errId: 'err-location', test: v => document.getElementById('stillDeciding').checked || v.trim().length > 1 },
-        { id: 'venueName', errId: 'err-venueName', test: v => document.getElementById('stillDeciding').checked || v.trim().length > 1 },
         { id: 'email', errId: 'err-email', test: v => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v) },
         { id: 'contactNumber', errId: 'err-contactNumber', test: v => v.trim().length > 6 },
         { id: 'pageSlug', errId: 'err-pageSlug', test: v => document.getElementById('wantCustomDomain').checked ? /^[a-z0-9-.]{2,}$/.test(v.trim()) : /^[a-z0-9-]{2,}$/.test(v.trim()) },
@@ -2424,13 +2483,6 @@
         err.classList.toggle('visible', !valid);
         if (!valid) ok = false;
       });
-      // Ceremony time custom check
-      const ctErr = document.getElementById('err-ceremonyTime');
-      const ctValid = document.getElementById('stillDeciding').checked || !!getCeremonyTime();
-      document.getElementById('ceremonyHour').classList.toggle('error', !ctValid);
-      document.getElementById('ceremonyMinute').classList.toggle('error', !ctValid);
-      ctErr.classList.toggle('visible', !ctValid);
-      if (!ctValid) ok = false;
       return ok;
     }
 
@@ -2811,6 +2863,35 @@
       showStep(TOTAL_STEPS);
     }
 
+    // ── Continue Editing ──────────────────────────────────────
+    function toggleContinueEditing() {
+      const section = document.getElementById('continueEditingSection');
+      const btn = document.getElementById('continueEditingBtn');
+      const isOpen = section.classList.contains('open');
+      section.classList.toggle('open', !isOpen);
+      btn.textContent = isOpen ? '+ Continue Editing' : '− Hide';
+    }
+
+    async function saveContinueEditing() {
+      const time = getCeremonyTime();
+      const venue = document.getElementById('venueName').value.trim();
+      const btn = document.getElementById('saveDetailsBtn');
+      btn.disabled = true;
+      btn.innerHTML = '<span class="spinner"></span> Saving…';
+      try {
+        if (_orderId) {
+          await db.from('orders')
+            .update({ ceremony_time: time || null, venue_name: venue || null })
+            .eq('id', _orderId);
+        }
+        btn.innerHTML = 'Saved ✓';
+        btn.style.background = 'var(--sage)';
+      } catch (_) {
+        btn.disabled = false;
+        btn.innerHTML = 'Save Details';
+      }
+    }
+
     // ── Init ──────────────────────────────────────────────────
     renderCoreSection();
     renderFunctionalAddOns();
@@ -2830,18 +2911,13 @@
     // "Still deciding" checkbox toggle
     document.getElementById('stillDeciding').addEventListener('change', function () {
       const deciding = this.checked;
-      const disableIds = ['weddingDate', 'ceremonyHour', 'ceremonyMinute', 'location', 'venueName'];
-      const reqIds = ['weddingDateReq', 'ceremonyTimeReq', 'locationReq', 'venueNameReq'];
-      const errIds = ['err-weddingDate', 'err-ceremonyTime', 'err-location', 'err-venueName'];
+      const disableIds = ['weddingDate', 'location'];
+      const reqIds = ['weddingDateReq', 'locationReq'];
+      const errIds = ['err-weddingDate', 'err-location'];
 
       disableIds.forEach(id => {
         const el = document.getElementById(id);
         if (el) el.disabled = deciding;
-      });
-      // also disable AM/PM buttons
-      ['amBtn', 'pmBtn'].forEach(id => {
-        const btn = document.getElementById(id);
-        if (btn) btn.disabled = deciding;
       });
       reqIds.forEach(id => {
         const el = document.getElementById(id);
