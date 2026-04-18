@@ -870,9 +870,10 @@
     });
 
     // ── Preloader ─────────────────────────────────────────
+    document.body.style.overflow = 'hidden';
     window.addEventListener('load', () => {
       const preloader = document.getElementById('page-preloader');
-      if (preloader) setTimeout(() => preloader.classList.add('hidden'), 300);
+      if (preloader) setTimeout(() => { preloader.classList.add('hidden'); document.body.style.overflow = ''; }, 300);
     });
 
     // ── Music — play on first user interaction ────────────
@@ -1138,6 +1139,51 @@
     const { createClient } = supabase;
     const db = createClient('https://auohzxsufvdgdrhtlpib.supabase.co', 'sb_publishable_sRKhjg0x42oqn0obrF3rYQ_fsAypvL0');
 
+    let _rsvpEditToken = null;
+
+    // Load edit token from URL and pre-fill form
+    (async () => {
+      const token = new URLSearchParams(location.search).get('edit');
+      if (!token) return;
+      try {
+        const { data, error } = await db
+          .from('anna_marco_rsvp')
+          .select('*')
+          .eq('edit_token', token)
+          .single();
+        if (error || !data) return;
+        _rsvpEditToken = token;
+        document.getElementById('rsvp-name').value    = data.name    || '';
+        document.getElementById('rsvp-email').value   = data.email   || '';
+        document.getElementById('rsvp-phone').value   = data.phone   || '';
+        document.getElementById('rsvp-attend').value  = data.attend  || '';
+        document.getElementById('rsvp-guests').value  = data.guests  || '1';
+        document.getElementById('rsvp-meal').value    = data.meal    || '';
+        document.getElementById('rsvp-meal-guest2').value = data.meal2 || '';
+        document.getElementById('rsvp-message').value = data.message || '';
+        document.querySelector('.rsvp-submit').textContent = 'Update RSVP ✦';
+        if (data.guests === '2') meal2Field.classList.add('visible');
+        attendSelect.dispatchEvent(new Event('change'));
+        setTimeout(() => {
+          const rsvp = document.getElementById('rsvp');
+          if (rsvp) {
+            const start = window.scrollY;
+            const end   = rsvp.getBoundingClientRect().top + start - 72;
+            const dur   = 800;
+            let t0 = null;
+            const ease = t => t < 0.5 ? 2*t*t : -1+(4-2*t)*t;
+            const step = ts => {
+              if (!t0) t0 = ts;
+              const p = Math.min((ts - t0) / dur, 1);
+              window.scrollTo(0, start + (end - start) * ease(p));
+              if (p < 1) requestAnimationFrame(step);
+            };
+            requestAnimationFrame(step);
+          }
+        }, 400);
+      } catch (_) {}
+    })();
+
     document.getElementById('rsvpForm').addEventListener('submit', async function(e) {
       e.preventDefault();
       const fb     = document.getElementById('rsvp-feedback');
@@ -1159,42 +1205,58 @@
       }
 
       btn.disabled    = true;
-      btn.textContent = 'Sending…';
+      btn.textContent = _rsvpEditToken ? 'Updating…' : 'Sending…';
       fb.style.display = 'none';
+
+      const edit_token = _rsvpEditToken || crypto.randomUUID();
 
       const payload = {
         couple_id: 'anna-and-marco',
         name,
-        email:   document.getElementById('rsvp-email').value.trim(),
-        phone:   document.getElementById('rsvp-phone').value.trim(),
+        email:      document.getElementById('rsvp-email').value.trim(),
+        phone:      document.getElementById('rsvp-phone').value.trim(),
         attend,
-        guests:  attend === 'no' ? '0' : document.getElementById('rsvp-guests').value,
-        meal:    document.getElementById('rsvp-meal').value,
-        meal2:   document.getElementById('rsvp-meal-guest2').value,
-        message: document.getElementById('rsvp-message').value.trim()
+        guests:     attend === 'no' ? '0' : document.getElementById('rsvp-guests').value,
+        meal:       document.getElementById('rsvp-meal').value,
+        meal2:      document.getElementById('rsvp-meal-guest2').value,
+        message:    document.getElementById('rsvp-message').value.trim(),
+        edit_token
       };
 
       try {
-        const { error } = await db.from('anna_marco_rsvp').insert(payload);
-        if (error) throw error;
+        let dbError;
+        if (_rsvpEditToken) {
+          ({ error: dbError } = await db.from('anna_marco_rsvp').update(payload).eq('edit_token', _rsvpEditToken));
+        } else {
+          ({ error: dbError } = await db.from('anna_marco_rsvp').insert(payload));
+        }
+        if (dbError) throw dbError;
+
+        _rsvpEditToken = edit_token;
+        const editUrl  = `${location.origin}/anna-and-marco/?edit=${edit_token}`;
+        const isEdit   = !!_rsvpEditToken && _rsvpEditToken === edit_token && payload.couple_id;
+
         fb.style.display = 'block';
         if (attend === 'yes') {
-          fb.textContent = `Thank you, ${name}! We can't wait to celebrate with you in Rome.`;
+          fb.innerHTML = `Thank you, ${name}! We can't wait to celebrate with you in Rome.<br><a class="rsvp-edit-link" href="${editUrl}">Made a mistake? Edit your RSVP →</a>`;
           fb.style.color = '#C5A059';
         } else {
-          fb.textContent = `We'll miss you, ${name}. Thank you for letting us know.`;
+          fb.innerHTML = `We'll miss you, ${name}. Thank you for letting us know.<br><a class="rsvp-edit-link" href="${editUrl}">Need to update your response? Edit your RSVP →</a>`;
           fb.style.color = '#9E9890';
         }
-        this.reset();
-        meal2Field.classList.remove('visible');
+
+        if (!isEdit) {
+          this.reset();
+          meal2Field.classList.remove('visible');
+        }
       } catch (err) {
-        console.error('RSVP insert error:', err);
+        console.error('RSVP error:', err);
         fb.style.display = 'block';
         fb.textContent   = 'Something went wrong. Please try again or contact us directly.';
         fb.style.color   = '#D1A3A4';
       } finally {
         btn.disabled    = false;
-        btn.textContent = 'Send RSVP ✦';
+        btn.textContent = _rsvpEditToken ? 'Update RSVP ✦' : 'Send RSVP ✦';
       }
     });
   </script>

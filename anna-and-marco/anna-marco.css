@@ -1032,6 +1032,17 @@ section { padding: 88px 24px; }
   line-height: 1.5;
 }
 
+.rsvp-edit-link {
+  display: block;
+  margin-top: 10px;
+  font-size: 0.82rem;
+  color: rgba(197, 160, 89, 0.75);
+  text-decoration: none;
+  transition: color 0.2s;
+}
+
+.rsvp-edit-link:hover { color: var(--gold); }
+
 .rsvp-deadline {
   text-align: center;
   margin-top: 22px;
