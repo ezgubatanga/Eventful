@@ -1,0 +1,1063 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Eventful — Admin</title>
+  <link rel="icon" type="image/webp" href="/favicon.webp" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&family=Bricolage+Grotesque:opsz,wght@12..96,300;12..96,400;12..96,500;12..96,600;12..96,700&display=swap" rel="stylesheet" />
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <style>
+    :root {
+      --bg:         #1A1714;
+      --surface:    #232018;
+      --surface-2:  #2A2520;
+      --surface-3:  #332E28;
+      --border:     rgba(197,160,89,0.15);
+      --border-mid: rgba(197,160,89,0.28);
+      --gold:       #C5A059;
+      --gold-dark:  #B8903F;
+      --gold-light: rgba(197,160,89,0.10);
+      --gold-mid:   rgba(197,160,89,0.22);
+      --text:       #F0EDE8;
+      --muted:      #9E9890;
+      --light:      #6E685F;
+      --rose:       #D1A3A4;
+      --green:      #7FA882;
+      --red:        #C47A7A;
+      --radius:     12px;
+      --radius-lg:  18px;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: auto; }
+    body {
+      font-family: 'Outfit', sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      min-height: 100dvh;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    /* ── Auth ── */
+    .auth-overlay {
+      position: fixed;
+      inset: 0;
+      background: var(--bg);
+      z-index: 9999;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 24px;
+    }
+    .auth-box {
+      background: var(--surface);
+      border: 1px solid var(--border-mid);
+      border-radius: var(--radius-lg);
+      padding: 40px 36px;
+      width: 100%;
+      max-width: 360px;
+      text-align: center;
+    }
+    .auth-logo {
+      font-family: 'Bricolage Grotesque', sans-serif;
+      font-size: 1.9rem;
+      font-weight: 400;
+      color: var(--gold);
+      margin-bottom: 4px;
+      letter-spacing: -0.02em;
+    }
+    .auth-sub {
+      font-size: 0.75rem;
+      color: var(--muted);
+      margin-bottom: 28px;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+    }
+    .auth-input {
+      width: 100%;
+      padding: 12px 16px;
+      background: var(--surface-2);
+      border: 1.5px solid var(--border-mid);
+      border-radius: 10px;
+      color: var(--text);
+      font-family: 'Outfit', sans-serif;
+      font-size: 0.95rem;
+      outline: none;
+      margin-bottom: 14px;
+      transition: border-color 0.2s;
+    }
+    .auth-input:focus { border-color: var(--gold); }
+    .auth-btn {
+      width: 100%;
+      padding: 13px;
+      background: var(--gold);
+      color: #1A1714;
+      border: none;
+      border-radius: 10px;
+      font-family: 'Outfit', sans-serif;
+      font-size: 0.9rem;
+      font-weight: 700;
+      letter-spacing: 0.06em;
+      cursor: pointer;
+      transition: background 0.2s, transform 0.15s;
+    }
+    .auth-btn:hover { background: var(--gold-dark); transform: translateY(-1px); }
+    .auth-error { font-size: 0.78rem; color: var(--red); margin-top: 10px; display: none; }
+
+    /* ── Nav ── */
+    .nav {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      background: rgba(26,23,20,0.92);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      border-bottom: 1px solid var(--border);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 28px;
+      height: 60px;
+    }
+    .nav-left { display: flex; align-items: center; gap: 8px; }
+    .nav-right { display: flex; align-items: center; gap: 10px; }
+    .nav-brand {
+      font-family: 'Bricolage Grotesque', sans-serif;
+      font-size: 1.15rem;
+      color: var(--gold);
+      font-weight: 400;
+      text-decoration: none;
+      letter-spacing: -0.01em;
+    }
+    .nav-brand span {
+      color: var(--muted);
+      font-size: 0.72rem;
+      font-family: 'Outfit', sans-serif;
+      margin-left: 10px;
+      font-weight: 400;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+    .nav-refresh {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      background: var(--gold-light);
+      border: 1px solid var(--border-mid);
+      border-radius: 8px;
+      padding: 7px 14px;
+      font-family: 'Outfit', sans-serif;
+      font-size: 0.8rem;
+      color: var(--gold);
+      cursor: pointer;
+      transition: background 0.2s;
+    }
+    .nav-refresh:hover { background: var(--gold-mid); }
+    .nav-refresh svg { width: 14px; height: 14px; }
+    .nav-notify {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 34px;
+      height: 34px;
+      background: var(--gold-light);
+      border: 1px solid var(--border-mid);
+      border-radius: 8px;
+      color: var(--gold);
+      cursor: pointer;
+      transition: background 0.2s, border-color 0.2s;
+      position: relative;
+      flex-shrink: 0;
+    }
+    .nav-notify:hover { background: var(--gold-mid); border-color: var(--gold); }
+    .nav-notify svg { width: 15px; height: 15px; }
+    .nav-notify.enabled { background: var(--gold); color: #1A1714; border-color: var(--gold); }
+    .nav-notify.enabled:hover { background: var(--gold-dark); }
+    .notify-dot {
+      position: absolute;
+      top: 5px; right: 5px;
+      width: 7px; height: 7px;
+      background: var(--green);
+      border-radius: 50%;
+      border: 1.5px solid var(--bg);
+      display: none;
+    }
+    .nav-notify.enabled .notify-dot { display: block; }
+
+    /* ── Main ── */
+    .main {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 36px 24px 64px;
+    }
+
+    /* ── Loading / error ── */
+    .state-loading, .state-error {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 80px 0;
+      gap: 16px;
+      color: var(--muted);
+      font-size: 0.9rem;
+    }
+    .spinner {
+      width: 28px; height: 28px;
+      border: 2.5px solid var(--border-mid);
+      border-top-color: var(--gold);
+      border-radius: 50%;
+      animation: spin 0.8s linear infinite;
+    }
+    @keyframes spin { to { transform: rotate(360deg); } }
+    .state-error { color: var(--red); }
+
+    /* ── KPI cards ── */
+    .kpi-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+      gap: 14px;
+      margin-bottom: 28px;
+    }
+    .kpi-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 22px 20px;
+      position: relative;
+      overflow: hidden;
+      transition: border-color 0.2s;
+    }
+    .kpi-card:hover { border-color: var(--border-mid); }
+    .kpi-card::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      opacity: 0;
+      transition: opacity 0.2s;
+    }
+    .kpi-card.gold::before  { background: linear-gradient(135deg, rgba(197,160,89,0.06), transparent); }
+    .kpi-card.green::before { background: linear-gradient(135deg, rgba(127,168,130,0.08), transparent); }
+    .kpi-card.rose::before  { background: linear-gradient(135deg, rgba(209,163,164,0.08), transparent); }
+    .kpi-card:hover::before { opacity: 1; }
+    .kpi-label { font-size: 0.7rem; letter-spacing: 0.1em; text-transform: uppercase; color: var(--muted); font-weight: 600; margin-bottom: 10px; }
+    .kpi-value { font-size: 2.4rem; font-weight: 700; line-height: 1; margin-bottom: 4px; }
+    .kpi-card.gold  .kpi-value { color: var(--gold); }
+    .kpi-card.green .kpi-value { color: var(--green); }
+    .kpi-card.rose  .kpi-value { color: var(--rose); }
+    .kpi-sub { font-size: 0.75rem; color: var(--light); }
+
+    /* ── Section header ── */
+    .section-header {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 14px;
+      margin-top: 32px;
+    }
+    .section-title { font-size: 0.72rem; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; color: var(--muted); white-space: nowrap; }
+    .section-line { flex: 1; height: 1px; background: var(--border); }
+
+    /* ── Filter pills ── */
+    .filter-pills { display: flex; gap: 8px; align-items: center; }
+    .filter-pill {
+      padding: 4px 14px;
+      border-radius: 99px;
+      font-size: 0.72rem;
+      font-weight: 600;
+      letter-spacing: 0.05em;
+      cursor: pointer;
+      border: 1px solid var(--border-mid);
+      background: transparent;
+      color: var(--muted);
+      font-family: 'Outfit', sans-serif;
+      transition: background 0.15s, color 0.15s, border-color 0.15s;
+    }
+    .filter-pill:hover { color: var(--text); border-color: var(--gold); }
+    .filter-pill.active { background: var(--gold-mid); color: var(--gold); border-color: var(--gold); }
+
+    /* ── Table ── */
+    .table-wrap {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      overflow: hidden;
+    }
+    table { width: 100%; border-collapse: collapse; table-layout: fixed; }
+    thead th {
+      padding: 12px 16px;
+      text-align: left;
+      font-size: 0.68rem;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--muted);
+      background: var(--surface-2);
+      border-bottom: 1px solid var(--border);
+      vertical-align: middle;
+    }
+    tbody tr { border-bottom: 1px solid rgba(197,160,89,0.07); transition: background 0.15s; }
+    tbody tr:last-child { border-bottom: none; }
+    tbody tr:hover { background: rgba(197,160,89,0.04); }
+    tbody td {
+      padding: 13px 16px;
+      font-size: 0.84rem;
+      color: var(--text);
+      vertical-align: middle;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+    .td-muted { color: var(--light); }
+    .td-actions { overflow: visible !important; white-space: nowrap; }
+
+    /* Column widths */
+    thead th:nth-child(1) { width: 20%; }
+    thead th:nth-child(2) { width: 10%; }
+    thead th:nth-child(3) { width: 17%; }
+    thead th:nth-child(4) { width: 12%; }
+    thead th:nth-child(5) { width: 9%; }
+    thead th:nth-child(6) { width: 10%; }
+    thead th:nth-child(7) { width: 9%; }
+    thead th:nth-child(8) { width: 10%; }
+
+    /* ── Badges ── */
+    .badge {
+      display: inline-flex;
+      align-items: center;
+      padding: 3px 10px;
+      border-radius: 99px;
+      font-size: 0.72rem;
+      font-weight: 600;
+      letter-spacing: 0.04em;
+    }
+    .badge-paid    { background: rgba(127,168,130,0.15); color: var(--green); }
+    .badge-pending { background: rgba(209,163,164,0.12); color: var(--rose); }
+    .badge-other   { background: rgba(110,104,95,0.15);  color: var(--muted); }
+
+    /* ── Action buttons ── */
+    .action-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      padding: 5px 12px;
+      border-radius: 8px;
+      font-size: 0.73rem;
+      font-weight: 600;
+      font-family: 'Outfit', sans-serif;
+      cursor: pointer;
+      border: 1px solid;
+      transition: background 0.15s, transform 0.1s;
+      white-space: nowrap;
+    }
+    .action-btn:active { transform: scale(0.97); }
+    .btn-view { background: var(--gold-light); border-color: var(--border-mid); color: var(--gold); }
+    .btn-view:hover { background: var(--gold-mid); }
+    .btn-icon { width: 13px; height: 13px; pointer-events: none; }
+    .action-btn * { pointer-events: none; }
+
+    /* ── 3-dots mobile ── */
+    .btn-dots {
+      display: none;
+      align-items: center;
+      justify-content: center;
+      width: 32px; height: 32px;
+      border-radius: 8px;
+      background: transparent;
+      border: none;
+      color: var(--gold);
+      cursor: pointer;
+      transition: background 0.15s;
+    }
+    .btn-dots:hover { background: rgba(197,160,89,0.08); }
+    .btn-dots * { pointer-events: none; }
+    .dots-dropdown {
+      display: none;
+      position: absolute;
+      right: 0;
+      top: calc(100% - 4px);
+      background: var(--surface-2);
+      border: 1px solid var(--border-mid);
+      border-radius: 10px;
+      box-shadow: 0 8px 24px rgba(0,0,0,0.45);
+      z-index: 200;
+      min-width: 150px;
+      overflow: hidden;
+    }
+    .dots-dropdown.open { display: block; }
+    .dots-item {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      width: 100%;
+      padding: 11px 16px;
+      background: transparent;
+      border: none;
+      font-family: 'Outfit', sans-serif;
+      font-size: 0.84rem;
+      font-weight: 500;
+      color: var(--gold);
+      cursor: pointer;
+      text-align: left;
+      transition: background 0.12s;
+    }
+    .dots-item svg { width: 14px; height: 14px; flex-shrink: 0; pointer-events: none; }
+    .dots-item * { pointer-events: none; }
+    .dots-item:hover { background: var(--surface-3); }
+
+    /* ── Table footer ── */
+    .table-actions {
+      display: flex;
+      gap: 10px;
+      margin-top: 12px;
+      justify-content: flex-end;
+    }
+    .tbl-btn {
+      padding: 8px 20px;
+      border-radius: 8px;
+      font-size: 0.8rem;
+      font-family: 'Outfit', sans-serif;
+      font-weight: 500;
+      cursor: pointer;
+      border: 1px solid;
+      transition: background 0.2s, color 0.2s;
+    }
+    .tbl-btn-viewall { background: transparent; color: var(--gold); border-color: var(--gold); }
+    .tbl-btn-viewall:hover { background: var(--gold); color: #1a1a1a; }
+
+    /* ── Detail modal ── */
+    .modal-backdrop {
+      position: fixed;
+      inset: 0;
+      background: rgba(10,8,6,0.75);
+      backdrop-filter: blur(4px);
+      -webkit-backdrop-filter: blur(4px);
+      z-index: 1000;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 24px;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.2s;
+    }
+    .modal-backdrop.open { opacity: 1; pointer-events: all; }
+    .modal {
+      background: var(--surface);
+      border: 1px solid var(--border-mid);
+      border-radius: var(--radius-lg);
+      width: 100%;
+      max-width: 580px;
+      max-height: 85dvh;
+      display: flex;
+      flex-direction: column;
+      transform: translateY(10px);
+      transition: transform 0.2s;
+      overflow: hidden;
+    }
+    .modal-backdrop.open .modal { transform: translateY(0); }
+    .modal-header {
+      padding: 24px 28px 20px;
+      border-bottom: 1px solid var(--border);
+      flex-shrink: 0;
+    }
+    .modal-title { font-family: 'Bricolage Grotesque', sans-serif; font-size: 1.3rem; color: var(--gold); }
+    .modal-sub { font-size: 0.78rem; color: var(--muted); margin-top: 3px; }
+    .modal-body { padding: 20px 28px 24px; overflow-y: auto; flex: 1; }
+    .modal-section { margin-bottom: 22px; }
+    .modal-section:last-child { margin-bottom: 0; }
+    .modal-section-title {
+      font-size: 0.64rem;
+      font-weight: 700;
+      letter-spacing: 0.13em;
+      text-transform: uppercase;
+      color: var(--light);
+      margin-bottom: 12px;
+      padding-bottom: 8px;
+      border-bottom: 1px solid var(--border);
+    }
+    .modal-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+    .modal-field { display: flex; flex-direction: column; gap: 4px; }
+    .modal-field-label { font-size: 0.67rem; color: var(--muted); letter-spacing: 0.05em; }
+    .modal-field-value { font-size: 0.87rem; color: var(--text); word-break: break-word; }
+    .modal-field-value a { color: var(--gold); text-decoration: none; }
+    .modal-field-value a:hover { text-decoration: underline; }
+    .modal-field.full { grid-column: 1 / -1; }
+    .modal-tags { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 2px; }
+    .modal-tag {
+      padding: 3px 10px;
+      background: var(--surface-2);
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      font-size: 0.75rem;
+      color: var(--text);
+    }
+    .modal-footer {
+      padding: 16px 28px;
+      border-top: 1px solid var(--border);
+      flex-shrink: 0;
+      display: flex;
+      justify-content: flex-end;
+    }
+    .modal-close {
+      padding: 9px 24px;
+      background: transparent;
+      border: 1px solid var(--border-mid);
+      border-radius: 8px;
+      color: var(--muted);
+      font-family: 'Outfit', sans-serif;
+      font-size: 0.83rem;
+      cursor: pointer;
+      transition: background 0.15s, color 0.15s;
+    }
+    .modal-close:hover { background: var(--surface-2); color: var(--text); }
+
+    /* ── Toast ── */
+    .toast {
+      position: fixed;
+      bottom: 28px;
+      left: 50%;
+      transform: translateX(-50%) translateY(80px);
+      background: var(--surface-2);
+      border: 1px solid var(--gold);
+      border-radius: 12px;
+      padding: 13px 22px;
+      font-size: 0.88rem;
+      color: var(--text);
+      z-index: 2000;
+      transition: transform 0.35s cubic-bezier(0.16,1,0.3,1), opacity 0.35s;
+      opacity: 0;
+      white-space: nowrap;
+      box-shadow: 0 8px 32px rgba(0,0,0,0.5);
+      pointer-events: none;
+    }
+    .toast.show { transform: translateX(-50%) translateY(0); opacity: 1; }
+    .toast strong { color: var(--gold); }
+
+    /* ── Responsive ── */
+    @media (max-width: 768px) {
+      .nav { padding: 0 16px; }
+      .main { padding: 24px 16px 56px; }
+      .kpi-grid { grid-template-columns: repeat(2, 1fr); gap: 10px; }
+      .kpi-value { font-size: 1.9rem; }
+      table { table-layout: auto; }
+      thead th { width: auto; }
+      thead th:nth-child(2), tbody td:nth-child(2),
+      thead th:nth-child(5), tbody td:nth-child(5),
+      thead th:nth-child(6), tbody td:nth-child(6),
+      thead th:nth-child(8), tbody td:nth-child(8) { display: none; }
+      .btn-view { display: none; }
+      .btn-dots { display: inline-flex; }
+      .modal { max-width: 100%; border-radius: 16px 16px 0 0; max-height: 90dvh; }
+      .modal-backdrop { align-items: flex-end; padding: 0; }
+      .modal-grid { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Auth -->
+  <div class="auth-overlay" id="auth-overlay">
+    <div class="auth-box">
+      <div class="auth-logo">Eventful</div>
+      <div class="auth-sub">Admin Dashboard</div>
+      <input class="auth-input" type="password" id="auth-input" placeholder="Password" autocomplete="current-password" />
+      <button class="auth-btn" id="auth-btn">Enter</button>
+      <div class="auth-error" id="auth-error">Incorrect password.</div>
+      <div class="auth-error" id="auth-lockout" style="display:none;"></div>
+    </div>
+  </div>
+
+  <!-- Detail modal -->
+  <div class="modal-backdrop" id="detail-modal">
+    <div class="modal">
+      <div class="modal-header">
+        <div class="modal-title" id="detail-title"></div>
+        <div class="modal-sub" id="detail-sub"></div>
+      </div>
+      <div class="modal-body" id="detail-body"></div>
+      <div class="modal-footer">
+        <button class="modal-close" id="detail-close">Close</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Toast -->
+  <div class="toast" id="toast"></div>
+
+  <!-- Nav -->
+  <nav class="nav">
+    <div class="nav-left">
+      <a class="nav-brand" href="/">Eventful <span>Admin</span></a>
+    </div>
+    <div class="nav-right">
+      <button class="nav-notify" id="notify-btn" title="Realtime active — click to pause">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 0 1-3.46 0"/>
+        </svg>
+        <span class="notify-dot"></span>
+      </button>
+      <button class="nav-refresh" id="refresh-btn">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <polyline points="23 4 23 10 17 10"/><polyline points="1 20 1 14 7 14"/>
+          <path d="M3.51 9a9 9 0 0 1 14.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0 0 20.49 15"/>
+        </svg>
+        Refresh
+      </button>
+    </div>
+  </nav>
+
+  <!-- Main -->
+  <main class="main" id="main" style="display:none">
+
+    <div class="state-loading" id="state-loading">
+      <div class="spinner"></div>
+      Loading orders…
+    </div>
+
+    <div class="state-error" id="state-error" style="display:none">
+      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+      Failed to load orders.
+    </div>
+
+    <div id="content" style="display:none">
+
+      <div class="kpi-grid" id="kpi-grid"></div>
+
+      <div class="section-header">
+        <div class="section-title">Orders</div>
+        <div class="section-line"></div>
+        <div class="filter-pills">
+          <button class="filter-pill active" data-filter="all">All</button>
+          <button class="filter-pill" data-filter="pending">Pending</button>
+          <button class="filter-pill" data-filter="paid">Paid</button>
+        </div>
+      </div>
+
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr>
+              <th>Couple</th>
+              <th>Wedding Date</th>
+              <th>Email</th>
+              <th>Page Slug</th>
+              <th>Delivery</th>
+              <th>Price</th>
+              <th>Status</th>
+              <th>Submitted</th>
+              <th></th>
+            </tr>
+          </thead>
+          <tbody id="orders-tbody"></tbody>
+        </table>
+      </div>
+
+      <div class="table-actions" id="table-actions" style="display:none">
+        <button class="tbl-btn tbl-btn-viewall" id="btn-view-all">View All</button>
+      </div>
+
+    </div>
+  </main>
+
+  <script>
+    const { createClient } = supabase;
+    const db   = createClient('https://auohzxsufvdgdrhtlpib.supabase.co', 'sb_publishable_sRKhjg0x42oqn0obrF3rYQ_fsAypvL0');
+    const PASS = 'Baguvix01!';
+
+    // ── Auth ──
+    const overlay  = document.getElementById('auth-overlay');
+    const authBtn  = document.getElementById('auth-btn');
+    const authIn   = document.getElementById('auth-input');
+    const authErr  = document.getElementById('auth-error');
+    const authLock = document.getElementById('auth-lockout');
+    const mainEl   = document.getElementById('main');
+
+    let failCount    = 0;
+    let lockoutTimer = null;
+
+    function getLockoutSeconds(fails) {
+      if (fails >= 8) return 180;
+      if (fails >= 5) return 60;
+      return 0;
+    }
+
+    function startLockout(seconds) {
+      authBtn.disabled = true;
+      authIn.disabled  = true;
+      authErr.style.display = 'none';
+      let remaining = seconds;
+      function tick() {
+        const m = Math.floor(remaining / 60);
+        const s = remaining % 60;
+        authLock.style.display = 'block';
+        authLock.textContent   = `Too many attempts. Try again in ${m > 0 ? m + 'm ' : ''}${s}s.`;
+        if (remaining <= 0) {
+          authLock.style.display = 'none';
+          authBtn.disabled = false;
+          authIn.disabled  = false;
+          authIn.value = '';
+          authIn.focus();
+          return;
+        }
+        remaining--;
+        lockoutTimer = setTimeout(tick, 1000);
+      }
+      tick();
+    }
+
+    function unlock() {
+      if (lockoutTimer !== null || authBtn.disabled) return;
+      if (authIn.value === PASS) {
+        overlay.style.display = 'none';
+        mainEl.style.display  = 'block';
+        loadData();
+        subscribeRealtime();
+        updateNotifyBtn(true);
+      } else {
+        failCount++;
+        const lockSecs = getLockoutSeconds(failCount);
+        if (lockSecs > 0) {
+          startLockout(lockSecs);
+        } else {
+          authErr.style.display = 'block';
+          authIn.value = '';
+          authIn.focus();
+        }
+      }
+    }
+
+    authBtn.addEventListener('click', unlock);
+    authIn.addEventListener('keydown', e => { if (e.key === 'Enter') unlock(); });
+
+    // ── Data ──
+    let allOrders    = [];
+    let activeFilter = 'all';
+    let showAll      = false;
+
+    async function loadData() {
+      document.getElementById('state-loading').style.display = 'flex';
+      document.getElementById('state-error').style.display   = 'none';
+      document.getElementById('content').style.display       = 'none';
+
+      try {
+        const { data: rows, error } = await db
+          .from('orders')
+          .select('*')
+          .order('submitted_at', { ascending: false });
+
+        if (error) throw error;
+
+        allOrders = rows;
+
+        const total   = rows.length;
+        const paid    = rows.filter(r => r.payment_status === 'paid');
+        const pending = rows.filter(r => r.payment_status === 'pending');
+        const revenue = paid.reduce((sum, r) => sum + (parseFloat(r.estimated_price) || 0), 0);
+
+        document.getElementById('kpi-grid').innerHTML = `
+          <div class="kpi-card gold">
+            <div class="kpi-label">Total Orders</div>
+            <div class="kpi-value">${total}</div>
+            <div class="kpi-sub">all time</div>
+          </div>
+          <div class="kpi-card green">
+            <div class="kpi-label">Paid</div>
+            <div class="kpi-value">${paid.length}</div>
+            <div class="kpi-sub">payment confirmed</div>
+          </div>
+          <div class="kpi-card rose">
+            <div class="kpi-label">Pending</div>
+            <div class="kpi-value">${pending.length}</div>
+            <div class="kpi-sub">awaiting payment</div>
+          </div>
+          <div class="kpi-card gold">
+            <div class="kpi-label">Revenue</div>
+            <div class="kpi-value">₱${revenue.toLocaleString('en-PH', { minimumFractionDigits: 0, maximumFractionDigits: 0 })}</div>
+            <div class="kpi-sub">from paid orders</div>
+          </div>
+        `;
+
+        document.getElementById('state-loading').style.display = 'none';
+        document.getElementById('content').style.display       = 'block';
+
+        renderTable();
+      } catch (err) {
+        console.error('loadData error:', err);
+        document.getElementById('state-loading').style.display = 'none';
+        document.getElementById('state-error').style.display   = 'flex';
+      }
+    }
+
+    document.getElementById('refresh-btn').addEventListener('click', loadData);
+
+    // ── Realtime ──
+    const notifyBtn = document.getElementById('notify-btn');
+    let realtimeChannel = null;
+
+    function updateNotifyBtn(on) {
+      if (on) {
+        notifyBtn.classList.add('enabled');
+        notifyBtn.title = 'Realtime active — click to pause';
+      } else {
+        notifyBtn.classList.remove('enabled');
+        notifyBtn.title = 'Click to enable realtime';
+      }
+    }
+
+    function subscribeRealtime() {
+      if (realtimeChannel) return;
+      realtimeChannel = db
+        .channel('admin-orders-realtime')
+        .on('postgres_changes', {
+          event:  'INSERT',
+          schema: 'public',
+          table:  'orders'
+        }, payload => {
+          const r = payload.new;
+          playChime();
+          const names = [r.groom_name, r.bride_name].filter(Boolean).join(' & ') || 'Someone';
+          showToast(`New order — <strong>${esc(names)}</strong>`);
+          loadData();
+        })
+        .subscribe();
+    }
+
+    function unsubscribeRealtime() {
+      if (realtimeChannel) {
+        db.removeChannel(realtimeChannel);
+        realtimeChannel = null;
+      }
+    }
+
+    notifyBtn.addEventListener('click', () => {
+      if (realtimeChannel) {
+        unsubscribeRealtime();
+        updateNotifyBtn(false);
+      } else {
+        subscribeRealtime();
+        updateNotifyBtn(true);
+      }
+    });
+
+    function playChime() {
+      try {
+        const ctx = new (window.AudioContext || window.webkitAudioContext)();
+        [[523.25, 0], [659.25, 0.12], [783.99, 0.24], [1046.5, 0.38]].forEach(([freq, delay]) => {
+          const osc  = ctx.createOscillator();
+          const gain = ctx.createGain();
+          osc.connect(gain);
+          gain.connect(ctx.destination);
+          osc.type = 'sine';
+          osc.frequency.value = freq;
+          const t = ctx.currentTime + delay;
+          gain.gain.setValueAtTime(0, t);
+          gain.gain.linearRampToValueAtTime(0.18, t + 0.02);
+          gain.gain.exponentialRampToValueAtTime(0.0001, t + 0.9);
+          osc.start(t);
+          osc.stop(t + 0.9);
+        });
+      } catch (e) {}
+    }
+
+    // ── Toast ──
+    const toastEl = document.getElementById('toast');
+    let toastTimer;
+    function showToast(html) {
+      toastEl.innerHTML = html;
+      toastEl.classList.add('show');
+      clearTimeout(toastTimer);
+      toastTimer = setTimeout(() => toastEl.classList.remove('show'), 4500);
+    }
+
+    // ── Filter pills ──
+    document.querySelectorAll('.filter-pill').forEach(pill => {
+      pill.addEventListener('click', () => {
+        document.querySelectorAll('.filter-pill').forEach(p => p.classList.remove('active'));
+        pill.classList.add('active');
+        activeFilter = pill.dataset.filter;
+        showAll = false;
+        renderTable();
+      });
+    });
+
+    // ── Render table ──
+    function renderTable() {
+      const filtered = activeFilter === 'all'
+        ? allOrders
+        : allOrders.filter(r => r.payment_status === activeFilter);
+
+      const tbody   = document.getElementById('orders-tbody');
+      const actions = document.getElementById('table-actions');
+      const viewBtn = document.getElementById('btn-view-all');
+
+      if (!filtered.length) {
+        tbody.innerHTML = `<tr><td colspan="9" style="text-align:center;color:var(--light);padding:32px">No orders found.</td></tr>`;
+        actions.style.display = 'none';
+        return;
+      }
+
+      const visible = showAll ? filtered : filtered.slice(0, 10);
+      viewBtn.textContent = showAll ? 'Show Less' : `View All (${filtered.length})`;
+      actions.style.display = filtered.length <= 10 ? 'none' : 'flex';
+
+      tbody.innerHTML = visible.map((r, i) => {
+        const names   = [r.groom_name, r.bride_name].filter(Boolean).join(' & ') || '—';
+        const price   = r.estimated_price != null ? '₱' + Number(r.estimated_price).toLocaleString('en-PH') : '—';
+        const dateStr = r.submitted_at ? new Date(r.submitted_at).toLocaleDateString('en-GB', { day: 'numeric', month: 'short', year: 'numeric' }) : '—';
+        const badge   = r.payment_status === 'paid'
+          ? '<span class="badge badge-paid">Paid</span>'
+          : r.payment_status === 'pending'
+            ? '<span class="badge badge-pending">Pending</span>'
+            : `<span class="badge badge-other">${esc(r.payment_status || '—')}</span>`;
+
+        return `
+          <tr>
+            <td title="${esc(names)}">${esc(names)}</td>
+            <td class="td-muted">${esc(r.wedding_date || '—')}</td>
+            <td class="td-muted" title="${esc(r.email || '')}">${esc(r.email || '—')}</td>
+            <td class="td-muted">${esc(r.page_slug || '—')}</td>
+            <td class="td-muted">${esc(r.delivery || '—')}</td>
+            <td class="td-muted">${price}</td>
+            <td>${badge}</td>
+            <td class="td-muted">${dateStr}</td>
+            <td class="td-actions">
+              <button class="action-btn btn-view" id="btn-view-${i}">
+                <svg class="btn-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
+                View
+              </button>
+              <button class="btn-dots" id="btn-dots-${i}">
+                <svg viewBox="0 0 24 24" fill="currentColor"><circle cx="5" cy="12" r="2"/><circle cx="12" cy="12" r="2"/><circle cx="19" cy="12" r="2"/></svg>
+              </button>
+              <div class="dots-dropdown" id="dots-dd-${i}">
+                <button class="dots-item" id="dots-view-${i}">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
+                  View Details
+                </button>
+              </div>
+            </td>
+          </tr>`;
+      }).join('');
+
+      visible.forEach((r, i) => {
+        document.getElementById('btn-view-' + i).addEventListener('click', e => { e.stopPropagation(); openDetail(r); });
+        document.getElementById('btn-dots-' + i).addEventListener('click', e => {
+          e.stopPropagation();
+          const dd = document.getElementById('dots-dd-' + i);
+          const isOpen = dd.classList.contains('open');
+          closeAllDropdowns();
+          if (!isOpen) dd.classList.add('open');
+        });
+        document.getElementById('dots-view-' + i).addEventListener('click', e => {
+          e.stopPropagation();
+          closeAllDropdowns();
+          openDetail(r);
+        });
+      });
+    }
+
+    document.getElementById('btn-view-all').addEventListener('click', () => {
+      showAll = !showAll;
+      renderTable();
+    });
+
+    function closeAllDropdowns() {
+      document.querySelectorAll('.dots-dropdown.open').forEach(d => d.classList.remove('open'));
+    }
+    document.addEventListener('click', closeAllDropdowns);
+
+    // ── Detail modal ──
+    const detailModal = document.getElementById('detail-modal');
+    document.getElementById('detail-close').addEventListener('click', () => detailModal.classList.remove('open'));
+    detailModal.addEventListener('click', e => { if (e.target === detailModal) detailModal.classList.remove('open'); });
+
+    function fmtArr(v) {
+      if (!v) return '<span style="color:var(--light)">None</span>';
+      const arr = Array.isArray(v) ? v : (typeof v === 'object' ? Object.values(v) : [String(v)]);
+      if (!arr.length) return '<span style="color:var(--light)">None</span>';
+      return '<div class="modal-tags">' + arr.map(t => `<span class="modal-tag">${esc(String(t))}</span>`).join('') + '</div>';
+    }
+
+    function openDetail(r) {
+      const names = [r.groom_name, r.bride_name].filter(Boolean).join(' & ') || 'Order';
+      document.getElementById('detail-title').textContent = names;
+      document.getElementById('detail-sub').textContent   = r.page_slug ? `/${r.page_slug}` : '';
+
+      const f  = v => esc(v || '—');
+      const fp = v => v != null ? '₱' + Number(v).toLocaleString('en-PH') : '—';
+
+      document.getElementById('detail-body').innerHTML = `
+        <div class="modal-section">
+          <div class="modal-section-title">Couple</div>
+          <div class="modal-grid">
+            <div class="modal-field"><div class="modal-field-label">Groom</div><div class="modal-field-value">${f(r.groom_name)}</div></div>
+            <div class="modal-field"><div class="modal-field-label">Bride</div><div class="modal-field-value">${f(r.bride_name)}</div></div>
+            <div class="modal-field"><div class="modal-field-label">Wedding Date</div><div class="modal-field-value">${f(r.wedding_date)}</div></div>
+            <div class="modal-field"><div class="modal-field-label">Ceremony Time</div><div class="modal-field-value">${f(r.ceremony_time)}</div></div>
+            <div class="modal-field"><div class="modal-field-label">Location</div><div class="modal-field-value">${f(r.location)}</div></div>
+            <div class="modal-field"><div class="modal-field-label">Venue</div><div class="modal-field-value">${f(r.venue_name)}</div></div>
+          </div>
+        </div>
+
+        <div class="modal-section">
+          <div class="modal-section-title">Contact</div>
+          <div class="modal-grid">
+            <div class="modal-field"><div class="modal-field-label">Email</div><div class="modal-field-value"><a href="mailto:${esc(r.email || '')}">${f(r.email)}</a></div></div>
+            <div class="modal-field"><div class="modal-field-label">Phone</div><div class="modal-field-value"><a href="tel:${esc(r.contact_number || '')}">${f(r.contact_number)}</a></div></div>
+          </div>
+        </div>
+
+        <div class="modal-section">
+          <div class="modal-section-title">Page</div>
+          <div class="modal-grid">
+            <div class="modal-field"><div class="modal-field-label">Page Slug</div><div class="modal-field-value">${f(r.page_slug)}</div></div>
+            <div class="modal-field"><div class="modal-field-label">Color Palette</div><div class="modal-field-value">${f(r.color_palette)}</div></div>
+            <div class="modal-field"><div class="modal-field-label">Delivery</div><div class="modal-field-value">${f(r.delivery)}</div></div>
+          </div>
+        </div>
+
+        <div class="modal-section">
+          <div class="modal-section-title">Add-Ons</div>
+          <div class="modal-grid">
+            <div class="modal-field full"><div class="modal-field-label">Core Sections</div><div class="modal-field-value">${fmtArr(r.core_sections)}</div></div>
+            <div class="modal-field full"><div class="modal-field-label">Functional Add-Ons</div><div class="modal-field-value">${fmtArr(r.functional_add_ons)}</div></div>
+            <div class="modal-field full"><div class="modal-field-label">Premium Add-Ons</div><div class="modal-field-value">${fmtArr(r.premium_add_ons)}</div></div>
+          </div>
+        </div>
+
+        <div class="modal-section">
+          <div class="modal-section-title">Payment</div>
+          <div class="modal-grid">
+            <div class="modal-field"><div class="modal-field-label">Estimated Price</div><div class="modal-field-value">${fp(r.estimated_price)}</div></div>
+            <div class="modal-field"><div class="modal-field-label">Status</div><div class="modal-field-value">${f(r.payment_status)}</div></div>
+            ${r.receipt_url ? `<div class="modal-field full"><div class="modal-field-label">Receipt</div><div class="modal-field-value"><a href="${esc(r.receipt_url)}" target="_blank" rel="noopener">View Receipt ↗</a></div></div>` : ''}
+          </div>
+        </div>
+
+        ${r.special_requests ? `
+        <div class="modal-section">
+          <div class="modal-section-title">Special Requests</div>
+          <div style="font-size:0.87rem;color:var(--text);line-height:1.65;white-space:pre-wrap;">${esc(r.special_requests)}</div>
+        </div>` : ''}
+
+        <div class="modal-section">
+          <div class="modal-section-title">Meta</div>
+          <div class="modal-grid">
+            <div class="modal-field full"><div class="modal-field-label">Order ID</div><div class="modal-field-value" style="font-family:monospace;font-size:0.76rem;color:var(--muted)">${f(r.id)}</div></div>
+            <div class="modal-field full"><div class="modal-field-label">Submitted At</div><div class="modal-field-value">${r.submitted_at ? new Date(r.submitted_at).toLocaleString() : '—'}</div></div>
+          </div>
+        </div>
+      `;
+
+      detailModal.classList.add('open');
+    }
+
+    function esc(str) {
+      return String(str || '').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+    }
+  </script>
+</body>
+</html>
