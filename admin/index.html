@@ -45,7 +45,7 @@
     .auth-overlay {
       position: fixed;
       inset: 0;
-      background: var(--bg);
+      background: #F5F2EE;
       z-index: 9999;
       display: flex;
       align-items: center;
@@ -53,25 +53,24 @@
       padding: 24px;
     }
     .auth-box {
-      background: var(--surface);
-      border: 1px solid var(--border-mid);
+      background: #FFFFFF;
+      border: 1px solid rgba(197,160,89,0.3);
       border-radius: var(--radius-lg);
       padding: 40px 36px;
       width: 100%;
       max-width: 360px;
       text-align: center;
+      box-shadow: 0 8px 40px rgba(0,0,0,0.10);
     }
     .auth-logo {
-      font-family: 'Bricolage Grotesque', sans-serif;
-      font-size: 1.9rem;
-      font-weight: 400;
-      color: var(--gold);
-      margin-bottom: 4px;
-      letter-spacing: -0.02em;
+      display: block;
+      width: 140px;
+      height: auto;
+      margin: 0 auto 20px;
     }
     .auth-sub {
       font-size: 0.75rem;
-      color: var(--muted);
+      color: #8A8070;
       margin-bottom: 28px;
       letter-spacing: 0.1em;
       text-transform: uppercase;
@@ -79,22 +78,23 @@
     .auth-input {
       width: 100%;
       padding: 12px 16px;
-      background: var(--surface-2);
-      border: 1.5px solid var(--border-mid);
+      background: #F5F2EE;
+      border: 1.5px solid rgba(197,160,89,0.4);
       border-radius: 10px;
-      color: var(--text);
+      color: #2A2520;
       font-family: 'Outfit', sans-serif;
       font-size: 0.95rem;
       outline: none;
       margin-bottom: 14px;
       transition: border-color 0.2s;
     }
+    .auth-input::placeholder { color: #B0A898; }
     .auth-input:focus { border-color: var(--gold); }
     .auth-btn {
       width: 100%;
       padding: 13px;
       background: var(--gold);
-      color: #1A1714;
+      color: #FFFFFF;
       border: none;
       border-radius: 10px;
       font-family: 'Outfit', sans-serif;
@@ -105,7 +105,7 @@
       transition: background 0.2s, transform 0.15s;
     }
     .auth-btn:hover { background: var(--gold-dark); transform: translateY(-1px); }
-    .auth-error { font-size: 0.78rem; color: var(--red); margin-top: 10px; display: none; }
+    .auth-error { font-size: 0.78rem; color: #C47A7A; margin-top: 10px; display: none; }
 
     /* ── Nav ── */
     .nav {
@@ -312,17 +312,18 @@
       white-space: nowrap;
     }
     .td-muted { color: var(--light); }
-    .td-actions { overflow: visible !important; white-space: nowrap; }
+    .td-actions { overflow: visible !important; white-space: nowrap; position: relative; }
 
     /* Column widths */
-    thead th:nth-child(1) { width: 20%; }
-    thead th:nth-child(2) { width: 10%; }
-    thead th:nth-child(3) { width: 17%; }
-    thead th:nth-child(4) { width: 12%; }
+    thead th:nth-child(1) { width: 17%; }
+    thead th:nth-child(2) { width: 9%; }
+    thead th:nth-child(3) { width: 14%; }
+    thead th:nth-child(4) { width: 11%; }
     thead th:nth-child(5) { width: 9%; }
-    thead th:nth-child(6) { width: 10%; }
-    thead th:nth-child(7) { width: 9%; }
-    thead th:nth-child(8) { width: 10%; }
+    thead th:nth-child(6) { width: 8%; }
+    thead th:nth-child(7) { width: 11%; }
+    thead th:nth-child(8) { width: 9%; }
+    thead th:nth-child(9) { width: 12%; }
 
     /* ── Badges ── */
     .badge {
@@ -334,9 +335,10 @@
       font-weight: 600;
       letter-spacing: 0.04em;
     }
-    .badge-paid    { background: rgba(127,168,130,0.15); color: var(--green); }
-    .badge-pending { background: rgba(209,163,164,0.12); color: var(--rose); }
-    .badge-other   { background: rgba(110,104,95,0.15);  color: var(--muted); }
+    .badge-paid     { background: rgba(127,168,130,0.15); color: var(--green); }
+    .badge-pending  { background: rgba(209,163,164,0.12); color: var(--rose); }
+    .badge-receipt  { background: rgba(197,160,89,0.12);  color: var(--gold); }
+    .badge-other    { background: rgba(110,104,95,0.15);  color: var(--muted); }
 
     /* ── Action buttons ── */
     .action-btn {
@@ -562,7 +564,7 @@
   <!-- Auth -->
   <div class="auth-overlay" id="auth-overlay">
     <div class="auth-box">
-      <div class="auth-logo">Eventful</div>
+      <img class="auth-logo" src="/logo.webp" alt="Eventful" />
       <div class="auth-sub">Admin Dashboard</div>
       <input class="auth-input" type="password" id="auth-input" placeholder="Password" autocomplete="current-password" />
       <button class="auth-btn" id="auth-btn">Enter</button>
@@ -912,7 +914,9 @@
           ? '<span class="badge badge-paid">Paid</span>'
           : r.payment_status === 'pending'
             ? '<span class="badge badge-pending">Pending</span>'
-            : `<span class="badge badge-other">${esc(r.payment_status || '—')}</span>`;
+            : r.payment_status === 'receipt_uploaded'
+              ? '<span class="badge badge-receipt">Receipt Sent</span>'
+              : `<span class="badge badge-other">${esc(r.payment_status || '—')}</span>`;
 
         return `
           <tr>
