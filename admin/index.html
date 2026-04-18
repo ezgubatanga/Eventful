@@ -189,8 +189,6 @@
 
     /* ── Main ── */
     .main {
-      max-width: 1200px;
-      margin: 0 auto;
       padding: 36px 24px 64px;
     }
 
@@ -356,9 +354,11 @@
       white-space: nowrap;
     }
     .action-btn:active { transform: scale(0.97); }
-    .btn-view { background: var(--gold-light); border-color: var(--border-mid); color: var(--gold); }
-    .btn-view:hover { background: var(--gold-mid); }
-    .btn-icon { width: 13px; height: 13px; pointer-events: none; }
+    .btn-view  { background: var(--gold-light); border-color: var(--border-mid); color: var(--gold); padding: 6px 8px; }
+    .btn-view:hover  { background: var(--gold-mid); }
+    .btn-delete { background: rgba(196,122,122,0.08); border-color: rgba(196,122,122,0.25); color: var(--red); padding: 6px 8px; margin-left: 6px; }
+    .btn-delete:hover { background: rgba(196,122,122,0.18); }
+    .btn-icon { width: 14px; height: 14px; pointer-events: none; }
     .action-btn * { pointer-events: none; }
 
     /* ── 3-dots mobile ── */
@@ -583,6 +583,23 @@
       <div class="modal-body" id="detail-body"></div>
       <div class="modal-footer">
         <button class="modal-close" id="detail-close">Close</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Delete confirm modal -->
+  <div class="modal-backdrop" id="delete-modal">
+    <div class="modal" style="max-width:380px">
+      <div class="modal-header">
+        <div class="modal-title" style="color:var(--red)">Delete Order</div>
+        <div class="modal-sub" id="delete-modal-sub"></div>
+      </div>
+      <div class="modal-body">
+        <p style="font-size:0.88rem;color:var(--muted);line-height:1.6">This will permanently remove the order from Supabase. This cannot be undone.</p>
+      </div>
+      <div class="modal-footer" style="gap:10px;justify-content:flex-end">
+        <button class="modal-close" id="delete-cancel" style="margin:0">Cancel</button>
+        <button id="delete-confirm" style="padding:9px 24px;background:rgba(196,122,122,0.15);border:1px solid rgba(196,122,122,0.4);border-radius:8px;color:var(--red);font-family:'Outfit',sans-serif;font-size:0.83rem;font-weight:600;cursor:pointer;transition:background 0.15s">Delete</button>
       </div>
     </div>
   </div>
@@ -929,9 +946,11 @@
             <td>${badge}</td>
             <td class="td-muted">${dateStr}</td>
             <td class="td-actions">
-              <button class="action-btn btn-view" id="btn-view-${i}">
+              <button class="action-btn btn-view" id="btn-view-${i}" title="View details">
                 <svg class="btn-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
-                View
+              </button>
+              <button class="action-btn btn-delete" id="btn-delete-${i}" title="Delete order">
+                <svg class="btn-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="3 6 5 6 21 6"/><path d="M19 6l-1 14H6L5 6"/><path d="M10 11v6"/><path d="M14 11v6"/><path d="M9 6V4h6v2"/></svg>
               </button>
               <button class="btn-dots" id="btn-dots-${i}">
                 <svg viewBox="0 0 24 24" fill="currentColor"><circle cx="5" cy="12" r="2"/><circle cx="12" cy="12" r="2"/><circle cx="19" cy="12" r="2"/></svg>
@@ -941,6 +960,10 @@
                   <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
                   View Details
                 </button>
+                <button class="dots-item" id="dots-delete-${i}" style="color:var(--red);border-top:1px solid var(--border)">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="3 6 5 6 21 6"/><path d="M19 6l-1 14H6L5 6"/><path d="M10 11v6"/><path d="M14 11v6"/><path d="M9 6V4h6v2"/></svg>
+                  Delete
+                </button>
               </div>
             </td>
           </tr>`;
@@ -948,6 +971,7 @@
 
       visible.forEach((r, i) => {
         document.getElementById('btn-view-' + i).addEventListener('click', e => { e.stopPropagation(); openDetail(r); });
+        document.getElementById('btn-delete-' + i).addEventListener('click', e => { e.stopPropagation(); openDeleteModal(r); });
         document.getElementById('btn-dots-' + i).addEventListener('click', e => {
           e.stopPropagation();
           const dd = document.getElementById('dots-dd-' + i);
@@ -959,6 +983,11 @@
           e.stopPropagation();
           closeAllDropdowns();
           openDetail(r);
+        });
+        document.getElementById('dots-delete-' + i).addEventListener('click', e => {
+          e.stopPropagation();
+          closeAllDropdowns();
+          openDeleteModal(r);
         });
       });
     }
@@ -972,6 +1001,38 @@
       document.querySelectorAll('.dots-dropdown.open').forEach(d => d.classList.remove('open'));
     }
     document.addEventListener('click', closeAllDropdowns);
+
+    // ── Delete modal ──
+    const deleteModal   = document.getElementById('delete-modal');
+    const deleteConfirm = document.getElementById('delete-confirm');
+    const deleteCancel  = document.getElementById('delete-cancel');
+    let pendingDeleteId = null;
+
+    function openDeleteModal(r) {
+      pendingDeleteId = r.id;
+      const names = [r.groom_name, r.bride_name].filter(Boolean).join(' & ') || 'this order';
+      document.getElementById('delete-modal-sub').textContent = names;
+      deleteModal.classList.add('open');
+    }
+
+    deleteCancel.addEventListener('click', () => deleteModal.classList.remove('open'));
+    deleteModal.addEventListener('click', e => { if (e.target === deleteModal) deleteModal.classList.remove('open'); });
+
+    deleteConfirm.addEventListener('click', async () => {
+      if (!pendingDeleteId) return;
+      deleteConfirm.disabled = true;
+      deleteConfirm.textContent = 'Deleting…';
+      const { error } = await db.from('orders').delete().eq('id', pendingDeleteId);
+      deleteConfirm.disabled = false;
+      deleteConfirm.textContent = 'Delete';
+      if (error) {
+        alert('Delete failed: ' + error.message);
+        return;
+      }
+      deleteModal.classList.remove('open');
+      pendingDeleteId = null;
+      loadData();
+    });
 
     // ── Detail modal ──
     const detailModal = document.getElementById('detail-modal');
