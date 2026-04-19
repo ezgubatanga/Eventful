@@ -1924,7 +1924,6 @@
             </div>
             <div class="field-group field-full" style="margin-top:4px;">
               <label class="field-label">Page Mode</label>
-              <p class="palette-hint">Light or dark background — pick whichever suits your vibe.</p>
               <div class="mode-toggle">
                 <div class="mode-option" data-mode="Light" onclick="selectMode(this)">
                   <div class="mode-preview mode-preview-light"></div>
@@ -2578,12 +2577,10 @@
 
       document.getElementById('summaryCoupleName').textContent = couple;
       const isRush = document.getElementById('delivery-rush')?.checked;
-      const time = getCeremonyTime();
-      const venue = document.getElementById('venueName')?.value || '';
       const slug = document.getElementById('pageSlug').value.trim();
       document.getElementById('summaryMeta').innerHTML = `
-        <span><span class="summary-meta-label">Date</span>${stillDeciding ? 'Still deciding' : formatDate(date)}${!stillDeciding && time ? ' · ' + time : ''}</span>
-        <span><span class="summary-meta-label">Location</span>${venue ? venue + ', ' : ''}${loc}</span>
+        <span><span class="summary-meta-label">Date</span>${stillDeciding ? 'Still deciding' : formatDate(date)}</span>
+        <span><span class="summary-meta-label">Location</span>${loc}</span>
         <span><span class="summary-meta-label">Email</span><span style="pointer-events:none;text-decoration:none;color:inherit">${email}</span></span>
         <span><span class="summary-meta-label">Link</span>${document.getElementById('wantCustomDomain').checked ? 'Custom domain' : 'eventful.page/' + slug}</span>
         <span><span class="summary-meta-label">Delivery</span>${isRush ? 'Rush (3 days)' : 'Standard (5 days)'}</span>
@@ -2655,8 +2652,6 @@
         email: document.getElementById('email').value.trim(),
         contactNumber: document.getElementById('contactNumber').value.trim(),
         location: document.getElementById('location').value.trim(),
-        venueName: document.getElementById('venueName')?.value.trim() || '',
-        ceremonyTime: getCeremonyTime(),
         pageSlug: document.getElementById('pageSlug').value.trim(),
         pageMode: document.getElementById('pageMode').value || 'Not specified',
         colorPalette: document.getElementById('colorPalette').value.trim() || 'Not specified',
@@ -2693,8 +2688,6 @@
             email:             payload.email,
             contact_number:    payload.contactNumber,
             location:          payload.location,
-            venue_name:        payload.venueName,
-            ceremony_time:     payload.ceremonyTime,
             page_slug:         payload.pageSlug,
             page_mode:         payload.pageMode,
             color_palette:     payload.colorPalette,
@@ -2834,21 +2827,8 @@
       set('email', d.email);
       set('contactNumber', d.contactNumber);
       set('location', d.location);
-      set('venueName', d.venueName);
       set('pageSlug', d.pageSlug);
       set('specialRequests', d.specialRequests);
-
-      // Ceremony time
-      if (d.ceremonyTime) {
-        const parts = d.ceremonyTime.match(/^(\d+):(\d+)\s*(AM|PM)$/i);
-        if (parts) {
-          set('ceremonyHour', parts[1]);
-          set('ceremonyMinute', parts[2]);
-          const isAm = parts[3].toUpperCase() === 'AM';
-          document.getElementById('amBtn')?.classList.toggle('active', isAm);
-          document.getElementById('pmBtn')?.classList.toggle('active', !isAm);
-        }
-      }
 
       // Functional addon checkboxes
       FUNCTIONAL_ADDONS.forEach(a => {
