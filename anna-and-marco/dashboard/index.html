@@ -734,6 +734,24 @@
     }
     .btn-confirm-rm:hover { background: rgba(196,122,122,0.25); }
 
+    /* ── Attend toggle ── */
+    .attend-cell { display: inline-flex; align-items: center; gap: 4px; }
+    .attend-toggle-btn {
+      display: inline-flex; align-items: center; justify-content: center;
+      width: 20px; height: 20px;
+      border: none; background: transparent; color: var(--muted);
+      cursor: pointer; border-radius: 4px; padding: 0;
+      transition: color 0.15s, background 0.15s;
+    }
+    .attend-toggle-btn:hover { color: var(--gold); background: var(--gold-light); }
+    .attend-toggle-btn svg { width: 12px; height: 12px; pointer-events: none; }
+    .btn-confirm-attend {
+      background: rgba(197,160,89,0.15);
+      border-color: rgba(197,160,89,0.35);
+      color: var(--gold);
+    }
+    .btn-confirm-attend:hover { background: rgba(197,160,89,0.25); }
+
     /* ── Responsive ── */
     @media (max-width: 768px) {
       .nav { padding: 0 16px; }
@@ -803,6 +821,19 @@
       <div class="modal-sub" id="remove-modal-name"></div>
       <div class="remove-warn" style="margin-bottom:0">Deleting RSVPs is not available on the demo page. On a live wedding page, the couple can remove entries directly from their dashboard.</div>
       <button class="modal-close" id="remove-modal-cancel">Got it</button>
+    </div>
+  </div>
+
+  <!-- Attend change confirmation modal -->
+  <div class="modal-backdrop" id="attend-modal">
+    <div class="modal">
+      <div class="modal-title">Change Attendance</div>
+      <div class="modal-sub" id="attend-modal-sub"></div>
+      <div class="remove-warn" id="attend-modal-warn" style="margin-bottom:24px"></div>
+      <div class="remove-actions">
+        <button class="btn-cancel-rm" id="attend-modal-cancel">Cancel</button>
+        <button class="btn-confirm-attend" id="attend-modal-confirm">Confirm</button>
+      </div>
     </div>
   </div>
 
@@ -1018,15 +1049,16 @@
         });
 
         allRecent = rows.map(r => ({
-          name:    r.name,
-          email:   r.email,
-          phone:   r.phone,
-          attend:  r.attend,
-          guests:  r.guests,
-          meal:    r.meal,
-          meal2:   r.meal2,
-          message: r.message,
-          ts:      new Date(r.created_at).toLocaleDateString('en-GB', { day: 'numeric', month: 'short', year: 'numeric' })
+          name:       r.name,
+          email:      r.email,
+          phone:      r.phone,
+          attend:     r.attend,
+          guests:     r.guests,
+          meal:       r.meal,
+          meal2:      r.meal2,
+          message:    r.message,
+          edit_token: r.edit_token,
+          ts:         new Date(r.created_at).toLocaleDateString('en-GB', { day: 'numeric', month: 'short', year: 'numeric' })
         }));
 
         render({
@@ -1230,10 +1262,10 @@
         <tr>
           <td>${esc(r.name)}</td>
           <td class="print-only">${esc(String(r.phone || '—'))}</td>
-          <td>${r.attend === 'yes'
+          <td><span class="attend-cell">${r.attend === 'yes'
             ? '<span class="badge badge-going">Yes</span>'
             : '<span class="badge badge-no">No</span>'
-          }</td>
+          }<button class="attend-toggle-btn" id="attend-btn-${i}" title="Change attendance"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg></button></span></td>
           <td class="td-muted">${r.attend !== 'yes' ? '0' : r.guests === '2' ? '2' : '1'}</td>
           <td class="td-muted">${esc(MEAL_LABELS[r.meal] || r.meal || '—')}${r.meal2 ? `<br><span style="opacity:0.6;font-size:0.75em">+1: ${esc(MEAL_LABELS[r.meal2] || r.meal2)}</span>` : ''}</td>
           <td class="td-muted screen-only">${esc(r.ts)}</td>
@@ -1286,6 +1318,10 @@
           const isOpen = dd.classList.contains('open');
           closeAllDropdowns();
           if (!isOpen) dd.classList.add('open');
+        });
+        document.getElementById('attend-btn-' + i).addEventListener('click', e => {
+          e.stopPropagation();
+          openAttendModal(r);
         });
         const dotsMsg = document.getElementById('dots-msg-' + i);
         if (dotsMsg) dotsMsg.addEventListener('click', e => {
@@ -1346,6 +1382,64 @@
       removeModalName.textContent = r.name;
       removeModal.classList.add('open');
     }
+
+    // ── Attend change modal ──
+    let _attendTarget = null;
+    const attendModal      = document.getElementById('attend-modal');
+    const attendModalSub   = document.getElementById('attend-modal-sub');
+    const attendModalWarn  = document.getElementById('attend-modal-warn');
+    const attendConfirmBtn = document.getElementById('attend-modal-confirm');
+
+    function openAttendModal(r) {
+      const to = r.attend === 'yes' ? 'No' : 'Yes';
+      attendModalSub.textContent   = r.name;
+      attendModalWarn.textContent  = `This will change their response from "${r.attend === 'yes' ? 'Yes' : 'No'}" to "${to}" and update the table.`;
+      attendConfirmBtn.textContent = `Change to ${to}`;
+      attendConfirmBtn.disabled    = false;
+      attendConfirmBtn.style.color = '';
+      _attendTarget = r;
+      attendModal.classList.add('open');
+    }
+
+    document.getElementById('attend-modal-cancel').addEventListener('click', () => {
+      attendModal.classList.remove('open');
+      _attendTarget = null;
+    });
+    attendModal.addEventListener('click', e => {
+      if (e.target === attendModal) { attendModal.classList.remove('open'); _attendTarget = null; }
+    });
+
+    attendConfirmBtn.addEventListener('click', async () => {
+      if (!_attendTarget) return;
+      const r = _attendTarget;
+      const newAttend = r.attend === 'yes' ? 'no' : 'yes';
+      attendConfirmBtn.disabled    = true;
+      attendConfirmBtn.textContent = 'Updating…';
+
+      try {
+        const { data: updated, error } = await db
+          .from('anna_marco_rsvp')
+          .update({ attend: newAttend, guests: newAttend === 'no' ? '0' : (r.guests === '0' ? '1' : r.guests) })
+          .eq('edit_token', r.edit_token)
+          .select();
+
+        if (error) throw error;
+        if (!updated || updated.length === 0) throw new Error('No rows updated — check Supabase RLS UPDATE policy for anna_marco_rsvp.');
+
+        attendModal.classList.remove('open');
+        _attendTarget = null;
+        loadData();
+      } catch (err) {
+        console.error('Attend update error:', err);
+        attendConfirmBtn.textContent = 'Failed. Try again.';
+        attendConfirmBtn.style.color = 'var(--red)';
+        setTimeout(() => {
+          attendConfirmBtn.disabled    = false;
+          attendConfirmBtn.textContent = `Change to ${r.attend === 'yes' ? 'No' : 'Yes'}`;
+          attendConfirmBtn.style.color = '';
+        }, 2500);
+      }
+    });
 
     function renderMealBars(meals, max) {
       const order = ['beef', 'chicken', 'fish', 'vegetarian'];
