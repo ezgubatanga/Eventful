@@ -1936,8 +1936,9 @@
                 </div>
               </div>
               <input type="hidden" id="pageMode" value="" />
+              <span class="field-error" id="err-pageMode">Please select a page mode.</span>
             </div>
-            <div class="field-group field-full" style="margin-top:4px;">
+            <div class="field-group field-full" id="paletteSection" style="margin-top:4px;display:none;">
               <label class="field-label">Color Palette</label>
               <p class="palette-hint">Pick a vibe — we'll match your page to it. Skip if you're not sure yet.</p>
               <div class="palette-grid" id="paletteGrid"></div>
@@ -2279,8 +2280,10 @@
       el.classList.add('selected');
       const mode = el.dataset.mode;
       document.getElementById('pageMode').value = mode;
+      document.getElementById('err-pageMode').classList.remove('visible');
       const isDark = mode === 'Dark';
       renderPaletteGrid(isDark ? DARK_PALETTES : LIGHT_PALETTES, isDark);
+      document.getElementById('paletteSection').style.display = '';
     }
 
     // ── Color Palette Picker ──────────────────────────────────
@@ -2520,6 +2523,12 @@
         err.classList.toggle('visible', !valid);
         if (!valid) ok = false;
       });
+
+      const modeErr = document.getElementById('err-pageMode');
+      const modeValid = !!document.getElementById('pageMode').value;
+      modeErr.classList.toggle('visible', !modeValid);
+      if (!modeValid) ok = false;
+
       return ok;
     }
 
@@ -2847,6 +2856,33 @@
       const rush = document.getElementById('delivery-rush');
       if (rush) rush.checked = !!d._rushDelivery;
 
+      // Restore page mode selection
+      if (d.pageMode && d.pageMode !== 'Not specified') {
+        const modeEl = document.querySelector(`.mode-option[data-mode="${d.pageMode}"]`);
+        if (modeEl) {
+          document.querySelectorAll('.mode-option').forEach(o => o.classList.remove('selected'));
+          modeEl.classList.add('selected');
+          document.getElementById('pageMode').value = d.pageMode;
+          renderPaletteGrid(d.pageMode === 'Dark' ? DARK_PALETTES : LIGHT_PALETTES, d.pageMode === 'Dark');
+          document.getElementById('paletteSection').style.display = '';
+        }
+      }
+
+      const target = document.getElementById('step-1');
+      if (target) {
+        const start = window.scrollY;
+        const end = target.getBoundingClientRect().top + start - 72;
+        const duration = 800;
+        let startTime = null;
+        const ease = t => t < 0.5 ? 2*t*t : -1+(4-2*t)*t;
+        const step = ts => {
+          if (!startTime) startTime = ts;
+          const p = Math.min((ts - startTime) / duration, 1);
+          window.scrollTo(0, start + (end - start) * ease(p));
+          if (p < 1) requestAnimationFrame(step);
+        };
+        requestAnimationFrame(step);
+      }
     }
 
     async function confirmPayment() {
