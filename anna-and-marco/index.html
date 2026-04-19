@@ -1141,9 +1141,9 @@
 
     let _rsvpEditToken = null;
 
-    // Load edit token from URL and pre-fill form
+    // Load edit token from URL or localStorage and pre-fill form
     (async () => {
-      const token = new URLSearchParams(location.search).get('edit');
+      const token = new URLSearchParams(location.search).get('edit') || localStorage.getItem('anna_marco_edit_token');
       if (!token) return;
       try {
         const { data, error } = await db
@@ -1233,6 +1233,7 @@
         if (dbError) throw dbError;
 
         _rsvpEditToken = edit_token;
+        localStorage.setItem('anna_marco_edit_token', edit_token);
         const editUrl  = `${location.origin}/anna-and-marco/?edit=${edit_token}`;
         const isEdit   = !!_rsvpEditToken && _rsvpEditToken === edit_token && payload.couple_id;
 
