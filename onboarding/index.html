@@ -1718,6 +1718,73 @@
       margin-bottom: 10px;
     }
 
+    /* ─── Page Mode Toggle ───────────────────────────── */
+    .mode-toggle {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 10px;
+      margin-bottom: 6px;
+    }
+
+    .mode-option {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 12px 14px;
+      border: 1.5px solid rgba(197, 160, 89, 0.2);
+      border-radius: 12px;
+      cursor: pointer;
+      background: var(--surface);
+      transition: var(--transition);
+      user-select: none;
+    }
+
+    .mode-option:hover {
+      border-color: var(--gold-mid);
+      background: #fff;
+    }
+
+    .mode-option.selected {
+      border-color: var(--gold);
+      background: var(--gold-light);
+      box-shadow: 0 0 0 3px var(--gold-light);
+    }
+
+    .mode-preview {
+      width: 34px;
+      height: 22px;
+      border-radius: 5px;
+      border: 1px solid rgba(0,0,0,0.08);
+      flex-shrink: 0;
+    }
+
+    .mode-preview-light {
+      background: linear-gradient(135deg, #FDFCF8 55%, #EDE8DF 100%);
+    }
+
+    .mode-preview-dark {
+      background: linear-gradient(135deg, #1C1C2A 55%, #2C2240 100%);
+    }
+
+    .mode-text .mode-label {
+      font-size: 0.83rem;
+      font-weight: 500;
+      color: var(--text-muted);
+      font-family: 'Outfit', sans-serif;
+    }
+
+    .mode-option.selected .mode-label {
+      color: var(--text-main);
+      font-weight: 600;
+    }
+
+    .mode-text .mode-sublabel {
+      font-size: 0.69rem;
+      color: var(--text-light);
+      font-family: 'Outfit', sans-serif;
+      margin-top: 1px;
+    }
+
     @media (max-width: 600px) {
       .palette-grid {
         grid-template-columns: repeat(2, 1fr);
@@ -1849,6 +1916,27 @@
                 <input type="checkbox" id="wantCustomDomain" />
                 <span>I want a custom domain <span style="color:var(--gold,#b8972a);font-weight:600;">+₱1,800 (one year)</span></span>
               </label>
+            </div>
+            <div class="field-group field-full" style="margin-top:4px;">
+              <label class="field-label">Page Mode</label>
+              <p class="palette-hint">Light or dark background — pick whichever suits your vibe.</p>
+              <div class="mode-toggle">
+                <div class="mode-option" data-mode="Light" onclick="selectMode(this)">
+                  <div class="mode-preview mode-preview-light"></div>
+                  <div class="mode-text">
+                    <div class="mode-label">Light</div>
+                    <div class="mode-sublabel">Airy & romantic</div>
+                  </div>
+                </div>
+                <div class="mode-option" data-mode="Dark" onclick="selectMode(this)">
+                  <div class="mode-preview mode-preview-dark"></div>
+                  <div class="mode-text">
+                    <div class="mode-label">Dark</div>
+                    <div class="mode-sublabel">Moody & elegant</div>
+                  </div>
+                </div>
+              </div>
+              <input type="hidden" id="pageMode" value="" />
             </div>
             <div class="field-group field-full" style="margin-top:4px;">
               <label class="field-label">Color Palette</label>
@@ -2248,6 +2336,13 @@
       </svg>`;
     }
 
+    // ── Page Mode Toggle ──────────────────────────────────────
+    function selectMode(el) {
+      document.querySelectorAll('.mode-option').forEach(o => o.classList.remove('selected'));
+      el.classList.add('selected');
+      document.getElementById('pageMode').value = el.dataset.mode;
+    }
+
     // ── Color Palette Picker ──────────────────────────────────
     function selectPalette(el) {
       document.querySelectorAll('.palette-option').forEach(o => o.classList.remove('selected'));
@@ -2545,6 +2640,7 @@
         <span><span class="summary-meta-label">Email</span><span style="pointer-events:none;text-decoration:none;color:inherit">${email}</span></span>
         <span><span class="summary-meta-label">Link</span>${document.getElementById('wantCustomDomain').checked ? 'Custom domain' : 'eventful.page/' + slug}</span>
         <span><span class="summary-meta-label">Delivery</span>${isRush ? 'Rush (3 days)' : 'Standard (5 days)'}</span>
+        ${document.getElementById('pageMode').value ? `<span><span class="summary-meta-label">Mode</span>${document.getElementById('pageMode').value}</span>` : ''}
         ${document.getElementById('colorPalette').value.trim() ? `<span><span class="summary-meta-label">Palette</span>${document.getElementById('colorPalette').value.trim()}</span>` : ''}
       `;
 
@@ -2615,6 +2711,7 @@
         venueName: document.getElementById('venueName').value.trim(),
         ceremonyTime: getCeremonyTime(),
         pageSlug: document.getElementById('pageSlug').value.trim(),
+        pageMode: document.getElementById('pageMode').value || 'Not specified',
         colorPalette: document.getElementById('colorPalette').value.trim() || 'Not specified',
         coreSections: CORE_SECTIONS,
         functionalAddOns: selFnLabels,
@@ -2647,6 +2744,7 @@
         venue_name:        payload.venueName,
         ceremony_time:     payload.ceremonyTime,
         page_slug:         payload.pageSlug,
+        page_mode:         payload.pageMode,
         color_palette:     payload.colorPalette,
         core_sections:     payload.coreSections,
         functional_add_ons: payload.functionalAddOns,
