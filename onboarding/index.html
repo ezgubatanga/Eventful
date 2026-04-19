@@ -1396,56 +1396,6 @@
       margin: 0 auto 28px;
     }
 
-    /* ─── Continue Editing Section ──────────────────────── */
-    .continue-editing-section {
-      display: none;
-      text-align: left;
-      margin-top: 28px;
-      border-top: 1px solid rgba(220, 215, 207, 0.5);
-      padding-top: 28px;
-    }
-
-    .continue-editing-section.open {
-      display: block;
-    }
-
-    .continue-editing-title {
-      font-family: 'Bricolage Grotesque', sans-serif;
-      font-size: 1.1rem;
-      font-weight: 500;
-      color: var(--text-main);
-      margin-bottom: 6px;
-      text-align: center;
-    }
-
-    .continue-editing-desc {
-      font-size: 0.85rem;
-      color: var(--text-muted);
-      text-align: center;
-      margin-bottom: 20px;
-    }
-
-    .btn-continue-editing {
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      gap: 6px;
-      background: transparent;
-      border: 1.5px solid var(--gold);
-      color: var(--gold);
-      font-family: 'Outfit', sans-serif;
-      font-size: 0.92rem;
-      font-weight: 500;
-      letter-spacing: 0.04em;
-      padding: 14px 30px;
-      border-radius: 999px;
-      cursor: pointer;
-      transition: var(--transition);
-    }
-
-    .btn-continue-editing:hover {
-      background: var(--gold-light);
-    }
 
     /* ─── Error message ──────────────────────────────────── */
     .field-error {
@@ -1472,9 +1422,38 @@
     .still-deciding-label input[type="checkbox"] {
       width: 15px;
       height: 15px;
-      accent-color: var(--gold);
       cursor: pointer;
       flex-shrink: 0;
+      appearance: none;
+      -webkit-appearance: none;
+      border: 1.5px solid rgba(197, 160, 89, 0.5);
+      border-radius: 3px;
+      background: transparent;
+      position: relative;
+      transition: background 0.18s, border-color 0.18s;
+    }
+
+    .still-deciding-label input[type="checkbox"]:checked {
+      background: var(--gold);
+      border-color: var(--gold);
+    }
+
+    .still-deciding-label input[type="checkbox"]::after {
+      content: '';
+      position: absolute;
+      display: none;
+      left: 3px;
+      top: 0px;
+      width: 5px;
+      height: 8px;
+      border: 2px solid #fff;
+      border-top: none;
+      border-left: none;
+      transform: rotate(45deg);
+    }
+
+    .still-deciding-label input[type="checkbox"]:checked::after {
+      display: block;
     }
     #weddingDate:disabled,
     .field-input:disabled,
@@ -2181,41 +2160,6 @@
         <p class="status-text">Thank you, <strong id="successEmail"></strong>. Your order has been submitted and your receipt is under review.<br><br>To help us get started, please send your photos and videos to <a href="mailto:hello@eventful.page" style="color:var(--gold);font-weight:600">hello@eventful.page</a> or share a Google Drive link with view access.<br><br>We will follow up within 24 hours via the contact details you provided.</p>
         <div style="display:flex;gap:12px;justify-content:center;flex-wrap:wrap;">
           <a href="/" class="btn btn-primary">← Back to Eventful</a>
-          <button class="btn-continue-editing" id="continueEditingBtn" onclick="toggleContinueEditing()">+ Continue Editing</button>
-        </div>
-        <div class="continue-editing-section" id="continueEditingSection">
-          <p class="continue-editing-title">A few more details</p>
-          <p class="continue-editing-desc">Add these now or we'll confirm them with you later.</p>
-          <div class="fields-grid">
-            <div class="field-group">
-              <label class="field-label">Ceremony Time</label>
-              <div class="time-picker">
-                <select class="field-input time-select" id="ceremonyHour" name="ceremonyHour">
-                  <option value="">Hour</option>
-                  <option>1</option><option>2</option><option>3</option><option>4</option>
-                  <option>5</option><option>6</option><option>7</option><option>8</option>
-                  <option>9</option><option>10</option><option>11</option><option>12</option>
-                </select>
-                <span class="time-colon">:</span>
-                <select class="field-input time-select" id="ceremonyMinute" name="ceremonyMinute">
-                  <option value="">Min</option>
-                  <option value="00" selected>00</option><option value="15">15</option>
-                  <option value="30">30</option><option value="45">45</option>
-                </select>
-                <div class="ampm-toggle">
-                  <button type="button" class="ampm-btn" id="amBtn" onclick="setAmPm('AM')">AM</button>
-                  <button type="button" class="ampm-btn active" id="pmBtn" onclick="setAmPm('PM')">PM</button>
-                </div>
-              </div>
-            </div>
-            <div class="field-group">
-              <label class="field-label" for="venueName">Reception Location</label>
-              <input class="field-input" type="text" id="venueName" name="venueName" placeholder="e.g. The Grand Ballroom" />
-            </div>
-          </div>
-          <div style="text-align:center;margin-top:20px;">
-            <button class="btn btn-primary" id="saveDetailsBtn" onclick="saveContinueEditing()">Save Details</button>
-          </div>
         </div>
       </div>
 
@@ -2800,6 +2744,15 @@
     function closePaymentModal() {
       document.getElementById('paymentModal').classList.remove('open');
       document.body.style.overflow = '';
+      // Auto-save form state for the resume feature
+      try {
+        const payload = buildPayload();
+        payload._functionalIds = getSelectedFunctional();
+        payload._premiumIds = getSelectedPremium();
+        payload._rushDelivery = document.getElementById('delivery-rush')?.checked || false;
+        localStorage.setItem('eventful_saved', JSON.stringify(payload));
+        document.getElementById('loadSavedBtn').style.display = '';
+      } catch (_) {}
     }
 
     function handleReceiptUpload(e) {
@@ -2965,36 +2918,6 @@
       showStep(TOTAL_STEPS);
     }
 
-    // ── Continue Editing ──────────────────────────────────────
-    function toggleContinueEditing() {
-      const section = document.getElementById('continueEditingSection');
-      const btn = document.getElementById('continueEditingBtn');
-      const isOpen = section.classList.contains('open');
-      section.classList.toggle('open', !isOpen);
-      btn.textContent = isOpen ? '+ Continue Editing' : '− Hide';
-    }
-
-    async function saveContinueEditing() {
-      const time = getCeremonyTime();
-      const venue = document.getElementById('venueName').value.trim();
-      const btn = document.getElementById('saveDetailsBtn');
-      btn.disabled = true;
-      btn.innerHTML = '<span class="spinner"></span> Saving…';
-      try {
-        if (_orderId) {
-          await db.from('orders')
-            .update({ ceremony_time: time || null, venue_name: venue || null })
-            .eq('id', _orderId);
-        }
-        const saved = document.createElement('p');
-        saved.textContent = 'Saved!';
-        saved.style.cssText = 'font-size:0.9rem;font-weight:500;color:var(--sage);margin:0;text-align:center;';
-        btn.replaceWith(saved);
-      } catch (_) {
-        btn.disabled = false;
-        btn.innerHTML = 'Save Details';
-      }
-    }
 
     // ── Init ──────────────────────────────────────────────────
     renderCoreSection();
@@ -3137,7 +3060,7 @@
           if (data.Status === 3) {
             // NXDOMAIN — domain likely available
             statusEl.className = 'domain-status available visible';
-            textEl.textContent = 'Likely available ✓';
+            textEl.textContent = 'Domain is available';
           } else {
             statusEl.className = 'domain-status taken visible';
             textEl.textContent = 'Domain is taken';
