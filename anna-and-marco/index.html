@@ -691,7 +691,7 @@
               <label class="rsvp-label" for="rsvp-attend">Will you attend?</label>
               <select class="rsvp-input" id="rsvp-attend" required>
                 <option value="">Select</option>
-                <option value="yes">Joyfully accepts ✓</option>
+                <option value="yes">Joyfully accepts</option>
                 <option value="no">Regretfully declines</option>
               </select>
             </div>
@@ -1226,7 +1226,9 @@
       try {
         let dbError;
         if (_rsvpEditToken) {
-          ({ error: dbError } = await db.from('anna_marco_rsvp').update(payload).eq('edit_token', _rsvpEditToken));
+          const { data: updated, error: ue } = await db.from('anna_marco_rsvp').update(payload).eq('edit_token', _rsvpEditToken).select();
+          dbError = ue;
+          if (!ue && (!updated || updated.length === 0)) throw new Error('Update blocked — check Supabase RLS UPDATE policy for anna_marco_rsvp.');
         } else {
           ({ error: dbError } = await db.from('anna_marco_rsvp').insert(payload));
         }

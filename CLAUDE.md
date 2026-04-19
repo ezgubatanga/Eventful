@@ -19,7 +19,7 @@ Platform builds bespoke wedding websites. Each couple gets own subdirectory, cus
   index.html               ← Landing page
   styles.css               ← Shared CSS for root pages
   script.js                ← JS for the RSVP form on the landing page
-  logo.webp / favicon.webp / eventful.webp / pexels-junerydocto.webp / Perfect.mp3
+  logo.webp / favicon.webp / eventful.webp / Perfect.mp3
 
 onboarding/index.html      ← Lead-gen onboarding flow for prospective couples
 
