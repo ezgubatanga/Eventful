@@ -735,16 +735,17 @@
     .btn-confirm-rm:hover { background: rgba(196,122,122,0.25); }
 
     /* ── Attend toggle ── */
-    .attend-cell { display: inline-flex; align-items: center; gap: 4px; }
     .attend-toggle-btn {
-      display: inline-flex; align-items: center; justify-content: center;
-      width: 20px; height: 20px;
-      border: none; background: transparent; color: var(--muted);
-      cursor: pointer; border-radius: 4px; padding: 0;
-      transition: color 0.15s, background 0.15s;
+      display: inline-flex; align-items: center; gap: 5px;
+      border: none; cursor: pointer; padding: 3px 8px 3px 10px;
+      border-radius: 99px; font-size: 0.72rem; font-weight: 600;
+      letter-spacing: 0.04em; font-family: 'Outfit', sans-serif;
+      transition: filter 0.15s;
     }
-    .attend-toggle-btn:hover { color: var(--gold); background: var(--gold-light); }
-    .attend-toggle-btn svg { width: 12px; height: 12px; pointer-events: none; }
+    .attend-toggle-btn:hover { filter: brightness(1.2); }
+    .attend-toggle-btn svg { width: 11px; height: 11px; pointer-events: none; flex-shrink: 0; }
+    .attend-toggle-btn.badge-going { background: rgba(127,168,130,0.15); color: var(--green); }
+    .attend-toggle-btn.badge-no    { background: rgba(196,122,122,0.12); color: var(--red); }
     .btn-confirm-attend {
       background: rgba(197,160,89,0.15);
       border-color: rgba(197,160,89,0.35);
@@ -1049,6 +1050,7 @@
         });
 
         allRecent = rows.map(r => ({
+          id:         r.id,
           name:       r.name,
           email:      r.email,
           phone:      r.phone,
@@ -1262,10 +1264,7 @@
         <tr>
           <td>${esc(r.name)}</td>
           <td class="print-only">${esc(String(r.phone || '—'))}</td>
-          <td><span class="attend-cell">${r.attend === 'yes'
-            ? '<span class="badge badge-going">Yes</span>'
-            : '<span class="badge badge-no">No</span>'
-          }<button class="attend-toggle-btn" id="attend-btn-${i}" title="Change attendance"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg></button></span></td>
+          <td><button class="attend-toggle-btn ${r.attend === 'yes' ? 'badge-going' : 'badge-no'}" id="attend-btn-${i}" title="Change attendance">${r.attend === 'yes' ? 'Yes' : 'No'}<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg></button></td>
           <td class="td-muted">${r.attend !== 'yes' ? '0' : r.guests === '2' ? '2' : '1'}</td>
           <td class="td-muted">${esc(MEAL_LABELS[r.meal] || r.meal || '—')}${r.meal2 ? `<br><span style="opacity:0.6;font-size:0.75em">+1: ${esc(MEAL_LABELS[r.meal2] || r.meal2)}</span>` : ''}</td>
           <td class="td-muted screen-only">${esc(r.ts)}</td>
@@ -1420,7 +1419,7 @@
         const { data: updated, error } = await db
           .from('anna_marco_rsvp')
           .update({ attend: newAttend, guests: newAttend === 'no' ? '0' : (r.guests === '0' ? '1' : r.guests) })
-          .eq('edit_token', r.edit_token)
+          .eq('id', r.id)
           .select();
 
         if (error) throw error;
