@@ -2717,6 +2717,7 @@
 
         document.getElementById('paymentModal').classList.add('open');
         document.body.style.overflow = 'hidden';
+        if (typeof fbq !== 'undefined') fbq('track', 'InitiateCheckout');
       } catch (err) {
         alert('Could not save order: ' + (err?.message || JSON.stringify(err)));
       } finally {
@@ -2923,6 +2924,7 @@
           } catch (_) {}
         }
       } finally {
+        if (typeof fbq !== 'undefined') fbq('track', 'Purchase', { currency: 'PHP', value: buildPayload().estimatedPrice });
         setTimeout(() => {
           closePaymentModal();
           showSuccess(email);
