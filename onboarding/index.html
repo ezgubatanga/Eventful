@@ -1428,17 +1428,18 @@
     .btn-continue-editing {
       display: inline-flex;
       align-items: center;
+      justify-content: center;
       gap: 6px;
       background: transparent;
       border: 1.5px solid var(--gold);
       color: var(--gold);
       font-family: 'Outfit', sans-serif;
-      font-size: 0.9rem;
-      font-weight: 600;
-      padding: 10px 22px;
-      border-radius: 50px;
+      font-size: 0.92rem;
+      font-weight: 500;
+      letter-spacing: 0.04em;
+      padding: 14px 30px;
+      border-radius: 999px;
       cursor: pointer;
-      margin: 0 auto;
       transition: var(--transition);
     }
 
@@ -2884,8 +2885,10 @@
             .update({ ceremony_time: time || null, venue_name: venue || null })
             .eq('id', _orderId);
         }
-        btn.innerHTML = 'Saved ✓';
-        btn.style.background = 'var(--sage)';
+        const saved = document.createElement('p');
+        saved.textContent = 'Saved!';
+        saved.style.cssText = 'font-size:0.9rem;font-weight:500;color:var(--sage);margin:0;text-align:center;';
+        btn.replaceWith(saved);
       } catch (_) {
         btn.disabled = false;
         btn.innerHTML = 'Save Details';

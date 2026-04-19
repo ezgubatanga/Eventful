@@ -320,8 +320,8 @@
     thead th:nth-child(5) { width: 9%; }
     thead th:nth-child(6) { width: 8%; }
     thead th:nth-child(7) { width: 11%; }
-    thead th:nth-child(8) { width: 9%; }
-    thead th:nth-child(9) { width: 12%; }
+    thead th:nth-child(8) { width: 7%; }
+    thead th:nth-child(9) { width: 14%; }
 
     /* ── Badges ── */
     .badge {
@@ -333,10 +333,12 @@
       font-weight: 600;
       letter-spacing: 0.04em;
     }
-    .badge-paid     { background: rgba(127,168,130,0.15); color: var(--green); }
-    .badge-pending  { background: rgba(209,163,164,0.12); color: var(--rose); }
-    .badge-receipt  { background: rgba(197,160,89,0.12);  color: var(--gold); }
-    .badge-other    { background: rgba(110,104,95,0.15);  color: var(--muted); }
+    .badge-paid      { background: rgba(127,168,130,0.15); color: var(--green); }
+    .badge-pending   { background: rgba(209,163,164,0.12); color: var(--rose); }
+    .badge-receipt   { background: rgba(197,160,89,0.12);  color: var(--gold); }
+    .badge-other     { background: rgba(110,104,95,0.15);  color: var(--muted); }
+    .badge-confirmed { background: rgba(197,160,89,0.18);  color: var(--gold);  border: 1px solid rgba(197,160,89,0.3); }
+    .badge-delivered { background: rgba(127,168,130,0.20); color: var(--green); border: 1px solid rgba(127,168,130,0.3); }
 
     /* ── Action buttons ── */
     .action-btn {
@@ -358,6 +360,8 @@
     .btn-view:hover  { background: var(--gold-mid); }
     .btn-delete { background: rgba(196,122,122,0.08); border-color: rgba(196,122,122,0.25); color: var(--red); padding: 6px 8px; margin-left: 6px; }
     .btn-delete:hover { background: rgba(196,122,122,0.18); }
+    .btn-status { background: var(--surface-2); border-color: var(--border-mid); color: var(--muted); padding: 6px 8px; margin-left: 6px; }
+    .btn-status:hover { background: var(--surface-3); color: var(--text); }
     .btn-icon { width: 14px; height: 14px; pointer-events: none; }
     .action-btn * { pointer-events: none; }
 
@@ -551,7 +555,7 @@
       thead th:nth-child(5), tbody td:nth-child(5),
       thead th:nth-child(6), tbody td:nth-child(6),
       thead th:nth-child(8), tbody td:nth-child(8) { display: none; }
-      .btn-view { display: none; }
+      .btn-view, .btn-status { display: none; }
       .btn-dots { display: inline-flex; }
       .modal { max-width: 100%; border-radius: 16px 16px 0 0; max-height: 90dvh; }
       .modal-backdrop { align-items: flex-end; padding: 0; }
@@ -933,7 +937,11 @@
             ? '<span class="badge badge-pending">Pending</span>'
             : r.payment_status === 'receipt_uploaded'
               ? '<span class="badge badge-receipt">Receipt Sent</span>'
-              : `<span class="badge badge-other">${esc(r.payment_status || '—')}</span>`;
+              : r.payment_status === 'confirmed'
+                ? '<span class="badge badge-confirmed">Confirmed</span>'
+                : r.payment_status === 'delivered'
+                  ? '<span class="badge badge-delivered">Delivered</span>'
+                  : `<span class="badge badge-other">${esc(r.payment_status || '—')}</span>`;
 
         return `
           <tr>
@@ -952,6 +960,21 @@
               <button class="action-btn btn-delete" id="btn-delete-${i}" title="Delete order">
                 <svg class="btn-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="3 6 5 6 21 6"/><path d="M19 6l-1 14H6L5 6"/><path d="M10 11v6"/><path d="M14 11v6"/><path d="M9 6V4h6v2"/></svg>
               </button>
+              <span style="position:relative;display:inline-block">
+                <button class="action-btn btn-status" id="btn-status-${i}" title="Update order status">
+                  <svg class="btn-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 11 12 14 22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></svg>
+                </button>
+                <div class="dots-dropdown" id="status-dd-${i}">
+                  <button class="dots-item" id="status-confirm-${i}" style="color:var(--gold)">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
+                    Confirm Order
+                  </button>
+                  <button class="dots-item" id="status-deliver-${i}" style="color:var(--green)">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="1" y="3" width="15" height="13"/><polygon points="16 8 20 8 23 11 23 16 16 16 16 8"/><circle cx="5.5" cy="18.5" r="2.5"/><circle cx="18.5" cy="18.5" r="2.5"/></svg>
+                    Mark Delivered
+                  </button>
+                </div>
+              </span>
               <button class="btn-dots" id="btn-dots-${i}">
                 <svg viewBox="0 0 24 24" fill="currentColor"><circle cx="5" cy="12" r="2"/><circle cx="12" cy="12" r="2"/><circle cx="19" cy="12" r="2"/></svg>
               </button>
@@ -959,6 +982,14 @@
                 <button class="dots-item" id="dots-view-${i}">
                   <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
                   View Details
+                </button>
+                <button class="dots-item" id="dots-confirm-${i}" style="color:var(--gold);border-top:1px solid var(--border)">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
+                  Confirm Order
+                </button>
+                <button class="dots-item" id="dots-deliver-${i}" style="color:var(--green)">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="1" y="3" width="15" height="13"/><polygon points="16 8 20 8 23 11 23 16 16 16 16 8"/><circle cx="5.5" cy="18.5" r="2.5"/><circle cx="18.5" cy="18.5" r="2.5"/></svg>
+                  Mark Delivered
                 </button>
                 <button class="dots-item" id="dots-delete-${i}" style="color:var(--red);border-top:1px solid var(--border)">
                   <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="3 6 5 6 21 6"/><path d="M19 6l-1 14H6L5 6"/><path d="M10 11v6"/><path d="M14 11v6"/><path d="M9 6V4h6v2"/></svg>
@@ -972,6 +1003,19 @@
       visible.forEach((r, i) => {
         document.getElementById('btn-view-' + i).addEventListener('click', e => { e.stopPropagation(); openDetail(r); });
         document.getElementById('btn-delete-' + i).addEventListener('click', e => { e.stopPropagation(); openDeleteModal(r); });
+        document.getElementById('btn-status-' + i).addEventListener('click', e => {
+          e.stopPropagation();
+          const dd = document.getElementById('status-dd-' + i);
+          const isOpen = dd.classList.contains('open');
+          closeAllDropdowns();
+          if (!isOpen) dd.classList.add('open');
+        });
+        document.getElementById('status-confirm-' + i).addEventListener('click', e => {
+          e.stopPropagation(); closeAllDropdowns(); confirmOrder(r);
+        });
+        document.getElementById('status-deliver-' + i).addEventListener('click', e => {
+          e.stopPropagation(); closeAllDropdowns(); markDelivered(r);
+        });
         document.getElementById('btn-dots-' + i).addEventListener('click', e => {
           e.stopPropagation();
           const dd = document.getElementById('dots-dd-' + i);
@@ -980,14 +1024,16 @@
           if (!isOpen) dd.classList.add('open');
         });
         document.getElementById('dots-view-' + i).addEventListener('click', e => {
-          e.stopPropagation();
-          closeAllDropdowns();
-          openDetail(r);
+          e.stopPropagation(); closeAllDropdowns(); openDetail(r);
+        });
+        document.getElementById('dots-confirm-' + i).addEventListener('click', e => {
+          e.stopPropagation(); closeAllDropdowns(); confirmOrder(r);
+        });
+        document.getElementById('dots-deliver-' + i).addEventListener('click', e => {
+          e.stopPropagation(); closeAllDropdowns(); markDelivered(r);
         });
         document.getElementById('dots-delete-' + i).addEventListener('click', e => {
-          e.stopPropagation();
-          closeAllDropdowns();
-          openDeleteModal(r);
+          e.stopPropagation(); closeAllDropdowns(); openDeleteModal(r);
         });
       });
     }
@@ -1001,6 +1047,54 @@
       document.querySelectorAll('.dots-dropdown.open').forEach(d => d.classList.remove('open'));
     }
     document.addEventListener('click', closeAllDropdowns);
+
+    // GAS web app doPost: function doPost(e) { sendOrderConfirmation(JSON.parse(e.parameter.payload)); return ContentService.createTextOutput('ok'); }
+    const GAS_CONFIRM_URL = 'https://script.google.com/macros/s/AKfycbxP4YLK1Cb59h0l8FNIh0UhubFolWQ_b5O-GGd64gmABuVy2XIq66oFo6iY0U4XlezgSw/exec';
+
+    async function confirmOrder(r) {
+      const names = [r.groom_name, r.bride_name].filter(Boolean).join(' & ') || 'Order';
+      const fnAddons = Array.isArray(r.functional_add_ons) ? r.functional_add_ons.join(', ') : String(r.functional_add_ons || '');
+      const prAddons = Array.isArray(r.premium_add_ons)    ? r.premium_add_ons.join(', ')    : String(r.premium_add_ons    || '');
+      const orderData = {
+        groomName:    r.groom_name    || '',
+        brideName:    r.bride_name    || '',
+        email:        r.email         || '',
+        delivery:     r.delivery      || '',
+        fnAddons,
+        prAddons,
+        weddingDate:  r.wedding_date  || '',
+        pageUrl:      r.page_slug ? 'https://eventful.page/' + r.page_slug : '',
+        colorPalette: r.color_palette || '',
+      };
+      try {
+        if (GAS_CONFIRM_URL) {
+          await fetch(GAS_CONFIRM_URL, {
+            method:  'POST',
+            mode:    'no-cors',
+            headers: { 'Content-Type': 'text/plain' },
+            body:    JSON.stringify({ action: 'confirm_order', ...orderData }),
+          });
+        }
+        const { error } = await db.from('orders').update({ payment_status: 'confirmed' }).eq('id', r.id);
+        if (error) throw error;
+        showToast(`<strong>${esc(names)}</strong> confirmed — email sent`);
+        loadData();
+      } catch (err) {
+        showToast('Error: ' + esc(err.message));
+      }
+    }
+
+    async function markDelivered(r) {
+      const names = [r.groom_name, r.bride_name].filter(Boolean).join(' & ') || 'Order';
+      try {
+        const { error } = await db.from('orders').update({ payment_status: 'delivered' }).eq('id', r.id);
+        if (error) throw error;
+        showToast(`<strong>${esc(names)}</strong> marked as delivered`);
+        loadData();
+      } catch (err) {
+        showToast('Error: ' + esc(err.message));
+      }
+    }
 
     // ── Delete modal ──
     const deleteModal   = document.getElementById('delete-modal');
