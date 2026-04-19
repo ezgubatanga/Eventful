@@ -1711,6 +1711,34 @@
       color: var(--text-main);
     }
 
+    .palette-option.dark-palette {
+      background: #1C1C2A;
+      border-color: rgba(197, 160, 89, 0.22);
+    }
+
+    .palette-option.dark-palette:hover {
+      background: #242434;
+      border-color: rgba(197, 160, 89, 0.45);
+    }
+
+    .palette-option.dark-palette.selected {
+      background: rgba(197, 160, 89, 0.15);
+      border-color: var(--gold);
+      box-shadow: 0 0 0 3px rgba(197, 160, 89, 0.12);
+    }
+
+    .palette-option.dark-palette .palette-name {
+      color: rgba(255,255,255,0.55);
+    }
+
+    .palette-option.dark-palette.selected .palette-name {
+      color: rgba(255,255,255,0.9);
+    }
+
+    .palette-option.dark-palette .palette-swatch {
+      border-color: rgba(255,255,255,0.12);
+    }
+
     .palette-hint {
       font-size: 0.78rem;
       color: var(--text-light);
@@ -2294,17 +2322,16 @@
       { name: 'Plum Velvet',         swatches: ['#1E0F2A','#C8A0D8','#E8C4B8'] },
     ];
 
-    function renderPaletteGrid(palettes) {
+    function renderPaletteGrid(palettes, isDark) {
       const grid = document.getElementById('paletteGrid');
       grid.innerHTML = palettes.map(p => `
-        <div class="palette-option" data-palette="${p.name}" onclick="selectPalette(this)">
+        <div class="palette-option${isDark ? ' dark-palette' : ''}" data-palette="${p.name}" onclick="selectPalette(this)">
           <div class="palette-swatches">
             ${p.swatches.map(c => `<div class="palette-swatch" style="background:${c};"></div>`).join('')}
           </div>
           <span class="palette-name">${p.name}</span>
         </div>
       `).join('');
-      // reset selection
       document.getElementById('colorPalette').value = '';
     }
 
@@ -2313,7 +2340,8 @@
       el.classList.add('selected');
       const mode = el.dataset.mode;
       document.getElementById('pageMode').value = mode;
-      renderPaletteGrid(mode === 'Dark' ? DARK_PALETTES : LIGHT_PALETTES);
+      const isDark = mode === 'Dark';
+      renderPaletteGrid(isDark ? DARK_PALETTES : LIGHT_PALETTES, isDark);
     }
 
     // ── Color Palette Picker ──────────────────────────────────
