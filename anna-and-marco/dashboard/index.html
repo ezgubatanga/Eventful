@@ -193,7 +193,7 @@
     .nav-brand:hover { opacity: 0.8; }
     .nav-brand span { color: var(--muted); font-size: 0.8rem; font-family: 'Outfit', sans-serif; margin-left: 10px; font-weight: 400; }
     @media (max-width: 540px) {
-      .nav-brand { font-size: 0.95rem; line-height: 1.2; }
+      .nav-brand { font-size: 0.95rem; display: flex; flex-direction: column; align-items: flex-start; gap: 1px; }
       .nav-brand span { display: block; margin-left: 0; font-size: 0.72rem; }
     }
     .nav-refresh {
@@ -764,8 +764,10 @@
       .kpi-grid { grid-template-columns: repeat(2, 1fr); gap: 10px; }
       .kpi-value { font-size: 1.9rem; }
       .meal-name { width: 130px; }
+      /* Horizontal scroll on the table wrap */
+      .table-wrap { overflow-x: auto; -webkit-overflow-scrolling: touch; }
       /* Switch to auto layout on mobile so hidden Date column doesn't break distribution */
-      table { table-layout: auto; }
+      table { table-layout: auto; min-width: 480px; }
       thead th { width: auto; }
       /* Hide Date column on mobile */
       thead th:nth-child(5),
