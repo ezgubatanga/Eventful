@@ -1941,72 +1941,7 @@
             <div class="field-group field-full" style="margin-top:4px;">
               <label class="field-label">Color Palette</label>
               <p class="palette-hint">Pick a vibe — we'll match your page to it. Skip if you're not sure yet.</p>
-              <div class="palette-grid" id="paletteGrid">
-                <div class="palette-option" data-palette="Blush & Sage" onclick="selectPalette(this)">
-                  <div class="palette-swatches">
-                    <div class="palette-swatch" style="background:#E8C4B8;"></div>
-                    <div class="palette-swatch" style="background:#A8BEA8;"></div>
-                    <div class="palette-swatch" style="background:#F5EDE8;"></div>
-                  </div>
-                  <span class="palette-name">Blush & Sage</span>
-                </div>
-                <div class="palette-option" data-palette="Navy & Gold" onclick="selectPalette(this)">
-                  <div class="palette-swatches">
-                    <div class="palette-swatch" style="background:#1A2E4A;"></div>
-                    <div class="palette-swatch" style="background:#C5A059;"></div>
-                    <div class="palette-swatch" style="background:#F5F0E8;"></div>
-                  </div>
-                  <span class="palette-name">Navy & Gold</span>
-                </div>
-                <div class="palette-option" data-palette="Dusty Rose & Mauve" onclick="selectPalette(this)">
-                  <div class="palette-swatches">
-                    <div class="palette-swatch" style="background:#D4A5A0;"></div>
-                    <div class="palette-swatch" style="background:#9B7B8A;"></div>
-                    <div class="palette-swatch" style="background:#F0E8EC;"></div>
-                  </div>
-                  <span class="palette-name">Dusty Rose & Mauve</span>
-                </div>
-                <div class="palette-option" data-palette="Plum & Terracotta" onclick="selectPalette(this)">
-                  <div class="palette-swatches">
-                    <div class="palette-swatch" style="background:#5C2D5E;"></div>
-                    <div class="palette-swatch" style="background:#C4684C;"></div>
-                    <div class="palette-swatch" style="background:#F2E8E0;"></div>
-                  </div>
-                  <span class="palette-name">Plum & Terracotta</span>
-                </div>
-                <div class="palette-option" data-palette="Ivory & Champagne" onclick="selectPalette(this)">
-                  <div class="palette-swatches">
-                    <div class="palette-swatch" style="background:#F5F0E8;"></div>
-                    <div class="palette-swatch" style="background:#D4B896;"></div>
-                    <div class="palette-swatch" style="background:#E8E0D4;"></div>
-                  </div>
-                  <span class="palette-name">Ivory & Champagne</span>
-                </div>
-                <div class="palette-option" data-palette="Sage & Terracotta" onclick="selectPalette(this)">
-                  <div class="palette-swatches">
-                    <div class="palette-swatch" style="background:#7A8C6E;"></div>
-                    <div class="palette-swatch" style="background:#C47B5A;"></div>
-                    <div class="palette-swatch" style="background:#F0EAE0;"></div>
-                  </div>
-                  <span class="palette-name">Sage & Terracotta</span>
-                </div>
-                <div class="palette-option" data-palette="Midnight & Blush" onclick="selectPalette(this)">
-                  <div class="palette-swatches">
-                    <div class="palette-swatch" style="background:#1C1C2E;"></div>
-                    <div class="palette-swatch" style="background:#E8C4B8;"></div>
-                    <div class="palette-swatch" style="background:#C8B8D0;"></div>
-                  </div>
-                  <span class="palette-name">Midnight & Blush</span>
-                </div>
-                <div class="palette-option" data-palette="Lavender & Gold" onclick="selectPalette(this)">
-                  <div class="palette-swatches">
-                    <div class="palette-swatch" style="background:#B5A5C8;"></div>
-                    <div class="palette-swatch" style="background:#C5A059;"></div>
-                    <div class="palette-swatch" style="background:#F0EDF5;"></div>
-                  </div>
-                  <span class="palette-name">Lavender & Gold</span>
-                </div>
-              </div>
+              <div class="palette-grid" id="paletteGrid"></div>
               <input class="field-input" type="text" id="colorPalette" name="colorPalette"
                 placeholder="Or describe it — 'dusty blue and white with gold accents'" autocomplete="off" />
             </div>
@@ -2337,10 +2272,48 @@
     }
 
     // ── Page Mode Toggle ──────────────────────────────────────
+    const LIGHT_PALETTES = [
+      { name: 'Blush & Sage',        swatches: ['#E8C4B8','#A8BEA8','#F5EDE8'] },
+      { name: 'Navy & Gold',         swatches: ['#1A2E4A','#C5A059','#F5F0E8'] },
+      { name: 'Dusty Rose & Mauve',  swatches: ['#D4A5A0','#9B7B8A','#F0E8EC'] },
+      { name: 'Plum & Terracotta',   swatches: ['#5C2D5E','#C4684C','#F2E8E0'] },
+      { name: 'Ivory & Champagne',   swatches: ['#F5F0E8','#D4B896','#E8E0D4'] },
+      { name: 'Sage & Terracotta',   swatches: ['#7A8C6E','#C47B5A','#F0EAE0'] },
+      { name: 'Midnight & Blush',    swatches: ['#1C1C2E','#E8C4B8','#C8B8D0'] },
+      { name: 'Lavender & Gold',     swatches: ['#B5A5C8','#C5A059','#F0EDF5'] },
+    ];
+
+    const DARK_PALETTES = [
+      { name: 'Midnight Rose',       swatches: ['#1C1825','#E8A0B0','#C5A059'] },
+      { name: 'Deep Navy & Pearl',   swatches: ['#0D1B2A','#D4C5A9','#8AB4C8'] },
+      { name: 'Obsidian & Gold',     swatches: ['#1A1814','#C5A059','#D4B896'] },
+      { name: 'Forest Night',        swatches: ['#0F1C14','#7AB88A','#D4A07A'] },
+      { name: 'Noir & Blush',        swatches: ['#1A1015','#E8C4B8','#9B8090'] },
+      { name: 'Slate & Gold',        swatches: ['#1C2030','#C5A059','#B0B8CC'] },
+      { name: 'Ember & Ash',         swatches: ['#1E1410','#C4684C','#B0A090'] },
+      { name: 'Plum Velvet',         swatches: ['#1E0F2A','#C8A0D8','#E8C4B8'] },
+    ];
+
+    function renderPaletteGrid(palettes) {
+      const grid = document.getElementById('paletteGrid');
+      grid.innerHTML = palettes.map(p => `
+        <div class="palette-option" data-palette="${p.name}" onclick="selectPalette(this)">
+          <div class="palette-swatches">
+            ${p.swatches.map(c => `<div class="palette-swatch" style="background:${c};"></div>`).join('')}
+          </div>
+          <span class="palette-name">${p.name}</span>
+        </div>
+      `).join('');
+      // reset selection
+      document.getElementById('colorPalette').value = '';
+    }
+
     function selectMode(el) {
       document.querySelectorAll('.mode-option').forEach(o => o.classList.remove('selected'));
       el.classList.add('selected');
-      document.getElementById('pageMode').value = el.dataset.mode;
+      const mode = el.dataset.mode;
+      document.getElementById('pageMode').value = mode;
+      renderPaletteGrid(mode === 'Dark' ? DARK_PALETTES : LIGHT_PALETTES);
     }
 
     // ── Color Palette Picker ──────────────────────────────────
@@ -2355,6 +2328,7 @@
 
     // Clicking the text field deselects palette chips
     document.addEventListener('DOMContentLoaded', () => {
+      renderPaletteGrid(LIGHT_PALETTES);
       document.getElementById('colorPalette').addEventListener('input', function() {
         const typed = this.value.trim();
         const activeChip = document.querySelector('.palette-option.selected');
@@ -3137,7 +3111,7 @@
             textEl.textContent = 'Likely available ✓';
           } else {
             statusEl.className = 'domain-status taken visible';
-            textEl.textContent = 'May already be registered';
+            textEl.textContent = 'Domain is taken';
           }
         } catch {
           statusEl.className = 'domain-status';
