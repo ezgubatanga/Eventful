@@ -2701,11 +2701,17 @@
             submitted_at:      payload.submittedAt,
           }).select('id').single();
 
-          if (!error && data) _orderId = data.id;
+          if (error) {
+            console.error('Supabase insert error:', error);
+            throw error;
+          }
+          if (data) _orderId = data.id;
         }
 
         document.getElementById('paymentModal').classList.add('open');
         document.body.style.overflow = 'hidden';
+      } catch (err) {
+        alert('Could not save order: ' + (err?.message || JSON.stringify(err)));
       } finally {
         btn.disabled = false;
         btn.innerHTML = 'Proceed to Payment ✦';
