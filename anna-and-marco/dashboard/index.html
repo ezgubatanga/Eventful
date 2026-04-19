@@ -192,6 +192,10 @@
     }
     .nav-brand:hover { opacity: 0.8; }
     .nav-brand span { color: var(--muted); font-size: 0.8rem; font-family: 'Outfit', sans-serif; margin-left: 10px; font-weight: 400; }
+    @media (max-width: 540px) {
+      .nav-brand { font-size: 0.95rem; line-height: 1.2; }
+      .nav-brand span { display: block; margin-left: 0; font-size: 0.72rem; }
+    }
     .nav-refresh {
       display: flex;
       align-items: center;
@@ -1392,10 +1396,10 @@
     function openAttendModal(r) {
       const to = r.attend === 'yes' ? 'No' : 'Yes';
       attendModalSub.textContent   = r.name;
-      attendModalWarn.textContent  = `This will change their response from "${r.attend === 'yes' ? 'Yes' : 'No'}" to "${to}" and update the table.`;
+      attendModalWarn.textContent  = 'Changing attendance is not available on the demo page. On a live wedding page, the couple can update responses directly from their dashboard.';
       attendConfirmBtn.textContent = `Change to ${to}`;
-      attendConfirmBtn.disabled    = false;
-      attendConfirmBtn.style.color = '';
+      attendConfirmBtn.disabled    = true;
+      attendConfirmBtn.style.color = 'var(--light)';
       _attendTarget = r;
       attendModal.classList.add('open');
     }
