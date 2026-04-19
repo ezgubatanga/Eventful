@@ -2676,37 +2676,47 @@
     let _orderId = null;
 
     async function handleSubmit() {
-      const { total } = calcPrice();
-      document.getElementById('modalAmount').textContent = `₱${total.toLocaleString()}`;
+      const btn = document.getElementById('submitBtn');
+      btn.disabled = true;
+      btn.innerHTML = '<span class="spinner"></span> Saving…';
 
-      // Insert order into Supabase
-      const payload = buildPayload();
-      const { data, error } = await db.from('orders').insert({
-        groom_name:        payload.groomName,
-        bride_name:        payload.brideName,
-        wedding_date:      payload.weddingDate,
-        email:             payload.email,
-        contact_number:    payload.contactNumber,
-        location:          payload.location,
-        venue_name:        payload.venueName,
-        ceremony_time:     payload.ceremonyTime,
-        page_slug:         payload.pageSlug,
-        page_mode:         payload.pageMode,
-        color_palette:     payload.colorPalette,
-        core_sections:     payload.coreSections,
-        functional_add_ons: payload.functionalAddOns,
-        premium_add_ons:   payload.premiumAddOns,
-        delivery:          payload.delivery,
-        special_requests:  payload.specialRequests,
-        estimated_price:   payload.estimatedPrice,
-        payment_status:    'pending',
-        submitted_at:      payload.submittedAt,
-      }).select('id').single();
+      try {
+        const { total } = calcPrice();
+        document.getElementById('modalAmount').textContent = `₱${total.toLocaleString()}`;
 
-      if (!error && data) _orderId = data.id;
+        if (!_orderId) {
+          const payload = buildPayload();
+          const { data, error } = await db.from('orders').insert({
+            groom_name:        payload.groomName,
+            bride_name:        payload.brideName,
+            wedding_date:      payload.weddingDate,
+            email:             payload.email,
+            contact_number:    payload.contactNumber,
+            location:          payload.location,
+            venue_name:        payload.venueName,
+            ceremony_time:     payload.ceremonyTime,
+            page_slug:         payload.pageSlug,
+            page_mode:         payload.pageMode,
+            color_palette:     payload.colorPalette,
+            core_sections:     payload.coreSections,
+            functional_add_ons: payload.functionalAddOns,
+            premium_add_ons:   payload.premiumAddOns,
+            delivery:          payload.delivery,
+            special_requests:  payload.specialRequests,
+            estimated_price:   payload.estimatedPrice,
+            payment_status:    'pending',
+            submitted_at:      payload.submittedAt,
+          }).select('id').single();
 
-      document.getElementById('paymentModal').classList.add('open');
-      document.body.style.overflow = 'hidden';
+          if (!error && data) _orderId = data.id;
+        }
+
+        document.getElementById('paymentModal').classList.add('open');
+        document.body.style.overflow = 'hidden';
+      } finally {
+        btn.disabled = false;
+        btn.innerHTML = 'Proceed to Payment ✦';
+      }
     }
 
     let _selectedMethod = 'gcash';
