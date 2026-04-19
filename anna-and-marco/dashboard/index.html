@@ -462,6 +462,7 @@
       .dots-dropdown, .btn-dots, .action-btn { display: none !important; }
       table th.screen-only, table td.screen-only { display: none !important; }
       table th.print-only, table td.print-only { display: table-cell !important; white-space: normal; word-break: break-word; }
+      thead th:nth-child(5), tbody td:nth-child(5) { display: table-cell !important; }
       table { font-size: 0.7rem; table-layout: auto; width: 100%; }
       table td, table th { padding: 6px 4px; white-space: normal; word-break: break-word; overflow: visible; }
       table thead th { white-space: nowrap; }
@@ -470,6 +471,18 @@
       #rsvp-section-title { font-size: 0; }
       #rsvp-section-title::after { font-size: 0.75rem; letter-spacing: 0.1em; }
       .badge { border: none; background: none !important; color: inherit !important; padding: 0; }
+      /* Hide chevron inside attendance badge */
+      .attend-toggle-btn svg { display: none !important; }
+      /* Hide filter pills */
+      .filter-pills { display: none !important; }
+      /* Darken light text for white paper */
+      .section-title, .kpi-label, .meal-card-title { color: #555 !important; }
+      .meal-name, .kpi-sub, .td-muted { color: #333 !important; }
+      .kpi-value, .meal-count { color: #111 !important; }
+      /* Meal bar chart — force color printing */
+      .meal-card { background: #fff !important; border-color: #ccc !important; }
+      .meal-bar-wrap { background: #e0ddd8 !important; -webkit-print-color-adjust: exact !important; print-color-adjust: exact !important; }
+      .meal-bar { background: #7a6030 !important; -webkit-print-color-adjust: exact !important; print-color-adjust: exact !important; }
       @page landscape { size: landscape; }
       @media (orientation: landscape) {
         thead th:nth-child(5) { width: 22%; } /* Meal — fixed width, more breathing room */
@@ -766,6 +779,10 @@
       .meal-name { width: 130px; }
       /* Horizontal scroll on the table wrap */
       .table-wrap { overflow-x: auto; -webkit-overflow-scrolling: touch; }
+      /* Freeze name column */
+      thead th:nth-child(1),
+      tbody td:nth-child(1) { position: sticky; left: 0; z-index: 2; background: var(--surface); }
+      thead th:nth-child(1) { background: var(--surface-2); }
       /* Switch to auto layout on mobile so hidden Date column doesn't break distribution */
       table { table-layout: auto; min-width: 480px; }
       thead th { width: auto; }
@@ -775,6 +792,7 @@
       /* Compact padding on Going + Guests */
       thead th:nth-child(2), tbody td:nth-child(2),
       thead th:nth-child(3), tbody td:nth-child(3) { padding-left: 8px; padding-right: 4px; white-space: nowrap; }
+      thead th:nth-child(4), tbody td:nth-child(4) { padding-left: 16px; }
       /* Meal text wrap on mobile */
       tbody td:nth-child(4) { font-size: 0.76rem; white-space: normal; padding-left: 4px; padding-right: 4px; }
       thead th:nth-child(4) { padding-left: 4px; }
