@@ -192,10 +192,6 @@
     }
     .nav-brand:hover { opacity: 0.8; }
     .nav-brand span { color: var(--muted); font-size: 0.8rem; font-family: 'Outfit', sans-serif; margin-left: 10px; font-weight: 400; }
-    @media (max-width: 540px) {
-      .nav-brand { font-size: 0.95rem; display: flex; flex-direction: column; align-items: flex-start; gap: 1px; }
-      .nav-brand span { display: block; margin-left: 0; font-size: 0.72rem; }
-    }
     .nav-refresh {
       display: flex;
       align-items: center;
@@ -479,6 +475,11 @@
       .section-title, .kpi-label, .meal-card-title { color: #555 !important; }
       .meal-name, .kpi-sub, .td-muted { color: #333 !important; }
       .kpi-value, .meal-count { color: #111 !important; }
+      thead th { color: #333 !important; }
+      /* Meal column min-width in print */
+      thead th:nth-child(5), tbody td:nth-child(5) { min-width: 130px !important; }
+      /* Attendance text black */
+      .attend-toggle-btn { color: #000 !important; }
       /* Meal bar chart — force color printing */
       .meal-card { background: #fff !important; border-color: #ccc !important; }
       .meal-bar-wrap { background: #e0ddd8 !important; -webkit-print-color-adjust: exact !important; print-color-adjust: exact !important; }
@@ -792,10 +793,8 @@
       /* Compact padding on Going + Guests */
       thead th:nth-child(2), tbody td:nth-child(2),
       thead th:nth-child(3), tbody td:nth-child(3) { padding-left: 8px; padding-right: 4px; white-space: nowrap; }
+      /* Guest column — breathing room from Going badge */
       thead th:nth-child(4), tbody td:nth-child(4) { padding-left: 16px; }
-      /* Meal text wrap on mobile */
-      tbody td:nth-child(4) { font-size: 0.76rem; white-space: normal; padding-left: 4px; padding-right: 4px; }
-      thead th:nth-child(4) { padding-left: 4px; }
       /* Actions: shrink to dots button, no clipping */
       .td-actions { padding-left: 4px; padding-right: 20px !important; white-space: nowrap; overflow: visible; }
       /* Hide message column and text buttons on mobile */
@@ -803,8 +802,8 @@
       .btn-contact, .btn-remove { display: none; }
       .btn-dots { display: inline-flex; }
       .nav-refresh, .nav-notify { display: none; }
-      .nav-brand { white-space: nowrap; font-size: 0.95rem; }
-      .nav-brand span { margin-left: 4px; }
+      .nav-brand { font-size: 0.95rem; display: flex; flex-direction: column; align-items: flex-start; gap: 1px; }
+      .nav-brand span { display: block; margin-left: 0; font-size: 0.72rem; }
     }
   </style>
   <!-- Meta Pixel Code -->
