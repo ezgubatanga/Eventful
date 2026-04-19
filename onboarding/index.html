@@ -2367,10 +2367,10 @@
     }
 
     function getCeremonyTime() {
-      const h = document.getElementById('ceremonyHour').value;
-      const m = document.getElementById('ceremonyMinute').value;
-      if (!h || m === '') return '';
-      const ampm = document.getElementById('amBtn').classList.contains('active') ? 'AM' : 'PM';
+      const h = document.getElementById('ceremonyHour')?.value;
+      const m = document.getElementById('ceremonyMinute')?.value;
+      if (!h || m === '' || m == null) return '';
+      const ampm = document.getElementById('amBtn')?.classList.contains('active') ? 'AM' : 'PM';
       return `${h}:${m} ${ampm}`;
     }
 
@@ -2579,7 +2579,7 @@
       document.getElementById('summaryCoupleName').textContent = couple;
       const isRush = document.getElementById('delivery-rush')?.checked;
       const time = getCeremonyTime();
-      const venue = document.getElementById('venueName').value;
+      const venue = document.getElementById('venueName')?.value || '';
       const slug = document.getElementById('pageSlug').value.trim();
       document.getElementById('summaryMeta').innerHTML = `
         <span><span class="summary-meta-label">Date</span>${stillDeciding ? 'Still deciding' : formatDate(date)}${!stillDeciding && time ? ' · ' + time : ''}</span>
@@ -2655,7 +2655,7 @@
         email: document.getElementById('email').value.trim(),
         contactNumber: document.getElementById('contactNumber').value.trim(),
         location: document.getElementById('location').value.trim(),
-        venueName: document.getElementById('venueName').value.trim(),
+        venueName: document.getElementById('venueName')?.value.trim() || '',
         ceremonyTime: getCeremonyTime(),
         pageSlug: document.getElementById('pageSlug').value.trim(),
         pageMode: document.getElementById('pageMode').value || 'Not specified',
