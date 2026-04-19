@@ -1712,12 +1712,10 @@
     }
 
     .palette-option.dark-palette {
-      background: #1C1C2A;
       border-color: rgba(197, 160, 89, 0.22);
     }
 
     .palette-option.dark-palette:hover {
-      background: #242434;
       border-color: rgba(197, 160, 89, 0.45);
     }
 
@@ -2324,14 +2322,17 @@
 
     function renderPaletteGrid(palettes, isDark) {
       const grid = document.getElementById('paletteGrid');
-      grid.innerHTML = palettes.map(p => `
-        <div class="palette-option${isDark ? ' dark-palette' : ''}" data-palette="${p.name}" onclick="selectPalette(this)">
+      grid.innerHTML = palettes.map(p => {
+        const swatches = isDark ? p.swatches.slice(1) : p.swatches;
+        const bgStyle = isDark ? ` style="background:${p.swatches[0]};"` : '';
+        return `
+        <div class="palette-option${isDark ? ' dark-palette' : ''}" data-palette="${p.name}" onclick="selectPalette(this)"${bgStyle}>
           <div class="palette-swatches">
-            ${p.swatches.map(c => `<div class="palette-swatch" style="background:${c};"></div>`).join('')}
+            ${swatches.map(c => `<div class="palette-swatch" style="background:${c};"></div>`).join('')}
           </div>
           <span class="palette-name">${p.name}</span>
-        </div>
-      `).join('');
+        </div>`;
+      }).join('');
       document.getElementById('colorPalette').value = '';
     }
 
