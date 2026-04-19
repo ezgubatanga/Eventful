@@ -2366,7 +2366,7 @@
         textEl.textContent = 'This URL is already taken';
       } else {
         statusEl.className = 'domain-status available visible';
-        textEl.textContent = 'Available ✓';
+        textEl.textContent = 'Available';
       }
     }
 
@@ -2469,7 +2469,7 @@
         { id: 'groomName', errId: 'err-groomName', test: v => v.trim().length > 0 },
         { id: 'brideName', errId: 'err-brideName', test: v => v.trim().length > 0 },
         { id: 'weddingDate', errId: 'err-weddingDate', test: v => document.getElementById('stillDeciding').checked || !!v },
-        { id: 'location', errId: 'err-location', test: v => document.getElementById('stillDeciding').checked || v.trim().length > 1 },
+        { id: 'location', errId: 'err-location', test: v => v.trim().length > 1 },
         { id: 'email', errId: 'err-email', test: v => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v) },
         { id: 'contactNumber', errId: 'err-contactNumber', test: v => v.trim().length > 6 },
         { id: 'pageSlug', errId: 'err-pageSlug', test: v => document.getElementById('wantCustomDomain').checked ? /^[a-z0-9-.]{2,}$/.test(v.trim()) : /^[a-z0-9-]{2,}$/.test(v.trim()) },
@@ -2914,9 +2914,9 @@
     // "Still deciding" checkbox toggle
     document.getElementById('stillDeciding').addEventListener('change', function () {
       const deciding = this.checked;
-      const disableIds = ['weddingDate', 'location'];
-      const reqIds = ['weddingDateReq', 'locationReq'];
-      const errIds = ['err-weddingDate', 'err-location'];
+      const disableIds = ['weddingDate'];
+      const reqIds = ['weddingDateReq'];
+      const errIds = ['err-weddingDate'];
 
       disableIds.forEach(id => {
         const el = document.getElementById(id);
@@ -2989,7 +2989,8 @@
       const groom = document.getElementById('groomName').value.trim().split(' ')[0].toLowerCase().replace(/[^a-z]/g, '');
       if (!bride && !groom) return;
       const isCustom = document.getElementById('wantCustomDomain').checked;
-      const base = [bride, groom].filter(Boolean).join('-');
+      const parts = [bride, groom].filter(Boolean);
+      const base = parts.length === 2 ? `${parts[0]}-and-${parts[1]}` : parts[0];
       document.getElementById('pageSlug').value = isCustom ? `${base}.com` : base;
       updateSlugPreview(document.getElementById('pageSlug').value);
       if (isCustom) checkDomainAvailability(`${base}.com`);
