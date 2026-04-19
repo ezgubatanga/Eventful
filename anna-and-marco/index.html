@@ -1240,13 +1240,20 @@
         const isEdit   = !!_rsvpEditToken && _rsvpEditToken === edit_token && payload.couple_id;
 
         fb.style.display = 'block';
+        const editLink = document.createElement('a');
+        editLink.className = 'rsvp-edit-link';
+        editLink.href = editUrl;
         if (attend === 'yes') {
-          fb.innerHTML = `Thank you, ${name}! We can't wait to celebrate with you in Rome.<br><a class="rsvp-edit-link" href="${editUrl}">Made a mistake? Edit your RSVP →</a>`;
+          fb.textContent = `Thank you, ${name}! We can't wait to celebrate with you in Rome.`;
+          editLink.textContent = 'Made a mistake? Edit your RSVP →';
           fb.style.color = '#C5A059';
         } else {
-          fb.innerHTML = `We'll miss you, ${name}. Thank you for letting us know.<br><a class="rsvp-edit-link" href="${editUrl}">Need to update your response? Edit your RSVP →</a>`;
+          fb.textContent = `We'll miss you, ${name}. Thank you for letting us know.`;
+          editLink.textContent = 'Need to update your response? Edit your RSVP →';
           fb.style.color = '#9E9890';
         }
+        fb.appendChild(document.createElement('br'));
+        fb.appendChild(editLink);
 
         if (!isEdit) {
           this.reset();

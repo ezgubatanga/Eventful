@@ -2582,14 +2582,17 @@
       document.getElementById('summaryCoupleName').textContent = couple;
       const isRush = document.getElementById('delivery-rush')?.checked;
       const slug = document.getElementById('pageSlug').value.trim();
+      const _esc = s => String(s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+      const mode = document.getElementById('pageMode').value;
+      const palette = document.getElementById('colorPalette').value.trim();
       document.getElementById('summaryMeta').innerHTML = `
         <span><span class="summary-meta-label">Date</span>${stillDeciding ? 'Still deciding' : formatDate(date)}</span>
-        <span><span class="summary-meta-label">Location</span>${loc}</span>
-        <span><span class="summary-meta-label">Email</span><span style="pointer-events:none;text-decoration:none;color:inherit">${email}</span></span>
-        <span><span class="summary-meta-label">Link</span>${document.getElementById('wantCustomDomain').checked ? 'Custom domain' : 'eventful.page/' + slug}</span>
+        <span><span class="summary-meta-label">Location</span>${_esc(loc)}</span>
+        <span><span class="summary-meta-label">Email</span><span style="pointer-events:none;text-decoration:none;color:inherit">${_esc(email)}</span></span>
+        <span><span class="summary-meta-label">Link</span>${document.getElementById('wantCustomDomain').checked ? 'Custom domain' : 'eventful.page/' + _esc(slug)}</span>
         <span><span class="summary-meta-label">Delivery</span>${isRush ? 'Rush (3 days)' : 'Standard (5 days)'}</span>
-        ${document.getElementById('pageMode').value ? `<span><span class="summary-meta-label">Mode</span>${document.getElementById('pageMode').value}</span>` : ''}
-        ${document.getElementById('colorPalette').value.trim() ? `<span><span class="summary-meta-label">Palette</span>${document.getElementById('colorPalette').value.trim()}</span>` : ''}
+        ${mode ? `<span><span class="summary-meta-label">Mode</span>${_esc(mode)}</span>` : ''}
+        ${palette ? `<span><span class="summary-meta-label">Palette</span>${_esc(palette)}</span>` : ''}
       `;
 
       const specialReqs = document.getElementById('specialRequests')?.value.trim();
