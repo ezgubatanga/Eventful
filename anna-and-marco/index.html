@@ -849,6 +849,21 @@
       if (preloader) setTimeout(() => { preloader.classList.add('hidden'); document.body.style.overflow = ''; }, 300);
     });
 
+    // ── Hero video — replace with poster img if autoplay blocked (iOS low power) ──
+    const heroVideo = document.querySelector('.hero-video');
+    if (heroVideo) {
+      const heroPlay = heroVideo.play();
+      if (heroPlay !== undefined) {
+        heroPlay.catch(() => {
+          const img = document.createElement('img');
+          img.src = heroVideo.getAttribute('poster');
+          img.className = heroVideo.className;
+          img.style.cssText = 'position:absolute;inset:0;width:100%;height:100%;object-fit:cover;z-index:0;pointer-events:none;';
+          heroVideo.parentNode.replaceChild(img, heroVideo);
+        });
+      }
+    }
+
     // ── Music — play on first user interaction ────────────
     function startMusic() {
       audio.play().then(() => {

@@ -3555,6 +3555,16 @@
           previewVideo.volume = 0;
         });
       });
+      const playAttempt = previewVideo.play();
+      if (playAttempt !== undefined) {
+        playAttempt.catch(() => {
+          const img = document.createElement('img');
+          img.src = previewVideo.getAttribute('poster');
+          img.className = previewVideo.className;
+          img.style.cssText = 'position:absolute;inset:0;width:100%;height:100%;object-fit:cover;z-index:0;opacity:0.55;';
+          previewVideo.parentNode.replaceChild(img, previewVideo);
+        });
+      }
     }
 
   </script>
