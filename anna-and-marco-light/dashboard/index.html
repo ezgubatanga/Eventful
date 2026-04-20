@@ -1,0 +1,1493 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <!-- Google tag (gtag.js) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-X3XHYNL7NJ"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-X3XHYNL7NJ');
+  </script>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Anna & Marco — RSVP Dashboard</title>
+  <link rel="icon" type="image/webp" href="/favicon.webp" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&family=Bricolage+Grotesque:opsz,wght@12..96,300;12..96,400;12..96,500;12..96,600;12..96,700&display=swap" rel="stylesheet" />
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <style>
+    :root {
+      --bg:         #ffffff;
+      --surface:    #f8f5f1;
+      --surface-2:  #f1ece5;
+      --surface-3:  #e9e2d9;
+      --border:     rgba(184,144,63,0.15);
+      --border-mid: rgba(184,144,63,0.28);
+      --gold:       #B8903F;
+      --gold-dark:  #9a7530;
+      --gold-light: rgba(184,144,63,0.10);
+      --gold-mid:   rgba(184,144,63,0.22);
+      --text:       #1A1714;
+      --muted:      #6b6459;
+      --light:      #9a9089;
+      --rose:       #B87070;
+      --green:      #4a8a4d;
+      --red:        #a05050;
+      --radius:     12px;
+      --radius-lg:  18px;
+      --shadow:     0 4px 20px rgba(0,0,0,0.10);
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: auto; }
+
+    body {
+      font-family: 'Outfit', sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      min-height: 100dvh;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    /* ── Auth overlay ── */
+    .auth-overlay {
+      position: fixed;
+      inset: 0;
+      background: var(--bg);
+      z-index: 9999;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 24px;
+    }
+    .auth-box {
+      background: var(--surface);
+      border: 1px solid var(--border-mid);
+      border-radius: var(--radius-lg);
+      padding: 40px 36px;
+      width: 100%;
+      max-width: 360px;
+      text-align: center;
+    }
+    .auth-title {
+      font-family: 'Bricolage Grotesque', sans-serif;
+      font-size: 1.6rem;
+      font-weight: 400;
+      color: var(--gold);
+      margin-bottom: 6px;
+    }
+    .auth-sub {
+      font-size: 0.8rem;
+      color: var(--muted);
+      margin-bottom: 28px;
+      letter-spacing: 0.04em;
+    }
+    .auth-input {
+      width: 100%;
+      padding: 12px 16px;
+      background: var(--surface-2);
+      border: 1.5px solid var(--border-mid);
+      border-radius: 10px;
+      color: var(--text);
+      font-family: 'Outfit', sans-serif;
+      font-size: 0.95rem;
+      outline: none;
+      margin-bottom: 14px;
+      transition: border-color 0.2s;
+    }
+    .auth-input:focus { border-color: var(--gold); }
+    .auth-btn {
+      width: 100%;
+      padding: 13px;
+      background: var(--gold);
+      color: #fff;
+      border: none;
+      border-radius: 10px;
+      font-family: 'Outfit', sans-serif;
+      font-size: 0.9rem;
+      font-weight: 700;
+      letter-spacing: 0.06em;
+      cursor: pointer;
+      transition: background 0.2s, transform 0.15s;
+    }
+    .auth-btn:hover { background: var(--gold-dark); transform: translateY(-1px); }
+    .auth-error {
+      font-size: 0.78rem;
+      color: var(--red);
+      margin-top: 10px;
+      display: none;
+    }
+
+    /* ── Nav ── */
+    .nav {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      background: rgba(250,247,244,0.92);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      border-bottom: 1px solid var(--border);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 28px;
+      height: 60px;
+    }
+    .nav-left {
+      display: flex;
+      align-items: center;
+      gap: 4px;
+    }
+    .nav-right {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .nav-cta {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 7px 14px;
+      background: var(--gold-light);
+      border: 1px solid var(--border-mid);
+      border-radius: 8px;
+      color: var(--gold);
+      font-family: 'Outfit', sans-serif;
+      font-size: 0.8rem;
+      font-weight: 600;
+      letter-spacing: 0.03em;
+      text-decoration: none;
+      white-space: nowrap;
+      transition: background 0.2s, border-color 0.2s;
+    }
+    .nav-cta:hover { background: var(--gold-mid); border-color: var(--gold); }
+    @media (max-width: 480px) {
+      .nav-cta span { display: none; }
+    }
+
+    .nav-back {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 32px;
+      height: 32px;
+      border-radius: 8px;
+      border: 1px solid var(--border-mid);
+      color: var(--gold);
+      text-decoration: none;
+      flex-shrink: 0;
+      transition: background 0.2s, border-color 0.2s;
+      margin-right: 4px;
+    }
+    .nav-back:hover { background: var(--gold-light); border-color: var(--gold); }
+
+    .nav-brand {
+      font-family: 'Bricolage Grotesque', sans-serif;
+      font-size: 1.1rem;
+      color: var(--gold);
+      font-weight: 400;
+      text-decoration: none;
+    }
+    .nav-brand:hover { opacity: 0.8; }
+    .nav-brand span { color: var(--muted); font-size: 0.8rem; font-family: 'Outfit', sans-serif; margin-left: 10px; font-weight: 400; }
+    .nav-refresh {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      background: var(--gold-light);
+      border: 1px solid var(--border-mid);
+      border-radius: 8px;
+      padding: 7px 14px;
+      font-family: 'Outfit', sans-serif;
+      font-size: 0.8rem;
+      color: var(--gold);
+      cursor: pointer;
+      transition: background 0.2s;
+    }
+    .nav-refresh:hover { background: var(--gold-mid); }
+    .nav-refresh svg { width: 14px; height: 14px; }
+    .nav-notify {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 34px;
+      height: 34px;
+      background: var(--gold-light);
+      border: 1px solid var(--border-mid);
+      border-radius: 8px;
+      color: var(--gold);
+      cursor: pointer;
+      transition: background 0.2s, border-color 0.2s;
+      position: relative;
+      flex-shrink: 0;
+    }
+    .nav-notify:hover { background: var(--gold-mid); border-color: var(--gold); }
+    .nav-notify svg { width: 15px; height: 15px; }
+    .nav-notify.enabled { background: var(--gold); color: #fff; border-color: var(--gold); }
+    .nav-notify.enabled:hover { background: var(--gold-dark); }
+    .notify-dot {
+      position: absolute;
+      top: 5px;
+      right: 5px;
+      width: 7px;
+      height: 7px;
+      background: var(--green);
+      border-radius: 50%;
+      border: 1.5px solid var(--bg);
+      display: none;
+    }
+    .nav-notify.enabled .notify-dot { display: block; }
+
+    /* ── Main ── */
+    .main {
+      padding: 36px 24px 64px;
+    }
+
+    /* ── Loading / error ── */
+    .state-loading, .state-error {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 80px 0;
+      gap: 16px;
+      color: var(--muted);
+      font-size: 0.9rem;
+    }
+    .spinner {
+      width: 28px;
+      height: 28px;
+      border: 2.5px solid var(--border-mid);
+      border-top-color: var(--gold);
+      border-radius: 50%;
+      animation: spin 0.8s linear infinite;
+    }
+    @keyframes spin { to { transform: rotate(360deg); } }
+    .state-error { color: var(--red); }
+
+    /* ── KPI cards ── */
+    .kpi-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+      gap: 14px;
+      margin-bottom: 28px;
+    }
+    .kpi-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 22px 20px;
+      position: relative;
+      overflow: hidden;
+      transition: border-color 0.2s;
+    }
+    .kpi-card:hover { border-color: var(--border-mid); }
+    .kpi-card::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      opacity: 0;
+      transition: opacity 0.2s;
+    }
+    .kpi-card.gold::before  { background: linear-gradient(135deg, rgba(197,160,89,0.06), transparent); }
+    .kpi-card.green::before { background: linear-gradient(135deg, rgba(127,168,130,0.08), transparent); }
+    .kpi-card.red::before   { background: linear-gradient(135deg, rgba(196,122,122,0.08), transparent); }
+    .kpi-card.rose::before  { background: linear-gradient(135deg, rgba(209,163,164,0.08), transparent); }
+    .kpi-card:hover::before { opacity: 1; }
+    .kpi-label {
+      font-size: 0.7rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--muted);
+      font-weight: 600;
+      margin-bottom: 10px;
+    }
+    .kpi-value {
+      font-size: 2.4rem;
+      font-weight: 700;
+      line-height: 1;
+      margin-bottom: 4px;
+    }
+    .kpi-card.gold  .kpi-value { color: var(--gold); }
+    .kpi-card.green .kpi-value { color: var(--green); }
+    .kpi-card.red   .kpi-value { color: var(--red); }
+    .kpi-card.rose  .kpi-value { color: var(--rose); }
+    .kpi-sub {
+      font-size: 0.75rem;
+      color: var(--light);
+    }
+
+    /* ── Section header ── */
+    .section-header {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 14px;
+      margin-top: 32px;
+    }
+    .section-title {
+      font-size: 0.72rem;
+      font-weight: 700;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--muted);
+      white-space: nowrap;
+    }
+    .section-line {
+      flex: 1;
+      height: 1px;
+      background: var(--border);
+    }
+
+    /* ── Filter pills ── */
+    .filter-pills {
+      display: flex;
+      gap: 8px;
+      align-items: center;
+    }
+    .filter-pill {
+      padding: 4px 14px;
+      border-radius: 99px;
+      font-size: 0.72rem;
+      font-weight: 600;
+      letter-spacing: 0.05em;
+      cursor: pointer;
+      border: 1px solid var(--border-mid);
+      background: transparent;
+      color: var(--muted);
+      font-family: 'Outfit', sans-serif;
+      transition: background 0.15s, color 0.15s, border-color 0.15s;
+    }
+    .filter-pill:hover { color: var(--text); border-color: var(--gold); }
+    .filter-pill.active { background: var(--gold-mid); color: var(--gold); border-color: var(--gold); }
+
+    /* ── Meal bars ── */
+    .meal-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 22px 22px 18px;
+    }
+    .meal-card-title {
+      font-size: 0.72rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--muted);
+      font-weight: 600;
+      margin-bottom: 18px;
+    }
+    .meal-row {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 14px;
+    }
+    .meal-row:last-child { margin-bottom: 0; }
+    .meal-name {
+      width: 180px;
+      font-size: 0.83rem;
+      color: var(--text);
+      flex-shrink: 0;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+    .meal-bar-wrap {
+      flex: 1;
+      height: 6px;
+      background: var(--surface-3);
+      border-radius: 99px;
+      overflow: hidden;
+    }
+    .meal-bar {
+      height: 100%;
+      background: var(--gold);
+      border-radius: 99px;
+      transition: width 0.7s cubic-bezier(0.16,1,0.3,1);
+      width: 0%;
+    }
+    .meal-count {
+      font-size: 0.83rem;
+      font-weight: 600;
+      color: var(--gold);
+      width: 28px;
+      text-align: right;
+      flex-shrink: 0;
+    }
+    .meal-empty {
+      font-size: 0.83rem;
+      color: var(--light);
+      font-style: italic;
+    }
+
+    /* ── Table actions ── */
+    .table-actions {
+      display: flex;
+      gap: 10px;
+      margin-top: 12px;
+      justify-content: flex-end;
+    }
+    .tbl-btn {
+      padding: 8px 20px;
+      border-radius: 8px;
+      font-size: 0.8rem;
+      font-family: 'Outfit', sans-serif;
+      font-weight: 500;
+      cursor: pointer;
+      border: 1px solid var(--border);
+      transition: background 0.2s, color 0.2s;
+    }
+    .tbl-btn-viewall {
+      background: transparent;
+      color: var(--gold);
+      border-color: var(--gold);
+    }
+    .tbl-btn-viewall:hover { background: var(--gold); color: #fff; }
+    .tbl-btn-print {
+      background: transparent;
+      color: var(--light);
+      border-color: var(--border);
+    }
+    .tbl-btn-print:hover { background: var(--surface); color: var(--text); }
+    table th.print-only, table td.print-only { display: none; }
+    @media print {
+      body > *:not(#main) { display: none; }
+      .table-actions, .filter-row, .nav-hamburger, .auth-overlay { display: none !important; }
+      .dots-dropdown, .btn-dots, .action-btn { display: none !important; }
+      table th.screen-only, table td.screen-only { display: none !important; }
+      table th.print-only, table td.print-only { display: table-cell !important; white-space: normal; word-break: break-word; }
+      thead th:nth-child(5), tbody td:nth-child(5) { display: table-cell !important; }
+      table { font-size: 0.7rem; table-layout: auto; width: 100%; }
+      table td, table th { padding: 6px 4px; white-space: normal; word-break: break-word; overflow: visible; }
+      table thead th { white-space: nowrap; }
+      @page { margin: 0; }
+      body { padding: 10mm; }
+      #rsvp-section-title::after { content: 'RSVPs'; }
+      #rsvp-section-title { font-size: 0; }
+      #rsvp-section-title::after { font-size: 0.75rem; letter-spacing: 0.1em; }
+      .badge { border: none; background: none !important; color: inherit !important; padding: 0; }
+      /* Hide chevron inside attendance badge */
+      .attend-toggle-btn svg { display: none !important; }
+      /* Hide filter pills */
+      .filter-pills { display: none !important; }
+      /* Darken light text for white paper */
+      .section-title, .kpi-label, .meal-card-title { color: #555 !important; }
+      .meal-name, .kpi-sub, .td-muted { color: #333 !important; }
+      .kpi-value, .meal-count { color: #111 !important; }
+      thead th { color: #333 !important; }
+      /* Meal column min-width in print */
+      thead th:nth-child(5), tbody td:nth-child(5) { min-width: 130px !important; }
+      /* Attendance text black */
+      .attend-toggle-btn { color: #000 !important; }
+      /* Meal bar chart — force color printing */
+      .meal-card { background: #fff !important; border-color: #ccc !important; }
+      .meal-bar-wrap { background: #e0ddd8 !important; -webkit-print-color-adjust: exact !important; print-color-adjust: exact !important; }
+      .meal-bar { background: #7a6030 !important; -webkit-print-color-adjust: exact !important; print-color-adjust: exact !important; }
+      @page landscape { size: landscape; }
+      @media (orientation: landscape) {
+        thead th:nth-child(5) { width: 22%; } /* Meal — fixed width, more breathing room */
+        table td, table th { padding: 6px 10px; }
+      }
+    }
+
+    /* ── Recent table ── */
+    .table-wrap {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      overflow: hidden;
+    }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      table-layout: fixed;
+    }
+    /* 1=Name 2=Phone(print) 3=Going 4=Guest 5=Meal 6=Date 7=Message 8=Message(print) 9=Actions */
+    thead th:nth-child(1) { width: 17%; }
+    thead th:nth-child(3) { width: 9%; }
+    thead th:nth-child(4) { width: 7%; }
+    thead th:nth-child(5) { width: 14%; }
+    thead th:nth-child(6) { width: 9%; }
+    thead th:nth-child(7) { width: 22%; }
+    thead th:nth-child(9) { width: auto; }
+    tbody td { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+    tbody td:nth-child(5) { white-space: normal; } /* Meal can wrap */
+    .col-message { }
+    .msg-cell {
+      display: -webkit-box;
+      -webkit-line-clamp: 2;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
+      white-space: normal;
+      line-height: 1.45;
+      cursor: pointer;
+    }
+    .msg-cell:hover { color: var(--text); }
+    .td-actions { overflow: visible; white-space: nowrap; width: 1px; } /* shrink to content, never clip */
+    thead th {
+      padding: 12px 18px;
+      text-align: left;
+      font-size: 0.68rem;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--muted);
+      background: var(--surface-2);
+      border-bottom: 1px solid var(--border);
+      vertical-align: middle;
+    }
+    tbody tr {
+      border-bottom: 1px solid rgba(197,160,89,0.07);
+      transition: background 0.15s;
+    }
+    tbody tr:last-child { border-bottom: none; }
+    tbody tr:hover { background: rgba(197,160,89,0.04); }
+    tbody td {
+      padding: 13px 18px;
+      font-size: 0.84rem;
+      color: var(--text);
+      vertical-align: middle;
+    }
+    .badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      padding: 3px 10px;
+      border-radius: 99px;
+      font-size: 0.72rem;
+      font-weight: 600;
+      letter-spacing: 0.04em;
+    }
+    .badge-going { background: rgba(127,168,130,0.15); color: var(--green); }
+    .badge-no    { background: rgba(196,122,122,0.12); color: var(--red); }
+    .td-muted { color: var(--light); }
+
+    /* ── Action buttons in table ── */
+    .action-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      padding: 5px 11px;
+      border-radius: 8px;
+      font-size: 0.73rem;
+      font-weight: 600;
+      font-family: 'Outfit', sans-serif;
+      cursor: pointer;
+      border: 1px solid;
+      transition: background 0.15s, transform 0.1s;
+      white-space: nowrap;
+    }
+    .action-btn:active { transform: scale(0.97); }
+    .btn-message {
+      background: rgba(127,168,130,0.08);
+      border-color: rgba(127,168,130,0.25);
+      color: var(--green);
+      margin-right: 6px;
+    }
+    .btn-message:hover { background: rgba(127,168,130,0.16); }
+    .btn-contact {
+      background: var(--gold-light);
+      border-color: var(--border-mid);
+      color: var(--gold);
+      text-decoration: none;
+    }
+    .btn-contact:hover { background: var(--gold-mid); }
+    .btn-remove {
+      background: rgba(196,122,122,0.08);
+      border-color: rgba(196,122,122,0.25);
+      color: var(--red);
+      margin-left: 6px;
+    }
+    .btn-remove:hover { background: rgba(196,122,122,0.16); }
+    .btn-icon { width: 13px; height: 13px; pointer-events: none; }
+    .action-btn * { pointer-events: none; }
+
+    /* ── 3-dots mobile menu ── */
+    .btn-dots {
+      display: none;
+      align-items: center;
+      justify-content: center;
+      width: 32px;
+      height: 32px;
+      border-radius: 8px;
+      background: transparent;
+      border: none;
+      color: var(--gold);
+      cursor: pointer;
+      transition: background 0.15s;
+    }
+    .btn-dots:hover { background: rgba(197,160,89,0.08); border-radius: 6px; }
+    .btn-dots * { pointer-events: none; }
+    .td-actions { position: relative; white-space: nowrap; }
+    .dots-dropdown {
+      display: none;
+      position: absolute;
+      right: 0;
+      top: calc(100% - 4px);
+      background: var(--surface-2);
+      border: 1px solid var(--border-mid);
+      border-radius: 10px;
+      box-shadow: 0 8px 24px rgba(0,0,0,0.14);
+      z-index: 200;
+      min-width: 140px;
+      overflow: hidden;
+    }
+    .dots-dropdown.open { display: block; }
+    .dots-item {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      width: 100%;
+      padding: 11px 16px;
+      background: transparent;
+      border: none;
+      font-family: 'Outfit', sans-serif;
+      font-size: 0.84rem;
+      font-weight: 500;
+      cursor: pointer;
+      text-align: left;
+      transition: background 0.12s;
+    }
+    .dots-item svg { width: 14px; height: 14px; flex-shrink: 0; pointer-events: none; }
+    .dots-item * { pointer-events: none; }
+    .dots-item:hover { background: var(--surface-3); }
+    .dots-item-contact { color: var(--gold); }
+    .dots-item-delete  { color: var(--red); border-top: 1px solid var(--border); }
+
+    /* ── Modals ── */
+    .modal-backdrop {
+      position: fixed;
+      inset: 0;
+      background: rgba(10,8,6,0.75);
+      backdrop-filter: blur(4px);
+      -webkit-backdrop-filter: blur(4px);
+      z-index: 1000;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 24px;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.2s;
+    }
+    .modal-backdrop.open { opacity: 1; pointer-events: all; }
+    .modal {
+      background: var(--surface);
+      border: 1px solid var(--border-mid);
+      border-radius: var(--radius-lg);
+      padding: 32px 28px;
+      width: 100%;
+      max-width: 340px;
+      transform: translateY(10px);
+      transition: transform 0.2s;
+    }
+    .modal-backdrop.open .modal { transform: translateY(0); }
+    .modal-title {
+      font-family: 'Bricolage Grotesque', sans-serif;
+      font-size: 1.25rem;
+      color: var(--gold);
+      margin-bottom: 4px;
+    }
+    .modal-sub {
+      font-size: 0.78rem;
+      color: var(--muted);
+      margin-bottom: 22px;
+    }
+    .modal-close {
+      display: block;
+      width: 100%;
+      margin-top: 20px;
+      padding: 10px;
+      background: transparent;
+      border: 1px solid var(--border-mid);
+      border-radius: 8px;
+      color: var(--muted);
+      font-family: 'Outfit', sans-serif;
+      font-size: 0.83rem;
+      cursor: pointer;
+      transition: background 0.15s, color 0.15s;
+    }
+    .modal-close:hover { background: var(--surface-2); color: var(--text); }
+
+    /* Remove confirm modal */
+    .remove-name {
+      font-size: 1rem;
+      font-weight: 600;
+      color: var(--text);
+      margin-bottom: 6px;
+    }
+    .remove-warn {
+      font-size: 0.82rem;
+      color: var(--muted);
+      margin-bottom: 24px;
+      line-height: 1.5;
+    }
+    .remove-actions {
+      display: flex;
+      gap: 10px;
+    }
+    .remove-actions button {
+      flex: 1;
+      padding: 10px;
+      border-radius: 8px;
+      font-family: 'Outfit', sans-serif;
+      font-size: 0.85rem;
+      font-weight: 600;
+      cursor: pointer;
+      border: 1px solid;
+      transition: background 0.15s, transform 0.1s;
+    }
+    .remove-actions button:active { transform: scale(0.97); }
+    .btn-cancel-rm {
+      background: transparent;
+      border-color: var(--border-mid);
+      color: var(--muted);
+    }
+    .btn-cancel-rm:hover { background: var(--surface-2); color: var(--text); }
+    .btn-confirm-rm {
+      background: rgba(196,122,122,0.15);
+      border-color: rgba(196,122,122,0.35);
+      color: var(--red);
+    }
+    .btn-confirm-rm:hover { background: rgba(196,122,122,0.25); }
+
+    /* ── Attend toggle ── */
+    .attend-toggle-btn {
+      display: inline-flex; align-items: center; gap: 5px;
+      border: none; cursor: pointer; padding: 3px 8px 3px 10px;
+      border-radius: 99px; font-size: 0.72rem; font-weight: 600;
+      letter-spacing: 0.04em; font-family: 'Outfit', sans-serif;
+      transition: filter 0.15s;
+    }
+    .attend-toggle-btn:hover { filter: brightness(1.2); }
+    .attend-toggle-btn svg { width: 11px; height: 11px; pointer-events: none; flex-shrink: 0; }
+    .attend-toggle-btn.badge-going { background: rgba(127,168,130,0.15); color: var(--green); }
+    .attend-toggle-btn.badge-no    { background: rgba(196,122,122,0.12); color: var(--red); }
+    .btn-confirm-attend {
+      background: rgba(197,160,89,0.15);
+      border-color: rgba(197,160,89,0.35);
+      color: var(--gold);
+    }
+    .btn-confirm-attend:hover { background: rgba(197,160,89,0.25); }
+
+    /* ── Responsive ── */
+    @media (max-width: 768px) {
+      .nav { padding: 0 16px; }
+      .main { padding: 24px 16px 56px; }
+      .kpi-grid { grid-template-columns: repeat(2, 1fr); gap: 10px; }
+      .kpi-value { font-size: 1.9rem; }
+      .meal-name { width: 130px; }
+      /* Horizontal scroll on the table wrap */
+      .table-wrap { overflow-x: auto; -webkit-overflow-scrolling: touch; }
+      /* Freeze name column */
+      thead th:nth-child(1),
+      tbody td:nth-child(1) { position: sticky; left: 0; z-index: 2; background: var(--surface); }
+      thead th:nth-child(1) { background: var(--surface-2); }
+      /* Switch to auto layout on mobile so hidden Date column doesn't break distribution */
+      table { table-layout: auto; min-width: 480px; }
+      thead th { width: auto; }
+      /* Hide Date column on mobile */
+      thead th:nth-child(5),
+      tbody td:nth-child(5) { display: none; }
+      /* Compact padding on Going + Guests */
+      thead th:nth-child(2), tbody td:nth-child(2),
+      thead th:nth-child(3), tbody td:nth-child(3) { padding-left: 8px; padding-right: 4px; white-space: nowrap; }
+      /* Guest column — breathing room from Going badge */
+      thead th:nth-child(4), tbody td:nth-child(4) { padding-left: 16px; }
+      /* Actions: shrink to dots button, no clipping */
+      .td-actions { padding-left: 4px; padding-right: 20px !important; white-space: nowrap; overflow: visible; }
+      /* Hide text buttons on mobile */
+      .btn-contact, .btn-remove { display: none; }
+      .btn-dots { display: inline-flex; }
+      .nav-refresh, .nav-notify { display: none; }
+      .nav-brand { font-size: 0.95rem; display: flex; flex-direction: column; align-items: flex-start; gap: 1px; }
+      .nav-brand span { display: block; margin-left: 0; font-size: 0.72rem; }
+    }
+    @media (max-width: 540px) {
+      .col-message { display: none; }
+    }
+  </style>
+  <!-- Meta Pixel Code -->
+  <script>
+  !function(f,b,e,v,n,t,s)
+  {if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+  n.callMethod.apply(n,arguments):n.queue.push(arguments)};
+  if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
+  n.queue=[];t=b.createElement(e);t.async=!0;
+  t.src=v;s=b.getElementsByTagName(e)[0];
+  s.parentNode.insertBefore(t,s)}(window, document,'script',
+  'https://connect.facebook.net/en_US/fbevents.js');
+  fbq('init', '1460672239124162');
+  fbq('track', 'PageView');
+  </script>
+  <noscript><img height="1" width="1" style="display:none"
+  src="https://www.facebook.com/tr?id=1460672239124162&ev=PageView&noscript=1"
+  /></noscript>
+  <!-- End Meta Pixel Code -->
+</head>
+<body>
+
+  <!-- Auth -->
+  <div class="auth-overlay" id="auth-overlay">
+    <div class="auth-box">
+      <div class="auth-title">Anna &amp; Marco</div>
+      <div class="auth-sub">Dashboard Access</div>
+      <input class="auth-input" type="text" id="auth-input" value="AnnaMarco2026" autocomplete="current-password" />
+      <button class="auth-btn" id="auth-btn">Enter</button>
+      <div class="auth-error" id="auth-error">Incorrect password.</div>
+      <div class="auth-error" id="auth-lockout" style="display:none;"></div>
+    </div>
+  </div>
+
+  <!-- Demo restriction modal -->
+  <div class="modal-backdrop" id="remove-modal">
+    <div class="modal">
+      <div class="modal-title">Demo Mode</div>
+      <div class="modal-sub" id="remove-modal-name"></div>
+      <div class="remove-warn" style="margin-bottom:0">Deleting RSVPs is not available on the demo page. On a live wedding page, the couple can remove entries directly from their dashboard.</div>
+      <button class="modal-close" id="remove-modal-cancel">Got it</button>
+    </div>
+  </div>
+
+  <!-- Attend change confirmation modal -->
+  <div class="modal-backdrop" id="attend-modal">
+    <div class="modal">
+      <div class="modal-title">Change Attendance</div>
+      <div class="modal-sub" id="attend-modal-sub"></div>
+      <div class="remove-warn" id="attend-modal-warn" style="margin-bottom:24px"></div>
+      <div class="remove-actions">
+        <button class="btn-cancel-rm" id="attend-modal-cancel">Cancel</button>
+        <button class="btn-confirm-attend" id="attend-modal-confirm">Confirm</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Message modal -->
+  <div class="modal-backdrop" id="message-modal">
+    <div class="modal">
+      <div class="modal-title" id="message-modal-name"></div>
+
+      <div id="message-modal-body" style="font-size:0.88rem;color:var(--text);line-height:1.6;white-space:pre-wrap;"></div>
+      <button class="modal-close" id="message-modal-close">Close</button>
+    </div>
+  </div>
+
+  <!-- Nav -->
+  <nav class="nav">
+    <div class="nav-left">
+      <a class="nav-back" href="/anna-and-marco-light/" aria-label="Back to wedding page">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"/></svg>
+      </a>
+      <a class="nav-brand" href="/anna-and-marco-light/">Anna &amp; Marco <span>RSVP Dashboard</span></a>
+    </div>
+    <div class="nav-right">
+      <button class="nav-notify" id="notify-btn" aria-label="Enable RSVP notifications" title="Get notified when a new RSVP arrives">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 0 1-3.46 0"/>
+        </svg>
+        <span class="notify-dot"></span>
+      </button>
+      <button class="nav-refresh" id="refresh-btn" aria-label="Refresh data">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <polyline points="23 4 23 10 17 10"/><polyline points="1 20 1 14 7 14"/>
+          <path d="M3.51 9a9 9 0 0 1 14.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0 0 20.49 15"/>
+        </svg>
+        Refresh
+      </button>
+      <a class="nav-cta" href="/onboarding/">
+        Create your own page
+        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
+      </a>
+    </div>
+  </nav>
+
+  <!-- Main -->
+  <main class="main" id="main" style="display:none">
+
+    <!-- Loading -->
+    <div class="state-loading" id="state-loading">
+      <div class="spinner"></div>
+      Loading RSVP data…
+    </div>
+
+    <!-- Error -->
+    <div class="state-error" id="state-error" style="display:none">
+      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+      Failed to load data. Check script URL.
+    </div>
+
+    <!-- Content -->
+    <div id="content" style="display:none">
+
+      <!-- KPIs -->
+      <div class="kpi-grid" id="kpi-grid"></div>
+
+      <!-- Meal breakdown -->
+      <div class="section-header">
+        <div class="section-title">Meal Choices</div>
+        <div class="section-line"></div>
+      </div>
+      <div id="meal-grid"></div>
+
+      <!-- Recent RSVPs -->
+      <div class="section-header" style="margin-top:32px">
+        <div class="section-title" id="rsvp-section-title">Recent RSVPs</div>
+        <div class="section-line"></div>
+        <div class="filter-pills">
+          <button class="filter-pill active" data-filter="all">All</button>
+          <button class="filter-pill" data-filter="yes">Attending</button>
+          <button class="filter-pill" data-filter="no">Declined</button>
+        </div>
+      </div>
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr>
+              <th>Name</th>
+              <th class="print-only">Phone</th>
+              <th>Going</th>
+              <th>Guest</th>
+              <th>Meal</th>
+              <th class="screen-only">Date</th>
+              <th class="col-message screen-only">Message</th>
+              <th class="print-only">Message</th>
+              <th class="th-actions screen-only"></th>
+            </tr>
+          </thead>
+          <tbody id="rsvp-tbody"></tbody>
+        </table>
+      </div>
+      <div class="table-actions" id="table-actions">
+        <button class="tbl-btn tbl-btn-viewall" id="btn-view-all">View All</button>
+        <button class="tbl-btn tbl-btn-print" id="btn-print">Print</button>
+      </div>
+
+    </div>
+  </main>
+
+  <script>
+    const { createClient } = supabase;
+    const db   = createClient('https://auohzxsufvdgdrhtlpib.supabase.co', 'sb_publishable_sRKhjg0x42oqn0obrF3rYQ_fsAypvL0');
+    const PASS = 'AnnaMarco2026';
+
+    const MEAL_LABELS = {
+      beef:        'Braised Beef Tenderloin',
+      chicken:     'Herb-Roasted Chicken',
+      fish:        'Pan-Seared Sea Bass',
+      vegetarian:  'Roasted Vegetable Risotto'
+    };
+
+    // ── Auth ──
+    const overlay   = document.getElementById('auth-overlay');
+    const authBtn   = document.getElementById('auth-btn');
+    const authIn    = document.getElementById('auth-input');
+    const authErr   = document.getElementById('auth-error');
+    const authLock  = document.getElementById('auth-lockout');
+    const mainEl    = document.getElementById('main');
+
+    let failCount     = 0;  // total wrong attempts this session
+    let lockoutTimer  = null;
+
+    // lockout schedule: after N total fails → lockout for M seconds
+    // [5 fails → 60s], [8 fails → 180s], repeat 180s every 3 after
+    function getLockoutSeconds(fails) {
+      if (fails >= 8) return 180;
+      if (fails >= 5) return 60;
+      return 0;
+    }
+
+    function startLockout(seconds) {
+      authBtn.disabled = true;
+      authIn.disabled  = true;
+      authErr.style.display = 'none';
+
+      let remaining = seconds;
+      function tick() {
+        const m = Math.floor(remaining / 60);
+        const s = remaining % 60;
+        authLock.style.display = 'block';
+        authLock.textContent = `Too many attempts. Try again in ${m > 0 ? m + 'm ' : ''}${s}s.`;
+        if (remaining <= 0) {
+          authLock.style.display = 'none';
+          authBtn.disabled = false;
+          authIn.disabled  = false;
+          authIn.value = '';
+          authIn.focus();
+          return;
+        }
+        remaining--;
+        lockoutTimer = setTimeout(tick, 1000);
+      }
+      tick();
+    }
+
+    function unlock() {
+      if (lockoutTimer !== null || authBtn.disabled) return;
+      if (authIn.value === PASS) {
+        overlay.style.display = 'none';
+        mainEl.style.display  = 'block';
+        loadData();
+        initNotifyIfGranted();
+      } else {
+        failCount++;
+        const lockSecs = getLockoutSeconds(failCount);
+        if (lockSecs > 0) {
+          startLockout(lockSecs);
+        } else {
+          authErr.style.display = 'block';
+          authIn.value = '';
+          authIn.focus();
+        }
+      }
+    }
+
+    authBtn.addEventListener('click', unlock);
+    authIn.addEventListener('keydown', e => { if (e.key === 'Enter') unlock(); });
+
+    // ── Data ──
+    let allRecent      = [];
+    let activeFilter   = 'all';
+    let currentFiltered = [];
+    let showAll        = false;
+
+    async function loadData() {
+      document.getElementById('state-loading').style.display = 'flex';
+      document.getElementById('state-error').style.display   = 'none';
+      document.getElementById('content').style.display       = 'none';
+
+      try {
+        const { data: rows, error } = await db
+          .from('anna_marco_rsvp')
+          .select('*')
+          .eq('couple_id', 'anna-and-marco')
+          .order('created_at', { ascending: false });
+
+        if (error) throw error;
+
+        const going    = rows.filter(r => r.attend === 'yes');
+        const notGoing = rows.filter(r => r.attend === 'no');
+        const plusOnes = going.filter(r => r.guests === '2').length;
+        const meals = {}, meals2 = {};
+        going.forEach(r => {
+          if (r.meal)  meals[r.meal]   = (meals[r.meal]  || 0) + 1;
+          if (r.meal2) meals2[r.meal2] = (meals2[r.meal2] || 0) + 1;
+        });
+
+        allRecent = rows.map(r => ({
+          id:         r.id,
+          name:       r.name,
+          email:      r.email,
+          phone:      r.phone,
+          attend:     r.attend,
+          guests:     r.guests,
+          meal:       r.meal,
+          meal2:      r.meal2,
+          message:    r.message,
+          edit_token: r.edit_token,
+          ts:         new Date(r.created_at).toLocaleDateString('en-GB', { day: 'numeric', month: 'short', year: 'numeric' })
+        }));
+
+        render({
+          total:     rows.length,
+          going:     going.length,
+          notGoing:  notGoing.length,
+          plusOnes,
+          headcount: going.length + plusOnes,
+          meals,
+          meals2
+        });
+
+        document.getElementById('state-loading').style.display = 'none';
+        document.getElementById('content').style.display       = 'block';
+      } catch (err) {
+        console.error('loadData error:', err);
+        document.getElementById('state-loading').style.display = 'none';
+        document.getElementById('state-error').style.display   = 'flex';
+      }
+    }
+
+    document.getElementById('refresh-btn').addEventListener('click', loadData);
+
+    // ── Notifications + Realtime ──
+    const notifyBtn = document.getElementById('notify-btn');
+    let realtimeChannel = null;
+
+    function updateNotifyBtn(granted) {
+      if (granted) {
+        notifyBtn.classList.add('enabled');
+        notifyBtn.title = 'Notifications enabled — click to disable';
+      } else {
+        notifyBtn.classList.remove('enabled');
+        notifyBtn.title = 'Get notified when a new RSVP arrives';
+      }
+    }
+
+    function subscribeRealtime() {
+      if (realtimeChannel) return;
+      realtimeChannel = db
+        .channel('anna-marco-rsvp-inserts')
+        .on('postgres_changes', {
+          event:  'INSERT',
+          schema: 'public',
+          table:  'anna_marco_rsvp'
+        }, payload => {
+          const r = payload.new;
+          console.log('[Realtime] new RSVP payload:', r, '| permission:', Notification.permission);
+          const attending = r.attend === 'yes' ? 'is attending' : 'declined';
+          playChime();
+          if (Notification.permission === 'granted') {
+            try {
+              const n = new Notification('New RSVP — Anna & Marco', {
+                body: `${r.name || 'Someone'} ${attending}`
+              });
+              n.onerror = e => console.error('[Notification] error:', e);
+              console.log('[Notification] fired:', n);
+            } catch (e) { console.error('[Notification] threw:', e); }
+          }
+          loadData();
+        })
+        .subscribe(status => console.log('[Realtime] status:', status));
+    }
+
+    function unsubscribeRealtime() {
+      if (realtimeChannel) {
+        db.removeChannel(realtimeChannel);
+        realtimeChannel = null;
+      }
+    }
+
+    notifyBtn.addEventListener('click', async () => {
+      if (Notification.permission === 'granted' && realtimeChannel) {
+        unsubscribeRealtime();
+        updateNotifyBtn(false);
+        return;
+      }
+      if (Notification.permission === 'denied') {
+        alert('Notifications are blocked. Enable them in your browser site settings, then try again.');
+        return;
+      }
+      const result = await Notification.requestPermission();
+      if (result === 'granted') {
+        subscribeRealtime();
+        updateNotifyBtn(true);
+        new Notification('Anna & Marco Dashboard', { body: 'You\'ll be notified when a new RSVP arrives.', icon: '/favicon.webp' });
+      }
+    });
+
+    function playChime() {
+      try {
+        const ctx = new (window.AudioContext || window.webkitAudioContext)();
+        [[523.25, 0], [659.25, 0.12], [783.99, 0.24], [1046.5, 0.38]].forEach(([freq, delay]) => {
+          const osc  = ctx.createOscillator();
+          const gain = ctx.createGain();
+          osc.connect(gain);
+          gain.connect(ctx.destination);
+          osc.type = 'sine';
+          osc.frequency.value = freq;
+          const t = ctx.currentTime + delay;
+          gain.gain.setValueAtTime(0, t);
+          gain.gain.linearRampToValueAtTime(0.18, t + 0.02);
+          gain.gain.exponentialRampToValueAtTime(0.0001, t + 0.9);
+          osc.start(t);
+          osc.stop(t + 0.9);
+        });
+      } catch (e) {}
+    }
+
+    function initNotifyIfGranted() {
+      if (Notification.permission === 'granted') {
+        subscribeRealtime();
+        updateNotifyBtn(true);
+      }
+    }
+
+    // ── Filter pills ──
+    document.querySelectorAll('.filter-pill').forEach(pill => {
+      pill.addEventListener('click', () => {
+        document.querySelectorAll('.filter-pill').forEach(p => p.classList.remove('active'));
+        pill.classList.add('active');
+        activeFilter = pill.dataset.filter;
+        showAll = false;
+        renderTable();
+      });
+    });
+
+    // ── Render ──
+    function render(d) {
+      // KPI cards
+      document.getElementById('kpi-grid').innerHTML = `
+        <div class="kpi-card gold">
+          <div class="kpi-label">Total RSVPs</div>
+          <div class="kpi-value">${d.total}</div>
+          <div class="kpi-sub">responses received</div>
+        </div>
+        <div class="kpi-card green">
+          <div class="kpi-label">Attending</div>
+          <div class="kpi-value">${d.going}</div>
+          <div class="kpi-sub">confirmed yes</div>
+        </div>
+        <div class="kpi-card red">
+          <div class="kpi-label">Declined</div>
+          <div class="kpi-value">${d.notGoing}</div>
+          <div class="kpi-sub">regrets received</div>
+        </div>
+        <div class="kpi-card rose">
+          <div class="kpi-label">Plus-Ones</div>
+          <div class="kpi-value">${d.plusOnes}</div>
+          <div class="kpi-sub">bringing a guest</div>
+        </div>
+        <div class="kpi-card gold">
+          <div class="kpi-label">Headcount</div>
+          <div class="kpi-value">${d.headcount}</div>
+          <div class="kpi-sub">expected guests</div>
+        </div>
+      `;
+
+      // Merge both meal objects
+      const combined = {};
+      for (const [k, v] of Object.entries(d.meals))  combined[k] = (combined[k] || 0) + v;
+      for (const [k, v] of Object.entries(d.meals2)) combined[k] = (combined[k] || 0) + v;
+      const maxMeal = Math.max(1, ...Object.values(combined));
+
+      document.getElementById('meal-grid').innerHTML = `
+        <div class="meal-card">
+          <div class="meal-card-title">All Meal Choices (Guests + Plus-Ones)</div>
+          ${renderMealBars(combined, maxMeal) || '<div class="meal-empty">No meal data yet.</div>'}
+        </div>
+      `;
+
+      requestAnimationFrame(() => {
+        document.querySelectorAll('.meal-bar').forEach(bar => {
+          bar.style.width = bar.dataset.pct + '%';
+        });
+      });
+
+      renderTable();
+    }
+
+    function renderTable() {
+      currentFiltered = activeFilter === 'all'
+        ? allRecent
+        : allRecent.filter(r => r.attend === activeFilter);
+
+      const tbody   = document.getElementById('rsvp-tbody');
+      const viewBtn = document.getElementById('btn-view-all');
+      const actions = document.getElementById('table-actions');
+
+      if (!currentFiltered.length) {
+        tbody.innerHTML = `<tr><td colspan="11" style="text-align:center;color:var(--light);padding:32px">No RSVPs found.</td></tr>`;
+        actions.style.display = 'none';
+        return;
+      }
+
+      const visible = showAll ? currentFiltered : currentFiltered.slice(0, 10);
+      viewBtn.textContent = showAll ? 'Show Less' : `View All (${currentFiltered.length})`;
+      actions.style.display = currentFiltered.length <= 10 ? 'none' : 'flex';
+
+      tbody.innerHTML = visible.map((r, i) => `
+        <tr>
+          <td>${esc(r.name)}</td>
+          <td class="print-only">${esc(String(r.phone || '—'))}</td>
+          <td><button class="attend-toggle-btn ${r.attend === 'yes' ? 'badge-going' : 'badge-no'}" id="attend-btn-${i}" title="Change attendance">${r.attend === 'yes' ? 'Yes' : 'No'}<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg></button></td>
+          <td class="td-muted">${r.attend !== 'yes' ? '0' : r.guests === '2' ? '2' : '1'}</td>
+          <td class="td-muted">${esc(MEAL_LABELS[r.meal] || r.meal || '—')}${r.meal2 ? `<br><span style="opacity:0.6;font-size:0.75em">+1: ${esc(MEAL_LABELS[r.meal2] || r.meal2)}</span>` : ''}</td>
+          <td class="td-muted screen-only">${esc(r.ts)}</td>
+          <td class="col-message td-muted screen-only">${r.message ? `<div class="msg-cell" id="td-msg-${i}" title="${esc(r.message)}">${esc(r.message)}</div>` : '<span style="color:var(--light)">—</span>'}</td>
+          <td class="print-only">${esc(r.message || '—')}</td>
+          <td class="td-actions">
+            ${r.phone ? `<a class="action-btn btn-contact" href="tel:${String(r.phone)}" target="_blank">
+              <svg class="btn-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.08 12a19.79 19.79 0 0 1-3-8.6A2 2 0 0 1 3.05 1h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L7.09 8.91a16 16 0 0 0 5.93 5.93l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+              Contact
+            </a>` : ''}
+            <button class="action-btn btn-remove" id="btn-remove-${i}">
+              <svg class="btn-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="3 6 5 6 21 6"/><path d="M19 6l-1 14H6L5 6"/><path d="M10 11v6"/><path d="M14 11v6"/><path d="M9 6V4h6v2"/></svg>
+              Remove
+            </button>
+            <button class="btn-dots" id="btn-dots-${i}">
+              <svg viewBox="0 0 24 24" fill="currentColor"><circle cx="5" cy="12" r="2"/><circle cx="12" cy="12" r="2"/><circle cx="19" cy="12" r="2"/></svg>
+            </button>
+            <div class="dots-dropdown" id="dots-dd-${i}">
+              ${r.message ? `<button class="dots-item" id="dots-msg-${i}" style="color:var(--green)">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+                View Message
+              </button>` : ''}
+              ${r.phone ? `<a class="dots-item dots-item-contact" href="tel:${String(r.phone)}" target="_blank">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.08 12a19.79 19.79 0 0 1-3-8.6A2 2 0 0 1 3.05 1h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L7.09 8.91a16 16 0 0 0 5.93 5.93l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+                Contact
+              </a>` : ''}
+              <button class="dots-item dots-item-delete" id="dots-delete-${i}">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="3 6 5 6 21 6"/><path d="M19 6l-1 14H6L5 6"/><path d="M10 11v6"/><path d="M14 11v6"/><path d="M9 6V4h6v2"/></svg>
+                Delete
+              </button>
+            </div>
+          </td>
+        </tr>
+      `).join('');
+
+      // Attach listeners directly to each button — no delegation, no stale closures
+      visible.forEach((r, i) => {
+        const tdMsg = document.getElementById('td-msg-' + i);
+        if (tdMsg) tdMsg.addEventListener('click', e => {
+          e.stopPropagation();
+          openMessageModal(r);
+        });
+        document.getElementById('btn-remove-' + i).addEventListener('click', e => {
+          e.stopPropagation();
+          openRemoveModal(r);
+        });
+        document.getElementById('btn-dots-' + i).addEventListener('click', e => {
+          e.stopPropagation();
+          const dd = document.getElementById('dots-dd-' + i);
+          const isOpen = dd.classList.contains('open');
+          closeAllDropdowns();
+          if (!isOpen) dd.classList.add('open');
+        });
+        document.getElementById('attend-btn-' + i).addEventListener('click', e => {
+          e.stopPropagation();
+          openAttendModal(r);
+        });
+        const dotsMsg = document.getElementById('dots-msg-' + i);
+        if (dotsMsg) dotsMsg.addEventListener('click', e => {
+          e.stopPropagation();
+          closeAllDropdowns();
+          openMessageModal(r);
+        });
+        const dotsDelete = document.getElementById('dots-delete-' + i);
+        if (dotsDelete) dotsDelete.addEventListener('click', e => {
+          e.stopPropagation();
+          closeAllDropdowns();
+          openRemoveModal(r);
+        });
+      });
+    }
+
+    document.getElementById('btn-view-all').addEventListener('click', () => {
+      showAll = !showAll;
+      renderTable();
+    });
+
+    document.getElementById('btn-print').addEventListener('click', () => {
+      const prev = showAll;
+      showAll = true;
+      renderTable();
+      window.print();
+      showAll = prev;
+      renderTable();
+    });
+
+    function closeAllDropdowns() {
+      document.querySelectorAll('.dots-dropdown.open').forEach(d => d.classList.remove('open'));
+    }
+    document.addEventListener('click', closeAllDropdowns);
+
+    // ── Remove modal (demo — deletion blocked) ──
+    const removeModal     = document.getElementById('remove-modal');
+    const removeModalName = document.getElementById('remove-modal-name');
+
+    document.getElementById('remove-modal-cancel').addEventListener('click', () => removeModal.classList.remove('open'));
+    removeModal.addEventListener('click', e => { if (e.target === removeModal) removeModal.classList.remove('open'); });
+
+    // ── Message modal ──
+    const messageModal     = document.getElementById('message-modal');
+    const messageModalName = document.getElementById('message-modal-name');
+    const messageModalBody = document.getElementById('message-modal-body');
+
+    document.getElementById('message-modal-close').addEventListener('click', () => messageModal.classList.remove('open'));
+    messageModal.addEventListener('click', e => { if (e.target === messageModal) messageModal.classList.remove('open'); });
+
+    function openMessageModal(r) {
+      messageModalName.textContent = r.name;
+      messageModalBody.textContent = r.message;
+      messageModal.classList.add('open');
+    }
+
+    function openRemoveModal(r) {
+      removeModalName.textContent = r.name;
+      removeModal.classList.add('open');
+    }
+
+    // ── Attend change modal ──
+    let _attendTarget = null;
+    const attendModal      = document.getElementById('attend-modal');
+    const attendModalSub   = document.getElementById('attend-modal-sub');
+    const attendModalWarn  = document.getElementById('attend-modal-warn');
+    const attendConfirmBtn = document.getElementById('attend-modal-confirm');
+
+    function openAttendModal(r) {
+      const to = r.attend === 'yes' ? 'No' : 'Yes';
+      attendModalSub.textContent   = r.name;
+      attendModalWarn.textContent  = 'Changing attendance is not available on the demo page. On a live wedding page, the couple can update responses directly from their dashboard.';
+      attendConfirmBtn.textContent = `Change to ${to}`;
+      attendConfirmBtn.disabled    = true;
+      attendConfirmBtn.style.color = 'var(--light)';
+      _attendTarget = r;
+      attendModal.classList.add('open');
+    }
+
+    document.getElementById('attend-modal-cancel').addEventListener('click', () => {
+      attendModal.classList.remove('open');
+      _attendTarget = null;
+    });
+    attendModal.addEventListener('click', e => {
+      if (e.target === attendModal) { attendModal.classList.remove('open'); _attendTarget = null; }
+    });
+
+    attendConfirmBtn.addEventListener('click', async () => {
+      if (!_attendTarget) return;
+      const r = _attendTarget;
+      const newAttend = r.attend === 'yes' ? 'no' : 'yes';
+      attendConfirmBtn.disabled    = true;
+      attendConfirmBtn.textContent = 'Updating…';
+
+      try {
+        const { data: updated, error } = await db
+          .from('anna_marco_rsvp')
+          .update({ attend: newAttend, guests: newAttend === 'no' ? '0' : (r.guests === '0' ? '1' : r.guests) })
+          .eq('id', r.id)
+          .select();
+
+        if (error) throw error;
+        if (!updated || updated.length === 0) throw new Error('No rows updated — check Supabase RLS UPDATE policy for anna_marco_rsvp.');
+
+        attendModal.classList.remove('open');
+        _attendTarget = null;
+        loadData();
+      } catch (err) {
+        console.error('Attend update error:', err);
+        attendConfirmBtn.textContent = 'Failed. Try again.';
+        attendConfirmBtn.style.color = 'var(--red)';
+        setTimeout(() => {
+          attendConfirmBtn.disabled    = false;
+          attendConfirmBtn.textContent = `Change to ${r.attend === 'yes' ? 'No' : 'Yes'}`;
+          attendConfirmBtn.style.color = '';
+        }, 2500);
+      }
+    });
+
+    function renderMealBars(meals, max) {
+      const order = ['beef', 'chicken', 'fish', 'vegetarian'];
+      const keys  = [...new Set([...order, ...Object.keys(meals)])].filter(k => meals[k]);
+      if (!keys.length) return '';
+      return keys.map(k => {
+        const count = meals[k] || 0;
+        const pct   = Math.round((count / max) * 100);
+        const label = MEAL_LABELS[k] || k;
+        return `
+          <div class="meal-row">
+            <div class="meal-name" title="${esc(label)}">${esc(label)}</div>
+            <div class="meal-bar-wrap">
+              <div class="meal-bar" data-pct="${pct}"></div>
+            </div>
+            <div class="meal-count">${count}</div>
+          </div>`;
+      }).join('');
+    }
+
+    function esc(str) {
+      return String(str || '').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+    }
+  </script>
+</body>
+</html>

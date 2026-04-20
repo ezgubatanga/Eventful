@@ -798,13 +798,15 @@
       thead th:nth-child(4), tbody td:nth-child(4) { padding-left: 16px; }
       /* Actions: shrink to dots button, no clipping */
       .td-actions { padding-left: 4px; padding-right: 20px !important; white-space: nowrap; overflow: visible; }
-      /* Hide message column and text buttons on mobile */
-      .col-message { display: none; }
+      /* Hide text buttons on mobile */
       .btn-contact, .btn-remove { display: none; }
       .btn-dots { display: inline-flex; }
       .nav-refresh, .nav-notify { display: none; }
       .nav-brand { font-size: 0.95rem; display: flex; flex-direction: column; align-items: flex-start; gap: 1px; }
       .nav-brand span { display: block; margin-left: 0; font-size: 0.72rem; }
+    }
+    @media (max-width: 540px) {
+      .col-message { display: none; }
     }
   </style>
   <!-- Meta Pixel Code -->
