@@ -1288,6 +1288,11 @@ section { padding: 88px 24px; }
   z-index: 0;
   pointer-events: none;
 }
+.hero-video::-webkit-media-controls,
+.hero-video::-webkit-media-controls-start-playback-button {
+  display: none !important;
+  -webkit-appearance: none;
+}
 
 .hero-overlay {
   position: absolute;
