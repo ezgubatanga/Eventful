@@ -572,10 +572,12 @@
       display: inline-block;
       z-index: 2;
       flex-shrink: 0;
+      max-width: 100%;
     }
 
     .mockup-img {
       width: 440px;
+      max-width: 90vw;
       display: block;
     }
 
@@ -1821,6 +1823,9 @@
 
       .hero-visual {
         order: -1;
+        width: 100%;
+        justify-content: center;
+        overflow: hidden;
       }
 
       .hero-phone {
@@ -3477,148 +3482,8 @@
   </footer>
 
 
-  <!-- ═══ BACKGROUND MUSIC ══════════════════════════════════════ -->
-  <audio id="bg-music" src="song.mp3" loop preload="auto" style="display: none !important;"></audio>
-
-  <!-- Floating music toggle -->
-  <button id="music-toggle" title="Toggle music" aria-label="Toggle background music">
-    <span id="music-icon">🔇</span>
-  </button>
-
-  <style>
-    #music-toggle {
-      position: fixed;
-      bottom: 28px;
-      right: 28px;
-      width: 50px;
-      height: 50px;
-      border-radius: 50%;
-      background: var(--surface);
-      border: 1.5px solid var(--gold-mid);
-      box-shadow: var(--shadow-md);
-      cursor: pointer;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 1.2rem;
-      z-index: 9999;
-      transition: var(--transition);
-      backdrop-filter: blur(12px);
-      -webkit-backdrop-filter: blur(12px);
-    }
-
-    #music-toggle:hover {
-      transform: scale(1.1);
-      box-shadow: var(--shadow-lg);
-      border-color: var(--gold);
-    }
-
-    @keyframes pulse-ring {
-      0% {
-        transform: scale(1);
-        opacity: 0.6;
-      }
-
-      100% {
-        transform: scale(1.6);
-        opacity: 0;
-      }
-    }
-
-    #music-toggle.playing::before {
-      content: '';
-      position: absolute;
-      inset: 0;
-      border-radius: 50%;
-      border: 2px solid var(--gold);
-      animation: pulse-ring 1.8s ease-out infinite;
-    }
-  </style>
-
   <script>
     (function () {
-      const audio = document.getElementById('bg-music');
-      const btn = document.getElementById('music-toggle');
-      const icon = document.getElementById('music-icon');
-      let isPlaying = false;
-
-      function updateState(playing) {
-        isPlaying = playing;
-        if (playing) {
-          btn.classList.add('playing');
-          icon.textContent = '🎵';
-        } else {
-          btn.classList.remove('playing');
-          icon.textContent = '🔇';
-        }
-      }
-
-      function attemptPlay() {
-        if (isPlaying) return;
-        const playPromise = audio.play();
-        if (playPromise !== undefined) {
-          playPromise.then(() => {
-            updateState(true);
-            removeInteractionListeners();
-          }).catch(error => {
-            console.log("Autoplay blocked by browser. Awaiting user interaction...");
-          });
-        }
-      }
-
-      let interactionPending = false;
-      function onInteraction() {
-        if (interactionPending) return;
-        interactionPending = true;
-        requestAnimationFrame(() => {
-          attemptPlay();
-          interactionPending = false;
-        });
-      }
-
-      function removeInteractionListeners() {
-        document.removeEventListener('click', onInteraction, true);
-        document.removeEventListener('keydown', onInteraction, true);
-        document.removeEventListener('touchstart', onInteraction, true);
-        document.removeEventListener('scroll', onInteraction, true);
-      }
-
-      // 1. Attempt to play immediately on load (will work if browser allows it)
-      attemptPlay();
-
-      // 2. If blocked, wait for the first interaction to start playback
-      document.addEventListener('click', onInteraction, true);
-      document.addEventListener('keydown', onInteraction, true);
-      document.addEventListener('touchstart', onInteraction, true);
-      document.addEventListener('scroll', onInteraction, true);
-
-      // 3. Manual toggle
-      btn.addEventListener('click', function (e) {
-        e.stopPropagation();
-        if (audio.paused) {
-          audio.play().then(() => updateState(true));
-        } else {
-          audio.pause();
-          updateState(false);
-        }
-      });
-
-      // Pause on tab hide, resume on tab show (only if was playing)
-      document.addEventListener('visibilitychange', () => {
-        if (document.hidden) {
-          if (!audio.paused) {
-            audio.pause();
-            updateState(false);
-            audio._wasPlaying = true;
-          }
-        } else {
-          if (audio._wasPlaying) {
-            audio._wasPlaying = false;
-            audio.play().then(() => updateState(true)).catch(() => {});
-          }
-        }
-      });
-    })();
 
     // Live Countdown Logic
     (function () {
