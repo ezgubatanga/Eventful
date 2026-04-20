@@ -874,6 +874,7 @@
     window.addEventListener('load', () => {
       const preloader = document.getElementById('page-preloader');
       if (preloader) setTimeout(() => { preloader.classList.add('hidden'); document.body.style.overflow = ''; }, 300);
+      document.querySelectorAll('video[autoplay]').forEach(v => { v.muted = true; v.play().catch(() => {}); });
     });
 
     // ── Music — play on first user interaction ────────────
