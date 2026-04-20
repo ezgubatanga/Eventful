@@ -566,6 +566,31 @@
       margin-top: 4px;
     }
 
+    /* ─── MOCKUP IMAGE ───────────────────────────────────── */
+    .mockup-wrapper {
+      position: relative;
+      display: inline-block;
+      animation: floatY 6s ease-in-out infinite;
+      z-index: 2;
+      flex-shrink: 0;
+    }
+
+    .mockup-img {
+      width: 280px;
+      display: block;
+      border-radius: 0;
+    }
+
+    .mockup-countdown {
+      position: absolute;
+      bottom: 9%;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 100%;
+      text-align: center;
+      pointer-events: none;
+    }
+
     /* ─── PREVIEW PHONE ─────────────────────────────────── */
     .preview-phone-shell {
       width: 280px;
@@ -2916,46 +2941,29 @@
 
         <!-- Right: live preview -->
         <div class="hero-visual fade-up delay-2">
-          <div class="preview-phone-shell">
-            <div class="preview-phone-inner">
-              <video class="prev-hero-video" autoplay muted loop playsinline disablepictureinpicture poster="https://images.unsplash.com/photo-1658019071484-f2ebe0902bc1?auto=format&fit=crop&w=800&q=80">
-                <source src="/demo/dark/anna-min.mp4" type="video/mp4">
-                <track kind="captions" src="" label="No captions" default />
-              </video>
-              <div class="prev-hero-overlay"></div>
-              <div class="prev-hero-content">
-                <h2 class="prev-hero-names">Anna<span class="prev-hero-amp">&amp;</span>Marco</h2>
-                <p class="prev-hero-date">September 20, 2026</p>
-                <p class="prev-hero-location">Rome, Italy</p>
-                <p class="prev-hero-quote">"You are my today and all of my tomorrows."</p>
-                <div class="prev-hero-actions">
-                  <span class="prev-btn-gold">RSVP Now</span>
-                  <span class="prev-btn-outline">Our Story</span>
+          <div class="mockup-wrapper">
+            <img src="mockup.webp" class="mockup-img" alt="Anna & Marco wedding page preview" />
+            <div class="mockup-countdown">
+              <p class="prev-countdown-label">Counting down to the big day</p>
+              <div class="prev-countdown-units">
+                <div class="prev-cd-unit">
+                  <span class="prev-cd-num" id="prev-cd-days">--</span>
+                  <span class="prev-cd-label">Days</span>
                 </div>
-                <div class="prev-hero-divider"></div>
-                <div class="prev-countdown">
-                  <p class="prev-countdown-label">Counting down to the big day</p>
-                  <div class="prev-countdown-units">
-                    <div class="prev-cd-unit">
-                      <span class="prev-cd-num" id="prev-cd-days">--</span>
-                      <span class="prev-cd-label">Days</span>
-                    </div>
-                    <span class="prev-cd-sep">·</span>
-                    <div class="prev-cd-unit">
-                      <span class="prev-cd-num" id="prev-cd-hours">--</span>
-                      <span class="prev-cd-label">Hours</span>
-                    </div>
-                    <span class="prev-cd-sep">·</span>
-                    <div class="prev-cd-unit">
-                      <span class="prev-cd-num" id="prev-cd-mins">--</span>
-                      <span class="prev-cd-label">Minutes</span>
-                    </div>
-                    <span class="prev-cd-sep">·</span>
-                    <div class="prev-cd-unit">
-                      <span class="prev-cd-num" id="prev-cd-secs">--</span>
-                      <span class="prev-cd-label">Seconds</span>
-                    </div>
-                  </div>
+                <span class="prev-cd-sep">·</span>
+                <div class="prev-cd-unit">
+                  <span class="prev-cd-num" id="prev-cd-hours">--</span>
+                  <span class="prev-cd-label">Hours</span>
+                </div>
+                <span class="prev-cd-sep">·</span>
+                <div class="prev-cd-unit">
+                  <span class="prev-cd-num" id="prev-cd-mins">--</span>
+                  <span class="prev-cd-label">Minutes</span>
+                </div>
+                <span class="prev-cd-sep">·</span>
+                <div class="prev-cd-unit">
+                  <span class="prev-cd-num" id="prev-cd-secs">--</span>
+                  <span class="prev-cd-label">Seconds</span>
                 </div>
               </div>
             </div>
