@@ -486,6 +486,32 @@
       display: none;
     }
 
+    .check-item.unavailable {
+      opacity: 0.45;
+      filter: grayscale(0.5);
+      cursor: not-allowed;
+      pointer-events: none;
+    }
+
+    .check-item.unavailable::before {
+      display: none;
+    }
+
+    .check-unavailable-tag {
+      margin-left: auto;
+      font-family: 'Outfit', sans-serif;
+      font-size: 0.65rem;
+      font-weight: 600;
+      letter-spacing: 0.07em;
+      text-transform: uppercase;
+      color: var(--text-muted, #999);
+      background: rgba(42,37,32,0.06);
+      border: 1px solid rgba(42,37,32,0.1);
+      border-radius: 4px;
+      padding: 2px 7px;
+      white-space: nowrap;
+    }
+
     .check-item.is-checked {
       border-color: var(--gold);
       background: var(--gold-light);
@@ -2013,12 +2039,11 @@
                 <span class="check-text">Standard — 5 days</span>
                 <span class="addon-price" style="color:var(--text-light)">Included</span>
               </label>
-              <label class="check-item" id="lbl-delivery-rush" tabindex="0" role="radio" aria-checked="false"
-                     onclick="selectDelivery('rush')" onkeydown="if(event.key==='Enter'||event.key===' ')selectDelivery('rush')">
-                <input type="radio" name="delivery" id="delivery-rush" value="rush" />
+              <label class="check-item unavailable" id="lbl-delivery-rush" tabindex="-1" role="radio" aria-checked="false" aria-disabled="true">
+                <input type="radio" name="delivery" id="delivery-rush" value="rush" disabled />
                 <span class="custom-check"><svg width="11" height="9" viewBox="0 0 11 9" fill="none"><path d="M1 4.5L4 7.5L10 1" stroke="white" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
                 <span class="check-text">Rush — 2 days</span>
-                <span class="addon-price">+₱1,800</span>
+                <span class="check-unavailable-tag">Not Available</span>
               </label>
             </div>
           </div>
@@ -2423,6 +2448,7 @@
     }
 
     function selectDelivery(value) {
+      if (value === 'rush') return;
       ['standard', 'rush'].forEach(v => {
         const lbl = document.getElementById(`lbl-delivery-${v}`);
         const rb = document.getElementById(`delivery-${v}`);

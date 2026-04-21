@@ -2418,6 +2418,34 @@
       box-shadow: 0 0 0 1px var(--gold), var(--shadow-sm);
     }
 
+    .pricing-card.unavailable {
+      opacity: 0.5;
+      filter: grayscale(0.6);
+      pointer-events: none;
+    }
+
+    .pricing-card.unavailable .btn {
+      background: rgba(42,37,32,0.08);
+      color: var(--text-muted);
+      border-color: rgba(42,37,32,0.15);
+      cursor: not-allowed;
+    }
+
+    .pricing-unavailable-tag {
+      display: inline-block;
+      margin-bottom: 10px;
+      font-family: 'Outfit', sans-serif;
+      font-size: 0.7rem;
+      font-weight: 600;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--text-muted);
+      background: rgba(42,37,32,0.07);
+      border: 1px solid rgba(42,37,32,0.12);
+      border-radius: 4px;
+      padding: 3px 8px;
+    }
+
     .pricing-card-badge {
       position: absolute;
       top: -13px;
@@ -3380,7 +3408,7 @@
           </ul>
           <a href="/onboarding" class="btn btn-gold" style="width:100%;justify-content:center;">Get Started ✦</a>
         </div>
-        <div class="pricing-card">
+        <div class="pricing-card unavailable">
           <p class="pricing-card-name">Rush</p>
           <p class="pricing-card-price"><span class="price-currency">₱</span>5,800</p>
           <p class="pricing-card-delivery">Delivered in 2 days</p>
@@ -3391,7 +3419,7 @@
             <li><span class="pf-check">✓</span> Add-ons available</li>
             <li><span class="pf-check">✓</span> Edits always welcome</li>
           </ul>
-          <a href="/onboarding?plan=rush" class="btn btn-outline" style="width:100%;justify-content:center;">Get Started →</a>
+          <span class="btn btn-outline" style="width:100%;justify-content:center;cursor:not-allowed;">Not Available</span>
         </div>
       </div>
 
