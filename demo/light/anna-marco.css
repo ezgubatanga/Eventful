@@ -538,12 +538,6 @@ section { padding: 88px 24px; }
   border-radius: var(--radius);
   border: 1px solid rgba(197,160,89,0.22);
   box-shadow: var(--shadow-sm);
-  transition: box-shadow var(--transition), transform var(--transition);
-}
-
-.schedule-item:hover {
-  box-shadow: var(--shadow-md);
-  transform: translateY(-2px);
 }
 
 .schedule-time {
@@ -615,17 +609,11 @@ section { padding: 88px 24px; }
 }
 
 .venue-card {
-  background: var(--surface-2);
+  background: #ffffff;
   border-radius: var(--radius-lg);
   overflow: hidden;
   border: 1px solid rgba(50,45,40,0.12);
   box-shadow: var(--shadow-sm);
-  transition: box-shadow var(--transition), transform var(--transition);
-}
-
-.venue-card:hover {
-  box-shadow: var(--shadow-md);
-  transform: translateY(-2px);
 }
 
 .venue-map {
@@ -1385,20 +1373,15 @@ section { padding: 88px 24px; }
   grid-column: 2; grid-row: 1;
   justify-self: center;
   z-index: 1;
-  transition: transform var(--transition), box-shadow var(--transition);
 }
-.timeline-item:hover .timeline-dot { transform: scale(1.4); box-shadow: 0 0 0 3px var(--gold-mid); }
 
 .timeline-content {
   grid-column: 3; grid-row: 1;
   padding: 4px 0;
-  transition: transform var(--transition);
 }
-.timeline-content:hover { transform: translateX(3px); }
 
 .timeline-item:nth-child(even) .timeline-year    { grid-column: 3; text-align: left; padding-right: 0; padding-left: 8px; }
 .timeline-item:nth-child(even) .timeline-content { grid-column: 1; }
-.timeline-item:nth-child(even) .timeline-content:hover { transform: translateX(-3px); }
 
 .timeline-event  { font-weight: 600; font-size: 0.95rem; color: var(--text-main); margin-bottom: 5px; }
 .timeline-detail { font-size: 0.84rem; color: var(--text-muted); line-height: 1.6; }
@@ -1848,7 +1831,6 @@ section { padding: 88px 24px; }
   .timeline-content { grid-column: 2; grid-row: 2; }
   .timeline-item:nth-child(even) .timeline-year    { grid-column: 2; text-align: left; padding-left: 0; }
   .timeline-item:nth-child(even) .timeline-content { grid-column: 2; }
-  .timeline-item:nth-child(even) .timeline-content:hover { transform: translateX(3px); }
   .accommodation-cards,
   .activities-grid { grid-template-columns: 1fr; }
   .transport-items  { grid-template-columns: 1fr; gap: 20px; }
