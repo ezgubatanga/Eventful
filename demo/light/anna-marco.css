@@ -1407,7 +1407,7 @@ section { padding: 88px 24px; }
 .accommodation-card:hover { box-shadow: var(--shadow-md); transform: translateY(-3px); }
 
 .accommodation-stars    { font-size: 0.7rem; letter-spacing: 0.22em; color: #C8976A; margin-bottom: 10px; display: block; }
-.accommodation-name     { font-family: 'Playfair Display', serif; font-size: 1.6rem; font-weight: 600; color: var(--text-main); margin-bottom: 6px; }
+.accommodation-name     { font-family: 'Playfair Display', serif; font-size: 1.6rem; font-weight: 400; color: var(--text-main); margin-bottom: 6px; }
 .accommodation-distance { font-size: 0.72rem; text-transform: uppercase; letter-spacing: 0.14em; color: var(--gold); font-weight: 600; margin-bottom: 12px; }
 .accommodation-desc     { font-size: 0.84rem; color: var(--text-muted); line-height: 1.6; flex: 1; margin-bottom: 20px; }
 
