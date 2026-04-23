@@ -537,7 +537,6 @@ section { padding: 88px 24px; }
   background: var(--surface);
   border-radius: var(--radius);
   border: 1px solid rgba(197,160,89,0.22);
-  box-shadow: var(--shadow-sm);
 }
 
 .schedule-time {
