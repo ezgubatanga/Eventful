@@ -1140,15 +1140,16 @@
       // Insert in background — id stored for confirmPayment
       try {
         if (!_onboardingId) {
-          const { data, error } = await db.from('onboarding').insert({
+          _onboardingId = crypto.randomUUID();
+          const { error } = await db.from('onboarding').insert({
+            id:             _onboardingId,
             name:           document.getElementById('name').value.trim(),
             contact_number: document.getElementById('contactNumber').value.trim(),
             email:          document.getElementById('email').value.trim(),
             payment_status: 'pending',
             submitted_at:   new Date().toISOString(),
-          }).select('id').single();
-
-          if (!error && data) _onboardingId = data.id;
+          });
+          if (error) console.error('Onboarding insert failed:', error);
         }
       } catch (err) {
         console.error('Onboarding insert failed:', err);
