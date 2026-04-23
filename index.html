@@ -28,15 +28,17 @@
   <link rel="icon" type="image/webp" href="favicon.webp" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link rel="preconnect" href="https://images.unsplash.com" />
+  <link rel="preload" as="image" href="mockup.webp" />
   <link
     rel="preload"
     as="style"
-    href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,300;12..96,400;12..96,500;12..96,600;12..96,700&family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500&family=Cormorant+Infant:ital,wght@0,400;0,500;1,400;1,500&family=Parisienne&family=Outfit:wght@300;400;500;600&display=swap" />
+    href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,300;12..96,400;12..96,500;12..96,600;12..96,700&family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500&family=Cormorant+Infant:ital,wght@0,400;0,500;1,400;1,500&family=Parisienne&family=Outfit:wght@300;400;500;600&display=optional" />
   <link
-    href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,300;12..96,400;12..96,500;12..96,600;12..96,700&family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500&family=Cormorant+Infant:ital,wght@0,400;0,500;1,400;1,500&family=Parisienne&family=Outfit:wght@300;400;500;600&display=swap"
+    href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,300;12..96,400;12..96,500;12..96,600;12..96,700&family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500&family=Cormorant+Infant:ital,wght@0,400;0,500;1,400;1,500&family=Parisienne&family=Outfit:wght@300;400;500;600&display=optional"
     rel="stylesheet" media="print" onload="this.media='all'" />
   <noscript><link
-    href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,300;12..96,400;12..96,500;12..96,600;12..96,700&family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500&family=Cormorant+Infant:ital,wght@0,400;0,500;1,400;1,500&family=Parisienne&family=Outfit:wght@300;400;500;600&display=swap"
+    href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,300;12..96,400;12..96,500;12..96,600;12..96,700&family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500&family=Cormorant+Infant:ital,wght@0,400;0,500;1,400;1,500&family=Parisienne&family=Outfit:wght@300;400;500;600&display=optional"
     rel="stylesheet" /></noscript>
   <style>
     /* ─── Design Tokens ─────────────────────────────────── */
@@ -2981,7 +2983,7 @@
     <div class="container">
       <div class="nav-inner">
         <a href="index.html" class="nav-logo">
-          <img src="logo.webp" alt="Eventful Logo" height="32" style="height: 32px; width: auto;" fetchpriority="high" />
+          <img src="logo.webp" alt="Eventful Logo" height="32" style="height: 32px; width: auto;" />
         </a>
         <ul class="nav-links">
           <li><a href="#features">Features</a></li>
@@ -3017,7 +3019,7 @@
         <!-- Right: live preview -->
         <div class="hero-visual fade-up delay-2">
           <div class="mockup-wrapper">
-            <img src="mockup.webp" class="mockup-img" alt="Anna & Marco wedding page preview" />
+            <img src="mockup.webp" class="mockup-img" alt="Anna & Marco wedding page preview" width="800" height="800" fetchpriority="high" loading="eager" />
             <div class="mockup-countdown">
               <p class="prev-countdown-label">Counting down to the big day</p>
               <div class="prev-countdown-units">
