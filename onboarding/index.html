@@ -28,21 +28,6 @@
   <meta name="agd-partner-manual-verification" />
   <link rel="icon" type="image/webp" href="https://eventful.page/favicon.webp" />
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-  <script type="application/ld+json">
-  {
-    "@context": "https://schema.org",
-    "@type": "Service",
-    "name": "Custom Wedding Website",
-    "provider": {
-      "@type": "Organization",
-      "name": "Eventful",
-      "url": "https://eventful.page"
-    },
-    "description": "Bespoke wedding websites with RSVP forms, countdown timers, background music, photo gallery, and more — all in one shareable page.",
-    "url": "https://eventful.page/onboarding/",
-    "serviceType": "Wedding Website Design"
-  }
-  </script>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link
@@ -72,7 +57,6 @@
       --transition: all 0.35s cubic-bezier(0.16, 1, 0.3, 1);
     }
 
-    /* ─── Reset ─────────────────────────────────────────── */
     *,
     *::before,
     *::after {
@@ -81,9 +65,7 @@
       padding: 0;
     }
 
-    html {
-      scroll-behavior: smooth;
-    }
+    html { scroll-behavior: smooth; }
 
     body {
       font-family: 'Outfit', sans-serif;
@@ -103,6 +85,7 @@
       padding: 40px 20px 80px;
     }
 
+    /* ─── Chat Bubble ────────────────────────────────────── */
     .chat-bubble-wrap {
       display: flex;
       align-items: center;
@@ -110,9 +93,7 @@
       margin-top: 20px;
     }
 
-    .chat-avatar-wrap {
-      flex-shrink: 0;
-    }
+    .chat-avatar-wrap { flex-shrink: 0; }
 
     .chat-avatar {
       width: 52px;
@@ -159,46 +140,10 @@
 
     .chat-link:hover { text-decoration: underline; }
 
-    /* ─── Back Link ──────────────────────────────────────── */
-    .back-link {
-      display: inline-flex;
-      align-items: center;
-      gap: 8px;
-      color: var(--text-muted);
-      text-decoration: none;
-      font-size: 0.9rem;
-      font-weight: 400;
-      margin-bottom: 40px;
-      transition: var(--transition);
-      letter-spacing: 0.02em;
-    }
-
-    .back-link:hover {
-      color: var(--gold);
-    }
-
-    .back-link .arrow {
-      font-size: 1rem;
-      transition: transform 0.3s ease;
-    }
-
-    .back-link:hover .arrow {
-      transform: translateX(-3px);
-    }
-
     /* ─── Page Header ─────────────────────────────────────── */
     .page-header {
       text-align: center;
       margin-bottom: 48px;
-    }
-
-    .page-eyebrow {
-      text-transform: uppercase;
-      letter-spacing: 0.3em;
-      font-size: 0.78rem;
-      color: var(--gold);
-      font-weight: 500;
-      margin-bottom: 12px;
     }
 
     .page-title {
@@ -272,13 +217,8 @@
       transition: color 0.3s;
     }
 
-    .step-label.active {
-      color: var(--gold);
-    }
-
-    .step-label.done {
-      color: var(--sage);
-    }
+    .step-label.active { color: var(--gold); }
+    .step-label.done { color: var(--sage); }
 
     .step-connector {
       flex: 1;
@@ -288,13 +228,9 @@
       max-width: 56px;
       margin-bottom: 24px;
       transition: background 0.4s;
-      position: relative;
-      z-index: 0;
     }
 
-    .step-connector.done {
-      background: var(--sage);
-    }
+    .step-connector.done { background: var(--sage); }
 
     /* ─── Form Card ──────────────────────────────────────── */
     .form-card {
@@ -310,20 +246,11 @@
       animation: stepFadeIn 0.45s cubic-bezier(0.16, 1, 0.3, 1) both;
     }
 
-    .step-panel.active {
-      display: block;
-    }
+    .step-panel.active { display: block; }
 
     @keyframes stepFadeIn {
-      from {
-        opacity: 0;
-        transform: translateY(18px);
-      }
-
-      to {
-        opacity: 1;
-        transform: translateY(0);
-      }
+      from { opacity: 0; transform: translateY(18px); }
+      to   { opacity: 1; transform: translateY(0); }
     }
 
     /* ─── Step Header Strip ──────────────────────────────── */
@@ -357,9 +284,7 @@
     }
 
     /* ─── Step Body ──────────────────────────────────────── */
-    .step-body {
-      padding: 36px 44px 40px;
-    }
+    .step-body { padding: 36px 44px 40px; }
 
     /* ─── Form Fields ────────────────────────────────────── */
     .fields-grid {
@@ -368,9 +293,7 @@
       gap: 20px;
     }
 
-    .fields-grid .field-full {
-      grid-column: 1 / -1;
-    }
+    .fields-grid .field-full { grid-column: 1 / -1; }
 
     .field-group {
       display: flex;
@@ -404,9 +327,7 @@
       appearance: none;
     }
 
-    .field-input::placeholder {
-      color: var(--text-light);
-    }
+    .field-input::placeholder { color: var(--text-light); }
 
     .field-input:focus {
       border-color: var(--gold);
@@ -419,526 +340,85 @@
       box-shadow: 0 0 0 3px rgba(192, 112, 106, 0.12);
     }
 
-    /* ─── Section Groups ─────────────────────────────────── */
-    .section-group {
-      margin-bottom: 28px;
-    }
+    /* ─── Features Accordion ─────────────────────────────── */
+    .features-accordion { margin-top: 28px; }
 
-    .section-group:last-child {
-      margin-bottom: 0;
-    }
-
-    .group-label {
-      font-size: 0.78rem;
-      letter-spacing: 0.2em;
-      text-transform: uppercase;
-      font-weight: 600;
-      color: var(--text-light);
-      margin-bottom: 14px;
-    }
-
-    /* ─── Checkbox Item ──────────────────────────────────── */
-    .checkbox-grid {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 10px;
-    }
-
-    .check-item {
-      display: flex;
-      align-items: center;
-      gap: 12px;
-      padding: 14px 16px;
-      border: 1.5px solid #E8E3DC;
+    .features-details {
+      border: 1.5px solid #E0DAD2;
       border-radius: var(--radius);
-      cursor: pointer;
-      transition: var(--transition);
-      background: var(--bg);
-      position: relative;
       overflow: hidden;
+      background: var(--bg);
     }
 
-    .check-item::before {
-      content: '';
-      position: absolute;
-      inset: 0;
-      background: var(--gold-light);
-      opacity: 0;
-      transition: opacity 0.25s;
-    }
-
-    .check-item:hover::before {
-      opacity: 1;
-    }
-
-    .check-item:hover {
-      border-color: var(--gold);
-    }
-
-    .check-item.locked {
-      background: rgba(245, 241, 235, 0.6);
-      border-color: rgba(197, 160, 89, 0.2);
-      cursor: default;
-      opacity: 0.85;
-    }
-
-    .check-item.locked::before {
-      display: none;
-    }
-
-    .check-item.unavailable {
-      opacity: 0.45;
-      filter: grayscale(0.5);
-      cursor: not-allowed;
-      pointer-events: none;
-    }
-
-    .check-item.unavailable::before {
-      display: none;
-    }
-
-    .check-unavailable-tag {
-      margin-left: auto;
-      font-family: 'Outfit', sans-serif;
-      font-size: 0.65rem;
-      font-weight: 600;
-      letter-spacing: 0.07em;
-      text-transform: uppercase;
-      color: var(--text-muted, #999);
-      background: rgba(42,37,32,0.06);
-      border: 1px solid rgba(42,37,32,0.1);
-      border-radius: 4px;
-      padding: 2px 7px;
-      white-space: nowrap;
-    }
-
-    .check-item.is-checked {
-      border-color: var(--gold);
-      background: var(--gold-light);
-    }
-
-    .check-item input[type="checkbox"],
-    .check-item input[type="radio"] {
-      display: none;
-    }
-
-    .custom-check {
-      width: 20px;
-      height: 20px;
-      border: 2px solid #D0C9C0;
-      border-radius: 6px;
-      flex-shrink: 0;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      transition: var(--transition);
-      background: #fff;
-      position: relative;
-      z-index: 1;
-    }
-
-    .check-item.is-checked .custom-check,
-    .check-item.locked .custom-check {
-      background: var(--gold);
-      border-color: var(--gold);
-    }
-
-    .custom-check svg {
-      opacity: 0;
-      transition: opacity 0.2s;
-    }
-
-    .check-item.is-checked .custom-check svg,
-    .check-item.locked .custom-check svg {
-      opacity: 1;
-    }
-
-    .check-text {
+    .features-summary {
+      padding: 14px 18px;
+      cursor: pointer;
       font-size: 0.88rem;
-      font-weight: 500;
-      color: var(--text-main);
-      line-height: 1.3;
-      position: relative;
-      z-index: 1;
-      flex: 1;
-    }
-
-    .addon-price {
-      font-size: 0.78rem;
       font-weight: 600;
       color: var(--gold);
-      letter-spacing: 0.02em;
-      flex-shrink: 0;
-      position: relative;
-      z-index: 1;
+      list-style: none;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      user-select: none;
+      transition: background 0.2s;
     }
 
-    .locked-badge {
-      font-size: 0.68rem;
-      background: rgba(197, 160, 89, 0.18);
-      color: #9A7833;
-      padding: 2px 8px;
-      border-radius: 20px;
-      font-weight: 600;
-      letter-spacing: 0.04em;
+    .features-summary:hover { background: var(--gold-light); }
+    .features-summary::-webkit-details-marker { display: none; }
+
+    .features-chevron {
+      width: 16px;
+      height: 16px;
+      transition: transform 0.3s;
       flex-shrink: 0;
-      position: relative;
-      z-index: 1;
     }
 
-    /* ─── Premium Items ──────────────────────────────────── */
-    .premium-grid {
+    .features-details[open] .features-chevron { transform: rotate(180deg); }
+
+    .features-body { padding: 16px 18px 20px; }
+
+    .features-grid {
       display: grid;
       grid-template-columns: 1fr 1fr;
-      gap: 10px;
+      gap: 8px;
     }
 
-    .premium-item {
+    .feature-tag {
       display: flex;
       align-items: center;
-      gap: 12px;
-      padding: 14px 16px;
-      border: 1.5px solid rgba(197, 160, 89, 0.3);
-      border-radius: var(--radius);
-      cursor: pointer;
-      background: linear-gradient(135deg, rgba(253, 252, 249, 1) 0%, rgba(250, 245, 235, 0.5) 100%);
-      transition: var(--transition);
-      position: relative;
-      overflow: hidden;
-    }
-
-    .premium-item::after {
-      content: '';
-      position: absolute;
-      inset: 0;
-      background: linear-gradient(135deg, rgba(197, 160, 89, 0.05), rgba(197, 160, 89, 0.12));
-      opacity: 0;
-      transition: opacity 0.25s;
-    }
-
-    .premium-item:hover::after {
-      opacity: 1;
-    }
-
-    .premium-item:hover {
-      border-color: var(--gold);
-      box-shadow: 0 4px 16px rgba(197, 160, 89, 0.15);
-    }
-
-    .premium-item.is-checked {
-      border-color: var(--gold);
-      background: linear-gradient(135deg, rgba(253, 252, 249, 1), rgba(253, 244, 220, 0.5));
-      box-shadow: 0 4px 20px rgba(197, 160, 89, 0.2);
-    }
-
-    .premium-item input[type="checkbox"] {
-      display: none;
-    }
-
-    .premium-check {
-      width: 20px;
-      height: 20px;
-      border: 2px solid rgba(197, 160, 89, 0.5);
-      border-radius: 6px;
-      flex-shrink: 0;
-      background: rgba(197, 160, 89, 0.08);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      transition: var(--transition);
-      position: relative;
-      z-index: 1;
-    }
-
-    .premium-item.is-checked .premium-check {
-      background: var(--gold);
-      border-color: var(--gold);
-    }
-
-    .premium-check svg {
-      opacity: 0;
-      transition: opacity 0.2s;
-    }
-
-    .premium-item.is-checked .premium-check svg {
-      opacity: 1;
-    }
-
-    .premium-text-wrap {
-      flex: 1;
-      position: relative;
-      z-index: 1;
-    }
-
-    .premium-text {
-      font-size: 0.88rem;
+      gap: 8px;
+      font-size: 0.82rem;
+      padding: 9px 12px;
+      border-radius: 10px;
       font-weight: 500;
-      color: var(--text-main);
       line-height: 1.3;
     }
 
-    .premium-badge {
-      display: inline-flex;
-      align-items: center;
-      gap: 4px;
-      font-size: 0.65rem;
-      font-weight: 600;
-      letter-spacing: 0.06em;
-      text-transform: uppercase;
-      background: linear-gradient(135deg, #C5A059, #D4B577);
-      color: #fff;
-      padding: 2px 8px;
-      border-radius: 20px;
-      margin-top: 3px;
-    }
-
-    .premium-badge::before {
-      content: '✦';
-      font-size: 0.55rem;
-    }
-
-    /* ─── Time Picker ────────────────────────────────────── */
-    .time-picker {
-      display: flex;
-      align-items: center;
-      gap: 8px;
-    }
-
-    .time-select {
-      flex: 1;
-      min-width: 0;
-    }
-
-    .time-colon {
-      font-size: 1.1rem;
-      font-weight: 600;
-      color: var(--text-muted);
-      flex-shrink: 0;
-    }
-
-    .ampm-toggle {
-      display: flex;
-      border: 1.5px solid #E0DAD2;
-      border-radius: var(--radius);
-      overflow: hidden;
-      flex-shrink: 0;
-      background: #FDFCFB;
-      transition: var(--transition);
-    }
-
-    .ampm-btn {
-      padding: 14px 14px;
-      font-family: 'Outfit', sans-serif;
-      font-size: 0.88rem;
-      font-weight: 500;
-      background: transparent;
-      color: var(--text-muted);
-      border: none;
-      cursor: pointer;
-      transition: var(--transition);
-      line-height: 1;
-    }
-
-    .ampm-btn + .ampm-btn {
-      border-left: 1.5px solid #E0DAD2;
-    }
-
-    .ampm-btn.active {
-      background: var(--gold);
-      color: #fff;
-    }
-
-    /* ─── Slug Field ─────────────────────────────────────── */
-    .slug-wrap {
-      display: flex;
-      align-items: center;
-      border: 1.5px solid #E0DAD2;
-      border-radius: var(--radius);
-      background: #FDFCFB;
-      overflow: hidden;
-      transition: var(--transition);
-    }
-
-    .slug-wrap:focus-within {
-      border-color: var(--gold);
-      background: #fff;
-      box-shadow: 0 0 0 4px var(--gold-light);
-    }
-
-    .slug-wrap.error {
-      border-color: #C0706A;
-      box-shadow: 0 0 0 3px rgba(192, 112, 106, 0.12);
-    }
-
-    .slug-prefix {
-      padding: 14px 0 14px 18px;
-      font-size: 0.97rem;
-      color: var(--text-light);
-      white-space: nowrap;
-      flex-shrink: 0;
-      user-select: none;
-    }
-
-    .slug-input {
-      border: none !important;
-      box-shadow: none !important;
-      background: transparent !important;
-      padding-left: 2px;
-      flex: 1;
-    }
-
-    .slug-input:focus {
-      border: none;
-      box-shadow: none;
-    }
-
-    /* ─── Summary ────────────────────────────────────────── */
-    .summary-block {
-      background: var(--bg);
-      border: 1px solid #E8E2DA;
-      border-radius: var(--radius-lg);
-      padding: 28px;
-      margin-bottom: 20px;
-    }
-
-    .summary-block-title {
-      font-size: 0.75rem;
-      text-transform: uppercase;
-      letter-spacing: 0.2em;
-      color: var(--text-light);
-      font-weight: 600;
-      margin-bottom: 14px;
-    }
-
-    .summary-couple {
-      font-family: 'Bricolage Grotesque', sans-serif;
-      font-size: 1.7rem;
-      font-style: italic;
-      color: var(--text-main);
-      margin-bottom: 4px;
-    }
-
-    .summary-meta {
-      display: flex;
-      flex-direction: column;
-      gap: 6px;
-      font-size: 0.88rem;
-      color: var(--text-muted);
-      margin-bottom: 0;
-    }
-
-    .summary-meta span {
-      display: flex;
-      align-items: baseline;
-      gap: 6px;
-      word-break: break-all;
-    }
-
-    .summary-meta-label {
-      font-size: 0.75rem;
-      text-transform: uppercase;
-      letter-spacing: 0.04em;
-      color: var(--text-light);
-      flex-shrink: 0;
-      min-width: 72px;
-    }
-
-    .summary-tags {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 8px;
-    }
-
-    .summary-tag {
-      font-size: 0.8rem;
-      padding: 5px 14px;
-      border-radius: 20px;
-      font-weight: 500;
-    }
-
-    .summary-tag.core {
-      background: var(--sage-light);
-      color: var(--sage);
-      border: 1px solid rgba(95, 113, 97, 0.2);
-    }
-
-    .summary-tag.addon {
-      background: rgba(220, 215, 207, 0.5);
-      color: var(--text-muted);
-      border: 1px solid #E0DAD2;
-    }
-
-    .summary-tag.premium {
+    .feature-tag.core,
+    .feature-tag.free {
       background: var(--gold-light);
       color: #9A7833;
       border: 1px solid rgba(197, 160, 89, 0.25);
     }
 
-    .summary-tag.removable {
-      display: inline-flex;
-      align-items: center;
-      gap: 6px;
-    }
-
-    .tag-remove {
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      width: 14px;
-      height: 14px;
-      border-radius: 50%;
-      background: rgba(0,0,0,0.12);
-      border: none;
-      cursor: pointer;
-      font-size: 0.6rem;
-      line-height: 1;
-      color: inherit;
-      padding: 0;
+    .feature-tag::before {
+      content: '✓';
+      font-size: 0.72rem;
+      font-weight: 700;
       flex-shrink: 0;
-      transition: background 0.2s;
     }
 
-    .tag-remove:hover {
-      background: rgba(0,0,0,0.25);
-    }
-
-    .price-box {
-      background: linear-gradient(135deg, #2A2520 0%, #3D3530 100%);
-      color: #fff;
-      border-radius: var(--radius-lg);
-      padding: 28px;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      margin-bottom: 20px;
-    }
-
-    .price-label {
-      font-size: 0.82rem;
-      opacity: 0.65;
-      letter-spacing: 0.1em;
-      text-transform: uppercase;
-      margin-bottom: 6px;
-    }
-
-    .price-value {
-      font-family: 'Bricolage Grotesque', sans-serif;
-      font-size: 2.6rem;
-      font-weight: 500;
-      line-height: 1;
-    }
-
-    .price-note {
-      font-size: 0.78rem;
-      opacity: 0.5;
-      margin-top: 4px;
-    }
-
-    .price-breakdown {
-      font-size: 0.82rem;
-      opacity: 0.7;
-      text-align: right;
-      line-height: 1.8;
+    .feature-free-badge {
+      margin-left: auto;
+      font-size: 0.68rem;
+      font-weight: 600;
+      background: rgba(197, 160, 89, 0.18);
+      color: #9A7833;
+      padding: 2px 7px;
+      border-radius: 20px;
+      white-space: nowrap;
+      flex-shrink: 0;
     }
 
     /* ─── Navigation ─────────────────────────────────────── */
@@ -975,9 +455,7 @@
       min-width: auto;
     }
 
-    .btn-ghost:hover {
-      color: var(--text-main);
-    }
+    .btn-ghost:hover { color: var(--text-main); }
 
     .btn-primary {
       background: var(--gold);
@@ -991,24 +469,9 @@
       box-shadow: 0 14px 32px rgba(197, 160, 89, 0.4);
     }
 
-    .btn-primary:active {
-      transform: translateY(0);
-    }
+    .btn-primary:active { transform: translateY(0); }
 
-    .btn-submit {
-      background: linear-gradient(135deg, #2A2520 0%, #3D3530 100%);
-      color: #fff;
-      font-size: 1rem;
-      padding: 16px 38px;
-      box-shadow: 0 8px 28px rgba(42, 37, 32, 0.25);
-    }
-
-    .btn-submit:hover {
-      transform: translateY(-2px);
-      box-shadow: 0 16px 40px rgba(42, 37, 32, 0.35);
-    }
-
-    .btn-submit:disabled {
+    .btn-primary:disabled {
       opacity: 0.65;
       cursor: not-allowed;
       transform: none;
@@ -1023,72 +486,22 @@
       animation: spin 0.6s linear infinite;
     }
 
-    @keyframes spin {
-      to {
-        transform: rotate(360deg);
-      }
-    }
+    @keyframes spin { to { transform: rotate(360deg); } }
 
-    .nav-spacer {
-      flex: 1;
-    }
-
-    /* ─── Payment Modal ──────────────────────────────────── */
-    .payment-modal-overlay {
-      display: none;
-      position: fixed;
-      inset: 0;
-      background: rgba(42, 37, 32, 0.55);
-      backdrop-filter: blur(6px);
-      -webkit-backdrop-filter: blur(6px);
-      z-index: 9000;
-      align-items: center;
-      justify-content: center;
-      padding: 24px;
-    }
-
-    .payment-modal-overlay.open {
-      display: flex;
-    }
-
-    .payment-modal {
-      background: var(--surface);
-      border-radius: var(--radius-xl);
-      padding: 36px 32px 32px;
+    /* ─── Payment (inline) ──────────────────────────────── */
+    .payment-inner {
       max-width: 440px;
-      width: 100%;
-      box-shadow: var(--shadow-lg);
+      margin: 0 auto;
       text-align: center;
-      position: relative;
-      max-height: 90vh;
-      overflow-y: auto;
-      scrollbar-width: none;
-      -ms-overflow-style: none;
     }
 
-    .payment-modal::-webkit-scrollbar { display: none; }
-
-    .payment-modal-close {
-      position: absolute;
-      top: 16px;
-      right: 18px;
-      background: none;
-      border: none;
-      font-size: 1.3rem;
-      color: var(--text-light);
-      cursor: pointer;
-      line-height: 1;
-      padding: 4px;
-    }
-
-    .payment-modal-close:hover { color: var(--text-main); }
-
-    .payment-modal-title {
+    .payment-amount-badge {
+      display: inline-block;
+      color: var(--gold);
       font-family: 'Bricolage Grotesque', sans-serif;
-      font-size: 1.6rem;
-      font-weight: 500;
-      color: var(--text-main);
-      margin-bottom: 16px;
+      font-size: 2.4rem;
+      font-weight: 700;
+      margin-bottom: 20px;
     }
 
     .payment-tabs {
@@ -1148,18 +561,6 @@
       display: block;
     }
 
-    .payment-amount-badge {
-      display: inline-block;
-      background: none;
-      color: var(--gold);
-      font-family: 'Bricolage Grotesque', sans-serif;
-      font-size: 1.8rem;
-      font-weight: 700;
-      padding: 0;
-      border-radius: 0;
-      margin-bottom: 16px;
-    }
-
     .payment-gcash-number {
       font-size: 0.88rem;
       font-weight: 600;
@@ -1173,6 +574,7 @@
       white-space: nowrap;
       text-decoration: none;
     }
+
     .copy-number-btn {
       background: none;
       border: none;
@@ -1183,6 +585,7 @@
       line-height: 1;
       transition: opacity 0.2s;
     }
+
     .copy-number-btn:hover { opacity: 0.7; }
 
     .payment-gcash-name {
@@ -1321,6 +724,10 @@
       letter-spacing: 0.04em;
       cursor: pointer;
       transition: var(--transition);
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
     }
 
     .btn-confirm-payment:hover {
@@ -1334,55 +741,14 @@
       transform: none;
     }
 
-
-
-    .no-receipt-warning {
-      background: var(--surface-2);
-      border-radius: var(--radius);
-      padding: 14px 16px;
-      margin-bottom: 12px;
-      text-align: center;
+    .btn-confirm-payment .spinner {
+      width: 16px;
+      height: 16px;
+      border: 2px solid rgba(255, 255, 255, 0.4);
+      border-top-color: #fff;
+      border-radius: 50%;
+      animation: spin 0.6s linear infinite;
     }
-
-    .no-receipt-warning p {
-      font-size: 0.82rem;
-      color: var(--text-muted);
-      margin-bottom: 12px;
-    }
-
-    .no-receipt-actions {
-      display: flex;
-      gap: 10px;
-      justify-content: center;
-    }
-
-    /* ─── CTA subtext ─────────────────────────────────────── */
-    .cta-subtext {
-      text-align: center;
-      font-size: 0.8rem;
-      color: var(--text-light);
-      margin-top: 6px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      gap: 6px;
-    }
-
-    .cta-subtext::before {
-      content: '🔒';
-      font-size: 0.75rem;
-    }
-
-    .step-nav-payment {
-      flex-wrap: wrap;
-    }
-
-    .payment-subtext {
-      width: 100%;
-      justify-content: flex-end;
-      margin-top: 10px;
-    }
-    .mobile-break { display: none; }
 
     /* ─── Success & Error States ─────────────────────────── */
     .status-screen {
@@ -1392,9 +758,7 @@
       animation: stepFadeIn 0.5s ease both;
     }
 
-    .status-screen.active {
-      display: block;
-    }
+    .status-screen.active { display: block; }
 
     .status-icon {
       width: 72px;
@@ -1422,7 +786,6 @@
       margin: 0 auto 28px;
     }
 
-
     /* ─── Error message ──────────────────────────────────── */
     .field-error {
       font-size: 0.8rem;
@@ -1431,395 +794,27 @@
       display: none;
     }
 
-    .field-error.visible {
-      display: block;
-    }
-
-    .still-deciding-label {
-      display: inline-flex;
-      align-items: center;
-      gap: 7px;
-      margin-top: 8px;
-      font-size: 0.82rem;
-      color: var(--text-muted);
-      cursor: pointer;
-      user-select: none;
-    }
-    .still-deciding-label input[type="checkbox"] {
-      width: 15px;
-      height: 15px;
-      cursor: pointer;
-      flex-shrink: 0;
-      appearance: none;
-      -webkit-appearance: none;
-      border: 1.5px solid rgba(197, 160, 89, 0.5);
-      border-radius: 3px;
-      background: transparent;
-      position: relative;
-      transition: background 0.18s, border-color 0.18s;
-    }
-
-    .still-deciding-label input[type="checkbox"]:checked {
-      background: var(--gold);
-      border-color: var(--gold);
-    }
-
-    .still-deciding-label input[type="checkbox"]::after {
-      content: '';
-      position: absolute;
-      display: none;
-      left: 3px;
-      top: 0px;
-      width: 5px;
-      height: 8px;
-      border: 2px solid #fff;
-      border-top: none;
-      border-left: none;
-      transform: rotate(45deg);
-    }
-
-    .still-deciding-label input[type="checkbox"]:checked::after {
-      display: block;
-    }
-    #weddingDate:disabled,
-    .field-input:disabled,
-    .ampm-btn:disabled {
-      opacity: 0.38;
-      cursor: not-allowed;
-    }
-
-    /* ─── Included Details Disclosure ───────────────────── */
-    .included-details {
-      margin-top: 16px;
-    }
-
-    .included-summary {
-      font-size: 0.8rem;
-      color: var(--gold);
-      font-weight: 600;
-      cursor: pointer;
-      letter-spacing: 0.04em;
-      list-style: none;
-      display: inline-flex;
-      align-items: center;
-      gap: 4px;
-      user-select: none;
-    }
-
-    .included-summary::-webkit-details-marker { display: none; }
-
-    .included-grid {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 8px;
-    }
-
-    .included-tag {
-      display: flex;
-      align-items: center;
-      gap: 8px;
-      font-size: 0.85rem;
-      background: var(--sage-light);
-      color: var(--sage);
-      border: 1px solid rgba(95, 113, 97, 0.2);
-      border-radius: 12px;
-      padding: 10px 14px;
-      font-weight: 500;
-    }
-
-    .included-tag::before {
-      content: '✓';
-      font-size: 0.75rem;
-      font-weight: 700;
-    }
-
-    /* ─── Price Bar ──────────────────────────────────────── */
-    .price-bar {
-      display: none;
-      position: fixed;
-      bottom: 24px;
-      right: 24px;
-      background: var(--primary);
-      color: #fff;
-      border-radius: 999px;
-      padding: 10px 20px;
-      font-family: 'Outfit', sans-serif;
-      font-size: 0.88rem;
-      font-weight: 500;
-      box-shadow: 0 8px 28px rgba(42, 37, 32, 0.28);
-      z-index: 500;
-      gap: 10px;
-      align-items: center;
-      pointer-events: none;
-    }
-
-    .price-bar.visible {
-      display: flex;
-    }
-
-    .price-bar-label {
-      color: rgba(255,255,255,0.55);
-      font-size: 0.78rem;
-    }
-
-    .price-bar-amount {
-      font-weight: 700;
-      font-size: 1rem;
-      color: #fff;
-    }
-
-    /* ─── Domain Status ──────────────────────────────────── */
-    .domain-status {
-      display: none;
-      align-items: center;
-      gap: 6px;
-      margin-top: 8px;
-      font-size: 0.8rem;
-      font-weight: 500;
-    }
-
-    .domain-status.visible { display: flex; }
-
-    .domain-status-dot {
-      width: 8px;
-      height: 8px;
-      border-radius: 50%;
-      flex-shrink: 0;
-    }
-
-    .domain-status.checking .domain-status-dot { background: var(--text-light); }
-    .domain-status.checking { color: var(--text-light); }
-    .domain-status.available .domain-status-dot { background: var(--sage); }
-    .domain-status.available { color: var(--sage); }
-    .domain-status.taken .domain-status-dot { background: #C0706A; }
-    .domain-status.taken { color: #C0706A; }
+    .field-error.visible { display: block; }
 
     /* ─── Responsive ─────────────────────────────────────── */
     @media (max-width: 640px) {
-      .page-wrap {
-        padding: 24px 16px 60px;
-      }
+      .page-wrap { padding: 24px 16px 60px; }
+      .step-header { padding: 24px 24px 20px; }
+      .step-body { padding: 24px 24px 28px; }
+      .step-nav { padding: 20px 24px 28px; }
 
-      .step-header {
-        padding: 24px 24px 20px;
-      }
+      .fields-grid { grid-template-columns: 1fr; }
 
-      .step-body {
-        padding: 24px 24px 28px;
-      }
-
-      .step-nav {
-        padding: 20px 24px 28px;
-      }
-      .cta-subtext {
-        text-align: right;
-      }
-      .cta-subtext::before {
-        display: none;
-      }
-      .payment-subtext {
-        max-width: 400px;
-        white-space: normal;
-      }
-      .mobile-break { display: inline; }
-
-      .fields-grid {
-        grid-template-columns: 1fr;
-      }
-
-      .checkbox-grid,
-      .premium-grid {
-        grid-template-columns: 1fr;
-      }
-
-      .price-box {
-        flex-direction: column;
-        align-items: flex-start;
-        gap: 16px;
-      }
-
-      .price-breakdown {
-        text-align: left;
-      }
-
-      .stepper {
-        gap: 0;
-      }
+      .stepper { gap: 0; }
 
       .step-connector {
         min-width: 14px;
         max-width: 28px;
       }
-
-      .btn-submit {
-        font-size: 0.95rem;
-        padding: 14px 28px;
-      }
     }
 
-    /* ─── Color Palette Picker ───────────────────────────── */
-    .palette-grid {
-      display: grid;
-      grid-template-columns: repeat(4, 1fr);
-      gap: 10px;
-      margin-bottom: 14px;
-    }
-
-    .palette-option {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      gap: 8px;
-      padding: 12px 10px;
-      border: 1.5px solid #E0DAD2;
-      border-radius: var(--radius);
-      background: #FDFCFB;
-      cursor: pointer;
-      transition: var(--transition);
-      user-select: none;
-    }
-
-    .palette-option:hover {
-      border-color: var(--gold-mid);
-      background: #fff;
-    }
-
-    .palette-option.selected {
-      border-color: var(--gold);
-      background: var(--gold-light);
-      box-shadow: 0 0 0 3px var(--gold-light);
-    }
-
-    .palette-swatches {
-      display: flex;
-      gap: 4px;
-    }
-
-    .palette-swatch {
-      width: 18px;
-      height: 18px;
-      border-radius: 50%;
-      border: 1px solid rgba(0,0,0,0.08);
-      flex-shrink: 0;
-    }
-
-    .palette-name {
-      font-size: 0.72rem;
-      font-family: 'Outfit', sans-serif;
-      font-weight: 500;
-      color: var(--text-muted);
-      text-align: center;
-      line-height: 1.3;
-    }
-
-    .palette-option.selected .palette-name {
-      color: var(--text-main);
-    }
-
-    .palette-option.dark-palette {
-      border-color: rgba(197, 160, 89, 0.22);
-    }
-
-    .palette-option.dark-palette:hover {
-      border-color: rgba(197, 160, 89, 0.45);
-    }
-
-    .palette-option.dark-palette.selected {
-      background: rgba(197, 160, 89, 0.15);
-      border-color: var(--gold);
-      box-shadow: 0 0 0 3px rgba(197, 160, 89, 0.12);
-    }
-
-    .palette-option.dark-palette .palette-name {
-      color: rgba(255,255,255,0.55);
-    }
-
-    .palette-option.dark-palette.selected .palette-name {
-      color: rgba(255,255,255,0.9);
-    }
-
-    .palette-option.dark-palette .palette-swatch {
-      border-color: rgba(255,255,255,0.12);
-    }
-
-    .palette-hint {
-      font-size: 0.78rem;
-      color: var(--text-light);
-      font-family: 'Outfit', sans-serif;
-      margin-bottom: 10px;
-    }
-
-    /* ─── Page Mode Toggle ───────────────────────────── */
-    .mode-toggle {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 10px;
-      margin-bottom: 6px;
-    }
-
-    .mode-option {
-      display: flex;
-      align-items: center;
-      gap: 12px;
-      padding: 12px 14px;
-      border: 1.5px solid rgba(197, 160, 89, 0.2);
-      border-radius: 12px;
-      cursor: pointer;
-      background: var(--surface);
-      transition: var(--transition);
-      user-select: none;
-    }
-
-    .mode-option:hover {
-      border-color: var(--gold-mid);
-      background: #fff;
-    }
-
-    .mode-option.selected {
-      border-color: var(--gold);
-      background: var(--gold-light);
-      box-shadow: 0 0 0 3px var(--gold-light);
-    }
-
-    .mode-preview {
-      width: 34px;
-      height: 22px;
-      border-radius: 5px;
-      border: 1px solid rgba(0,0,0,0.08);
-      flex-shrink: 0;
-    }
-
-    .mode-preview-light {
-      background: linear-gradient(135deg, #FDFCF8 55%, #EDE8DF 100%);
-    }
-
-    .mode-preview-dark {
-      background: linear-gradient(135deg, #1C1C2A 55%, #2C2240 100%);
-    }
-
-    .mode-text .mode-label {
-      font-size: 0.83rem;
-      font-weight: 500;
-      color: var(--text-muted);
-      font-family: 'Outfit', sans-serif;
-    }
-
-    .mode-option.selected .mode-label {
-      color: var(--text-main);
-      font-weight: 600;
-    }
-
-    .mode-text .mode-sublabel {
-      font-size: 0.69rem;
-      color: var(--text-light);
-      font-family: 'Outfit', sans-serif;
-      margin-top: 1px;
-    }
-
-    @media (max-width: 600px) {
-      .palette-grid {
-        grid-template-columns: repeat(2, 1fr);
-      }
+    @media (max-width: 500px) {
+      .features-grid { grid-template-columns: 1fr; }
     }
   </style>
   <!-- Meta Pixel Code -->
@@ -1846,330 +841,147 @@
 
     <!-- Page Header -->
     <header class="page-header">
-      <a href="/"><img class="page-eyebrow" src="/logo.webp" alt="Eventful" style="height:28px;width:auto;display:block;margin:0 auto 12px;filter:none;opacity:1;" /></a>
-      <h1 class="page-title">Let's Design Your Perfect<br />Wedding Page</h1>
+      <a href="/"><img src="/logo.webp" alt="Eventful" style="height:28px;width:auto;display:block;margin:0 auto 12px;filter:none;opacity:1;" /></a>
+      <h1 class="page-title">Let Eventful Design Your Personalized Wedding Page</h1>
+      <p class="page-subtitle">Simplified onboarding process.</p>
     </header>
 
     <!-- Stepper -->
     <nav class="stepper" id="mainStepper" aria-label="Form progress">
       <div class="step-node" id="node-1">
         <div class="step-circle active" id="circle-1">1</div>
-        <span class="step-label active" id="label-1">Your Details</span>
+        <span class="step-label active" id="label-1">Your Info</span>
       </div>
       <div class="step-connector" id="conn-1-2"></div>
       <div class="step-node" id="node-2">
         <div class="step-circle" id="circle-2">2</div>
-        <span class="step-label" id="label-2">What's Included</span>
-      </div>
-      <div class="step-connector" id="conn-2-3"></div>
-      <div class="step-node" id="node-3">
-        <div class="step-circle" id="circle-3">3</div>
-        <span class="step-label" id="label-3">Add-Ons</span>
-      </div>
-      <div class="step-connector" id="conn-3-4"></div>
-      <div class="step-node" id="node-4">
-        <div class="step-circle" id="circle-4">4</div>
-        <span class="step-label" id="label-4">Premium</span>
-      </div>
-      <div class="step-connector" id="conn-4-5"></div>
-      <div class="step-node" id="node-5">
-        <div class="step-circle" id="circle-5">5</div>
-        <span class="step-label" id="label-5">Summary</span>
+        <span class="step-label" id="label-2">Payment</span>
       </div>
     </nav>
 
     <!-- ═══ FORM CARD ══════════════════════════════════════ -->
     <div class="form-card" role="main">
 
-      <!-- ── Step 1: Basic Info ─────────────────────────── -->
-      <div class="step-panel active" id="step-1" role="tabpanel" aria-label="Step 1: Your Details">
+      <!-- ── Step 1: Your Info ─────────────────────────── -->
+      <div class="step-panel active" id="step-1" role="tabpanel" aria-label="Step 1: Your Info">
         <div class="step-header">
-          <p class="step-number">Step 01 / 05</p>
-          <h2 class="step-title">About Your Wedding</h2>
+          <p class="step-number">Step 01 / 02</p>
+          <h2 class="step-title">Your Information</h2>
+          <p class="step-desc">Let us know who you are so we can get in touch about your wedding page.</p>
         </div>
         <div class="step-body">
           <div class="fields-grid">
-            <div class="field-group">
-              <label class="field-label" for="groomName">Groom's Name <span class="req">*</span></label>
-              <input class="field-input" type="text" id="groomName" name="groomName"
-                autocomplete="off" required />
-              <span class="field-error" id="err-groomName">Please enter the groom's name.</span>
-            </div>
-            <div class="field-group">
-              <label class="field-label" for="brideName">Bride's Name <span class="req">*</span></label>
-              <input class="field-input" type="text" id="brideName" name="brideName"
-                autocomplete="off" required />
-              <span class="field-error" id="err-brideName">Please enter the bride's name.</span>
-            </div>
-            <div class="field-group">
-              <label class="field-label" for="weddingDate">Wedding Date <span class="req" id="weddingDateReq">*</span></label>
-              <input class="field-input" type="date" id="weddingDate" name="weddingDate" required />
-              <span class="field-error" id="err-weddingDate">Please choose a date.</span>
-              <label class="still-deciding-label">
-                <input type="checkbox" id="stillDeciding" />
-                <span>We're still deciding</span>
-              </label>
-            </div>
-            <div class="field-group">
-              <label class="field-label" for="location">Location <span class="req" id="locationReq">*</span></label>
-              <input class="field-input" type="text" id="location" name="location" placeholder="" required />
-              <span class="field-error" id="err-location">Please enter the location.</span>
-            </div>
-            <div class="field-group">
-              <label class="field-label" for="email">Email Address <span class="req">*</span></label>
-              <input class="field-input" type="email" id="email" name="email" placeholder="yourname@email.com" required />
-              <span class="field-error" id="err-email">Please enter a valid email.</span>
+            <div class="field-group field-full">
+              <label class="field-label" for="name">Full Name <span class="req">*</span></label>
+              <input class="field-input" type="text" id="name" name="name"
+                placeholder="" autocomplete="name" required />
+              <span class="field-error" id="err-name">Please enter your full name (first and last).</span>
             </div>
             <div class="field-group">
               <label class="field-label" for="contactNumber">Contact Number <span class="req">*</span></label>
-              <input class="field-input" type="tel" id="contactNumber" name="contactNumber" placeholder="e.g. 09171234567" maxlength="13" required />
+              <input class="field-input" type="tel" id="contactNumber" name="contactNumber"
+                placeholder="e.g. 09171234567" maxlength="13" required />
               <span class="field-error" id="err-contactNumber">Please enter a contact number.</span>
             </div>
-            <div class="field-group field-full">
-              <label class="field-label" for="pageSlug">Preferred Page URL <span class="req">*</span></label>
-              <div class="slug-wrap">
-                <span class="slug-prefix" id="slugPrefix">eventful.page/</span>
-                <input class="field-input slug-input" type="text" id="pageSlug" name="pageSlug"
-                  placeholder="sofia-and-carlos" autocomplete="off" required maxlength="30"
-                  oninput="updateSlugPreview(this.value)" />
-              </div>
-              <span class="field-error" id="err-pageSlug">Please enter a preferred URL (letters, numbers, and hyphens only).</span>
-              <div class="domain-status" id="domainStatus">
-                <span class="domain-status-dot"></span>
-                <span id="domainStatusText"></span>
-              </div>
-              <label class="still-deciding-label" style="margin-top:8px">
-                <input type="checkbox" id="wantCustomDomain" />
-                <span>I want a custom domain <span style="color:var(--gold,#b8972a);font-weight:600;">+₱1,800 (one year)</span></span>
-              </label>
+            <div class="field-group">
+              <label class="field-label" for="email">Email Address <span class="req">*</span></label>
+              <input class="field-input" type="email" id="email" name="email"
+                placeholder="yourname@email.com" required />
+              <span class="field-error" id="err-email">Please enter a valid email.</span>
             </div>
-            <div class="field-group field-full" style="margin-top:4px;">
-              <label class="field-label">Page Mode</label>
-              <div class="mode-toggle">
-                <div class="mode-option" data-mode="Light" onclick="selectMode(this)">
-                  <div class="mode-preview mode-preview-light"></div>
-                  <div class="mode-text">
-                    <div class="mode-label">Light</div>
-                    <div class="mode-sublabel">Airy & romantic</div>
-                  </div>
-                </div>
-                <div class="mode-option" data-mode="Dark" onclick="selectMode(this)">
-                  <div class="mode-preview mode-preview-dark"></div>
-                  <div class="mode-text">
-                    <div class="mode-label">Dark</div>
-                    <div class="mode-sublabel">Moody & elegant</div>
-                  </div>
-                </div>
-              </div>
-              <input type="hidden" id="pageMode" value="" />
-              <span class="field-error" id="err-pageMode">Please select a page mode.</span>
-            </div>
-            <div class="field-group field-full" id="paletteSection" style="margin-top:4px;display:none;">
-              <label class="field-label">Color Palette</label>
-              <p class="palette-hint">Pick a vibe — we'll match your page to it. Skip if you're not sure yet.</p>
-              <div class="palette-grid" id="paletteGrid"></div>
-              <input class="field-input" type="text" id="colorPalette" name="colorPalette"
-                placeholder="Or describe it — 'dusty blue and white with gold accents'" autocomplete="off" />
-            </div>
+          </div>
 
+          <!-- Accordion: What's Included -->
+          <div class="features-accordion">
+            <details class="features-details">
+              <summary class="features-summary">
+                <span>See what's included</span>
+                <svg class="features-chevron" viewBox="0 0 16 16" fill="none">
+                  <path d="M4 6l4 4 4-4" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+              </summary>
+              <div class="features-body">
+                <div class="features-grid" id="featuresGrid"><!-- populated by JS --></div>
+              </div>
+            </details>
           </div>
         </div>
         <div class="step-nav">
-          <button class="btn btn-ghost btn-load-saved" id="loadSavedBtn" onclick="loadSaved()" style="display:none">Resume</button>
-          <button class="btn btn-primary" id="nextBtn1" onclick="goNext(1)" style="margin-left:auto">
+          <div></div>
+          <button class="btn btn-primary" id="nextBtn1" onclick="handleStep1()">
             Continue <span>→</span>
           </button>
         </div>
       </div>
 
-      <!-- ── Step 2: What's Included ──────────────────── -->
-      <div class="step-panel" id="step-2" role="tabpanel" aria-label="Step 2: What's Included">
+      <!-- ── Step 2: Payment (inline) ──────────────────── -->
+      <div class="step-panel" id="step-2" role="tabpanel" aria-label="Step 2: Payment">
         <div class="step-header">
-          <p class="step-number">Step 02 / 05</p>
-          <h2 class="step-title">Everything You Get</h2>
-          <p class="step-desc">Every Eventful page comes with these beautifully crafted sections — no extras needed to look stunning.</p>
+          <p class="step-number">Step 02 / 02</p>
+          <h2 class="step-title">Complete Your Payment</h2>
+          <p class="step-desc">Send ₱4,000 via GCash or BPI and upload your receipt below.</p>
         </div>
         <div class="step-body">
-          <div class="included-grid" id="coreSectionsGrid"><!-- Populated by JS --></div>
+          <div class="payment-inner">
+            <div class="payment-amount-badge" id="modalAmount">₱4,000</div>
+
+            <!-- Payment method tabs -->
+            <div class="payment-tabs">
+              <button class="payment-tab active" id="tabGcash" onclick="selectPaymentMethod('gcash')">GCash</button>
+              <button class="payment-tab" id="tabBpi" onclick="selectPaymentMethod('bpi')">BPI</button>
+            </div>
+
+            <!-- QR + Download -->
+            <div class="payment-qr-wrap">
+              <img class="payment-qr" id="modalQr" src="https://eventful.page/onboarding/qr.jpg" alt="GCash QR Code" />
+              <button class="download-qr-btn" onclick="downloadQr()" title="Download QR code">
+                <svg width="12" height="12" viewBox="0 0 12 12" fill="none" style="vertical-align:middle;margin-right:5px">
+                  <path d="M6 1v7M3 5.5l3 3 3-3M1 10h10" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>Download QR
+              </button>
+            </div>
+
+            <!-- GCash info -->
+            <div id="infoGcash">
+              <p class="payment-gcash-number">GCash: 0947 357 5780 <button class="copy-number-btn" onclick="copyText('09473575780', this)" title="Copy number">⧉</button></p>
+              <p class="payment-gcash-name">Eventful (Ezra G.)</p>
+            </div>
+
+            <!-- BPI info -->
+            <div id="infoBpi" style="display:none">
+              <p class="payment-gcash-number">Account number: 1479322437 <button class="copy-number-btn" onclick="copyText('1479322437', this)" title="Copy account number">⧉</button></p>
+              <p class="payment-gcash-number" style="margin-top:4px;margin-bottom:16px">Account name: Ezra John Gubatanga <button class="copy-number-btn" onclick="copyText('Ezra John Gubatanga', this)" title="Copy account name">⧉</button></p>
+            </div>
+
+            <!-- How to pay -->
+            <div class="payment-instructions" id="instructionsGcash">
+              <strong>How to pay via GCash</strong>
+              <p>Open your GCash app and scan or upload the QR code above. You may also copy <b>0947 357 5780</b> <button class="copy-number-btn" style="font-size:0.85rem" onclick="copyText('09473575780', this)" title="Copy number">⧉</button> to send the payment directly. Make sure the amount matches exactly.</p>
+            </div>
+            <div class="payment-instructions" id="instructionsBpi" style="display:none">
+              <strong>How to pay via BPI</strong>
+              <p>Open your BPI Online app and scan or upload the QR code above. You may also copy the account number and name above and paste them manually in the app. Make sure the amount matches exactly.</p>
+            </div>
+
+            <span class="payment-upload-label">Upload your receipt</span>
+            <div class="payment-upload-zone" id="uploadZone">
+              <input type="file" id="receiptFile" accept="image/*" onchange="handleReceiptUpload(event)" />
+              <span class="upload-icon">📎</span>
+              <p>Tap to choose or drag your screenshot here (max 5 MB)</p>
+            </div>
+            <div class="payment-upload-preview" id="uploadPreview">
+              <img id="previewImg" src="" alt="Receipt preview" />
+              <span class="payment-upload-preview-name" id="previewName"></span>
+              <button class="payment-upload-remove" onclick="removeReceipt()" title="Remove">✕</button>
+            </div>
+            <button class="btn-confirm-payment" id="confirmPaymentBtn" onclick="confirmPayment()">
+              Done — I've Sent Payment ✦
+            </button>
+          </div>
         </div>
         <div class="step-nav">
           <button class="btn btn-ghost" onclick="goBack(2)">← Back</button>
-          <button class="btn btn-primary" onclick="goNext(2)">Looks great — Continue →</button>
-        </div>
-      </div>
-
-      <!-- ── Step 3: Functional Add-Ons ─────────────────── -->
-      <div class="step-panel" id="step-3" role="tabpanel" aria-label="Step 3: Functional Add-Ons">
-        <div class="step-header">
-          <p class="step-number">Step 03 / 05</p>
-          <h2 class="step-title">Functional Add-Ons</h2>
-          <p class="step-desc">Enhance your guests' experience with these practical features. Select as many as you'd like.</p>
-        </div>
-        <div class="step-body">
-          <div class="checkbox-grid" id="functionalAddOnsGrid">
-            <!-- Populated by JS -->
-          </div>
-        </div>
-        <div class="step-nav">
-          <button class="btn btn-ghost" onclick="goBack(3)">← Back</button>
-          <button class="btn btn-primary" onclick="goNext(3)">Continue →</button>
-        </div>
-      </div>
-
-      <!-- ── Step 3: Premium Add-Ons ────────────────────── -->
-      <div class="step-panel" id="step-4" role="tabpanel" aria-label="Step 4: Premium Add-Ons">
-        <div class="step-header">
-          <p class="step-number">Step 04 / 05</p>
-          <h2 class="step-title">Premium Features</h2>
-          <p class="step-desc">Take your wedding page to the next level. These exclusive features make your day
-            unforgettable.</p>
-        </div>
-        <div class="step-body">
-          <div class="premium-grid" id="premiumAddOnsGrid">
-            <!-- Populated by JS -->
-          </div>
-
-          <div class="section-group" style="margin-top:28px">
-            <p class="group-label">Delivery</p>
-            <div class="checkbox-grid">
-              <label class="check-item is-checked" id="lbl-delivery-standard" tabindex="0" role="radio" aria-checked="true"
-                     onclick="selectDelivery('standard')" onkeydown="if(event.key==='Enter'||event.key===' ')selectDelivery('standard')">
-                <input type="radio" name="delivery" id="delivery-standard" value="standard" checked />
-                <span class="custom-check"><svg width="11" height="9" viewBox="0 0 11 9" fill="none"><path d="M1 4.5L4 7.5L10 1" stroke="white" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
-                <span class="check-text">Standard — 5 days</span>
-                <span class="addon-price" style="color:var(--text-light)">Included</span>
-              </label>
-              <label class="check-item unavailable" id="lbl-delivery-rush" tabindex="-1" role="radio" aria-checked="false" aria-disabled="true">
-                <input type="radio" name="delivery" id="delivery-rush" value="rush" disabled />
-                <span class="custom-check"><svg width="11" height="9" viewBox="0 0 11 9" fill="none"><path d="M1 4.5L4 7.5L10 1" stroke="white" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
-                <span class="check-text">Rush — 2 days</span>
-                <span class="check-unavailable-tag">Not Available</span>
-              </label>
-            </div>
-          </div>
-
-          <div class="section-group" style="margin-top:20px;margin-bottom:0">
-            <p class="group-label">Special Requests</p>
-            <div class="field-group">
-              <textarea class="field-input" id="specialRequests" name="specialRequests"
-                        placeholder="Any special notes, preferences, or requests for your wedding page…"
-                        rows="4" style="resize:vertical;line-height:1.6"></textarea>
-            </div>
-          </div>
-        </div>
-        <div class="step-nav">
-          <button class="btn btn-ghost" onclick="goBack(4)">← Back</button>
-          <button class="btn btn-primary" onclick="goNext(4)">Review Order →</button>
-        </div>
-      </div>
-
-      <!-- ── Step 4: Summary ────────────────────────────── -->
-      <div class="step-panel" id="step-5" role="tabpanel" aria-label="Step 5: Summary">
-        <div class="step-header">
-          <p class="step-number">Step 05 / 05</p>
-          <h2 class="step-title">Your Wedding Page</h2>
-          <p class="step-desc">Everything looks beautiful. Review your selections below before we get started.</p>
-        </div>
-        <div class="step-body">
-
-          <!-- couple block -->
-          <div class="summary-block" id="summaryCouple">
-            <p class="summary-block-title">Your Details</p>
-            <p class="summary-couple" id="summaryCoupleName"></p>
-            <div class="summary-meta" id="summaryMeta"></div>
-          </div>
-
-          <!-- core sections -->
-          <div class="summary-block">
-            <p class="summary-block-title">Included Sections</p>
-            <div class="summary-tags" id="summaryCoreTags"></div>
-          </div>
-
-          <!-- add-ons -->
-          <div class="summary-block" id="summaryAddOnsBlock">
-            <p class="summary-block-title">Your Add-Ons</p>
-            <div class="summary-tags" id="summaryAddOnsTags"></div>
-          </div>
-
-          <!-- special requests -->
-          <div class="summary-block" id="summarySpecialBlock" style="display:none">
-            <p class="summary-block-title">Special Requests</p>
-            <p id="summarySpecialText" style="color:var(--text-muted);font-size:0.9rem;line-height:1.6"></p>
-          </div>
-
-          <!-- pricing -->
-          <div class="price-box" id="summaryPriceBox">
-            <div>
-              <p class="price-label">Total</p>
-              <p class="price-value" id="summaryPrice"></p>
-            </div>
-            <div class="price-breakdown" id="summaryBreakdown"></div>
-          </div>
-
-        </div>
-        <div class="step-nav step-nav-payment">
-          <button class="btn btn-ghost" onclick="goBack(5)">← Edit</button>
-          <button class="btn btn-submit" id="submitBtn" onclick="handleSubmit()">
-            Proceed to Payment ✦
-          </button>
-        </div>
-      </div>
-
-      <!-- ── Payment Modal ─────────────────────────────── -->
-      <div class="payment-modal-overlay" id="paymentModal">
-        <div class="payment-modal">
-          <button class="payment-modal-close" onclick="closePaymentModal()" aria-label="Close">✕</button>
-          <p class="payment-modal-title">Complete Your Payment</p>
-          <div class="payment-amount-badge" id="modalAmount">₱4,000</div>
-
-          <!-- Payment method tabs -->
-          <div class="payment-tabs">
-            <button class="payment-tab active" id="tabGcash" onclick="selectPaymentMethod('gcash')">GCash</button>
-            <button class="payment-tab" id="tabBpi" onclick="selectPaymentMethod('bpi')">BPI</button>
-          </div>
-
-          <!-- QR + Download -->
-          <div class="payment-qr-wrap">
-            <img class="payment-qr" id="modalQr" src="https://eventful.page/onboarding/qr.jpg" alt="GCash QR Code" />
-            <button class="download-qr-btn" onclick="downloadQr()" title="Download QR code"><svg width="12" height="12" viewBox="0 0 12 12" fill="none" style="vertical-align:middle;margin-right:5px"><path d="M6 1v7M3 5.5l3 3 3-3M1 10h10" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>Download QR</button>
-          </div>
-
-          <!-- GCash info -->
-          <div class="payment-info" id="infoGcash">
-            <p class="payment-gcash-number">GCash: 0947 357 5780 <button class="copy-number-btn" onclick="copyText('09473575780', this)" title="Copy number">⧉</button></p>
-            <p class="payment-gcash-name">Eventful (Ezra G.)</p>
-          </div>
-
-          <!-- BPI info -->
-          <div class="payment-info" id="infoBpi" style="display:none">
-            <p class="payment-gcash-number">Account number: 1479322437 <button class="copy-number-btn" onclick="copyText('1479322437', this)" title="Copy account number">⧉</button></p>
-            <p class="payment-gcash-number" style="margin-top:4px;margin-bottom:16px">Account name: Ezra John Gubatanga <button class="copy-number-btn" onclick="copyText('Ezra John Gubatanga', this)" title="Copy account name">⧉</button></p>
-          </div>
-
-          <!-- How to pay -->
-          <div class="payment-instructions" id="instructionsGcash">
-            <strong>How to pay via GCash</strong>
-            <p>Open your GCash app and scan or upload the QR code above. You may also copy <b>0947 357 5780</b> <button class="copy-number-btn" style="font-size:0.85rem" onclick="copyText('09473575780', this)" title="Copy number">⧉</button> to send the payment directly. Make sure the amount matches exactly.</p>
-          </div>
-          <div class="payment-instructions" id="instructionsBpi" style="display:none">
-            <strong>How to pay via BPI</strong>
-            <p>Open your BPI Online app and scan or upload the QR code above. You may also copy the account number and name above and paste them manually in the app. Make sure the amount matches exactly.</p>
-          </div>
-
-          <span class="payment-upload-label">Upload your receipt</span>
-          <div class="payment-upload-zone" id="uploadZone">
-            <input type="file" id="receiptFile" accept="image/*" onchange="handleReceiptUpload(event)" />
-            <span class="upload-icon">📎</span>
-            <p>Tap to choose or drag your screenshot here (max 5 MB)</p>
-          </div>
-          <div class="payment-upload-preview" id="uploadPreview">
-            <img id="previewImg" src="" alt="Receipt preview" />
-            <span class="payment-upload-preview-name" id="previewName"></span>
-            <button class="payment-upload-remove" onclick="removeReceipt()" title="Remove">✕</button>
-          </div>
-          <button class="btn-confirm-payment" id="confirmPaymentBtn" onclick="confirmPayment()">
-            Done — I've Sent Payment ✦
-          </button>
+          <div></div>
         </div>
       </div>
 
@@ -2187,8 +999,7 @@
       <div class="status-screen" id="errorScreen">
         <div class="status-icon error">⚠️</div>
         <h2 class="status-title">Something went wrong</h2>
-        <p class="status-text">We couldn't process your request. Please check your connection and try again, or email us
-          directly.</p>
+        <p class="status-text">We couldn't process your request. Please check your connection and try again, or email us directly.</p>
         <button class="btn btn-primary" onclick="resetError()" style="margin:0 auto">Try Again</button>
       </div>
 
@@ -2204,22 +1015,23 @@
       </a>
     </div>
 
-  <!-- Price Bar -->
-  <div class="price-bar" id="priceBar">
-    <span class="price-bar-label">Running total</span>
-    <span class="price-bar-amount" id="priceBarAmount">₱4,000</span>
-  </div>
-
   </div><!-- /.page-wrap -->
 
   <!-- ═══════════════════════════ JS ══════════════════════════ -->
   <script>
-    // ── Config ────────────────────────────────────────────────
     const { createClient } = supabase;
     const db = createClient('https://auohzxsufvdgdrhtlpib.supabase.co', 'sb_publishable_sRKhjg0x42oqn0obrF3rYQ_fsAypvL0');
 
-    // ── Data ──────────────────────────────────────────────────
-    const CORE_SECTIONS = [
+    const BASE_PRICE = 4000;
+    let currentStep = 1;
+    const TOTAL_STEPS = 2;
+    let _onboardingId = null;
+    let _receiptFile = null;
+    let _receiptFileName = null;
+    let _selectedMethod = 'gcash';
+
+    // ── Render Features Accordion ─────────────────────────────
+    const CORE_FEATURES = [
       "Couple's Story",
       'Relationship Timeline',
       'Schedule & Timeline',
@@ -2237,236 +1049,28 @@
       'RSVP Dashboard',
     ];
 
-    const FUNCTIONAL_ADDONS = [
-      { id: 'fa-music', label: 'Background Music / Spotify Playlist', price: 400 },
-      { id: 'fa-meal', label: 'Meal Selection', price: 600 },
-      { id: 'fa-weather', label: 'Weather Widget', price: 200 },
+    const FREE_FEATURES = [
+      'Background Music',
+      'Meal Selection',
     ];
 
-    const PREMIUM_ADDONS = [
-      { id: 'pa-qr', label: 'Digital Invite + QR Code', price: 1200 },
-      { id: 'pa-email', label: 'Email Reminder', price: 1200 },
-      { id: 'pa-gift', label: 'Gift Registry Integration', price: 1200 },
-      { id: 'pa-domain', label: 'Custom Domain (1 year)', price: 1800 },
-    ];
-
-    const BASE_PRICE = 4000;
-    let currentStep = 1;
-    const TOTAL_STEPS = 5;
-
-    // ── Render Checkboxes ─────────────────────────────────────
-    function checkSVG() {
-      return `<svg width="11" height="9" viewBox="0 0 11 9" fill="none">
-        <path d="M1 4.5L4 7.5L10 1" stroke="white" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
-      </svg>`;
+    function renderFeatures() {
+      const grid = document.getElementById('featuresGrid');
+      const coreHTML = CORE_FEATURES.map(f =>
+        `<span class="feature-tag core">${f}</span>`
+      ).join('');
+      const freeHTML = FREE_FEATURES.map(f =>
+        `<span class="feature-tag free">${f}</span>`
+      ).join('');
+      grid.innerHTML = coreHTML + freeHTML;
     }
-
-    // ── Page Mode Toggle ──────────────────────────────────────
-    const LIGHT_PALETTES = [
-      { name: 'Blush & Sage',        swatches: ['#E8C4B8','#A8BEA8','#F5EDE8'] },
-      { name: 'Navy & Gold',         swatches: ['#1A2E4A','#C5A059','#F5F0E8'] },
-      { name: 'Dusty Rose & Mauve',  swatches: ['#D4A5A0','#9B7B8A','#F0E8EC'] },
-      { name: 'Plum & Terracotta',   swatches: ['#5C2D5E','#C4684C','#F2E8E0'] },
-      { name: 'Ivory & Champagne',   swatches: ['#F5F0E8','#D4B896','#E8E0D4'] },
-      { name: 'Sage & Terracotta',   swatches: ['#7A8C6E','#C47B5A','#F0EAE0'] },
-      { name: 'Midnight & Blush',    swatches: ['#1C1C2E','#E8C4B8','#C8B8D0'] },
-      { name: 'Lavender & Gold',     swatches: ['#B5A5C8','#C5A059','#F0EDF5'] },
-    ];
-
-    const DARK_PALETTES = [
-      { name: 'Midnight Rose',       swatches: ['#1C1825','#E8A0B0','#C5A059'] },
-      { name: 'Deep Navy & Pearl',   swatches: ['#0D1B2A','#D4C5A9','#8AB4C8'] },
-      { name: 'Obsidian & Gold',     swatches: ['#1A1814','#C5A059','#D4B896'] },
-      { name: 'Forest Night',        swatches: ['#0F1C14','#7AB88A','#D4A07A'] },
-      { name: 'Noir & Blush',        swatches: ['#1A1015','#E8C4B8','#9B8090'] },
-      { name: 'Slate & Gold',        swatches: ['#1C2030','#C5A059','#B0B8CC'] },
-      { name: 'Ember & Ash',         swatches: ['#1E1410','#C4684C','#B0A090'] },
-      { name: 'Plum Velvet',         swatches: ['#1E0F2A','#C8A0D8','#E8C4B8'] },
-    ];
-
-    function renderPaletteGrid(palettes, isDark) {
-      const grid = document.getElementById('paletteGrid');
-      grid.innerHTML = palettes.map(p => {
-        const swatches = isDark ? p.swatches.slice(1) : p.swatches;
-        const bgStyle = isDark ? ` style="background:${p.swatches[0]};"` : '';
-        return `
-        <div class="palette-option${isDark ? ' dark-palette' : ''}" data-palette="${p.name}" onclick="selectPalette(this)"${bgStyle}>
-          <div class="palette-swatches">
-            ${swatches.map(c => `<div class="palette-swatch" style="background:${c};"></div>`).join('')}
-          </div>
-          <span class="palette-name">${p.name}</span>
-        </div>`;
-      }).join('');
-      document.getElementById('colorPalette').value = '';
-    }
-
-    function selectMode(el) {
-      document.querySelectorAll('.mode-option').forEach(o => o.classList.remove('selected'));
-      el.classList.add('selected');
-      const mode = el.dataset.mode;
-      document.getElementById('pageMode').value = mode;
-      document.getElementById('err-pageMode').classList.remove('visible');
-      const isDark = mode === 'Dark';
-      renderPaletteGrid(isDark ? DARK_PALETTES : LIGHT_PALETTES, isDark);
-      document.getElementById('paletteSection').style.display = '';
-    }
-
-    // ── Color Palette Picker ──────────────────────────────────
-    function selectPalette(el) {
-      document.querySelectorAll('.palette-option').forEach(o => o.classList.remove('selected'));
-      el.classList.add('selected');
-      const name = el.dataset.palette;
-      const input = document.getElementById('colorPalette');
-      input.value = name;
-      input.dispatchEvent(new Event('input'));
-    }
-
-    // Clicking the text field deselects palette chips
-    document.addEventListener('DOMContentLoaded', () => {
-      renderPaletteGrid(LIGHT_PALETTES);
-      document.getElementById('colorPalette').addEventListener('input', function() {
-        const typed = this.value.trim();
-        const activeChip = document.querySelector('.palette-option.selected');
-        if (activeChip && activeChip.dataset.palette !== typed) {
-          activeChip.classList.remove('selected');
-        }
-      });
-    });
-
-    function renderCoreSection() {
-      const grid = document.getElementById('coreSectionsGrid');
-      grid.innerHTML = CORE_SECTIONS.map(name => `<span class="included-tag">${name}</span>`).join('');
-    }
-
-    function renderFunctionalAddOns() {
-      const grid = document.getElementById('functionalAddOnsGrid');
-      grid.innerHTML = FUNCTIONAL_ADDONS.map(item => `
-        <label class="check-item" id="lbl-${item.id}" tabindex="0" role="checkbox" aria-checked="false"
-               onclick="toggleCheck('${item.id}', this)" onkeydown="if(event.key==='Enter'||event.key===' ')toggleCheck('${item.id}',this)">
-          <input type="checkbox" id="${item.id}" name="${item.id}"/>
-          <span class="custom-check">${checkSVG()}</span>
-          <span class="check-text">${item.label}</span>
-          <span class="addon-price">+₱${item.price.toLocaleString()}</span>
-        </label>
-      `).join('');
-    }
-
-    function renderPremiumAddOns() {
-      const grid = document.getElementById('premiumAddOnsGrid');
-      grid.innerHTML = PREMIUM_ADDONS.map(item => `
-        <label class="premium-item" id="lbl-${item.id}" tabindex="0" role="checkbox" aria-checked="false"
-               onclick="togglePremium('${item.id}', this)" onkeydown="if(event.key==='Enter'||event.key===' ')togglePremium('${item.id}',this)">
-          <input type="checkbox" id="${item.id}" name="${item.id}"/>
-          <span class="premium-check">${checkSVG()}</span>
-          <div class="premium-text-wrap">
-            <p class="premium-text">${item.label}</p>
-            <span class="premium-badge">Premium</span>
-          </div>
-          <span class="addon-price">+₱${item.price.toLocaleString()}</span>
-        </label>
-      `).join('');
-    }
-
-    function toggleCheck(id, labelEl) {
-      const cb = document.getElementById(id);
-      cb.checked = !cb.checked;
-      labelEl.classList.toggle('is-checked', cb.checked);
-      labelEl.setAttribute('aria-checked', cb.checked);
-      updatePriceBar();
-    }
-
-    function togglePremium(id, labelEl) {
-      const cb = document.getElementById(id);
-      cb.checked = !cb.checked;
-      labelEl.classList.toggle('is-checked', cb.checked);
-      labelEl.setAttribute('aria-checked', cb.checked);
-      updatePriceBar();
-    }
-
-    function setAmPm(val) {
-      document.getElementById('amBtn').classList.toggle('active', val === 'AM');
-      document.getElementById('pmBtn').classList.toggle('active', val === 'PM');
-    }
-
-    function getCeremonyTime() {
-      const h = document.getElementById('ceremonyHour')?.value;
-      const m = document.getElementById('ceremonyMinute')?.value;
-      if (!h || m === '' || m == null) return '';
-      const ampm = document.getElementById('amBtn')?.classList.contains('active') ? 'AM' : 'PM';
-      return `${h}:${m} ${ampm}`;
-    }
-
-    // ── Taken slugs — update when a new couple page is deployed ──
-    const TAKEN_SLUGS = [
-      // System paths
-      'onboarding',
-      'form',
-      'v2',
-      // Couple pages
-      'sofia-and-carlos',
-      'demo',
-    ];
-
-    function updateSlugPreview(val) {
-      const isCustomDomain = document.getElementById('wantCustomDomain').checked;
-      const sanitized = val.toLowerCase().replace(isCustomDomain ? /[^a-z0-9-.]/g : /[^a-z0-9-]/g, '');
-      const el = document.getElementById('pageSlug');
-      if (val !== sanitized) { el.value = sanitized; }
-      const wrap = el.closest('.slug-wrap');
-      wrap.classList.remove('error');
-      document.getElementById('err-pageSlug').classList.remove('visible');
-      if (!isCustomDomain) checkSlugAvailability(sanitized);
-    }
-
-    function checkSlugAvailability(slug) {
-      const statusEl = document.getElementById('domainStatus');
-      const textEl = document.getElementById('domainStatusText');
-      if (!slug || slug.length < 2) {
-        statusEl.className = 'domain-status';
-        return;
-      }
-      if (TAKEN_SLUGS.includes(slug)) {
-        statusEl.className = 'domain-status taken visible';
-        textEl.textContent = 'This URL is already taken';
-      } else {
-        statusEl.className = 'domain-status available visible';
-        textEl.textContent = 'Available';
-      }
-    }
-
-    function removeAddon(id) {
-      const cb = document.getElementById(id);
-      if (cb) {
-        cb.checked = false;
-        const lbl = document.getElementById(`lbl-${id}`);
-        if (lbl) {
-          lbl.classList.remove('is-checked');
-          lbl.setAttribute('aria-checked', 'false');
-        }
-      }
-      buildSummary();
-    }
-
-    function selectDelivery(value) {
-      if (value === 'rush') return;
-      ['standard', 'rush'].forEach(v => {
-        const lbl = document.getElementById(`lbl-delivery-${v}`);
-        const rb = document.getElementById(`delivery-${v}`);
-        lbl.classList.toggle('is-checked', v === value);
-        lbl.setAttribute('aria-checked', v === value);
-        rb.checked = v === value;
-      });
-      updatePriceBar();
-    }
-
-    if (new URLSearchParams(location.search).get('plan') === 'rush') selectDelivery('rush');
 
     // ── Stepper UI ────────────────────────────────────────────
     function updateStepper(active) {
       for (let i = 1; i <= TOTAL_STEPS; i++) {
-        const node = document.getElementById(`node-${i}`);
         const circle = document.getElementById(`circle-${i}`);
         const label = document.getElementById(`label-${i}`);
+        const node = document.getElementById(`node-${i}`);
         circle.classList.remove('active', 'done');
         label.classList.remove('active', 'done');
         if (i < active) {
@@ -2488,278 +1092,78 @@
         }
         if (i < TOTAL_STEPS) {
           const conn = document.getElementById(`conn-${i}-${i + 1}`);
-          conn.classList.toggle('done', i < active);
+          if (conn) conn.classList.toggle('done', i < active);
         }
       }
     }
 
     // ── Navigation ────────────────────────────────────────────
-    function goNext(fromStep) {
-      if (fromStep === 1 && !validateStep1()) return;
-      if (fromStep === TOTAL_STEPS - 1 || fromStep < TOTAL_STEPS) {
-        showStep(fromStep + 1);
-      }
-    }
-
-    function goBack(fromStep) {
-      if (fromStep > 1) showStep(fromStep - 1);
-    }
-
     function showStep(n) {
       document.querySelectorAll('.step-panel').forEach(p => p.classList.remove('active'));
       const panel = document.getElementById(`step-${n}`);
       if (panel) panel.classList.add('active');
       currentStep = n;
       updateStepper(n);
-      if (n === TOTAL_STEPS) buildSummary();
-      const priceBar = document.getElementById('priceBar');
-      if (n === 3 || n === 4) {
-        updatePriceBar();
-        priceBar.classList.add('visible');
-      } else {
-        priceBar.classList.remove('visible');
-      }
       window.scrollTo({ top: 0, behavior: 'smooth' });
     }
 
-    function updatePriceBar() {
-      const { total } = calcPrice();
-      document.getElementById('priceBarAmount').textContent = `₱${total.toLocaleString()}`;
+    function goBack(fromStep) {
+      if (fromStep > 1) showStep(fromStep - 1);
     }
 
     // ── Validation ────────────────────────────────────────────
     function validateStep1() {
       let ok = true;
       const fields = [
-        { id: 'groomName', errId: 'err-groomName', test: v => v.trim().length > 0 },
-        { id: 'brideName', errId: 'err-brideName', test: v => v.trim().length > 0 },
-        { id: 'weddingDate', errId: 'err-weddingDate', test: v => document.getElementById('stillDeciding').checked || !!v },
-        { id: 'location', errId: 'err-location', test: v => v.trim().length > 1 },
-        { id: 'email', errId: 'err-email', test: v => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v) },
+        { id: 'name',          errId: 'err-name',          test: v => v.trim().split(/\s+/).filter(w => w.length > 0).length >= 2 },
         { id: 'contactNumber', errId: 'err-contactNumber', test: v => v.trim().length > 6 },
-        { id: 'pageSlug', errId: 'err-pageSlug', test: v => document.getElementById('wantCustomDomain').checked ? /^[a-z0-9-.]{2,}$/.test(v.trim()) : /^[a-z0-9-]{2,}$/.test(v.trim()) },
+        { id: 'email',         errId: 'err-email',         test: v => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v) },
       ];
       fields.forEach(({ id, errId, test }) => {
         const el = document.getElementById(id);
         const err = document.getElementById(errId);
-        const slugWrap = id === 'pageSlug' ? el.closest('.slug-wrap') : null;
         const valid = test(el.value);
         el.classList.toggle('error', !valid);
-        if (slugWrap) slugWrap.classList.toggle('error', !valid);
         err.classList.toggle('visible', !valid);
         if (!valid) ok = false;
       });
-
-      const modeErr = document.getElementById('err-pageMode');
-      const modeValid = !!document.getElementById('pageMode').value;
-      modeErr.classList.toggle('visible', !modeValid);
-      if (!modeValid) ok = false;
-
       return ok;
     }
 
-    // ── Price Calculation ─────────────────────────────────────
-    function calcPrice() {
-      let total = BASE_PRICE;
-      let lines = [];
-      lines.push(`Base package — ₱${BASE_PRICE.toLocaleString()}`);
-      const selFn = getSelectedFunctional();
-      const selPr = getSelectedPremium();
-      selFn.forEach(id => {
-        const item = FUNCTIONAL_ADDONS.find(a => a.id === id);
-        if (item) { total += item.price; lines.push(`${item.label} +₱${item.price.toLocaleString()}`); }
-      });
-      selPr.forEach(id => {
-        const item = PREMIUM_ADDONS.find(a => a.id === id);
-        if (item) { total += item.price; lines.push(`${item.label} +₱${item.price.toLocaleString()}`); }
-      });
-      const isRush = document.getElementById('delivery-rush')?.checked;
-      if (isRush) {
-        total += 1800;
-        lines.push('Rush Delivery (3 days) +₱1,800');
-      } else {
-        lines.push('Standard Delivery (7 days) — included');
-      }
-      return { total, lines };
-    }
+    // ── Step 1 Submit → insert to onboarding ─────────────────
+    async function handleStep1() {
+      if (!validateStep1()) return;
 
-    function getSelectedFunctional() {
-      return FUNCTIONAL_ADDONS
-        .filter(a => document.getElementById(a.id)?.checked)
-        .map(a => a.id);
-    }
+      if (typeof fbq !== 'undefined') fbq('track', 'InitiateCheckout');
+      showStep(2);
 
-    function getSelectedPremium() {
-      return PREMIUM_ADDONS
-        .filter(a => document.getElementById(a.id)?.checked)
-        .map(a => a.id);
-    }
-
-    // ── Build Summary ─────────────────────────────────────────
-    function buildSummary() {
-      const groom = document.getElementById('groomName').value.trim();
-      const bride = document.getElementById('brideName').value.trim();
-      const couple = `${groom} & ${bride}`;
-      const stillDeciding = document.getElementById('stillDeciding').checked;
-      const date = document.getElementById('weddingDate').value;
-      const loc = document.getElementById('location').value;
-      const email = document.getElementById('email').value;
-
-      document.getElementById('summaryCoupleName').textContent = couple;
-      const isRush = document.getElementById('delivery-rush')?.checked;
-      const slug = document.getElementById('pageSlug').value.trim();
-      const _esc = s => String(s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
-      const mode = document.getElementById('pageMode').value;
-      const palette = document.getElementById('colorPalette').value.trim();
-      document.getElementById('summaryMeta').innerHTML = `
-        <span><span class="summary-meta-label">Date</span>${stillDeciding ? 'Still deciding' : formatDate(date)}</span>
-        <span><span class="summary-meta-label">Location</span>${_esc(loc)}</span>
-        <span><span class="summary-meta-label">Email</span><span style="pointer-events:none;text-decoration:none;color:inherit">${_esc(email)}</span></span>
-        <span><span class="summary-meta-label">Link</span>${document.getElementById('wantCustomDomain').checked ? 'Custom domain' : 'eventful.page/' + _esc(slug)}</span>
-        <span><span class="summary-meta-label">Delivery</span>${isRush ? 'Rush (3 days)' : 'Standard (5 days)'}</span>
-        ${mode ? `<span><span class="summary-meta-label">Mode</span>${_esc(mode)}</span>` : ''}
-        ${palette ? `<span><span class="summary-meta-label">Palette</span>${_esc(palette)}</span>` : ''}
-      `;
-
-      const specialReqs = document.getElementById('specialRequests')?.value.trim();
-      const specialBlock = document.getElementById('summarySpecialBlock');
-      if (specialReqs) {
-        document.getElementById('summarySpecialText').textContent = specialReqs;
-        specialBlock.style.display = 'block';
-      } else {
-        specialBlock.style.display = 'none';
-      }
-
-      // core tags
-      document.getElementById('summaryCoreTags').innerHTML =
-        CORE_SECTIONS.map(n => `<span class="summary-tag core">${n}</span>`).join('');
-
-      // add-on tags
-      const selFn = getSelectedFunctional();
-      const selPr = getSelectedPremium();
-      const addOnTags = [
-        ...selFn.map(id => {
-          const it = FUNCTIONAL_ADDONS.find(a => a.id === id);
-          return it ? `<span class="summary-tag addon removable">${it.label}<button class="tag-remove" onclick="removeAddon('${id}')" title="Remove">✕</button></span>` : '';
-        }),
-        ...selPr.map(id => {
-          const it = PREMIUM_ADDONS.find(a => a.id === id);
-          return it ? `<span class="summary-tag premium removable">✦ ${it.label}<button class="tag-remove" onclick="removeAddon('${id}')" title="Remove">✕</button></span>` : '';
-        }),
-      ].join('');
-      document.getElementById('summaryAddOnsTags').innerHTML =
-        addOnTags || '<span style="color:var(--text-light);font-size:0.88rem">No add-ons selected</span>';
-
-      // price
-      const { total, lines } = calcPrice();
-      document.getElementById('summaryPrice').textContent = `₱${total.toLocaleString()}`;
-      document.getElementById('summaryBreakdown').innerHTML = lines.join('<br>');
-    }
-
-    function formatDate(dateStr) {
-      if (!dateStr) return '';
-      const d = new Date(dateStr + 'T00:00:00');
-      return d.toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' });
-    }
-
-    function formatTime(timeStr) {
-      if (!timeStr) return '';
-      const [h, m] = timeStr.split(':').map(Number);
-      const ampm = h >= 12 ? 'PM' : 'AM';
-      const hour = h % 12 || 12;
-      return `${hour}:${String(m).padStart(2, '0')} ${ampm}`;
-    }
-
-    // ── Build Payload ─────────────────────────────────────────
-    function buildPayload() {
-      const { total } = calcPrice();
-      const selFnLabels = getSelectedFunctional()
-        .map(id => FUNCTIONAL_ADDONS.find(a => a.id === id)?.label).filter(Boolean);
-      const selPrLabels = getSelectedPremium()
-        .map(id => PREMIUM_ADDONS.find(a => a.id === id)?.label).filter(Boolean);
-
-      return {
-        groomName: document.getElementById('groomName').value.trim(),
-        brideName: document.getElementById('brideName').value.trim(),
-        weddingDate: document.getElementById('stillDeciding').checked ? 'Still deciding' : document.getElementById('weddingDate').value,
-        email: document.getElementById('email').value.trim(),
-        contactNumber: document.getElementById('contactNumber').value.trim(),
-        location: document.getElementById('location').value.trim(),
-        pageSlug: document.getElementById('pageSlug').value.trim(),
-        pageMode: document.getElementById('pageMode').value || 'Not specified',
-        colorPalette: document.getElementById('colorPalette').value.trim() || 'Not specified',
-        coreSections: CORE_SECTIONS,
-        functionalAddOns: selFnLabels,
-        premiumAddOns: selPrLabels,
-        delivery: document.getElementById('delivery-rush')?.checked ? 'Rush (3 days) +₱1,800' : 'Standard (5 days)',
-        specialRequests: document.getElementById('specialRequests')?.value.trim() || '',
-        estimatedPrice: total,
-        submittedAt: new Date().toISOString(),
-      };
-    }
-
-    // ── Payment Modal ─────────────────────────────────────────
-    let _receiptFile = null;
-    let _receiptFileName = null;
-    let _orderId = null;
-
-    async function handleSubmit() {
-      const btn = document.getElementById('submitBtn');
-      btn.disabled = true;
-      btn.innerHTML = '<span class="spinner"></span> Saving…';
-
+      // Insert in background — id stored for confirmPayment
       try {
-        const { total } = calcPrice();
-        document.getElementById('modalAmount').textContent = `₱${total.toLocaleString()}`;
-
-        if (!_orderId) {
-          const payload = buildPayload();
-          const { data, error } = await db.from('orders').insert({
-            groom_name:        payload.groomName,
-            bride_name:        payload.brideName,
-            wedding_date:      payload.weddingDate,
-            email:             payload.email,
-            contact_number:    payload.contactNumber,
-            location:          payload.location,
-            page_slug:         payload.pageSlug,
-            page_mode:         payload.pageMode,
-            color_palette:     payload.colorPalette,
-            core_sections:     payload.coreSections,
-            functional_add_ons: payload.functionalAddOns,
-            premium_add_ons:   payload.premiumAddOns,
-            delivery:          payload.delivery,
-            special_requests:  payload.specialRequests,
-            estimated_price:   payload.estimatedPrice,
-            payment_status:    'pending',
-            submitted_at:      payload.submittedAt,
+        if (!_onboardingId) {
+          const { data, error } = await db.from('onboarding').insert({
+            name:           document.getElementById('name').value.trim(),
+            contact_number: document.getElementById('contactNumber').value.trim(),
+            email:          document.getElementById('email').value.trim(),
+            payment_status: 'pending',
+            submitted_at:   new Date().toISOString(),
           }).select('id').single();
 
-          if (error) {
-            console.error('Supabase insert error:', error);
-            throw error;
-          }
-          if (data) _orderId = data.id;
+          if (!error && data) _onboardingId = data.id;
         }
-
-        document.getElementById('paymentModal').classList.add('open');
-        document.body.style.overflow = 'hidden';
-        if (typeof fbq !== 'undefined') fbq('track', 'InitiateCheckout');
       } catch (err) {
-        alert('Could not save order: ' + (err?.message || JSON.stringify(err)));
-      } finally {
-        btn.disabled = false;
-        btn.innerHTML = 'Proceed to Payment ✦';
+        console.error('Onboarding insert failed:', err);
       }
     }
 
-    let _selectedMethod = 'gcash';
-
+    // ── Payment Methods ───────────────────────────────────────
     function selectPaymentMethod(method) {
       _selectedMethod = method;
       const isGcash = method === 'gcash';
       document.getElementById('tabGcash').classList.toggle('active', isGcash);
       document.getElementById('tabBpi').classList.toggle('active', !isGcash);
-      document.getElementById('modalQr').src = isGcash ? 'https://eventful.page/onboarding/qr.jpg' : 'https://eventful.page/onboarding/qrbpi.jpg';
+      document.getElementById('modalQr').src = isGcash
+        ? 'https://eventful.page/onboarding/qr.jpg'
+        : 'https://eventful.page/onboarding/qrbpi.jpg';
       document.getElementById('modalQr').alt = isGcash ? 'GCash QR Code' : 'BPI QR Code';
       document.getElementById('infoGcash').style.display = isGcash ? '' : 'none';
       document.getElementById('infoBpi').style.display = isGcash ? 'none' : '';
@@ -2784,20 +1188,7 @@
       a.click();
     }
 
-    function closePaymentModal() {
-      document.getElementById('paymentModal').classList.remove('open');
-      document.body.style.overflow = '';
-      // Auto-save form state for the resume feature
-      try {
-        const payload = buildPayload();
-        payload._functionalIds = getSelectedFunctional();
-        payload._premiumIds = getSelectedPremium();
-        payload._rushDelivery = document.getElementById('delivery-rush')?.checked || false;
-        localStorage.setItem('eventful_saved', JSON.stringify(payload));
-        document.getElementById('loadSavedBtn').style.display = '';
-      } catch (_) {}
-    }
-
+    // ── Receipt Upload ────────────────────────────────────────
     function handleReceiptUpload(e) {
       const file = e.target.files[0];
       if (!file) return;
@@ -2823,7 +1214,81 @@
       document.getElementById('uploadZone').style.display = '';
     }
 
-    // Dragover styling
+    // ── Confirm Payment → update onboarding ──────────────────
+    async function confirmPayment() {
+      if (!_receiptFile) {
+        const zone = document.getElementById('uploadZone');
+        zone.style.outline = '2px solid #c0392b';
+        setTimeout(() => zone.style.outline = '', 2000);
+        return;
+      }
+
+      const btn = document.getElementById('confirmPaymentBtn');
+      btn.disabled = true;
+      const email = document.getElementById('email').value.trim();
+
+      try {
+        btn.innerHTML = '<span class="spinner"></span> Uploading receipt…';
+        let receipt_url = null;
+        try {
+          const ext = _receiptFile.name.split('.').pop();
+          const path = `onboarding/${Date.now()}.${ext}`;
+          const { error: uploadErr } = await db.storage
+            .from('receipts')
+            .upload(path, _receiptFile, { upsert: false });
+          if (!uploadErr) {
+            const { data: urlData } = db.storage.from('receipts').getPublicUrl(path);
+            receipt_url = urlData.publicUrl;
+          }
+        } catch (_) {}
+
+        btn.innerHTML = '<span class="spinner"></span> Confirming…';
+        if (_onboardingId) {
+          try {
+            await db.from('onboarding')
+              .update({ payment_status: 'receipt_uploaded', receipt_url, payment_method: _selectedMethod })
+              .eq('id', _onboardingId);
+          } catch (_) {}
+        }
+      } finally {
+        if (typeof fbq !== 'undefined') fbq('track', 'Purchase', { currency: 'PHP', value: BASE_PRICE });
+        setTimeout(() => showSuccess(email), 600);
+      }
+    }
+
+    function showSuccess(email) {
+      document.querySelectorAll('.step-panel').forEach(p => p.classList.remove('active'));
+      document.getElementById('successEmail').textContent = email;
+      document.getElementById('successScreen').classList.add('active');
+      updateStepper(TOTAL_STEPS + 1);
+    }
+
+    function resetError() {
+      document.getElementById('errorScreen').classList.remove('active');
+      showStep(TOTAL_STEPS);
+    }
+
+    // ── Init ──────────────────────────────────────────────────
+    renderFeatures();
+    updateStepper(1);
+
+    // Contact number — digits and + only
+    document.getElementById('contactNumber').addEventListener('input', function() {
+      const sanitized = this.value.replace(/[^0-9+]/g, '');
+      if (this.value !== sanitized) this.value = sanitized;
+      this.classList.remove('error');
+      document.getElementById('err-contactNumber')?.classList.remove('visible');
+    });
+
+    // Live validation clear
+    ['name', 'email'].forEach(id => {
+      document.getElementById(id)?.addEventListener('input', () => {
+        document.getElementById(id).classList.remove('error');
+        document.getElementById(`err-${id}`)?.classList.remove('visible');
+      });
+    });
+
+    // Dragover on upload zone
     document.addEventListener('DOMContentLoaded', () => {
       const zone = document.getElementById('uploadZone');
       zone.addEventListener('dragover', e => { e.preventDefault(); zone.classList.add('dragover'); });
@@ -2836,304 +1301,6 @@
           document.getElementById('receiptFile').files = e.dataTransfer.files;
           handleReceiptUpload({ target: { files: [file] } });
         }
-      });
-    });
-
-    function goBackToSummary() {
-      closePaymentModal();
-    }
-
-    function saveForLater() {
-      const payload = buildPayload();
-      payload._functionalIds = getSelectedFunctional();
-      payload._premiumIds = getSelectedPremium();
-      payload._rushDelivery = document.getElementById('delivery-rush')?.checked || false;
-      localStorage.setItem('eventful_saved', JSON.stringify(payload));
-      closePaymentModal();
-      document.getElementById('loadSavedBtn').style.display = '';
-      alert('Your details have been saved in this browser. You can return anytime to complete your payment.');
-    }
-
-    function loadSaved() {
-      const raw = localStorage.getItem('eventful_saved');
-      if (!raw) return;
-      const d = JSON.parse(raw);
-
-      // Step 1 fields
-      const set = (id, val) => { const el = document.getElementById(id); if (el) el.value = val || ''; };
-      set('groomName', d.groomName);
-      set('brideName', d.brideName);
-      set('weddingDate', d.weddingDate);
-      set('email', d.email);
-      set('contactNumber', d.contactNumber);
-      set('location', d.location);
-      set('pageSlug', d.pageSlug);
-      set('specialRequests', d.specialRequests);
-
-      // Functional addon checkboxes
-      FUNCTIONAL_ADDONS.forEach(a => {
-        const cb = document.getElementById(a.id);
-        if (cb) cb.checked = (d._functionalIds || []).includes(a.id);
-      });
-
-      // Premium addon checkboxes
-      PREMIUM_ADDONS.forEach(a => {
-        const cb = document.getElementById(a.id);
-        if (cb) cb.checked = (d._premiumIds || []).includes(a.id);
-      });
-
-      // Rush delivery
-      const rush = document.getElementById('delivery-rush');
-      if (rush) rush.checked = !!d._rushDelivery;
-
-      // Restore page mode selection
-      if (d.pageMode && d.pageMode !== 'Not specified') {
-        const modeEl = document.querySelector(`.mode-option[data-mode="${d.pageMode}"]`);
-        if (modeEl) {
-          document.querySelectorAll('.mode-option').forEach(o => o.classList.remove('selected'));
-          modeEl.classList.add('selected');
-          document.getElementById('pageMode').value = d.pageMode;
-          renderPaletteGrid(d.pageMode === 'Dark' ? DARK_PALETTES : LIGHT_PALETTES, d.pageMode === 'Dark');
-          document.getElementById('paletteSection').style.display = '';
-        }
-      }
-
-      const target = document.getElementById('step-1');
-      if (target) {
-        const start = window.scrollY;
-        const end = target.getBoundingClientRect().top + start - 72;
-        const duration = 800;
-        let startTime = null;
-        const ease = t => t < 0.5 ? 2*t*t : -1+(4-2*t)*t;
-        const step = ts => {
-          if (!startTime) startTime = ts;
-          const p = Math.min((ts - startTime) / duration, 1);
-          window.scrollTo(0, start + (end - start) * ease(p));
-          if (p < 1) requestAnimationFrame(step);
-        };
-        requestAnimationFrame(step);
-      }
-    }
-
-    async function confirmPayment() {
-      if (!_receiptFile) {
-        const zone = document.getElementById('uploadZone');
-        if (zone) { zone.style.outline = '2px solid #c0392b'; setTimeout(() => zone.style.outline = '', 2000); }
-        return;
-      }
-
-      const btn = document.getElementById('confirmPaymentBtn');
-      btn.disabled = true;
-      const email = document.getElementById('email').value.trim();
-
-      try {
-        btn.innerHTML = `<span class="spinner"></span> Uploading receipt…`;
-        let receipt_url = null;
-        try {
-          const ext  = _receiptFile.name.split('.').pop();
-          const path = `onboarding/${Date.now()}.${ext}`;
-          const { error: uploadErr } = await db.storage
-            .from('receipts')
-            .upload(path, _receiptFile, { upsert: false });
-          if (!uploadErr) {
-            const { data: urlData } = db.storage.from('receipts').getPublicUrl(path);
-            receipt_url = urlData.publicUrl;
-          }
-        } catch (_) {}
-
-        btn.innerHTML = `<span class="spinner"></span> Confirming…`;
-        if (_orderId) {
-          try {
-            await db.from('orders')
-              .update({ payment_status: 'receipt_uploaded', receipt_url })
-              .eq('id', _orderId);
-          } catch (_) {}
-        }
-      } finally {
-        if (typeof fbq !== 'undefined') fbq('track', 'Purchase', { currency: 'PHP', value: buildPayload().estimatedPrice });
-        setTimeout(() => {
-          closePaymentModal();
-          showSuccess(email);
-        }, 600);
-      }
-    }
-
-    function showSuccess(email) {
-      document.querySelectorAll('.step-panel').forEach(p => p.classList.remove('active'));
-      document.getElementById('successEmail').textContent = email;
-      const s = document.getElementById('successScreen');
-      s.classList.add('active');
-      updateStepper(TOTAL_STEPS + 1);
-    }
-
-    function showError() {
-      document.querySelectorAll('.step-panel').forEach(p => p.classList.remove('active'));
-      document.getElementById('errorScreen').classList.add('active');
-    }
-
-    function resetError() {
-      document.getElementById('errorScreen').classList.remove('active');
-      showStep(TOTAL_STEPS);
-    }
-
-
-    // ── Init ──────────────────────────────────────────────────
-    renderCoreSection();
-    renderFunctionalAddOns();
-    renderPremiumAddOns();
-    updateStepper(1);
-
-    // Show resume button if saved data exists
-    if (localStorage.getItem('eventful_saved')) {
-      document.getElementById('loadSavedBtn').style.display = '';
-    }
-
-    // Preselect wedding date to today + 15 days
-    const defaultDate = new Date();
-    defaultDate.setDate(defaultDate.getDate() + 15);
-    document.getElementById('weddingDate').value = defaultDate.toISOString().split('T')[0];
-
-    // "Still deciding" checkbox toggle
-    document.getElementById('stillDeciding').addEventListener('change', function () {
-      const deciding = this.checked;
-      const disableIds = ['weddingDate'];
-      const reqIds = ['weddingDateReq'];
-      const errIds = ['err-weddingDate'];
-
-      disableIds.forEach(id => {
-        const el = document.getElementById(id);
-        if (el) el.disabled = deciding;
-      });
-      reqIds.forEach(id => {
-        const el = document.getElementById(id);
-        if (el) el.style.opacity = deciding ? '0' : '';
-      });
-      if (deciding) {
-        errIds.forEach(id => {
-          const el = document.getElementById(id);
-          if (el) { el.classList.remove('visible'); }
-        });
-        disableIds.forEach(id => {
-          document.getElementById(id)?.classList.remove('error');
-        });
-      }
-    });
-
-    // "I want a custom domain" checkbox
-    document.getElementById('wantCustomDomain').addEventListener('change', function () {
-      const isCustom = this.checked;
-      document.getElementById('slugPrefix').textContent = isCustom ? 'https://www.' : 'eventful.page/';
-      const slugInput = document.getElementById('pageSlug');
-      slugInput.placeholder = isCustom ? 'sofia-and-carlos.com' : 'sofia-and-carlos';
-
-      // Auto-append or strip .com
-      if (!_slugManuallyEdited) {
-        autoGenerateSlug();
-      } else {
-        let val = slugInput.value.trim().replace(/\.com$/, '');
-        if (isCustom) val = val + '.com';
-        slugInput.value = val;
-        updateSlugPreview(val);
-        if (isCustom) checkDomainAvailability(val);
-      }
-
-      // Reset status and re-check with the appropriate checker
-      document.getElementById('domainStatus').className = 'domain-status';
-      const currentVal = document.getElementById('pageSlug').value.trim();
-      if (isCustom) checkDomainAvailability(currentVal);
-      else checkSlugAvailability(currentVal);
-
-      // Auto-check or uncheck the premium domain addon in step 3 (formerly 4)
-      const domainCb = document.getElementById('pa-domain');
-      const domainLbl = document.getElementById('lbl-pa-domain');
-      if (domainCb && domainLbl) {
-        domainCb.checked = isCustom;
-        domainLbl.classList.toggle('is-checked', isCustom);
-        domainLbl.setAttribute('aria-checked', isCustom);
-      }
-      calcPrice();
-    });
-
-    // Contact number — allow digits and + only
-    document.getElementById('contactNumber').addEventListener('input', function () {
-      const sanitized = this.value.replace(/[^0-9+]/g, '');
-      if (this.value !== sanitized) this.value = sanitized;
-      this.classList.remove('error');
-      document.getElementById('err-contactNumber')?.classList.remove('visible');
-    });
-
-    // ── Auto-generate slug from names ─────────────────────────
-    let _slugManuallyEdited = false;
-
-    function autoGenerateSlug() {
-      if (_slugManuallyEdited) return;
-      const bride = document.getElementById('brideName').value.trim().split(' ')[0].toLowerCase().replace(/[^a-z]/g, '');
-      const groom = document.getElementById('groomName').value.trim().split(' ')[0].toLowerCase().replace(/[^a-z]/g, '');
-      if (!bride && !groom) return;
-      const isCustom = document.getElementById('wantCustomDomain').checked;
-      const parts = [bride, groom].filter(Boolean);
-      const base = parts.length === 2 ? `${parts[0]}-and-${parts[1]}` : parts[0];
-      document.getElementById('pageSlug').value = isCustom ? `${base}.com` : base;
-      updateSlugPreview(document.getElementById('pageSlug').value);
-      if (isCustom) checkDomainAvailability(`${base}.com`);
-    }
-
-    document.getElementById('groomName').addEventListener('input', () => {
-      document.getElementById('groomName').classList.remove('error');
-      document.getElementById('err-groomName')?.classList.remove('visible');
-      autoGenerateSlug();
-    });
-
-    document.getElementById('brideName').addEventListener('input', () => {
-      document.getElementById('brideName').classList.remove('error');
-      document.getElementById('err-brideName')?.classList.remove('visible');
-      autoGenerateSlug();
-    });
-
-    document.getElementById('pageSlug').addEventListener('input', () => {
-      _slugManuallyEdited = true;
-      const isCustom = document.getElementById('wantCustomDomain').checked;
-      const val = document.getElementById('pageSlug').value.trim();
-      if (isCustom) checkDomainAvailability(val);
-      else checkSlugAvailability(val);
-    });
-
-    // ── Domain availability check ─────────────────────────────
-    let _domainCheckTimer = null;
-
-    function checkDomainAvailability(domain) {
-      const statusEl = document.getElementById('domainStatus');
-      const textEl = document.getElementById('domainStatusText');
-      if (!domain || domain.length < 4 || !domain.includes('.')) {
-        statusEl.className = 'domain-status';
-        return;
-      }
-      clearTimeout(_domainCheckTimer);
-      statusEl.className = 'domain-status checking visible';
-      textEl.textContent = 'Checking availability…';
-      _domainCheckTimer = setTimeout(async () => {
-        try {
-          const res = await fetch(`https://dns.google/resolve?name=${encodeURIComponent(domain)}&type=A`);
-          const data = await res.json();
-          if (data.Status === 3) {
-            // NXDOMAIN — domain likely available
-            statusEl.className = 'domain-status available visible';
-            textEl.textContent = 'Domain is available';
-          } else {
-            statusEl.className = 'domain-status taken visible';
-            textEl.textContent = 'Domain is taken';
-          }
-        } catch {
-          statusEl.className = 'domain-status';
-        }
-      }, 600);
-    }
-
-    // Live validation clear
-    ['weddingDate', 'location', 'venueName', 'email'].forEach(id => {
-      document.getElementById(id)?.addEventListener('input', () => {
-        document.getElementById(id).classList.remove('error');
-        document.getElementById(`err-${id}`)?.classList.remove('visible');
       });
     });
   </script>
