@@ -317,7 +317,7 @@ body {
 }
 
 .hero-quote {
-  font-family: 'Cormorant Infant', serif;
+  font-family: 'Playfair Display', serif;
   font-size: 1.25rem;
   font-style: italic;
   color: var(--text-muted);
@@ -418,7 +418,7 @@ body {
 }
 
 .countdown-num {
-  font-family: 'Cormorant Infant', serif;
+  font-family: 'Playfair Display', serif;
   font-size: clamp(2.2rem, 5vw, 3.2rem);
   font-weight: 500;
   line-height: 1;
@@ -434,7 +434,7 @@ body {
 }
 
 .countdown-sep {
-  font-family: 'Cormorant Infant', serif;
+  font-family: 'Playfair Display', serif;
   font-size: 2rem;
   color: var(--plum-mid);
   align-self: center;
@@ -641,7 +641,7 @@ section { padding: 88px 24px; }
 }
 
 .venue-card-name {
-  font-family: 'Cormorant Infant', serif;
+  font-family: 'Playfair Display', serif;
   font-size: 1.45rem;
   font-weight: 500;
   color: var(--text-main);
@@ -775,7 +775,7 @@ section { padding: 88px 24px; }
 }
 
 .registry-card-name {
-  font-family: 'Cormorant Infant', serif;
+  font-family: 'Playfair Display', serif;
   font-size: 1.2rem;
   font-weight: 500;
   color: var(--text-main);
@@ -814,7 +814,7 @@ section { padding: 88px 24px; }
 }
 
 .dress-theme {
-  font-family: 'Cormorant Infant', serif;
+  font-family: 'Playfair Display', serif;
   font-size: 1.6rem;
   font-style: italic;
   color: var(--gold);
@@ -1069,7 +1069,7 @@ section { padding: 88px 24px; }
 .contact-card-icon svg { display: block; }
 
 .contact-card-title {
-  font-family: 'Cormorant Infant', serif;
+  font-family: 'Playfair Display', serif;
   font-weight: 600;
   font-size: 1.1rem;
   color: var(--text-main);
@@ -1189,7 +1189,7 @@ section { padding: 88px 24px; }
 }
 
 .footer-quote {
-  font-family: 'Cormorant Infant', serif;
+  font-family: 'Playfair Display', serif;
   font-size: 1.1rem;
   font-style: italic;
   color: var(--text-muted);
@@ -1407,7 +1407,7 @@ section { padding: 88px 24px; }
 .accommodation-card:hover { box-shadow: var(--shadow-md); transform: translateY(-3px); }
 
 .accommodation-stars    { font-size: 0.7rem; letter-spacing: 0.22em; color: #C8976A; margin-bottom: 10px; display: block; }
-.accommodation-name     { font-family: 'Cormorant Infant', serif; font-size: 1.6rem; font-weight: 600; color: var(--text-main); margin-bottom: 6px; }
+.accommodation-name     { font-family: 'Playfair Display', serif; font-size: 1.6rem; font-weight: 600; color: var(--text-main); margin-bottom: 6px; }
 .accommodation-distance { font-size: 0.72rem; text-transform: uppercase; letter-spacing: 0.14em; color: var(--gold); font-weight: 600; margin-bottom: 12px; }
 .accommodation-desc     { font-size: 0.84rem; color: var(--text-muted); line-height: 1.6; flex: 1; margin-bottom: 20px; }
 
@@ -1460,7 +1460,7 @@ section { padding: 88px 24px; }
 .activity-icon svg { display: block; }
 
 .activity-name {
-  font-family: 'Cormorant Infant', serif;
+  font-family: 'Playfair Display', serif;
   font-size: 1.12rem;
   font-weight: 500;
   color: var(--text-main);
@@ -1482,7 +1482,7 @@ section { padding: 88px 24px; }
   border: 1px solid rgba(197,160,89,0.18);
   padding: 32px 26px;
 }
-.transport-title    { font-family: 'Cormorant Infant', serif; font-size: 1.6rem; font-weight: 500; color: var(--text-main); margin-bottom: 6px; }
+.transport-title    { font-family: 'Playfair Display', serif; font-size: 1.6rem; font-weight: 500; color: var(--text-main); margin-bottom: 6px; }
 .transport-subtitle { font-size: 0.84rem; color: var(--text-muted); margin-bottom: 28px; line-height: 1.6; }
 .transport-items    { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; }
 .transport-item     { display: flex; flex-direction: column; gap: 6px; }
@@ -1504,11 +1504,11 @@ section { padding: 88px 24px; }
   flex-wrap: wrap;
 }
 .weather-eyebrow    { font-size: 0.67rem; text-transform: uppercase; letter-spacing: 0.28em; color: var(--gold); font-weight: 600; margin-bottom: 6px; display: block; }
-.weather-title      { font-family: 'Cormorant Infant', serif; font-size: 1.6rem; font-weight: 500; color: var(--text-main); margin-bottom: 4px; }
+.weather-title      { font-family: 'Playfair Display', serif; font-size: 1.6rem; font-weight: 500; color: var(--text-main); margin-bottom: 4px; }
 .weather-note       { font-size: 0.82rem; color: var(--text-muted); line-height: 1.55; }
 .weather-stats      { display: flex; gap: 28px; flex-wrap: wrap; flex: 1; justify-content: flex-end; }
 .weather-stat       { display: flex; flex-direction: column; align-items: center; gap: 4px; }
-.weather-stat-value { font-family: 'Cormorant Infant', serif; font-size: 1.6rem; font-weight: 500; color: var(--gold); line-height: 1; }
+.weather-stat-value { font-family: 'Playfair Display', serif; font-size: 1.6rem; font-weight: 500; color: var(--gold); line-height: 1; }
 .weather-stat-label { font-size: 0.64rem; text-transform: uppercase; letter-spacing: 0.18em; color: var(--text-muted); text-align: center; }
 
 /* ─── Gallery Lightbox ───────────────────────────────── */
@@ -1550,7 +1550,7 @@ section { padding: 88px 24px; }
 }
 .lightbox-caption {
   margin-top: 16px;
-  font-family: 'Cormorant Infant', serif;
+  font-family: 'Playfair Display', serif;
   font-style: italic;
   font-size: 1.05rem;
   color: rgba(255,255,255,0.50);
@@ -1607,7 +1607,7 @@ section { padding: 88px 24px; }
 .registry-modal-close:hover { color: var(--text-main); transform: rotate(90deg); }
 
 .registry-modal-title {
-  font-family: 'Cormorant Infant', serif;
+  font-family: 'Playfair Display', serif;
   font-size: 1.4rem;
   font-weight: 500;
   color: var(--text-main);
@@ -1730,7 +1730,7 @@ section { padding: 88px 24px; }
 }
 
 .gcash-name {
-  font-family: 'Cormorant Infant', serif;
+  font-family: 'Playfair Display', serif;
   font-size: 1.4rem;
   font-weight: 500;
   color: var(--text-main);
