@@ -10,7 +10,6 @@
     gtag('js', new Date());
     gtag('config', 'G-X3XHYNL7NJ');
   </script>
-  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Eventful — Elegant Wedding Landing Pages</title>
@@ -3687,11 +3686,11 @@
 
   </script>
 
-  <script>
-    (async () => {
+  <script type="module">
+    window.addEventListener('load', async () => {
       const TOTAL = 20;
       try {
-        const { createClient } = supabase;
+        const { createClient } = await import('https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/+esm');
         const db = createClient(
           'https://auohzxsufvdgdrhtlpib.supabase.co',
           'sb_publishable_sRKhjg0x42oqn0obrF3rYQ_fsAypvL0'
@@ -3721,7 +3720,7 @@
       } catch (e) {
         // silently fail — static fallback remains visible
       }
-    })();
+    });
   </script>
 
   <script>
