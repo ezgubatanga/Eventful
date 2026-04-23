@@ -27,7 +27,6 @@
   <meta name="twitter:image" content="https://eventful.page/eventful.webp" />
   <meta name="agd-partner-manual-verification" />
   <link rel="icon" type="image/webp" href="https://eventful.page/favicon.webp" />
-  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link
@@ -872,21 +871,21 @@
         <div class="step-body">
           <div class="fields-grid">
             <div class="field-group field-full">
-              <label class="field-label" for="name">Full Name <span class="req">*</span></label>
+              <label class="field-label" for="name">Full Name (First & Surname)<span class="req">*</span></label>
               <input class="field-input" type="text" id="name" name="name"
-                placeholder="" autocomplete="name" required />
+                autocomplete="name" required />
               <span class="field-error" id="err-name">Please enter your full name (first and last).</span>
             </div>
             <div class="field-group">
               <label class="field-label" for="contactNumber">Contact Number <span class="req">*</span></label>
               <input class="field-input" type="tel" id="contactNumber" name="contactNumber"
-                placeholder="e.g. 09171234567" maxlength="13" required />
+                maxlength="13" required />
               <span class="field-error" id="err-contactNumber">Please enter a contact number.</span>
             </div>
             <div class="field-group">
               <label class="field-label" for="email">Email Address <span class="req">*</span></label>
               <input class="field-input" type="email" id="email" name="email"
-                placeholder="yourname@email.com" required />
+                required />
               <span class="field-error" id="err-email">Please enter a valid email.</span>
             </div>
           </div>
@@ -1018,6 +1017,7 @@
   </div><!-- /.page-wrap -->
 
   <!-- ═══════════════════════════ JS ══════════════════════════ -->
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
   <script>
     const { createClient } = supabase;
     const db = createClient('https://auohzxsufvdgdrhtlpib.supabase.co', 'sb_publishable_sRKhjg0x42oqn0obrF3rYQ_fsAypvL0');
@@ -1044,14 +1044,17 @@
       'Countdown Timer',
       'RSVP Form',
       'Contact Info',
-      'Mobile-Optimized Design',
-      'Custom Shareable Link',
       'RSVP Dashboard',
     ];
 
     const FREE_FEATURES = [
       'Background Music',
       'Meal Selection',
+    ];
+
+    const TAIL_FEATURES = [
+      'Mobile-Optimized Design',
+      'Custom Shareable Link',
     ];
 
     function renderFeatures() {
@@ -1062,7 +1065,10 @@
       const freeHTML = FREE_FEATURES.map(f =>
         `<span class="feature-tag free">${f}</span>`
       ).join('');
-      grid.innerHTML = coreHTML + freeHTML;
+      const tailHTML = TAIL_FEATURES.map(f =>
+        `<span class="feature-tag core">${f}</span>`
+      ).join('');
+      grid.innerHTML = coreHTML + freeHTML + tailHTML;
     }
 
     // ── Stepper UI ────────────────────────────────────────────
