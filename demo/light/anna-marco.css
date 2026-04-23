@@ -613,7 +613,6 @@ section { padding: 88px 24px; }
   border-radius: var(--radius-lg);
   overflow: hidden;
   border: 1px solid rgba(50,45,40,0.12);
-  box-shadow: var(--shadow-sm);
 }
 
 .venue-map {
@@ -1479,7 +1478,7 @@ section { padding: 88px 24px; }
 /* ─── Transportation ─────────────────────────────────── */
 .transport-block {
   margin-top: 44px;
-  background: var(--surface-2);
+  background: #ffffff;
   border-radius: var(--radius);
   border: 1px solid rgba(197,160,89,0.18);
   padding: 32px 26px;
@@ -1496,7 +1495,7 @@ section { padding: 88px 24px; }
 /* ─── Weather Card ───────────────────────────────────── */
 .weather-card {
   margin-top: 28px;
-  background: linear-gradient(135deg, var(--surface-2) 0%, var(--surface-3) 100%);
+  background: #ffffff;
   border-radius: var(--radius);
   border: 1px solid rgba(197,160,89,0.18);
   padding: 28px 26px;
