@@ -1402,9 +1402,9 @@ section { padding: 88px 24px; }
   box-shadow: var(--shadow-gold);
   display: flex;
   flex-direction: column;
-  transition: box-shadow var(--transition), transform var(--transition);
+  transition: box-shadow var(--transition), transform var(--transition), border-color var(--transition);
 }
-.accommodation-card:hover { box-shadow: var(--shadow-md); transform: translateY(-3px); }
+.accommodation-card:hover { box-shadow: var(--shadow-plum); transform: translateY(-2px); border-color: rgba(197,160,89,0.45); }
 
 .accommodation-stars    { font-size: 0.7rem; letter-spacing: 0.22em; color: #C8976A; margin-bottom: 10px; display: block; }
 .accommodation-name     { font-family: 'Playfair Display', serif; font-size: 1.6rem; font-weight: 400; color: var(--text-main); margin-bottom: 6px; }
