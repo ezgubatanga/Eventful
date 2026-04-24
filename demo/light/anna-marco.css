@@ -1399,7 +1399,7 @@ section { padding: 88px 24px; }
   border-radius: var(--radius);
   padding: 28px 24px;
   border: 1px solid rgba(197,160,89,0.20);
-  box-shadow: var(--shadow-sm);
+  box-shadow: var(--shadow-gold);
   display: flex;
   flex-direction: column;
   transition: box-shadow var(--transition), transform var(--transition);
@@ -1430,17 +1430,14 @@ section { padding: 88px 24px; }
 }
 
 .activity-card {
-  background: var(--surface-2);
+  background: #ffffff;
   border-radius: var(--radius);
   padding: 26px 22px;
   border: 1px solid rgba(197,160,89,0.18);
-  box-shadow: var(--shadow-sm);
   display: flex;
   flex-direction: column;
   gap: 8px;
-  transition: box-shadow var(--transition), transform var(--transition);
 }
-.activity-card:hover { box-shadow: var(--shadow-md); transform: translateY(-3px); }
 
 .activity-tag {
   font-size: 0.62rem;
@@ -1451,11 +1448,17 @@ section { padding: 88px 24px; }
   display: block;
 }
 
+.activity-header {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
 .activity-icon {
   color: var(--gold);
   display: flex;
   align-items: center;
-  margin: 4px 0 2px;
+  flex-shrink: 0;
 }
 .activity-icon svg { display: block; }
 
