@@ -1053,12 +1053,6 @@ section { padding: 88px 24px; }
   padding: 30px 26px;
   border: 1px solid rgba(184,144,63,0.22);
   box-shadow: var(--shadow-sm);
-  transition: box-shadow var(--transition), transform var(--transition);
-}
-
-.contact-card:hover {
-  box-shadow: var(--shadow-md);
-  transform: translateY(-2px);
 }
 
 .contact-card-icon {
@@ -1088,7 +1082,6 @@ section { padding: 88px 24px; }
   transition: color var(--transition);
 }
 
-.contact-card-detail a:hover { color: var(--gold-dark); }
 
 /* ─── Dashboard CTA ──────────────────────────────────── */
 .dashboard-cta {
@@ -1118,7 +1111,7 @@ section { padding: 88px 24px; }
   font-size: 0.88rem;
   font-weight: 600;
   letter-spacing: 0.07em;
-  text-transform: uppercase;
+  text-transform: capitalize;
   text-decoration: none;
   border-radius: 999px;
   box-shadow: var(--shadow-gold);
@@ -1399,7 +1392,7 @@ section { padding: 88px 24px; }
   border-radius: var(--radius);
   padding: 28px 24px;
   border: 1px solid rgba(197,160,89,0.20);
-  box-shadow: var(--shadow-gold);
+  box-shadow: var(--shadow-sm);
   display: flex;
   flex-direction: column;
   transition: box-shadow var(--transition), transform var(--transition), border-color var(--transition);

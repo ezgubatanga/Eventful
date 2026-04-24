@@ -1067,12 +1067,6 @@ section { padding: 88px 24px; }
   padding: 30px 26px;
   border: 1px solid rgba(50,45,40,0.55);
   box-shadow: var(--shadow-sm);
-  transition: box-shadow var(--transition), transform var(--transition);
-}
-
-.contact-card:hover {
-  box-shadow: var(--shadow-md);
-  transform: translateY(-2px);
 }
 
 .contact-card-icon {
@@ -1102,7 +1096,6 @@ section { padding: 88px 24px; }
   transition: color var(--transition);
 }
 
-.contact-card-detail a:hover { color: var(--gold-dark); }
 
 /* ─── Dashboard CTA ──────────────────────────────────── */
 .dashboard-cta {

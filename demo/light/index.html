@@ -676,7 +676,7 @@
             </div>
             <div class="rsvp-field">
               <label class="rsvp-label" for="rsvp-phone">Phone Number</label>
-              <input class="rsvp-input" type="tel" id="rsvp-phone" placeholder="09471234567" />
+              <input class="rsvp-input" type="tel" id="rsvp-phone" placeholder="09471234567" required />
             </div>
             <div class="rsvp-field">
               <label class="rsvp-label" for="rsvp-attend">Will you attend?</label>
@@ -1193,6 +1193,18 @@
       const name   = document.getElementById('rsvp-name').value.trim();
       const attend = document.getElementById('rsvp-attend').value;
 
+      if (name.split(/\s+/).filter(Boolean).length < 2) {
+        fb.style.display = 'block';
+        fb.textContent   = 'Please enter your full name (first and last).';
+        fb.style.color   = '#D1A3A4';
+        return;
+      }
+      if (!document.getElementById('rsvp-phone').value.trim()) {
+        fb.style.display = 'block';
+        fb.textContent   = 'Please enter your phone number.';
+        fb.style.color   = '#D1A3A4';
+        return;
+      }
       if (attend === 'yes' && !document.getElementById('rsvp-meal').value) {
         fb.style.display = 'block';
         fb.textContent   = 'Please select your meal choice.';
