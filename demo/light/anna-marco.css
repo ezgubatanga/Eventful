@@ -1113,7 +1113,7 @@ section { padding: 88px 24px; }
 .dashboard-cta-btn {
   display: inline-block;
   padding: 14px 40px;
-  background: var(--gold);
+  background: #5F7161;
   color: #fff;
   font-family: 'Outfit', sans-serif;
   font-size: 0.88rem;
@@ -1122,10 +1122,10 @@ section { padding: 88px 24px; }
   text-transform: capitalize;
   text-decoration: none;
   border-radius: 999px;
-  box-shadow: var(--shadow-gold);
+  box-shadow: 0 6px 20px rgba(95,113,97,0.28);
   transition: background var(--transition), transform var(--transition);
 }
-.dashboard-cta-btn:hover { background: var(--gold-dark); transform: translateY(-2px); }
+.dashboard-cta-btn:hover { background: #4e5e50; transform: translateY(-2px); }
 
 .dashboard-cta-outline {
   display: inline-block;
