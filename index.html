@@ -181,22 +181,62 @@
 
     .btn-gold {
       background: linear-gradient(135deg, #C5A059 0%, #E0BC72 50%, #C5A059 100%);
-      background-size: 200% 100%;
       color: #fff !important;
       box-shadow: 0 4px 24px rgba(197,160,89,0.35), inset 0 1px 0 rgba(255,255,255,0.15);
       padding: 15px 38px;
+      position: relative;
+      isolation: isolate;
+    }
+
+    .btn-gold::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(135deg, #E0BC72 0%, #F0D08A 50%, #E0BC72 100%);
+      opacity: 0;
+      transition: opacity 0.4s ease;
+      border-radius: inherit;
+      z-index: -1;
+    }
+
+    .btn-gold:hover::after {
+      opacity: 1;
     }
 
     .btn-gold:hover {
-      background-position: 100% 0;
-      background: linear-gradient(135deg, #E0BC72 0%, #F0D08A 50%, #E0BC72 100%);
-      transform: translateY(-3px);
+      transform: scale(1.06);
       box-shadow: 0 8px 32px rgba(197,160,89,0.5), inset 0 1px 0 rgba(255,255,255,0.2);
     }
 
     .btn-gold:active {
-      transform: translateY(0);
+      transform: scale(1);
     }
+
+    /* ── Hero CTA stars ── */
+    .hero-star {
+      position: absolute;
+      color: #E0BC72;
+      filter: drop-shadow(0 0 0 #E0BC72);
+      z-index: 2;
+      opacity: 0;
+      transition: all 0.8s cubic-bezier(0.05, 0.83, 0.43, 0.96);
+      pointer-events: none;
+    }
+    .hero-star-1 { width: 22px; top: 40%; left: 40%; transition-duration: 1s; }
+    .hero-star-2 { width: 13px; top: 45%; left: 45%; transition-duration: 1s; transition-timing-function: cubic-bezier(0,0.4,0,1.01); }
+    .hero-star-3 { width: 5px;  top: 40%; left: 40%; transition-duration: 1s; transition-timing-function: cubic-bezier(0,0.4,0,1.01); }
+    .hero-star-4 { width: 8px;  top: 20%; left: 40%; transition-duration: 0.8s; transition-timing-function: cubic-bezier(0,0.4,0,1.01); }
+    .hero-star-5 { width: 14px; top: 25%; left: 45%; transition-duration: 0.6s; transition-timing-function: cubic-bezier(0,0.4,0,1.01); }
+    .hero-star-6 { width: 5px;  top: 5%;  left: 50%; transition-duration: 0.8s; transition-timing-function: ease; }
+
+    #hero-cta:hover {
+      background: transparent !important;
+      color: #2A2520 !important;
+      box-shadow: none;
+    }
+    #hero-cta:hover::after { opacity: 0; }
+    #hero-cta:hover .hero-cta-sparkle { color: #E0BC72; transition: color 0.3s ease; }
+    #hero-cta:hover .hero-star { opacity: 1; }
 
     .btn-dark {
       background: var(--primary);
@@ -219,7 +259,6 @@
     .btn-outline:hover {
       border-color: var(--gold);
       color: var(--gold);
-      transform: translateY(-2px);
     }
 
     #view-demo-btn {
@@ -712,7 +751,7 @@
     }
 
     .prev-btn-gold {
-      background: #C5A059;
+      background: linear-gradient(135deg, #C5A059 0%, #E0BC72 50%, #C5A059 100%);
       color: #fff;
       padding: 12px 28px;
       border-radius: 999px;
@@ -720,6 +759,29 @@
       font-size: 0.82rem;
       font-weight: 600;
       letter-spacing: 0.05em;
+      position: relative;
+      overflow: hidden;
+      isolation: isolate;
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+
+    .prev-btn-gold::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(135deg, #E0BC72 0%, #F0D08A 50%, #E0BC72 100%);
+      opacity: 0;
+      transition: opacity 0.4s ease;
+      border-radius: inherit;
+      z-index: -1;
+    }
+
+    .prev-btn-gold:hover::after {
+      opacity: 1;
+    }
+
+    .prev-btn-gold:hover {
+      transform: translateY(-2px);
     }
 
     .prev-btn-outline {
@@ -1383,6 +1445,7 @@
       display: flex;
       gap: 12px;
       flex-wrap: wrap;
+      justify-content: center;
     }
 
     .showcase-btn {
@@ -1417,8 +1480,8 @@
     }
 
     .showcase-btn-dark:hover {
-      background: var(--gold-dark);
-      border-color: var(--gold-dark);
+      background: #a8873e;
+      border-color: #a8873e;
     }
 
     .showcase-btn svg {
@@ -3020,10 +3083,18 @@
             Your love story<br />deserves a<br />beautiful page
           </h1>
           <p class="hero-sub fade-up delay-2">
-            Eventful creates beautiful, customized wedding landing pages that include features like RSVP, venue information, galleries, countdown timers, and more. x`No hassle.
+            Eventful creates beautiful, customized wedding landing pages that include features like RSVP, venue information, galleries, countdown timers, and more. No hassle.
           </p>
           <div class="hero-actions fade-up delay-3">
-            <a href="/onboarding" class="btn btn-gold" id="hero-cta">Get Started ✦</a>
+            <a href="/onboarding" class="btn btn-gold" id="hero-cta">
+              <svg class="hero-star hero-star-1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 784.11 815.53"><path d="M392.05 0c-20.9 210.08-184.6 336.8-392.05 381.7 207.45 44.9 371.15 171.6 392.05 381.7 20.9-210.1 184.6-336.8 392.05-381.7C576.65 336.8 412.95 210.1 392.05 0z" fill="currentColor"/></svg>
+              <svg class="hero-star hero-star-2" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 784.11 815.53"><path d="M392.05 0c-20.9 210.08-184.6 336.8-392.05 381.7 207.45 44.9 371.15 171.6 392.05 381.7 20.9-210.1 184.6-336.8 392.05-381.7C576.65 336.8 412.95 210.1 392.05 0z" fill="currentColor"/></svg>
+              <svg class="hero-star hero-star-3" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 784.11 815.53"><path d="M392.05 0c-20.9 210.08-184.6 336.8-392.05 381.7 207.45 44.9 371.15 171.6 392.05 381.7 20.9-210.1 184.6-336.8 392.05-381.7C576.65 336.8 412.95 210.1 392.05 0z" fill="currentColor"/></svg>
+              <svg class="hero-star hero-star-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 784.11 815.53"><path d="M392.05 0c-20.9 210.08-184.6 336.8-392.05 381.7 207.45 44.9 371.15 171.6 392.05 381.7 20.9-210.1 184.6-336.8 392.05-381.7C576.65 336.8 412.95 210.1 392.05 0z" fill="currentColor"/></svg>
+              <svg class="hero-star hero-star-5" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 784.11 815.53"><path d="M392.05 0c-20.9 210.08-184.6 336.8-392.05 381.7 207.45 44.9 371.15 171.6 392.05 381.7 20.9-210.1 184.6-336.8 392.05-381.7C576.65 336.8 412.95 210.1 392.05 0z" fill="currentColor"/></svg>
+              <svg class="hero-star hero-star-6" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 784.11 815.53"><path d="M392.05 0c-20.9 210.08-184.6 336.8-392.05 381.7 207.45 44.9 371.15 171.6 392.05 381.7 20.9-210.1 184.6-336.8 392.05-381.7C576.65 336.8 412.95 210.1 392.05 0z" fill="currentColor"/></svg>
+              <span>Get Started <span class="hero-cta-sparkle">✦</span></span>
+            </a>
             <button class="btn btn-outline" id="view-demo-btn">View Demo</button>
           </div>
         </div>
@@ -3797,6 +3868,26 @@
   </div>
 
   <script>
+    (function() {
+      var heroBtn = document.getElementById('hero-cta');
+      var heroStars = heroBtn ? heroBtn.querySelectorAll('.hero-star') : [];
+      if (heroBtn) {
+        heroBtn.addEventListener('mouseenter', function() {
+          heroStars.forEach(function(star) {
+            var angle = Math.random() * 2 * Math.PI;
+            var dist = 38 + Math.random() * 30;
+            star.style.top  = (50 + Math.sin(angle) * dist) + '%';
+            star.style.left = (50 + Math.cos(angle) * dist) + '%';
+          });
+        });
+        heroBtn.addEventListener('mouseleave', function() {
+          heroStars.forEach(function(star) {
+            star.style.top  = '';
+            star.style.left = '';
+          });
+        });
+      }
+    })();
     (function() {
       var overlay = document.getElementById('demo-modal-overlay');
       var openBtn = document.getElementById('view-demo-btn');
