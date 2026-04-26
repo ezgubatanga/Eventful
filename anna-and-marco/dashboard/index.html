@@ -19,25 +19,25 @@
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
   <style>
     :root {
-      --bg:         #1A1714;
-      --surface:    #232018;
-      --surface-2:  #2A2520;
-      --surface-3:  #332E28;
-      --border:     rgba(197,160,89,0.15);
-      --border-mid: rgba(197,160,89,0.28);
-      --gold:       #C5A059;
-      --gold-dark:  #B8903F;
-      --gold-light: rgba(197,160,89,0.10);
-      --gold-mid:   rgba(197,160,89,0.22);
-      --text:       #F0EDE8;
-      --muted:      #9E9890;
-      --light:      #6E685F;
-      --rose:       #D1A3A4;
-      --green:      #7FA882;
-      --red:        #C47A7A;
+      --bg:         #ffffff;
+      --surface:    #f8f5f1;
+      --surface-2:  #f1ece5;
+      --surface-3:  #e9e2d9;
+      --border:     rgba(184,144,63,0.15);
+      --border-mid: rgba(184,144,63,0.28);
+      --gold:       #B8903F;
+      --gold-dark:  #9a7530;
+      --gold-light: rgba(184,144,63,0.10);
+      --gold-mid:   rgba(184,144,63,0.22);
+      --text:       #1A1714;
+      --muted:      #6b6459;
+      --light:      #9a9089;
+      --rose:       #B87070;
+      --green:      #4a8a4d;
+      --red:        #a05050;
       --radius:     12px;
       --radius-lg:  18px;
-      --shadow:     0 4px 20px rgba(0,0,0,0.35);
+      --shadow:     0 4px 20px rgba(0,0,0,0.10);
     }
 
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
@@ -102,7 +102,7 @@
       width: 100%;
       padding: 13px;
       background: var(--gold);
-      color: #1A1714;
+      color: #fff;
       border: none;
       border-radius: 10px;
       font-family: 'Outfit', sans-serif;
@@ -125,7 +125,7 @@
       position: sticky;
       top: 0;
       z-index: 100;
-      background: rgba(26,23,20,0.90);
+      background: rgba(250,247,244,0.92);
       backdrop-filter: blur(16px);
       -webkit-backdrop-filter: blur(16px);
       border-bottom: 1px solid var(--border);
@@ -225,7 +225,7 @@
     }
     .nav-notify:hover { background: var(--gold-mid); border-color: var(--gold); }
     .nav-notify svg { width: 15px; height: 15px; }
-    .nav-notify.enabled { background: var(--gold); color: #1A1714; border-color: var(--gold); }
+    .nav-notify.enabled { background: var(--gold); color: #fff; border-color: var(--gold); }
     .nav-notify.enabled:hover { background: var(--gold-dark); }
     .notify-dot {
       position: absolute;
@@ -444,7 +444,7 @@
       color: var(--gold);
       border-color: var(--gold);
     }
-    .tbl-btn-viewall:hover { background: var(--gold); color: #1a1a1a; }
+    .tbl-btn-viewall:hover { background: var(--gold); color: #fff; }
     .tbl-btn-print {
       background: transparent;
       color: var(--light);
@@ -629,7 +629,7 @@
       background: var(--surface-2);
       border: 1px solid var(--border-mid);
       border-radius: 10px;
-      box-shadow: 0 8px 24px rgba(0,0,0,0.45);
+      box-shadow: 0 8px 24px rgba(0,0,0,0.14);
       z-index: 200;
       min-width: 140px;
       overflow: hidden;
@@ -877,10 +877,10 @@
   <!-- Nav -->
   <nav class="nav">
     <div class="nav-left">
-      <a class="nav-back" href="/demo/dark/" aria-label="Back to wedding page">
+      <a class="nav-back" href="/anna-and-marco/" aria-label="Back to wedding page">
         <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"/></svg>
       </a>
-      <a class="nav-brand" href="/demo/dark/">Anna &amp; Marco <span>RSVP Dashboard</span></a>
+      <a class="nav-brand" href="/anna-and-marco/">Anna &amp; Marco <span>RSVP Dashboard</span></a>
     </div>
     <div class="nav-right">
       <button class="nav-notify" id="notify-btn" aria-label="Enable RSVP notifications" title="Get notified when a new RSVP arrives">
