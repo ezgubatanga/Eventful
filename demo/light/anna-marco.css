@@ -748,7 +748,7 @@ section { padding: 88px 24px; }
 
 .video-wrapper {
   margin-top: 44px;
-  border-radius: var(--radius-lg);
+  border-radius: 0;
   overflow: hidden;
   box-shadow: var(--shadow-md);
   aspect-ratio: 16/9;

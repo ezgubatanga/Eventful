@@ -839,8 +839,10 @@
   <div class="page-wrap">
 
     <!-- Page Header -->
+    <div style="text-align:center;margin-bottom:12px;">
+      <a href="/"><img src="/logo.webp" alt="Eventful" style="height:28px;width:auto;display:inline-block;filter:none;opacity:1;" /></a>
+    </div>
     <header class="page-header">
-      <a href="/"><img src="/logo.webp" alt="Eventful" style="height:28px;width:auto;display:block;margin:0 auto 12px;filter:none;opacity:1;" /></a>
       <h1 class="page-title">Let Eventful Design Your Personalized Wedding Page</h1>
       <p class="page-subtitle">Simplified onboarding process.</p>
     </header>
@@ -918,7 +920,6 @@
         <div class="step-header">
           <p class="step-number">Step 02 / 02</p>
           <h2 class="step-title">Complete Your Payment</h2>
-          <p class="step-desc">Send ₱4,000 via GCash or BPI and upload your receipt below.</p>
         </div>
         <div class="step-body">
           <div class="payment-inner">
@@ -1110,6 +1111,8 @@
       if (panel) panel.classList.add('active');
       currentStep = n;
       updateStepper(n);
+      const pageHeader = document.querySelector('.page-header');
+      if (pageHeader) pageHeader.style.display = n === 1 ? '' : 'none';
       window.scrollTo({ top: 0, behavior: 'smooth' });
     }
 
@@ -1135,6 +1138,13 @@
       });
       return ok;
     }
+
+    // ── Enter key triggers Continue on step 1 fields ─────────
+    ['name', 'contactNumber', 'email'].forEach(id => {
+      document.getElementById(id).addEventListener('keydown', e => {
+        if (e.key === 'Enter') { e.preventDefault(); handleStep1(); }
+      });
+    });
 
     // ── Step 1 Submit → insert to onboarding ─────────────────
     async function handleStep1() {
