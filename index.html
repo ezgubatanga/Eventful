@@ -3774,13 +3774,12 @@
           'sb_publishable_sRKhjg0x42oqn0obrF3rYQ_fsAypvL0'
         );
         const { count, error } = await db
-          .from('orders')
-          .select('*', { count: 'exact', head: true })
-          .eq('payment_status', 'receipt_uploaded');
+          .from('onboarding')
+          .select('*', { count: 'exact', head: true });
 
         if (error || count === null) return;
 
-        const taken = Math.min(count, TOTAL);
+        const taken = Math.min(count + 6, TOTAL);
         const track = document.getElementById('slot-track');
         const label = document.getElementById('slot-counter-text');
 
