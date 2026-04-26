@@ -1260,6 +1260,8 @@ section { padding: 88px 24px; }
 /* ─── Responsive ─────────────────────────────────────── */
 @media (max-width: 1024px) {
   .container { max-width: 720px; }
+  .timeline .section-eyebrow,
+  .timeline .section-title { text-align: left !important; }
 }
 
 @media (max-width: 768px) {

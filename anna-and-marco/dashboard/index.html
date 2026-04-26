@@ -1029,6 +1029,7 @@
         overlay.style.display = 'none';
         mainEl.style.display  = 'block';
         loadData();
+        subscribeRealtime();
         initNotifyIfGranted();
       } else {
         failCount++;
@@ -1129,7 +1130,7 @@
       realtimeChannel = db
         .channel('anna-marco-rsvp-inserts')
         .on('postgres_changes', {
-          event:  'INSERT',
+          event:  '*',
           schema: 'public',
           table:  'anna_marco_rsvp'
         }, payload => {
