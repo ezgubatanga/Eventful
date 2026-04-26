@@ -248,6 +248,17 @@ body {
 
 .hero::before { display: none; }
 
+.hero-video {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  z-index: 0;
+  pointer-events: none;
+  opacity: 0.22;
+}
+
 .hero-inner { position: relative; z-index: 1; max-width: 720px; }
 
 .hero-names {
@@ -446,14 +457,13 @@ body {
   font-size: 0.6rem;
   letter-spacing: 0.26em;
   text-transform: uppercase;
-  color: var(--text-light);
-  opacity: 0.65;
+  color: var(--text-muted);
 }
 
 .countdown-sep {
   font-family: 'Playfair Display', serif;
   font-size: 1.8rem;
-  color: var(--gold-mid);
+  color: var(--text-main);
   align-self: center;
   margin-bottom: 22px;
 }
@@ -523,7 +533,7 @@ section { padding: 88px 24px; }
 }
 
 .story-image {
-  border-radius: var(--radius-lg);
+  border-radius: 0;
   overflow: hidden;
   box-shadow: var(--shadow-md);
   aspect-ratio: 4/5;
@@ -708,38 +718,19 @@ section { padding: 88px 24px; }
 .gallery-grid {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
-  grid-template-rows: auto auto;
-  gap: 12px;
+  gap: 6px;
   margin-top: 44px;
 }
 
 .gallery-item {
-  border-radius: var(--radius);
+  border-radius: 0;
   overflow: hidden;
   aspect-ratio: 1;
   background: var(--surface-3);
 }
 
-.gallery-item:first-child {
-  grid-column: 1 / 3;
-  grid-row: 1;
-  aspect-ratio: 16/9;
-}
-
-.gallery-item:nth-child(2) {
-  aspect-ratio: unset;
-  align-self: stretch;
-}
-
-@media (min-width: 769px) {
-  .gallery-grid { grid-template-rows: clamp(260px, 30vw, 400px) auto; }
-  .gallery-item:first-child { aspect-ratio: unset; align-self: stretch; }
-  .gallery-item:nth-child(2) {
-    grid-row: 1;
-    min-height: 0;
-    align-self: stretch;
-  }
-  .gallery-item:nth-child(2) img { object-position: center 15%; }
+.gallery-item:nth-child(3n+2) {
+  transform: translateY(-18px);
 }
 
 .gallery-item img {
@@ -1307,9 +1298,7 @@ section { padding: 88px 24px; }
   .rsvp-card { padding: 28px 20px; }
   .contact-cards { grid-template-columns: 1fr; }
   .registry-cards { grid-template-columns: 1fr; }
-  .gallery-grid { grid-template-columns: 1fr 1fr; }
-  .gallery-item:first-child { grid-column: 1 / -1; aspect-ratio: 16/9; }
-  .gallery-item:nth-child(2) { aspect-ratio: 1; }
+  .gallery-grid { gap: 3px; }
   .music-btn { bottom: 20px; right: 20px; width: 44px; height: 44px; }
   .back-btn { bottom: 20px; left: 20px; width: 44px; height: 44px; }
 }
