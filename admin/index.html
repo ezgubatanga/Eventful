@@ -670,12 +670,9 @@
         <table>
           <thead>
             <tr>
-              <th>Couple</th>
-              <th>Wedding Date</th>
+              <th>Name</th>
               <th>Email</th>
-              <th>Page Slug</th>
-              <th>Delivery</th>
-              <th>Price</th>
+              <th>Contact Number</th>
               <th>Status</th>
               <th>Submitted</th>
               <th></th>
@@ -762,7 +759,7 @@
 
       try {
         const { data: rows, error } = await db
-          .from('orders')
+          .from('onboarding')
           .select('*')
           .order('submitted_at', { ascending: false });
 
@@ -771,18 +768,17 @@
         allOrders = rows;
 
         const total   = rows.length;
-        const paid    = rows.filter(r => r.payment_status === 'paid');
-        const pending = rows.filter(r => r.payment_status === 'pending');
-        const revenue = paid.reduce((sum, r) => sum + (parseFloat(r.estimated_price) || 0), 0);
+        const paid    = rows.filter(r => r.payment_status === 'confirmed' || r.payment_status === 'delivered');
+        const pending = rows.filter(r => r.payment_status === 'pending' || r.payment_status === 'receipt_uploaded');
 
         document.getElementById('kpi-grid').innerHTML = `
           <div class="kpi-card gold">
-            <div class="kpi-label">Total Orders</div>
+            <div class="kpi-label">Total Submissions</div>
             <div class="kpi-value">${total}</div>
             <div class="kpi-sub">all time</div>
           </div>
           <div class="kpi-card green">
-            <div class="kpi-label">Paid</div>
+            <div class="kpi-label">Confirmed</div>
             <div class="kpi-value">${paid.length}</div>
             <div class="kpi-sub">payment confirmed</div>
           </div>
@@ -790,11 +786,6 @@
             <div class="kpi-label">Pending</div>
             <div class="kpi-value">${pending.length}</div>
             <div class="kpi-sub">awaiting payment</div>
-          </div>
-          <div class="kpi-card gold">
-            <div class="kpi-label">Revenue</div>
-            <div class="kpi-value">₱${revenue.toLocaleString('en-PH', { minimumFractionDigits: 0, maximumFractionDigits: 0 })}</div>
-            <div class="kpi-sub">from paid orders</div>
           </div>
         `;
 
@@ -828,15 +819,15 @@
     function subscribeRealtime() {
       if (realtimeChannel) return;
       realtimeChannel = db
-        .channel('admin-orders-realtime')
+        .channel('admin-onboarding-realtime')
         .on('postgres_changes', {
-          event:  'INSERT',
+          event:  '*',
           schema: 'public',
-          table:  'orders'
+          table:  'onboarding'
         }, payload => {
           const r = payload.new;
           playChime();
-          const names = [r.groom_name, r.bride_name].filter(Boolean).join(' & ') || 'Someone';
+          const names = r.name || 'Someone';
           showToast(`New order — <strong>${esc(names)}</strong>`);
           loadData();
         })
@@ -922,29 +913,22 @@
       actions.style.display = filtered.length <= 10 ? 'none' : 'flex';
 
       tbody.innerHTML = visible.map((r, i) => {
-        const names   = [r.groom_name, r.bride_name].filter(Boolean).join(' & ') || '—';
-        const price   = r.estimated_price != null ? '₱' + Number(r.estimated_price).toLocaleString('en-PH') : '—';
         const dateStr = r.submitted_at ? new Date(r.submitted_at).toLocaleDateString('en-GB', { day: 'numeric', month: 'short', year: 'numeric' }) : '—';
-        const badge   = r.payment_status === 'paid'
-          ? '<span class="badge badge-paid">Paid</span>'
-          : r.payment_status === 'pending'
-            ? '<span class="badge badge-pending">Pending</span>'
-            : r.payment_status === 'receipt_uploaded'
-              ? '<span class="badge badge-receipt">Receipt Sent</span>'
-              : r.payment_status === 'confirmed'
-                ? '<span class="badge badge-confirmed">Confirmed</span>'
-                : r.payment_status === 'delivered'
-                  ? '<span class="badge badge-delivered">Delivered</span>'
-                  : `<span class="badge badge-other">${esc(r.payment_status || '—')}</span>`;
+        const badge   = r.payment_status === 'pending'
+          ? '<span class="badge badge-pending">Pending</span>'
+          : r.payment_status === 'receipt_uploaded'
+            ? '<span class="badge badge-receipt">Receipt Sent</span>'
+            : r.payment_status === 'confirmed'
+              ? '<span class="badge badge-confirmed">Confirmed</span>'
+              : r.payment_status === 'delivered'
+                ? '<span class="badge badge-delivered">Delivered</span>'
+                : `<span class="badge badge-other">${esc(r.payment_status || '—')}</span>`;
 
         return `
           <tr>
-            <td title="${esc(names)}">${esc(names)}</td>
-            <td class="td-muted">${esc(r.wedding_date || '—')}</td>
+            <td title="${esc(r.name || '')}">${esc(r.name || '—')}</td>
             <td class="td-muted" title="${esc(r.email || '')}">${esc(r.email || '—')}</td>
-            <td class="td-muted">${esc(r.page_slug || '—')}</td>
-            <td class="td-muted">${esc(r.delivery || '—')}</td>
-            <td class="td-muted">${price}</td>
+            <td class="td-muted">${esc(r.contact_number || '—')}</td>
             <td>${badge}</td>
             <td class="td-muted">${dateStr}</td>
             <td class="td-actions">
@@ -1046,19 +1030,13 @@
     const GAS_CONFIRM_URL = 'https://script.google.com/macros/s/AKfycbxP4YLK1Cb59h0l8FNIh0UhubFolWQ_b5O-GGd64gmABuVy2XIq66oFo6iY0U4XlezgSw/exec';
 
     async function confirmOrder(r) {
-      const names = [r.groom_name, r.bride_name].filter(Boolean).join(' & ') || 'Order';
-      const fnAddons = Array.isArray(r.functional_add_ons) ? r.functional_add_ons.join(', ') : String(r.functional_add_ons || '');
-      const prAddons = Array.isArray(r.premium_add_ons)    ? r.premium_add_ons.join(', ')    : String(r.premium_add_ons    || '');
+      const names = r.name || 'Order';
       const orderData = {
-        groomName:    r.groom_name    || '',
-        brideName:    r.bride_name    || '',
-        email:        r.email         || '',
-        delivery:     r.delivery      || '',
-        fnAddons,
-        prAddons,
-        weddingDate:  r.wedding_date  || '',
-        pageUrl:      r.page_slug ? 'https://eventful.page/' + r.page_slug : '',
-        colorPalette: r.color_palette || '',
+        name:          r.name           || '',
+        email:         r.email          || '',
+        contactNumber: r.contact_number || '',
+        paymentMethod: r.payment_method || '',
+        receiptUrl:    r.receipt_url    || '',
       };
       try {
         if (GAS_CONFIRM_URL) {
@@ -1069,7 +1047,7 @@
             body:    JSON.stringify({ action: 'confirm_order', ...orderData }),
           });
         }
-        const { error } = await db.from('orders').update({ payment_status: 'confirmed' }).eq('id', r.id);
+        const { error } = await db.from('onboarding').update({ payment_status: 'confirmed' }).eq('id', r.id);
         if (error) throw error;
         showToast(`<strong>${esc(names)}</strong> confirmed — email sent`);
         loadData();
@@ -1079,9 +1057,9 @@
     }
 
     async function markDelivered(r) {
-      const names = [r.groom_name, r.bride_name].filter(Boolean).join(' & ') || 'Order';
+      const names = r.name || 'Order';
       try {
-        const { error } = await db.from('orders').update({ payment_status: 'delivered' }).eq('id', r.id);
+        const { error } = await db.from('onboarding').update({ payment_status: 'delivered' }).eq('id', r.id);
         if (error) throw error;
         showToast(`<strong>${esc(names)}</strong> marked as delivered`);
         loadData();
@@ -1098,8 +1076,7 @@
 
     function openDeleteModal(r) {
       pendingDeleteId = r.id;
-      const names = [r.groom_name, r.bride_name].filter(Boolean).join(' & ') || 'this order';
-      document.getElementById('delete-modal-sub').textContent = names;
+      document.getElementById('delete-modal-sub').textContent = r.name || 'this entry';
       deleteModal.classList.add('open');
     }
 
@@ -1110,7 +1087,7 @@
       if (!pendingDeleteId) return;
       deleteConfirm.disabled = true;
       deleteConfirm.textContent = 'Deleting…';
-      const { error } = await db.from('orders').delete().eq('id', pendingDeleteId);
+      const { error } = await db.from('onboarding').delete().eq('id', pendingDeleteId);
       deleteConfirm.disabled = false;
       deleteConfirm.textContent = 'Delete';
       if (error) {
