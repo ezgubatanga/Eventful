@@ -1802,7 +1802,10 @@ section { padding: 88px 24px; }
 .print-btn:hover { border-color: var(--plum); color: var(--gold); background: var(--plum-light); transform: translateY(-1px); }
 
 /* ─── @media print ───────────────────────────────────── */
+@page { margin: 0; }
+
 @media print {
+  body { padding: 12mm 15mm; }
   .preloader-overlay, .nav, .music-btn, .back-btn,
   .hero, .countdown-bar, .story, .timeline, .venue,
   .accommodation, .activities, .gallery, .video-section, .registry,
