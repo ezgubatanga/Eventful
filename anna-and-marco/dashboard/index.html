@@ -462,8 +462,11 @@
       table { font-size: 0.7rem; table-layout: auto; width: 100%; }
       table td, table th { padding: 6px 4px; white-space: normal; word-break: break-word; overflow: visible; }
       table thead th { white-space: nowrap; }
-      @page { margin: 20mm 10mm; }
-      body { padding: 0; }
+      @page { margin: 0; size: A4; }
+      body { padding: 18mm 10mm 0; }
+      /* thead repeats per page — spacer gives top padding on every page */
+      .print-spacer-top { display: table-row !important; }
+      .print-spacer-top th { height: 14mm !important; padding: 0 !important; border: none !important; background: none !important; }
       #rsvp-section-title::after { content: 'RSVPs'; }
       #rsvp-section-title { font-size: 0; }
       #rsvp-section-title::after { font-size: 0.75rem; letter-spacing: 0.1em; }
@@ -944,6 +947,7 @@
       <div class="table-wrap">
         <table>
           <thead>
+            <tr class="print-spacer-top"><th colspan="9"></th></tr>
             <tr>
               <th>Name</th>
               <th class="print-only">Phone</th>

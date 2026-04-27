@@ -425,6 +425,7 @@
       display: flex;
       align-items: center;
       justify-content: space-between;
+      gap: 12px;
       padding: 24px 44px 32px;
       border-top: 1px solid rgba(220, 215, 207, 0.5);
     }
@@ -475,6 +476,7 @@
       cursor: not-allowed;
       transform: none;
     }
+
 
     .btn .spinner {
       width: 16px;
@@ -711,7 +713,8 @@
     .payment-upload-remove:hover { color: var(--text-main); }
 
     .btn-confirm-payment {
-      width: 100%;
+      flex: 1;
+      min-width: 0;
       background: linear-gradient(135deg, #2A2520 0%, #3D3530 100%);
       color: #fff;
       border: none;
@@ -800,7 +803,8 @@
       .page-wrap { padding: 24px 16px 60px; }
       .step-header { padding: 24px 24px 20px; }
       .step-body { padding: 24px 24px 28px; }
-      .step-nav { padding: 20px 24px 28px; }
+      .step-nav { padding: 16px 20px 24px; gap: 8px; }
+      .btn-confirm-payment { padding: 13px 16px; font-size: 0.85rem; letter-spacing: 0.02em; }
 
       .fields-grid { grid-template-columns: 1fr; }
 
@@ -974,14 +978,13 @@
               <span class="payment-upload-preview-name" id="previewName"></span>
               <button class="payment-upload-remove" onclick="removeReceipt()" title="Remove">✕</button>
             </div>
-            <button class="btn-confirm-payment" id="confirmPaymentBtn" onclick="confirmPayment()">
-              Done — I've Sent Payment ✦
-            </button>
           </div>
         </div>
         <div class="step-nav">
           <button class="btn btn-ghost" onclick="goBack(2)">← Back</button>
-          <div></div>
+          <button class="btn-confirm-payment" id="confirmPaymentBtn" onclick="confirmPayment()">
+            Done — I've Sent Payment ✦
+          </button>
         </div>
       </div>
 
