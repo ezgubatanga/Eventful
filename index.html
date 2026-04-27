@@ -3833,11 +3833,12 @@
         );
         const { count, error } = await db
           .from('onboarding')
-          .select('*', { count: 'exact', head: true });
+          .select('*', { count: 'exact', head: true })
+          .eq('payment_status', 'receipt_uploaded');
 
         if (error || count === null) return;
 
-        const taken = Math.min(count, TOTAL);
+        const taken = Math.min(count + 6, TOTAL);
         const track = document.getElementById('slot-track');
         const label = document.getElementById('slot-counter-text');
 
