@@ -371,6 +371,25 @@
       margin-bottom: 20px;
     }
 
+    /* ── Per-char text effect ─────────────────────────────── */
+    .hero-char {
+      display: inline-block;
+      white-space: pre;
+      opacity: 0;
+      transform: translateY(20px);
+      filter: blur(12px);
+      transition:
+        opacity   0.35s cubic-bezier(0.16, 1, 0.3, 1),
+        transform 0.35s cubic-bezier(0.16, 1, 0.3, 1),
+        filter    0.35s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    .hero-char.visible {
+      opacity: 1;
+      transform: translateY(0);
+      filter: blur(0);
+    }
+
     .hero h1 em {
       font-style: italic;
       color: var(--gold);
@@ -3079,7 +3098,7 @@
 
         <!-- Left: copy -->
         <div>
-          <h1 class="fade-up delay-1">
+          <h1 id="hero-title">
             Your love story<br />deserves a<br />beautiful page
           </h1>
           <p class="hero-sub fade-up delay-2">
@@ -3874,6 +3893,50 @@
       closeBtn.addEventListener('click', closeModal);
       overlay.addEventListener('click', function(e) { if (e.target === overlay) closeModal(); });
       document.addEventListener('keydown', function(e) { if (e.key === 'Escape') closeModal(); });
+    })();
+  </script>
+
+  <script>
+    // ── Hero title per-char text effect ───────────────────
+    (function () {
+      const h1 = document.getElementById('hero-title');
+      if (!h1) return;
+
+      // Walk child nodes, split text into per-char spans, preserve <br>
+      const nodes = [...h1.childNodes];
+      h1.innerHTML = '';
+      let idx = 0;
+
+      nodes.forEach(function (node) {
+        if (node.nodeType === Node.TEXT_NODE) {
+          const text = node.textContent
+            .replace(/^\s*\n\s*/g, '')
+            .replace(/\s*\n\s*$/g, '');
+          if (!text) return;
+          [...text].forEach(function (char) {
+            const s = document.createElement('span');
+            s.className = 'hero-char';
+            s.textContent = char;
+            s.style.transitionDelay = (idx * 0.03).toFixed(3) + 's';
+            idx++;
+            h1.appendChild(s);
+          });
+        } else if (node.nodeName === 'BR') {
+          h1.appendChild(document.createElement('br'));
+        }
+      });
+
+      // Trigger when h1 enters viewport
+      const io = new IntersectionObserver(function (entries) {
+        if (entries[0].isIntersecting) {
+          h1.querySelectorAll('.hero-char').forEach(function (s) {
+            s.classList.add('visible');
+          });
+          io.unobserve(h1);
+        }
+      }, { threshold: 0.1 });
+
+      io.observe(h1);
     })();
   </script>
 
