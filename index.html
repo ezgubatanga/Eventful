@@ -2480,25 +2480,76 @@
     }
 
     .proof-price {
-      display: flex;
-      align-items: baseline;
-      gap: 10px;
+      display: grid;
+      place-items: center;
       margin-bottom: 4px;
     }
-    .proof-price-main {
+    .proof-price-main,
+    .proof-price-original {
+      grid-area: 1 / 1;
       font-family: 'Bricolage Grotesque', sans-serif;
       font-size: 4rem;
       font-weight: 600;
+      text-align: center;
+    }
+    .proof-price-main {
       color: #1A1714;
     }
     .proof-price-original {
-      font-family: 'Bricolage Grotesque', sans-serif;
-      font-size: 4rem;
-      font-weight: 600;
-      color: #7a6e52;
-      text-decoration: line-through;
-      text-decoration-thickness: 3px;
-      text-decoration-color: #1A1714;
+      color: #1A1714;
+      position: relative;
+    }
+
+    .strike-line {
+      position: absolute;
+      left: 0;
+      top: 50%;
+      transform: translateY(-50%);
+      height: 3px;
+      background: #1A1714;
+      width: 0;
+      opacity: 1;
+      transition: width 0.45s cubic-bezier(0.4, 0, 0.2, 1),
+                  opacity 0.4s cubic-bezier(0.4, 0, 1, 1);
+      pointer-events: none;
+      border-radius: 2px;
+    }
+
+    .strike-line.drawn { width: 100%; }
+    .strike-line.out   { opacity: 0; }
+
+    /* ── Price reveal per-char animation ─────────────────── */
+    .price-char-out {
+      display: inline-block;
+      white-space: pre;
+      transition:
+        opacity   0.4s cubic-bezier(0.4, 0, 1, 1),
+        transform 0.4s cubic-bezier(0.4, 0, 1, 1),
+        filter    0.4s cubic-bezier(0.4, 0, 1, 1);
+    }
+
+    .price-char-out.out {
+      opacity: 0;
+      transform: translateY(-14px);
+      filter: blur(10px);
+    }
+
+    .price-char-in {
+      display: inline-block;
+      white-space: pre;
+      opacity: 0;
+      transform: translateY(14px);
+      filter: blur(10px);
+      transition:
+        opacity   0.4s cubic-bezier(0.16, 1, 0.3, 1),
+        transform 0.4s cubic-bezier(0.16, 1, 0.3, 1),
+        filter    0.4s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    .price-char-in.visible {
+      opacity: 1;
+      transform: translateY(0);
+      filter: blur(0);
     }
 
     .social-proof-cta {
@@ -3940,6 +3991,61 @@
       }, { threshold: 0.1 });
 
       io.observe(h1);
+    })();
+
+    // ── Price reveal: ₱8,000 out → ₱4,000 in ─────────────
+    (function () {
+      var priceMain = document.querySelector('.proof-price-main');
+      var priceOrig = document.querySelector('.proof-price-original');
+      var priceWrap = document.querySelector('.proof-price');
+      if (!priceMain || !priceOrig || !priceWrap) return;
+
+      function splitToChars(el, cls) {
+        var text = el.textContent;
+        el.textContent = '';
+        text.split('').forEach(function (char, i) {
+          var s = document.createElement('span');
+          s.className = cls;
+          s.textContent = char;
+          s.style.transitionDelay = (i * 0.05).toFixed(3) + 's';
+          el.appendChild(s);
+        });
+      }
+
+      splitToChars(priceOrig, 'price-char-out');
+      splitToChars(priceMain, 'price-char-in');
+
+      // Append the animated strike line inside the ₱8,000 span
+      var strikeLine = document.createElement('span');
+      strikeLine.className = 'strike-line';
+      priceOrig.appendChild(strikeLine);
+
+      var io = new IntersectionObserver(function (entries) {
+        if (!entries[0].isIntersecting) return;
+        io.unobserve(priceWrap);
+
+        setTimeout(function () {
+          // 1. Strike line draws across ₱8,000 (0.45s)
+          strikeLine.classList.add('drawn');
+
+          // 2. After line is drawn, chars + line fade out together
+          setTimeout(function () {
+            strikeLine.classList.add('out');
+            priceOrig.querySelectorAll('.price-char-out').forEach(function (s) {
+              s.classList.add('out');
+            });
+
+            // 3. ₱4,000 blurs in shortly after
+            setTimeout(function () {
+              priceMain.querySelectorAll('.price-char-in').forEach(function (s) {
+                s.classList.add('visible');
+              });
+            }, 350);
+          }, 500);
+        }, 400);
+      }, { threshold: 0.4 });
+
+      io.observe(priceWrap);
     })();
   </script>
 

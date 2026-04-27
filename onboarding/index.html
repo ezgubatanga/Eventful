@@ -142,7 +142,7 @@
     /* ─── Page Header ─────────────────────────────────────── */
     .page-header {
       text-align: center;
-      margin-bottom: 48px;
+      margin-bottom: 28px;
     }
 
     .page-title {
@@ -843,26 +843,13 @@
   <div class="page-wrap">
 
     <!-- Page Header -->
-    <div style="text-align:center;margin-bottom:12px;">
-      <a href="/"><img src="/logo.webp" alt="Eventful" style="height:28px;width:auto;display:inline-block;filter:none;opacity:1;" /></a>
+    <div style="text-align:center;margin-bottom:20px;">
+      <a href="/"><img src="/logo.webp" alt="Eventful" style="height:36px;width:auto;display:inline-block;filter:none;opacity:1;" /></a>
     </div>
     <header class="page-header">
       <h1 class="page-title">Let Eventful Design Your Personalized Wedding Page</h1>
-      <p class="page-subtitle">Simplified onboarding process.</p>
     </header>
 
-    <!-- Stepper -->
-    <nav class="stepper" id="mainStepper" aria-label="Form progress">
-      <div class="step-node" id="node-1">
-        <div class="step-circle active" id="circle-1">1</div>
-        <span class="step-label active" id="label-1">Your Info</span>
-      </div>
-      <div class="step-connector" id="conn-1-2"></div>
-      <div class="step-node" id="node-2">
-        <div class="step-circle" id="circle-2">2</div>
-        <span class="step-label" id="label-2">Payment</span>
-      </div>
-    </nav>
 
     <!-- ═══ FORM CARD ══════════════════════════════════════ -->
     <div class="form-card" role="main">
@@ -870,7 +857,7 @@
       <!-- ── Step 1: Your Info ─────────────────────────── -->
       <div class="step-panel active" id="step-1" role="tabpanel" aria-label="Step 1: Your Info">
         <div class="step-header">
-          <p class="step-number">Step 01 / 02</p>
+          <p class="step-number">Step 01 / 03</p>
           <h2 class="step-title">Your Information</h2>
           <p class="step-desc">Let us know who you are so we can get in touch about your wedding page.</p>
         </div>
@@ -896,20 +883,6 @@
             </div>
           </div>
 
-          <!-- Accordion: What's Included -->
-          <div class="features-accordion">
-            <details class="features-details">
-              <summary class="features-summary">
-                <span>See what's included</span>
-                <svg class="features-chevron" viewBox="0 0 16 16" fill="none">
-                  <path d="M4 6l4 4 4-4" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
-                </svg>
-              </summary>
-              <div class="features-body">
-                <div class="features-grid" id="featuresGrid"><!-- populated by JS --></div>
-              </div>
-            </details>
-          </div>
         </div>
         <div class="step-nav">
           <div></div>
@@ -919,10 +892,28 @@
         </div>
       </div>
 
-      <!-- ── Step 2: Payment (inline) ──────────────────── -->
-      <div class="step-panel" id="step-2" role="tabpanel" aria-label="Step 2: Payment">
+      <!-- ── Step 2: What's Included ──────────────────── -->
+      <div class="step-panel" id="step-2" role="tabpanel" aria-label="Step 2: What's Included">
         <div class="step-header">
-          <p class="step-number">Step 02 / 02</p>
+          <p class="step-number">Step 02 / 03</p>
+          <h2 class="step-title">What You Will Get</h2>
+          <p class="step-desc">Everything included in your wedding page, built and delivered in days.</p>
+        </div>
+        <div class="step-body">
+          <div class="features-grid" id="featuresGrid"><!-- populated by JS --></div>
+        </div>
+        <div class="step-nav">
+          <button class="btn btn-ghost" onclick="goBack(2)">← Back</button>
+          <button class="btn btn-primary" onclick="showStep(3)">
+            Continue <span>→</span>
+          </button>
+        </div>
+      </div>
+
+      <!-- ── Step 3: Payment ────────────────────────────── -->
+      <div class="step-panel" id="step-3" role="tabpanel" aria-label="Step 3: Payment">
+        <div class="step-header">
+          <p class="step-number">Step 03 / 03</p>
           <h2 class="step-title">Complete Your Payment</h2>
         </div>
         <div class="step-body">
@@ -981,7 +972,7 @@
           </div>
         </div>
         <div class="step-nav">
-          <button class="btn btn-ghost" onclick="goBack(2)">← Back</button>
+          <button class="btn btn-ghost" onclick="goBack(3)">← Back</button>
           <button class="btn-confirm-payment" id="confirmPaymentBtn" onclick="confirmPayment()">
             Done — I've Sent Payment ✦
           </button>
@@ -1028,7 +1019,7 @@
 
     const BASE_PRICE = 4000;
     let currentStep = 1;
-    const TOTAL_STEPS = 2;
+    const TOTAL_STEPS = 3;
     let _onboardingId = null;
     let _receiptFile = null;
     let _receiptFileName = null;
