@@ -3926,13 +3926,16 @@
         }
       });
 
-      // Trigger when h1 enters viewport
+      // Trigger when h1 enters viewport — delay so initial hidden state
+      // is painted before the wave starts (hero is always in viewport on load)
       const io = new IntersectionObserver(function (entries) {
         if (entries[0].isIntersecting) {
-          h1.querySelectorAll('.hero-char').forEach(function (s) {
-            s.classList.add('visible');
-          });
           io.unobserve(h1);
+          setTimeout(function () {
+            h1.querySelectorAll('.hero-char').forEach(function (s) {
+              s.classList.add('visible');
+            });
+          }, 500);
         }
       }, { threshold: 0.1 });
 
