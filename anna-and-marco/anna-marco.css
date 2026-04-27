@@ -31,8 +31,8 @@
   inset: 0;
   z-index: 100000;
   background:
-    radial-gradient(ellipse 90% 75% at 50% 50%, transparent 28%, rgba(42,37,32,0.22) 100%),
-    #f5ede0;
+    radial-gradient(ellipse 65% 55% at 50% 48%, transparent 20%, rgba(22,14,6,0.38) 100%),
+    #f0e5d0;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -40,7 +40,7 @@
   transition: opacity 1.4s ease, visibility 1.4s ease, transform 1.4s cubic-bezier(0.16,1,0.3,1);
 }
 
-/* Grain texture */
+/* Grain texture — background */
 .env-overlay::before {
   content: '';
   position: absolute;
@@ -48,7 +48,22 @@
   z-index: 0;
   pointer-events: none;
   background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='1'/%3E%3C/svg%3E");
-  opacity: 0.04;
+  opacity: 0.10;
+}
+
+/* Grain texture — envelope pieces */
+.env-back::after,
+.env-flap::after,
+.env-tri::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='1'/%3E%3C/svg%3E");
+  opacity: 0.14;
+  mix-blend-mode: multiply;
+  border-radius: inherit;
+  z-index: 10;
 }
 
 .env-overlay.hidden {
@@ -85,10 +100,11 @@
 
 .env-eyebrow {
   font-family: 'Parisienne', cursive;
-  font-size: 1.8rem;
+  font-size: clamp(3rem, 8vw, 4.8rem);
+  line-height: 1.05;
   color: var(--text-main);
   text-align: center;
-  letter-spacing: 0.02em;
+  letter-spacing: 0.01em;
 }
 
 /* ── Envelope Stage ────────────────────────────────────── */
@@ -98,22 +114,31 @@
   height: 200px;
   perspective: 900px;
   cursor: pointer;
-  filter: drop-shadow(0 16px 48px rgba(42,37,32,0.18));
+  box-shadow: inset 0 1px 0 rgba(255,255,255,0.45);
+  filter:
+    drop-shadow(10px 16px 12px rgba(48,32,8,0.28))
+    drop-shadow(10px 30px 52px rgba(38,24,6,0.38));
   transition: filter 0.5s ease;
 }
 
 .env-stage:hover {
-  filter: drop-shadow(0 22px 60px rgba(42,37,32,0.26));
+  filter:
+    drop-shadow(10px 18px 16px rgba(48,32,8,0.32))
+    drop-shadow(10px 38px 64px rgba(38,24,6,0.46));
 }
 
 /* ── Envelope Body ─────────────────────────────────────── */
 .env-back {
   position: absolute;
   inset: 0;
-  background: #fdf8f2;
-  border: 1.5px solid rgba(184,144,63,0.3);
+  background:
+    radial-gradient(ellipse 70% 60% at 50% 60%, #fdfaf2 0%, #f5ecda 55%, #e8d8bc 100%);
+  border: 1px solid rgba(160,125,55,0.2);
   border-radius: 3px;
   z-index: 1;
+  box-shadow:
+    inset 0 -1px 0   rgba(100,70,20,0.10),
+    inset 0  0  52px rgba(80,52,12,0.07);
 }
 
 /* ── Inner crease triangles ────────────────────────────── */
@@ -123,9 +148,39 @@
   z-index: 3;
 }
 
-.env-tri-left   { background: #ede3d3; clip-path: polygon(0 0, 50% 56%, 0 100%); }
-.env-tri-right  { background: #e8dccb; clip-path: polygon(100% 0, 50% 56%, 100% 100%); }
-.env-tri-bottom { background: #f2e8d8; clip-path: polygon(0 100%, 50% 56%, 100% 100%); }
+/* Side folds — dark outer edge, lighter toward center crease point */
+.env-tri-left {
+  background: linear-gradient(to right, #c4b496 0%, #ddd0b8 60%, #eee4cc 100%);
+  clip-path: polygon(0 0, 50% 56%, 0 100%);
+}
+
+.env-tri-left::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 320 200'%3E%3Cline x1='0.5' y1='0' x2='0.5' y2='200' stroke='white' stroke-opacity='0.25' stroke-width='1'/%3E%3C/svg%3E");
+  background-size: 100% 100%;
+}
+.env-tri-right {
+  background: linear-gradient(to left, #bead8e 0%, #d8cbb2 60%, #ece2ca 100%);
+  clip-path: polygon(100% 0, 50% 56%, 100% 100%);
+}
+/* Bottom fold — medium tone, slightly lighter than sides */
+.env-tri-bottom {
+  background: linear-gradient(175deg, #d4c8ae 0%, #c8bc9e 100%);
+  clip-path: polygon(0 100%, 50% 56%, 100% 100%);
+}
+
+/* White border on diagonal sides only (no bottom edge) */
+.env-tri-bottom::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 320 200'%3E%3Cline x1='0' y1='200' x2='160' y2='112' stroke='white' stroke-opacity='0.5' stroke-width='2'/%3E%3Cline x1='320' y1='200' x2='160' y2='112' stroke='white' stroke-opacity='0.5' stroke-width='2'/%3E%3C/svg%3E");
+  background-size: 100% 100%;
+}
 
 /* ── Invitation Card (peeks out on open) ───────────────── */
 .env-card {
@@ -168,11 +223,27 @@
   color: var(--gold);
 }
 
+/* ── Flap shadow div ───────────────────────────────────── */
+.env-flap-shadow {
+  position: absolute;
+  inset: 0;
+  background: rgba(0,0,0,0.28);
+  clip-path: polygon(0 0, 100% 0, 50% 56%);
+  z-index: 3;
+  transform: translateY(3px);
+  filter: blur(3px);
+  pointer-events: none;
+}
+
+.env-overlay.open .env-flap-shadow { opacity: 0; transition: opacity 0.3s; }
+
 /* ── Flap (3D open — slow & deliberate) ───────────────── */
 .env-flap {
   position: absolute;
   inset: 0;
-  background: linear-gradient(160deg, #c9a055 0%, #b8903f 60%, #a07832 100%);
+  background:
+    radial-gradient(ellipse 55% 38% at 38% 18%, rgba(224,186,100,0.32) 0%, transparent 65%),
+    linear-gradient(148deg, #c49a38 0%, #b08830 40%, #9a7020 70%, #886018 100%);
   clip-path: polygon(0 0, 100% 0, 50% 56%);
   z-index: 4;
   transform-origin: top center;
@@ -249,7 +320,7 @@
   .env-stage { width: 260px; height: 163px; }
   .env-seal  { width: 54px; height: 54px; top: calc(56% - 27px); }
   .env-overlay.open .env-card { transform: translateX(-50%) translateY(-100px); }
-  .env-eyebrow { font-size: 1.4rem; }
+  .env-eyebrow { font-size: 2.6rem; }
   .env-card-names { font-size: 1.05rem; }
   .env-brand { bottom: 18px; }
 }
