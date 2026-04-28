@@ -1560,6 +1560,7 @@ section { padding: 88px 24px; }
     border: none;
     border-radius: 0;
     padding: 22px 0;
+    justify-content: center;
   }
 
   .schedule-item:not(:last-child) {
@@ -1567,9 +1568,39 @@ section { padding: 88px 24px; }
     border-image-source: linear-gradient(to right, transparent, rgba(184,144,63,0.5), transparent);
     border-image-slice: 1;
   }
+  .rsvp { text-align: center; padding-top: 40px; }
+  .rsvp .section-lead { margin-left: auto; margin-right: auto; }
   .rsvp-grid { grid-template-columns: 1fr; }
-  .rsvp-card { padding: 28px 20px; }
-  .contact-cards { grid-template-columns: 1fr; }
+  .rsvp-card { padding: 28px 20px; text-align: left; }
+  /* Contact: flat list with fading gold separators, centered */
+  .contact { text-align: center; }
+  .contact-cards {
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+  }
+
+  .contact-card {
+    background: none;
+    border: none;
+    box-shadow: none;
+    border-radius: 0;
+    padding: 24px 0;
+    text-align: center;
+    align-items: center;
+  }
+
+  .contact-card:hover {
+    box-shadow: none;
+    transform: none;
+    border-color: transparent;
+  }
+
+  .contact-card:not(:last-child) {
+    border-bottom: 1px solid transparent;
+    border-image-source: linear-gradient(to right, transparent, rgba(184,144,63,0.5), transparent);
+    border-image-slice: 1;
+  }
   .registry-cards { grid-template-columns: 1fr; }
   .gallery-grid { gap: 3px; }
   .music-btn { bottom: 20px; right: 20px; width: 44px; height: 44px; }
@@ -2108,7 +2139,35 @@ section { padding: 88px 24px; }
   .timeline-content { grid-column: 2; grid-row: 2; }
   .timeline-item:nth-child(even) .timeline-year    { grid-column: 2; text-align: left; padding-left: 0; }
   .timeline-item:nth-child(even) .timeline-content { grid-column: 2; }
-  .accommodation-cards { grid-template-columns: 1fr; }
+  /* Accommodations: flat list with fading gold separators, centered */
+  .accommodation { text-align: center; }
+  .accommodation-cards {
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+  }
+
+  .accommodation-card {
+    background: none;
+    border: none;
+    box-shadow: none;
+    border-radius: 0;
+    padding: 24px 0;
+    text-align: center;
+    align-items: center;
+  }
+
+  .accommodation-card:not(:last-child) {
+    border-bottom: 1px solid transparent;
+    border-image-source: linear-gradient(to right, transparent, rgba(184,144,63,0.5), transparent);
+    border-image-slice: 1;
+  }
+
+  .accommodation-card:hover {
+    box-shadow: none;
+    transform: none;
+    border-color: transparent;
+  }
 
   /* Activities: flat list with fading gold separators */
   .activities-grid {
@@ -2123,15 +2182,15 @@ section { padding: 88px 24px; }
     box-shadow: none;
     border-radius: 0;
     padding: 24px 0;
+    text-align: center;
   }
 
-  .activity-card:not(:last-child)::after {
-    content: '';
-    display: block;
-    height: 1px;
-    background: linear-gradient(to right, transparent, var(--gold), transparent);
-    opacity: 0.45;
-    margin-top: 24px;
+  .activity-card .activity-header { justify-content: center; }
+
+  .activity-card:not(:last-child) {
+    border-bottom: 1px solid transparent;
+    border-image-source: linear-gradient(to right, transparent, rgba(184,144,63,0.5), transparent);
+    border-image-slice: 1;
   }
   .transport-items  { grid-template-columns: 1fr; gap: 20px; }
   .transport-block  { padding: 24px 20px; }
