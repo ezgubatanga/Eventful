@@ -819,7 +819,7 @@ section { padding: 88px 24px; }
 .schedule-item {
   display: flex;
   gap: 18px;
-  align-items: flex-start;
+  align-items: center;
   padding: 22px 24px;
   background: var(--surface);
   border-radius: var(--radius);
@@ -827,13 +827,12 @@ section { padding: 88px 24px; }
 }
 
 .schedule-time {
-  font-size: 0.78rem;
+  font-size: 1rem;
   font-weight: 700;
   color: var(--gold);
   letter-spacing: 0.05em;
   white-space: nowrap;
-  min-width: 62px;
-  padding-top: 2px;
+  min-width: 78px;
 }
 
 .schedule-info { flex: 1; }
@@ -1541,8 +1540,27 @@ section { padding: 88px 24px; }
   .story-image { aspect-ratio: 3/2; order: 2; }
   .story-image img { object-position: center top; }
   .story-text { order: 1; }
-  .schedule-grid,
   .venue-cards { grid-template-columns: 1fr; }
+
+  /* Schedule: flat list with fading gold separators */
+  .schedule-grid {
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+  }
+
+  .schedule-item {
+    background: none;
+    border: none;
+    border-radius: 0;
+    padding: 22px 0;
+  }
+
+  .schedule-item:not(:last-child) {
+    border-bottom: 1px solid transparent;
+    border-image-source: linear-gradient(to right, transparent, rgba(184,144,63,0.5), transparent);
+    border-image-slice: 1;
+  }
   .rsvp-grid { grid-template-columns: 1fr; }
   .rsvp-card { padding: 28px 20px; }
   .contact-cards { grid-template-columns: 1fr; }
@@ -2083,8 +2101,31 @@ section { padding: 88px 24px; }
   .timeline-content { grid-column: 2; grid-row: 2; }
   .timeline-item:nth-child(even) .timeline-year    { grid-column: 2; text-align: left; padding-left: 0; }
   .timeline-item:nth-child(even) .timeline-content { grid-column: 2; }
-  .accommodation-cards,
-  .activities-grid { grid-template-columns: 1fr; }
+  .accommodation-cards { grid-template-columns: 1fr; }
+
+  /* Activities: flat list with fading gold separators */
+  .activities-grid {
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+  }
+
+  .activity-card {
+    background: none;
+    border: none;
+    box-shadow: none;
+    border-radius: 0;
+    padding: 24px 0;
+  }
+
+  .activity-card:not(:last-child)::after {
+    content: '';
+    display: block;
+    height: 1px;
+    background: linear-gradient(to right, transparent, var(--gold), transparent);
+    opacity: 0.45;
+    margin-top: 24px;
+  }
   .transport-items  { grid-template-columns: 1fr; gap: 20px; }
   .transport-block  { padding: 24px 20px; }
   .weather-card     { flex-direction: column; align-items: flex-start; gap: 20px; padding: 24px 20px; }
