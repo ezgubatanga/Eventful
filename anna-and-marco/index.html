@@ -78,39 +78,6 @@
 
 <body>
 
-  <!-- ── Envelope Invitation ──────────────────────────── -->
-  <div id="envelope-overlay" class="env-overlay">
-    <div class="env-wrap">
-      <p class="env-eyebrow">You Are<br>Invited</p>
-      <div class="env-stage" id="envStage">
-        <!-- Card peeks out on open -->
-        <div class="env-card">
-          <p class="env-card-names">Anna &amp; Marco</p>
-          <p class="env-card-date">September 20, 2026 · Rome, Italy</p>
-        </div>
-        <!-- Envelope body -->
-        <div class="env-back"></div>
-        <!-- Inner crease triangles -->
-        <div class="env-tri env-tri-left"></div>
-        <div class="env-tri env-tri-right"></div>
-        <div class="env-tri env-tri-bottom"></div>
-        <!-- Flap shadow (cast onto side triangles) -->
-        <div class="env-flap-shadow"></div>
-        <!-- Flap (rotates open) -->
-        <div class="env-flap"></div>
-        <!-- Wax seal (fades on open) -->
-        <div class="env-seal">
-          <svg viewBox="0 0 60 60" xmlns="http://www.w3.org/2000/svg">
-            <circle cx="30" cy="30" r="29" fill="#B8903F"/>
-            <circle cx="30" cy="30" r="25" fill="none" stroke="rgba(255,255,255,0.35)" stroke-width="1"/>
-            <text x="50%" y="53%" dominant-baseline="middle" text-anchor="middle" font-family="Parisienne, cursive" font-size="11" fill="#fff" letter-spacing="0">A &amp; M</text>
-          </svg>
-        </div>
-      </div>
-    </div>
-    <p class="env-brand">Powered by <strong>Eventful</strong></p>
-  </div>
-
   <!-- ── Background Music ──────────────────────────────── -->
   <audio id="bg-music" src="/anna-and-marco/song-min.mp3" loop preload="none"></audio>
   <a href="/" class="back-btn" aria-label="Back to Eventful" title="Back to Eventful">
@@ -394,21 +361,18 @@
           <span class="accommodation-stars">★★★★★</span>
           <p class="accommodation-name">Hotel Raphael</p>
           <p class="accommodation-distance">Reception venue · Largo Febo</p>
-          <p class="accommodation-desc">An intimate ivy-covered retreat steps from Piazza Navona. Rooftop terrace with panoramic views — the same one where dinner takes place.</p>
           <a class="accommodation-link" href="https://www.raphaelhotel.com" target="_blank" rel="noopener">Book a room →</a>
         </div>
         <div class="accommodation-card reveal">
           <span class="accommodation-stars">★★★★</span>
           <p class="accommodation-name">Hotel Santa Maria</p>
           <p class="accommodation-distance">5 min walk · Trastevere</p>
-          <p class="accommodation-desc">A tranquil 16th-century convent set around a quiet orange grove in the heart of Trastevere — steps from the ceremony.</p>
           <a class="accommodation-link" href="https://www.hotelsantamaria.info" target="_blank" rel="noopener">Book a room →</a>
         </div>
         <div class="accommodation-card reveal">
           <span class="accommodation-stars">★★★</span>
           <p class="accommodation-name">Hotel Campo de' Fiori</p>
           <p class="accommodation-distance">10 min walk · Campo de' Fiori</p>
-          <p class="accommodation-desc">A charming rooftop-terrace hotel in a historic palazzio, centrally located between both venues with views over Rome's rooftops.</p>
           <a class="accommodation-link" href="https://www.hotelcampodefiori.com" target="_blank" rel="noopener">Book a room →</a>
         </div>
       </div>
@@ -577,9 +541,6 @@
           </div>
         </div>
         <div>
-          <span class="section-eyebrow">FAQs</span>
-          <h2 class="section-title">Good to know</h2>
-          <div class="section-divider"></div>
           <div class="faq-list">
             <div class="faq-item">
               <p class="faq-question">Can I bring a plus-one?</p>
@@ -802,10 +763,6 @@
         requestAnimationFrame(step);
       });
     });
-
-    // ── Envelope Invitation (disabled) ───────────────────
-    const envOverlay = document.getElementById('envelope-overlay');
-    if (envOverlay) envOverlay.classList.add('hidden');
 
     // ── Hero video — replace with poster img if autoplay blocked (iOS low power) ──
     const heroVideo = document.querySelector('.hero-video');

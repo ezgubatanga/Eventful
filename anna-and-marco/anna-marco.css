@@ -807,7 +807,8 @@ section { padding: 88px 24px; }
 .story-text p:last-child { margin-bottom: 0; }
 
 /* ─── Schedule ───────────────────────────────────────── */
-.schedule { background: var(--bg); }
+.schedule { background: var(--bg); text-align: center; }
+.schedule-time, .schedule-info { text-align: left; }
 
 .schedule-grid {
   display: grid;
@@ -990,7 +991,7 @@ section { padding: 88px 24px; }
 .gallery-item:hover img { transform: scale(1.05); }
 
 /* ─── Featured Video ─────────────────────────────────── */
-.video-section { background: var(--surface); }
+.video-section { background: var(--surface); text-align: center; }
 
 .video-wrapper {
   margin-top: 44px;
@@ -1537,6 +1538,11 @@ section { padding: 88px 24px; }
   section { padding: 64px 20px; }
   .story-inner,
   .dress-faq-inner { grid-template-columns: 1fr; gap: 40px; }
+
+  /* Center dress code block on tablet/mobile */
+  .dress-faq-inner > div:first-child { text-align: center; }
+  .dress-faq-inner > div:first-child .section-divider { margin: 24px auto; }
+  .dress-faq-inner > div:first-child .palette { justify-content: center; }
   .story-image { aspect-ratio: 3/2; order: 2; }
   .story-image img { object-position: center top; }
   .story-text { order: 1; }
@@ -1686,7 +1692,8 @@ section { padding: 88px 24px; }
 .accommodation-link:hover { gap: 10px; color: var(--gold-dark); }
 
 /* ─── Things to Do ───────────────────────────────────── */
-.activities { background: var(--surface); }
+.activities { background: var(--surface); text-align: center; }
+.activity-card { text-align: left; }
 
 .activities-grid {
   display: grid;
