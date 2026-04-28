@@ -837,21 +837,9 @@
       });
     });
 
-    // ── Envelope Invitation ───────────────────────────────
-    document.body.style.overflow = 'hidden';
+    // ── Envelope Invitation (disabled) ───────────────────
     const envOverlay = document.getElementById('envelope-overlay');
-    const envStage   = document.getElementById('envStage');
-
-    function openEnvelope() {
-      if (envOverlay.classList.contains('open')) return;
-      envOverlay.classList.add('open');
-      setTimeout(() => {
-        envOverlay.classList.add('hidden');
-        document.body.style.overflow = '';
-      }, 2200);
-    }
-
-    envStage.addEventListener('click', openEnvelope);
+    if (envOverlay) envOverlay.classList.add('hidden');
 
     // ── Hero video — replace with poster img if autoplay blocked (iOS low power) ──
     const heroVideo = document.querySelector('.hero-video');
