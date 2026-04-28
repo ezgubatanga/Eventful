@@ -1,9 +1,9 @@
 /* ─── Tokens ─────────────────────────────────────────── */
 :root {
   --bg:           #ffffff;
-  --surface:      #f8f5f1;
-  --surface-2:    #f1ece5;
-  --surface-3:    #e9e2d9;
+  --surface:      #faf8f5;
+  --surface-2:    #f5f1ec;
+  --surface-3:    #ede8e0;
   --text-main:    #1A1714;
   --text-muted:   #6b6459;
   --text-light:   #9a9089;
@@ -734,8 +734,8 @@ section { padding: 88px 24px; }
 .container { max-width: 880px; margin: 0 auto; }
 
 .section-eyebrow {
-  font-size: 0.7rem;
-  letter-spacing: 0.32em;
+  font-size: 0.85rem;
+  letter-spacing: 0.28em;
   text-transform: uppercase;
   color: var(--gold);
   font-weight: 600;
@@ -1010,14 +1010,14 @@ section { padding: 88px 24px; }
 }
 
 /* ─── Gift Registry ──────────────────────────────────── */
-.registry { background: var(--bg); }
+.registry { background: var(--bg); text-align: center; }
 
 .registry-intro {
   color: var(--text-muted);
   font-size: 1rem;
   line-height: 1.8;
   max-width: 560px;
-  margin-bottom: 40px;
+  margin: 0 auto 40px;
 }
 
 .registry-cards {
