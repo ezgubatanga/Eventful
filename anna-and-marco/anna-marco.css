@@ -1548,11 +1548,15 @@ section { padding: 88px 24px; }
   .story-text { order: 1; }
   .venue-cards { grid-template-columns: 1fr; }
 
-  /* Schedule: flat list with fading gold separators */
+  /* Schedule: flat list with fading gold separators, centered block */
   .schedule-grid {
     display: flex;
     flex-direction: column;
     gap: 0;
+    max-width: 420px;
+    margin-left: auto;
+    margin-right: auto;
+    padding-left: 24px;
   }
 
   .schedule-item {
@@ -1560,7 +1564,7 @@ section { padding: 88px 24px; }
     border: none;
     border-radius: 0;
     padding: 22px 0;
-    justify-content: center;
+    justify-content: flex-start;
   }
 
   .schedule-item:not(:last-child) {
@@ -1574,6 +1578,7 @@ section { padding: 88px 24px; }
   .rsvp-card { padding: 28px 20px; text-align: left; }
   /* Contact: flat list with fading gold separators, centered */
   .contact { text-align: center; }
+  .contact-card-icon { display: none; }
   .contact-cards {
     display: flex;
     flex-direction: column;
