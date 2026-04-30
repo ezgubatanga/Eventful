@@ -1548,6 +1548,8 @@ section { padding: 88px 24px; }
   .story-text { order: 1; }
   .venue-cards { grid-template-columns: 1fr; }
 
+  .calendar-add { justify-content: center; }
+
   /* Schedule: flat list with fading gold separators, centered block */
   .schedule-grid {
     display: flex;
