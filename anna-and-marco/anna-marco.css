@@ -992,6 +992,7 @@ section { padding: 88px 24px; }
 
 /* ─── Featured Video ─────────────────────────────────── */
 .video-section { background: var(--surface); text-align: center; }
+.video-section .section-lead { margin: 0 auto; }
 
 .video-wrapper {
   margin-top: 44px;
@@ -1695,7 +1696,8 @@ section { padding: 88px 24px; }
 .timeline-detail { font-size: 0.84rem; color: var(--text-muted); line-height: 1.6; }
 
 /* ─── Accommodation ──────────────────────────────────── */
-.accommodation { background: var(--bg); }
+.accommodation { background: var(--bg); text-align: center; }
+.accommodation .section-lead { margin: 0 auto; }
 
 .accommodation-cards {
   display: grid;
