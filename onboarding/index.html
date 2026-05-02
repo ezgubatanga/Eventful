@@ -713,7 +713,7 @@
     .payment-upload-remove:hover { color: var(--text-main); }
 
     .btn-confirm-payment {
-      flex: 1;
+      flex: 0 0 auto;
       min-width: 0;
       background: linear-gradient(135deg, #2A2520 0%, #3D3530 100%);
       color: #fff;
@@ -983,7 +983,7 @@
       <div class="status-screen" id="successScreen">
         <div class="status-icon success">🌸</div>
         <h2 class="status-title">Request received</h2>
-        <p class="status-text">Thank you, <strong id="successEmail"></strong>. Your order has been submitted and your receipt is under review.<br><br>To help us get started, please send your photos and videos to <a href="mailto:hello@eventful.page" style="color:var(--gold);font-weight:600">hello@eventful.page</a> or share a Google Drive link with view access.<br><br>We will follow up within 24 hours via the contact details you provided.</p>
+        <p class="status-text">Thank you, <strong id="successName"></strong>. Your order has been submitted and your receipt is under review.<br><br>To help us get started, please send your photos and videos to <a href="mailto:hello@eventful.page" style="color:var(--gold);font-weight:600">hello@eventful.page</a> or share a Google Drive link with view access.<br><br>We will follow up within 24 hours via the contact details you provided.</p>
         <div style="display:flex;gap:12px;justify-content:center;flex-wrap:wrap;">
           <a href="/" class="btn btn-primary">← Back to Eventful</a>
         </div>
@@ -1263,13 +1263,14 @@
         }
       } finally {
         if (typeof fbq !== 'undefined') fbq('track', 'Purchase', { currency: 'PHP', value: BASE_PRICE });
-        setTimeout(() => showSuccess(email), 600);
+        const name = document.getElementById('name').value.trim().split(' ')[0];
+        setTimeout(() => showSuccess(name), 600);
       }
     }
 
-    function showSuccess(email) {
+    function showSuccess(name) {
       document.querySelectorAll('.step-panel').forEach(p => p.classList.remove('active'));
-      document.getElementById('successEmail').textContent = email;
+      document.getElementById('successName').textContent = name;
       document.getElementById('successScreen').classList.add('active');
       updateStepper(TOTAL_STEPS + 1);
     }
