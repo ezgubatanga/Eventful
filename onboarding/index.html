@@ -1072,6 +1072,7 @@
         const circle = document.getElementById(`circle-${i}`);
         const label = document.getElementById(`label-${i}`);
         const node = document.getElementById(`node-${i}`);
+        if (!circle || !label || !node) continue;
         circle.classList.remove('active', 'done');
         label.classList.remove('active', 'done');
         if (i < active) {
