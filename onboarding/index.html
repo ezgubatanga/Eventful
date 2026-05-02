@@ -1159,7 +1159,7 @@
             payment_status: 'pending',
             submitted_at:   new Date().toISOString(),
           });
-          if (error) console.error('Onboarding insert failed:', error);
+          if (error) { console.error('Onboarding insert failed:', error.message, error); _onboardingId = null; }
         }
       } catch (err) {
         console.error('Onboarding insert failed:', err);
