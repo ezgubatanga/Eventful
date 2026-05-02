@@ -282,7 +282,7 @@
       background: var(--surface);
       border: 1px solid var(--border);
       border-radius: var(--radius);
-      overflow: hidden;
+      overflow: visible;
     }
     table { width: 100%; border-collapse: collapse; table-layout: fixed; }
     thead th {
@@ -1033,6 +1033,7 @@
       const names = r.name || 'Order';
       const orderData = {
         name:          r.name           || '',
+        customer_name: r.name           || '',
         email:         r.email          || '',
         contactNumber: r.contact_number || '',
         paymentMethod: r.payment_method || '',
