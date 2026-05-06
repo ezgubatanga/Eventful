@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="robots" content="noindex, nofollow" />
+  <title>Spotify Family — Eventful</title>
+  <link rel="icon" type="image/webp" href="/favicon.webp" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: 'Segoe UI', system-ui, sans-serif;
+      background: #0d0d0d;
+      color: #e8e8e8;
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 40px 20px;
+    }
+    .card {
+      background: #181818;
+      border-radius: 16px;
+      padding: 36px;
+      width: 100%;
+      max-width: 480px;
+      border: 1px solid rgba(255,255,255,0.07);
+    }
+    .header {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      margin-bottom: 32px;
+    }
+    .spotify-icon {
+      width: 40px;
+      height: 40px;
+      background: #1DB954;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+    }
+    .spotify-icon svg { display: block; }
+    .header-text h1 {
+      font-size: 1.1rem;
+      font-weight: 700;
+      color: #fff;
+    }
+    .header-text p {
+      font-size: 0.78rem;
+      color: #888;
+      margin-top: 2px;
+    }
+    .members {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+    .member {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      background: #222;
+      border-radius: 10px;
+      padding: 14px 16px;
+      border: 1px solid rgba(255,255,255,0.05);
+    }
+    .member-num {
+      font-size: 0.72rem;
+      font-weight: 700;
+      color: #555;
+      width: 16px;
+      text-align: center;
+      flex-shrink: 0;
+    }
+    .member-info { flex: 1; min-width: 0; }
+    .member-name {
+      font-size: 0.92rem;
+      font-weight: 600;
+      color: #e8e8e8;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+    .member-name.vacant { color: #444; font-style: italic; font-weight: 400; }
+    .badge {
+      font-size: 0.72rem;
+      font-weight: 600;
+      padding: 4px 10px;
+      border-radius: 999px;
+      white-space: nowrap;
+      flex-shrink: 0;
+    }
+    .badge-paid {
+      background: rgba(29,185,84,0.15);
+      color: #1DB954;
+      border: 1px solid rgba(29,185,84,0.3);
+    }
+    .badge-pending {
+      background: rgba(255,180,0,0.12);
+      color: #FFB400;
+      border: 1px solid rgba(255,180,0,0.3);
+    }
+    .badge-vacant {
+      background: rgba(255,255,255,0.04);
+      color: #444;
+      border: 1px solid rgba(255,255,255,0.07);
+    }
+    .due {
+      font-size: 0.7rem;
+      color: #555;
+      margin-top: 2px;
+    }
+  </style>
+</head>
+<body>
+  <div class="card">
+    <div class="header">
+      <div class="spotify-icon">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="white" xmlns="http://www.w3.org/2000/svg">
+          <path d="M12 2C6.477 2 2 6.477 2 12s4.477 10 10 10 10-4.477 10-10S17.523 2 12 2zm4.586 14.424a.623.623 0 0 1-.857.207c-2.348-1.435-5.304-1.76-8.785-.964a.623.623 0 0 1-.277-1.215c3.809-.87 7.076-.496 9.712 1.115a.623.623 0 0 1 .207.857zm1.223-2.722a.78.78 0 0 1-1.072.257C14.1 12.306 10.539 11.9 7.2 12.847a.78.78 0 0 1-.407-1.504c3.763-1.018 7.741-.524 10.759 1.287a.78.78 0 0 1 .257 1.072zm.105-2.835C14.692 9.065 9.375 8.888 6.2 9.828a.937.937 0 1 1-.543-1.794c3.608-1.094 9.607-.883 13.396 1.297a.937.937 0 0 1-.94 1.536z"/>
+        </svg>
+      </div>
+      <div class="header-text">
+        <h1>Spotify Family Plan</h1>
+        <p>5 slots · managed by Ezra</p>
+      </div>
+    </div>
+
+    <div class="members">
+      <div class="member">
+        <div class="member-num">1</div>
+        <div class="member-info">
+          <div class="member-name">Reymart Tagolimot</div>
+          <div class="due">Until September 6</div>
+        </div>
+        <span class="badge badge-paid">Paid</span>
+      </div>
+
+      <div class="member">
+        <div class="member-num">2</div>
+        <div class="member-info">
+          <div class="member-name">Paul John Ilisan</div>
+        </div>
+        <span class="badge badge-pending">Pending</span>
+      </div>
+
+      <div class="member">
+        <div class="member-num">3</div>
+        <div class="member-info">
+          <div class="member-name vacant">Vacant slot</div>
+        </div>
+        <span class="badge badge-vacant">Open</span>
+      </div>
+
+      <div class="member">
+        <div class="member-num">4</div>
+        <div class="member-info">
+          <div class="member-name vacant">Vacant slot</div>
+        </div>
+        <span class="badge badge-vacant">Open</span>
+      </div>
+
+      <div class="member">
+        <div class="member-num">5</div>
+        <div class="member-info">
+          <div class="member-name vacant">Vacant slot</div>
+        </div>
+        <span class="badge badge-vacant">Open</span>
+      </div>
+    </div>
+  </div>
+</body>
+</html>
