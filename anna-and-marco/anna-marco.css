@@ -1728,11 +1728,13 @@ section { padding: 88px 24px; }
   font-size: 0.82rem; font-weight: 600; color: var(--gold);
   text-decoration: none; letter-spacing: 0.02em;
   transition: gap var(--transition), color var(--transition);
+  align-self: center;
 }
 .accommodation-link:hover { gap: 10px; color: var(--gold-dark); }
 
 /* ─── Things to Do ───────────────────────────────────── */
 .activities { background: var(--surface); text-align: center; }
+.activities .section-lead { margin: 0 auto; }
 .activity-card { text-align: left; }
 
 .activities-grid {
